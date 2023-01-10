@@ -1,0 +1,21 @@
+* Chapter 1
+** Terms
++ =Hosts=: end systems that run apps
++ =Apps=
++ =Devices=: run apps
++ =Packet switches= (chucks of data)
++ =Communication links=: transmission forms like fiber, radio, etc
++ =Access Network=: A network that bottlenecks to one router (edge router) to get
+  back to isp
++ =Edge Router=: A router on the "edge" of a network
++ Protocols: Control sending, receiving.
++ Internet Standards
++ TCP connection
++ RFC: Request for comments
++ IETF: Internet Enginering Task Force
+** Nuts and bolts
++ Hosts run apps
++ Devices at the core of the network (routers, switches)
++ Router decides what to do with chunk of data
++ TCP, HTTP are protocols
++ RFC:

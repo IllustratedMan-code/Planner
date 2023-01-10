@@ -1,0 +1,36 @@
+* Preliminary math concepts
+** Sets
++ an unordered collection of unique/distinct objects, usually represented by numbers
++ Explicitly or implicitly defined
++ Explicit: describe every element of a set.
+  + Binary set = {0, 1}
+  + roman alphabet = {a, b, c, ..., z}
++ Implicit: Abstract representation of a set, a set where you have to "do work"
+  + \(\mathbb{N}\) = {1, 2, 3, ...}
+  + \(x \in U: P(x)\)
+  + \(x \in \mathbb{N}:x\text{ a product of two disticnt primes\)
+*** Special sets
++ \(\O\): set with no elements (null set)
++ \(\mathbb{N}\): set with all natural numbers
++ \(\mathbb{Z}\): Set of all integers
++ \(\mathbb{Q}\): Set of all rational numbers
++ \(\mathbb{U}\): universal set
+*** Set operations
++ \(\cup\): union
+  + {1, 2} \(\cup\) {2} = {1, 2}
++ \(\cap\): intersection
++ \(2^A\): every subset of A (including \(\O\))
+  + \(2^{|A|}\): number of subsets
++ \(|A|\): cardinality is the number of elements in set
++ \(A^c = \{x \in U, x \notin A\}\)
++ \(A \times B = \{(a, b) : a \in A, B \in B\}\)
++ \(|A \times B| = |A||B|\)
++ \(\{1,2,3\} - \{2\} = \{1, 2, 3\} \char`\\ \{2\} = \{1, 3\} \)
+** Functions
+A relationship between sets that transforms one set into an another set
+*** Total function
+Every element in A is mapped to a point in B
++ \(A \rightarrow B\)
+*** Partial function
+Not every element in A is mapped to a point in B
++ \(A \rightsquigarrow B\)

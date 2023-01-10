@@ -1,0 +1,17 @@
+#+title: lab0
+#+options: toc:nil num:nil
+#+EXPORT_FILE_NAME: solution
+* 1
++ TCP
++ HTTP
+* 2
++ =25.499635311= seconds
++ =09:40:38.520300235= time of day
+* 3
++ =10.11.142.16=: Source address/my computer address
++ =128.119.245.12=: Destination address/gaia.cs.umass.edu address
+* 4
++ User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0
++ Firefox is the browser
+* 5
++ Destination port: 80
