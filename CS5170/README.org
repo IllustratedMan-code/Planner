@@ -1,2 +1,2 @@
 * Notes
-Prepend emails with [CS5170/6070-Spring 2023]
+Prepend emails with [CS5170/6070-Spring 2023].
