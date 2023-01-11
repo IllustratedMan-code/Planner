@@ -10,7 +10,7 @@
   + \(x \in U: P(x)\)
   + \(x \in \mathbb{N}:x\text{ a product of two disticnt primes\)
 *** Special sets
-+ \(\O\): set with no elements (null set)
++ \(\emptyset\): set with no elements (null set)
 + \(\mathbb{N}\): set with all natural numbers
 + \(\mathbb{Z}\): Set of all integers
 + \(\mathbb{Q}\): Set of all rational numbers
@@ -19,7 +19,7 @@
 + \(\cup\): union
   + {1, 2} \(\cup\) {2} = {1, 2}
 + \(\cap\): intersection
-+ \(2^A\): power set, every subset of A (including \(\O\))
++ \(2^A\): power set, every subset of A (including \(\emptyset\))
   + \(2^{|A|}\): number of subsets
 + \(|A|\): cardinality is the number of elements in set
 + \(A^c = \{x \in U, x \notin A\}\)
@@ -29,16 +29,16 @@
 ** Excercises
 + Let A be a non-empty finite set. What is \
 *** 1
-What is \(2^\O\)
-+ \(2^\O = \O\)
+What is \(2^\emptyset\)
++ \(2^\emptyset = \emptyset\)
 *** 2
-Let A be a non-empty finite set. What is \(A \times \O\)
+Let A be a non-empty finite set. What is \(A \times \emptyset\)
 *** 3
 Prove that: A = B if and only if A \ B = B \A
 + \(A-B = \{x \in A, x \notin B\}\)
 + \(B-A = \{x \in B, x \notin A\}\)
 + assuming \(\{x \in B, x \notin A\} = \{x \in A, x \notin B\}\)
-+ \(\{x \in B, x \notin A, x \in A, x \notin B\} = \O\)
++ \(\{x \in B, x \notin A, x \in A, x \notin B\} = \emptyset\)
 ** Functions
 A relationship between sets that transforms one set into an another set.
 *** Total function

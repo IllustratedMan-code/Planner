@@ -13,9 +13,44 @@
 + TCP connection
 + RFC: Request for comments
 + IETF: Internet Enginering Task Force
++ AP: wireless access point
++ NAT: firewall, router
 ** Nuts and bolts
 + Hosts run apps
 + Devices at the core of the network (routers, switches)
 + Router decides what to do with chunk of data
 + TCP, HTTP are protocols
 + RFC:
+** Access networks
++ Digital subscriber line (DSL)
++ cable-based access
+  + HFC hybrid fiber coax
+    + fiber optics connect neighborhood junctions
+    + coaxial cable connects homes to neighborhood junctions
+    + cable modem has higher downstream than upstream
+  + Network of cables,fiber optics connect to ISP router
++ Fiber to the homer (FTTH)
+  + fiber leaving CO is shared
+  + splitter (100 homes)
+  + Gbps range
+  + Optical Network Terminator (ONT) is an analog for modems
+  + Optical
+*** 5g fixed wireless
+Data is sent wirelessy to modem in home
+** Wireless access networks
++ Wireless local area networks (wlans)
+** Wide-area cellular access networks
++ 4g/5g cellular networks
+** enterprise networks
++ switches connect to modem which goes to isp
+** Packets of data
++ length L bits
++ tranmission rate (packets per time) R
++ link capacity = link bandwitch = capacity
++ transmission delay
+** links
++ bit: tranmitter/reciever pairs
++ physical link: what lies between tranmitter and reciever
++ guided media (cables, fiber, etc)
++ unguided media (wireless)
++ TP (twisted pair) cables (cat6): 10gbs
