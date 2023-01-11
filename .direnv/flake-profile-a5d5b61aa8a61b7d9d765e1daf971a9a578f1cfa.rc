@@ -43,7 +43,7 @@ NIX_HARDENING_ENABLE='fortify stackprotector pic strictoverflow format relro bin
 export NIX_HARDENING_ENABLE
 NIX_INDENT_MAKE='1'
 export NIX_INDENT_MAKE
-NIX_LDFLAGS='-rpath /home/david/Documents/Projects/test_emanote/outputs/out/lib64 -rpath /home/david/Documents/Projects/test_emanote/outputs/out/lib '
+NIX_LDFLAGS='-rpath /home/david/Documents/Planner/outputs/out/lib64 -rpath /home/david/Documents/Planner/outputs/out/lib '
 export NIX_LDFLAGS
 NIX_LIB64_IN_SELF_RPATH='1'
 NIX_NO_SELF_RPATH='1'
@@ -133,7 +133,7 @@ name='nix-shell'
 export name
 nativeBuildInputs=''
 export nativeBuildInputs
-out='/home/david/Documents/Projects/test_emanote/outputs/out'
+out='/home/david/Documents/Planner/outputs/out'
 export out
 outputBin='out'
 outputDev='out'
@@ -161,7 +161,7 @@ declare -a postFixupHooks=('_multioutPropagateDev' )
 declare -a postUnpackHooks=('_updateSourceDateEpochFromSourceRoot' )
 declare -a preConfigureHooks=('_multioutConfig' )
 declare -a preFixupHooks=('_moveToShare' '_multioutDocs' '_multioutDevs' )
-prefix='/home/david/Documents/Projects/test_emanote/outputs/out'
+prefix='/home/david/Documents/Planner/outputs/out'
 declare -a propagatedBuildDepFiles=('propagated-build-build-deps' 'propagated-native-build-inputs' 'propagated-build-target-deps' )
 propagatedBuildInputs=''
 export propagatedBuildInputs
