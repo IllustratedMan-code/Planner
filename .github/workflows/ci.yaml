@@ -1,6 +1,6 @@
 name: "CI"
 on:
-  # Run only when pushing to master branch
+  # Run only when pushing to main branch
   push:
     branches:
       - main
@@ -33,7 +33,7 @@ jobs:
           echo "::set-output name=docker-img::${DOCKERIMG}"
       - name: Upload docker image tgz
         uses: actions/upload-artifact@v2
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         with:
           name: docker-img
           retention-days: 1
@@ -43,7 +43,7 @@ jobs:
   docker:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     env:
       DOCKERTAG: latest
     steps:
@@ -63,7 +63,7 @@ jobs:
   website:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
       - name: Download docker image
