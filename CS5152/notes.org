@@ -93,3 +93,27 @@ What is the rank of A?
 + \(\frac{\text{universe}}{population}\) is all possible values
 + What can you learn about the population from the sample
 + populations have parameters (mean, variance)
++ variance = \(\sigma^2\)
++ \(M_x = E[x] = \int^\infty_{-\infty}x p(x) dx\)
++ \(\hat{M_x} = \frac{\sum x_i}{n}\) estimated value of mean (hat is estimate)
+* Geometric 2d
++ \(p_i \in \mathbb{R}^2\)
++ \(p_i^T = (x_i, y_i) = 1e_1 + 2e_2\) e is standard unit vector in respective dimension
++ \(p_i = \begin{bmatrix}x_i \\ y_i \end{bmatrix} \)
++ Plot-able points
++ Point == vector
++ Magnitude is norm is length = \(||v|| = \sqrt{x^2 + y^2 + ... \)
++ dot product = \(A\cdot B = AB^T = \begin{bmatrix}a_1 & a_2 \end{bmatrix}\begin{bmatrix} b_1 \\ b_2
+  \end{bmatrix} = a_1b_1 + a_2b_2\)
++ orthogonal vectors have a dot product of 0
++ 90 degree angle in 2 dimensions
++ \(\cos \theta = \frac{x \cdot y}{||x||||y||}\)
++ Distance = \(\sqrt{(x_1-x_2)^2 (y_1 - y_2)^2}\)
+* Correlation
++ \(\sigma_{xy} = \frac{\sum(x_i-\mu_x)(y_i-\mu_y)}{n}\) is the covariance
++ correlation is the standardized/normalized covariance
++ \(\rho_{xy} = \frac{\sigma_{xy}}{\sigma_x\sigma_y} = \frac{\sigma_{xy}}{\sqrt{\sigma^2_x \sigma^2_y}} =
+  \frac{\frac{\sum(x_i-\mu_x)(y_i-\mu_y)}{n}}{\sqrt{\frac{\sum(x-\mu_x)^2}{n} +
+  \frac{\sum(y-\mu_y)^2}{n}}} = \frac{x' \cdot y'}{||x'||||y'||} = \cos \theta\)
++ Center the data on the mean (subtraction) then find \(\cos \theta\) that is the correlation
+* Correlation and covariance matrices

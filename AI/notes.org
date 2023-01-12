@@ -1,0 +1,19 @@
+
+* AI characteristics
+** episodic
+** sequential
+** deterministic
+** stochastic
+** static
+environment does not change
+** dynamic
+environment does change
+** semi-dynamic
+agent changes
+** discrete
+bounded
+** continuous
+** single agent
+** multi-agent
+* Problem solving and search
++ converge upon the solution using estimation
