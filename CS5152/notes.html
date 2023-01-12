@@ -51,7 +51,7 @@
 
 
   
-  <link href='tailwind.css?instanceId=53104d55-801a-493e-bdfa-1607e20a1f57' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=ee8d5255-c095-44d5-8007-b6b842368486' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -345,6 +345,45 @@
       </svg>
     
   
+    <a class='hover:underline truncate' title='AI' href='AI.html'>
+      AI
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
     <a class='hover:underline truncate' title='CS4033' href='CS4033.html'>
       CS4033
     </a>
@@ -437,6 +476,43 @@
     TODO: Use <details> to toggle visibility?
   -->
   
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
+        </path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Data matrix' href='CS5152/chapter1.html'>
+      Data matrix
+    </a>
+    
+      
+        
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
     
       <!-- Variable bindings for this tree-->
   
@@ -867,8 +943,91 @@
           populations have parameters (mean, variance)
         </li>
       
+        <li>
+          variance = <span class='math inline'>\(\sigma^2\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(M_x = E[x] = \int^\infty_{-\infty}x p(x) dx\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\hat{M_x} = \frac{\sum x_i}{n}\)</span> estimated value of mean (hat is estimate)
+        </li>
+      
     </ul>
-  
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Geometric 2d</h1>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(p_i \in \mathbb{R}^2\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(p_i^T = (x_i, y_i) = 1e_1 + 2e_2\)</span> e is standard unit vector in respective dimension
+        </li>
+      
+        <li>
+          <span class='math inline'>\(p_i = \begin{bmatrix}x_i \\ y_i \end{bmatrix} \)</span>
+        </li>
+      
+        <li>
+          Plot-able points
+        </li>
+      
+        <li>
+          Point == vector
+        </li>
+      
+        <li>
+          Magnitude is norm is length = <span class='math inline'>\(||v|| = \sqrt{x^2 + y^2 + ... \)</span>
+        </li>
+      
+        <li>
+          dot product = <span class='math inline'>\(A\cdot B = AB^T = \begin{bmatrix}a_1 & a_2 \end{bmatrix}\begin{bmatrix} b_1 \\ b_2
+ \end{bmatrix} = a_1b_1 + a_2b_2\)</span>
+        </li>
+      
+        <li>
+          orthogonal vectors have a dot product of 0
+        </li>
+      
+        <li>
+          90 degree angle in 2 dimensions
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\cos \theta = \frac{x \cdot y}{||x||||y||}\)</span>
+        </li>
+      
+        <li>
+          Distance = <span class='math inline'>\(\sqrt{(x_1-x_2)^2 (y_1 - y_2)^2}\)</span>
+        </li>
+      
+    </ul>
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Correlation</h1>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(\sigma_{xy} = \frac{\sum(x_i-\mu_x)(y_i-\mu_y)}{n}\)</span> is the covariance
+        </li>
+      
+        <li>
+          correlation is the standardized/normalized covariance
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\rho_{xy} = \frac{\sigma_{xy}}{\sigma_x\sigma_y} = \frac{\sigma_{xy}}{\sqrt{\sigma^2_x \sigma^2_y}} =
+ \frac{\frac{\sum(x_i-\mu_x)(y_i-\mu_y)}{n}}{\sqrt{\frac{\sum(x-\mu_x)^2}{n} +
+ \frac{\sum(y-\mu_y)^2}{n}}} = \frac{x' \cdot y'}{||x'||||y'||} = \cos \theta\)</span>
+        </li>
+      
+        <li>
+          Center the data on the mean (subtraction) then find <span class='math inline'>\(\cos \theta\)</span> that is the correlation
+        </li>
+      
+    </ul>
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Correlation and covariance matrices</h1>
 
   <div class='flex items-center justify-center mt-2'>
   
