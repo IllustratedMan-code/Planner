@@ -23,7 +23,7 @@ template:
 
   # You can add your own variables here, like editBaseUrl.
   # See after-note.tpl to see where editBaseUrl gets used.
-  editBaseUrl: https://github.com/illustratedman-code.github.io/Planner/
+  editBaseUrl: https://github.com/IllustratedMan-code/Planner
 
   # Uncomment this to get neuron-style pages
   #name: /templates/layouts/note
