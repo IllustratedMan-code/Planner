@@ -87,3 +87,9 @@ What is the rank of A?
 + each dimension is \(\mathbb{R}\)
 + \(x_i = (x_{i1}, x_{i2}, ..., x_{id}\))
 + \(x_i \in \mathbb{R}^d\)
+* Probabilistic 1d
++ Random variable is a value that each member of population shares (age, hair
+  color, etc)
++ \(\frac{\text{universe}}{population}\) is all possible values
++ What can you learn about the population from the sample
++ populations have parameters (mean, variance)
