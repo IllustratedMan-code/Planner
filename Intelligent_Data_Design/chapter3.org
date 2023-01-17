@@ -1,0 +1,40 @@
+#+title: Categorical Attributes
+* Univariate Analysis
+** bernoulli variable
++ Binary variable
++ \(X(v) = \begin{cases} 1 \text{ if } v=a_1 \\ 0 \text{ if } v = a_2\end{cases}\)
++ PMF = \(P(X = x) = f(x) = \begin{cases}\rho_1 \text{ if } x = 1 \\ \rho_0 \text{ if
+  } x = 0\end{cases}\)
+*** Mean and Variance
+*** Sample mean and variance
+*** Binomial Distribution: Number of Occurrences
+*** Multivariate Bernoulli Variable
+*** Mean
+*** Sample Mean
+*** Covariance Matrix
+* Bivariate Analysis
+** mean
+** Sample mean
+** Sample Covariance Matrix
+** Attribute Dependence: Contingency Analysis
+*** Contingency Table
++ \(m_1 \times m_2\) matrix of observed counts \(n_{ij}\) for all pairs of values
++ \(n_{ij}\) is the sum of objects that fit both i and j categories (shortjk)
+*** \(X^2\) Statistic and Hypothesis Testing
++ expected frequency \(= e_{ij} = n \cdot \hat\rho_{ij} = n \cdot \hat\rho^1_i \cdot \hat\rho^2_j = n
+  \cdot \frac{n^1_in^2_j}{n}\)
++ \(X^2 = \displaystyle\sum\limits^{m_1}_{i=1}\displaystyle\sum\limits^{m_2}_{j=1}\frac{(n_{ij}-e_{ij})^2}{e_{ij}}\)
++ dof = q = S-t+1 = \((m_1-1)(m_2-1)\)
++ m = # of columns or # rows respectively
++ S = number of cells in contingency table (excluding margins)
++ t = cells in margins
++ on parameter is removed twice, so add 1 degree of freedom
++ \(f(x|q) = \frac{1}{2^{q/2}\Gamma(q/2)} x^{\frac{q}{2}-1}e^{-\frac{x}{2}\)
++ \(\Gamma(k>0) = \displaystyle\int\limits^\infty_0x^{k-1}e^{-x}dx\)
+*** p-value
++ if p-value < \(\alpha\) then reject null hypothesis
++ if \(X^2 > z\) where \(pvalue(z) = \alpha\) then reject null hypothesis \(H_0\)
+* Multivariate Analysis
+** Covariance matrix
+** Multiway Contingency Analysis
+*** \(X^2\) test

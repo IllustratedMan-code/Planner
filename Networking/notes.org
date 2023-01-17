@@ -54,3 +54,49 @@ Data is sent wirelessy to modem in home
 + guided media (cables, fiber, etc)
 + unguided media (wireless)
 + TP (twisted pair) cables (cat6): 10gbs
+** Packet queuing and loss
++ packets can be lost(dropped) if packets exceed memory of router
++ queuing delay: packets have higher latency depending on the length of the
+  queue
+** Two key network-core functions
++ local forwarding table
++ forwarding table is constructed by the router using "routing algorithms"
++ routing is a *global action*
++ forwarding table is a *local action*
+** Circuit switching
++ end-end resources allocated to *reserved* for "call" between source and
+  destination
++ restaurant reservation
++ Signal cannot share connection
+*** Fequency Division Multiplexing (FDM)
++ Divide signal into frequency bands
++ each user can utilize 1 band
++ Telephone networks (4KHz bands)
+*** Time Division Multiplexing (TDM)
++ Time is divided into "frames"
++ User gets full access to transmit data, but only during time slot in the frame.
+** Packet switching
++ More users can use network
++ Adjusts to intermittent data transmission better
+** Isp structure
++ Tier 1 isp is at the top
++ regional isp connects user to internet exchange point connects back to tier 1
++ Point of presence
++ \(d_{nodal} = d_{proc}+d_{queue}+d_{trans}+d_{prop}\)
+*** d_proc
++ <
+*** transmission delay
+\(d_{trans} = L/R\)
+*** Propegation
+Length/Rate
+*** Traffic intensity
++ R (bits per second)
++ L packet length (bits)
++ a: average packet arrival rate
++ La/R = traffic intensity
++ Average queueing delay \(= \infty\) when \(La/R=1\)
++ =traceroute= shows delay between packet transmission
+*** Throughput
++ Bits/time
++ Instantaneous: rate at given point in time
++ average: rate over longer period of time

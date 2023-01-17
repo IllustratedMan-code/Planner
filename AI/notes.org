@@ -17,3 +17,5 @@ bounded
 ** multi-agent
 * Problem solving and search
 + converge upon the solution using estimation
++ Decision tree
++ Start -> successor states

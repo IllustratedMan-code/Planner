@@ -1,0 +1,129 @@
+#+title: Lec 2: Classroom activity
+#+options: toc:nil
+#+date: 1/12/2022
+#+latex_header: \usepackage{minted}
+#+LATEX_HEADER: \usepackage[margin=0.5in]{geometry}
+* 1
+a. There are 5 columns (attributes), therefore the dimensionality is 5. There are 8 rows,
+   therefore the number of points is 8 (in 5 dimensional space).
+b. \(\begin{bmatrix} ID2 \\ 23 \\3.5 \\ \text{Masters} \\ \text{Mechanical}\end{bmatrix}\)
+c.
+   + Average GPA: numerical, continuous
+   + Level of Education: Categorical, ordinal
+   + Major: Categorical, nominal
+* 2
+** a
+1 dimensional scatter plot of points shows the geometric view.
+#+begin_src python :exports code
+import matplotlib.pyplot as plt
+d = [1, 5, 5, 2, 1, 6]
+fig, ax = plt.subplots()
+ax.scatter(d, [0] * len(d))
+ax.yaxis.set_visible(False)
+fig.savefig("2a.png")
+#+end_src
+
+#+attr_latex: :width 8cm
+[[file:2a.png]]
+** b
+\(\mu = \frac{1+5+5+2+1+6}{6} = \frac{10}{3}\), \(\sigma^2 =
+   \frac{(1-\frac{10}{3})^2+(5-\frac{10}{3})^2+(5-\frac{10}{3})^2+(2-\frac{10}{3})^2+(1-\frac{10}{3})^2+(6-\frac{10}{3})^2}{6-1}
+   = 1.58 \cdot 10^{31} = 5.067\)
+#+begin_src python
+u = 10/3
+return (((1-u)**2) + ((5-u)**2) + ((5-u)**2) + ((2-u)**2) + ((1-u)**2) + ((6-u)**2))/(6-1)
+#+end_src
+
+#+RESULTS:
+: 5.066666666666667
+
+
+** c
+Three points with lower x and higher y are clustered together as well as three
+points with higher x and higher y are clustered together.
+#+begin_src python
+import matplotlib.pyplot as plt
+d = {"score1":[1, 5, 5, 2, 1, 6], "score2":[4, 1, 0, 4, 5, 1]}
+fig, ax = plt.subplots()
+ax.scatter(d["score1"], d["score2"])
+fig.savefig("2c.png")
+#+end_src
+
+#+RESULTS:
+: None
+
+#+attr_latex: :width 8cm
+[[file:2c.png]]
+** d
+The formula for \(\cos \theta\) is \(\frac{a \cdot b}{||a||||b||}\) where a and b are
+vectors with the same dimesionality. Implementing this in python using the given points:
+#+begin_src python :exports both
+d = tuple(zip([1, 5, 5, 2, 1, 6],[4, 1, 0, 4, 5, 1]))
+import math
+
+def dot(a, b):
+    return a[0]*b[0] + a[1]*b[1]
+
+a = {}
+def length(a):
+    return math.sqrt((a[0]**2) + (a[1]**2))
+
+def cos(x, y):
+    return dot(d[x-1], d[y-1])/(length(d[x-1]) * length(d[y-1]))
+a["1,5"] = cos(1, 5)
+a["1,6"] = cos(1, 6)
+a["2,6"] = cos(2, 6)
+a["3,5"] = cos(3, 5)
+return list(a.items())
+
+#+end_src
+
+#+RESULTS:
+| 1,5 |  0.9988681377244377 |
+| 1,6 |    0.39872611141445 |
+| 2,6 |  0.9994801143396996 |
+| 3,5 | 0.19611613513818404 |
+** e
+#+begin_src python
+d = tuple(zip([1, 5, 5, 2, 1, 6],[4, 1, 0, 4, 5, 1]))
+import math
+def dist(p1, p2):
+   p1 = d[p1-1]
+   p2 = d[p2-1]
+   return math.sqrt(((p1[1]-p2[1])**2) + ((p1[0] - p2[0])**2))
+
+a = {}
+a["1,4"] = dist(1, 5)
+a["1,5"] = dist(1, 6)
+a["2,6"] = dist(2, 6)
+a["4,6"] = dist(4, 6)
+return list(a.items())
+
+#+end_src
+
+#+RESULTS:
+| 1,4 |               1.0 |
+| 1,5 | 5.830951894845301 |
+| 2,6 |               1.0 |
+| 4,6 |               5.0 |
+** f
+The values along the diagonal are all equal for both matrices.
+* 3
+a. 4.6 ( the third element of the mean vector )
+b. 3.58 ( along the diagonal on the second column )
+c. -3.67 ( 1st row, second column or vice versa )
+d. The negative covariance implies that the two variables (score 1 and 2) are
+   inversly related, they move away from each other. The magnitude is larger than the covariance between score 1
+   and 3 and 2 and 3, meaning that the relationship between 1 and 2 is more
+   significant than the other relationships (they affect each other more). This
+   means that the linear relationship is stronger.
+e. correlation forumula is \(\frac{\sigma_{xy}}{\sqrt{\sigma^2_x \sigma^2_y}} \rightarrow
+   \frac{-3.67}{\sqrt{4.22 \cdot 3.58}} = -0.944\)
+f. The negative sign indicates an inverse relationship. The magnitude is close
+   to one, indicating that the linear relationship between score 1 and 2 is strong.
+* Bonus
+Correlation is the normalized/standardized covariance. They both show the type of linear
+relationship with their sign (positive or negative) and they share the meaning
+of the sign. The significant difference between correlation and covariance is
+that the correlation is equal to the cosine of the angle between the two centered
+attribute vectors.

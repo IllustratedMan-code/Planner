@@ -1,0 +1,10 @@
+* Data mining
++ non-trivial extraction of implicit, previously unknown and potentially useful information.
++ exploration and analysis
+** Tasks
++ Regression
++ outlier detection
++ change detection
++ forecasting
++ classification
+

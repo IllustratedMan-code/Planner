@@ -1,0 +1,42 @@
+
+* Univariate Analysis
+** Empirical Cumulative Distribution Function
+** Inverse Cumulative Distribution Function
+** Empirical Probability Mass Function
+** Measures of Central Tendency
+*** Mean
+*** Sample Mean
+*** Sample mean is unbiased
+*** Robustness
+*** Median
+*** Mode
+** Measures of Dispersion
+*** Range
+*** Interquartile Range
+*** Sample Variance
+*** Geometric Interpretation of Sample Variance
+*** Sample Variance is biased but asymptomatically Unbiased
+* Bivariate Analysis
+** Empirical Joint Probablitiy Mass Function
+** Measures of Location and Dispersion
+*** Mean
+*** Variance
+*** Covariance
+*** Correlation
+*** Geometric Interpretation of Sample Sovariance and Correlation
+*** Covariance matrix
+* Multivariate analysis
+** Mean
+** Covariance Matrix
+** Covariance Matrix is positive semidefinite
++ \(a^T\Sigma a \ge 0\)
+** Total and Generalized Variance
+** Sample Covariance Matrix
+* Data Normalization
+** Range Normaliziation
+** Standard Score Normalization
+* Normal Distribution
+** Univariate Normal Distribution
+*** Probability Mass
+** Multivariate Normal Distribution
+*** Total and Generalized Variance

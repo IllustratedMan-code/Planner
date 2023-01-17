@@ -1,22 +1,10 @@
-* Data mining
-+ non-trivial extraction of implicit, previously unknown and potentially useful information.
-+ exploration and analysis
-** Tasks
-+ Regression
-+ outlier detection
-+ change detection
-+ forecasting
-+ classification
-
-* Review
-** Quiz
-*** 1
+* 1
 #+begin_quote
 You have a fair coin that you toss eight times. What is the probability that you’ll get no more than seven heads? 
 #+end_quote 
 + Probability is 1-chance of getting 8 heads
 + \(\frac{1}{2}^8 = \frac{1}{256}\)
-*** 2
+* 2
 #+begin_quote
 You have a fair coin that you toss eight times. What is the probability that
 you’ll get exactly seven heads?
@@ -24,13 +12,13 @@ you’ll get exactly seven heads?
 + 7 different ways to get exactly seven heads
 + \(\frac{1}{2}^8 = \frac{1}{256}\) chance for each way
 + \(7 \cdot \frac{1}{256} = \frac{7}{256}\)
-*** 3
+* 3
 #+begin_quote
 Let P(X) = 0.2, P(Y) = 0.4, P(X|Y) = 0.5. What is P(Y|X)? 
 #+end_quote
 + Bayes rule is \(P(A|B) = \frac{P(B|A)\cdot P(A)}{B}\)
 + \(P(Y|X) = \frac{0.5 \cdot 0.4}{0.2} = 1\)
-*** 4
+* 4
 #+begin_quote
 Let P(X) = 0.2, P(Y) = 0.4. If P(X|Y) = 0.2, what can you say about X & Y?
 #+end_quote
@@ -39,7 +27,7 @@ Let P(X) = 0.2, P(Y) = 0.4. If P(X|Y) = 0.2, what can you say about X & Y?
 + The probability of X is the same as the probability of X given Y
 + Y has no relationship to X
 + They are independent
-*** 5
+* 5
 #+begin_quote
 Which of these numbers cannot be a probability?
 
@@ -48,20 +36,20 @@ Which of these numbers cannot be a probability?
 Probabilities are given as a chance of an event occurring against some other
 condition. This means that probabilities cannot be greater than 1 or less than 0.
 + 1.5
-*** 6
+* 6
 #+begin_quote
 A die is rolled and a coin is tossed simultaneously. What is the probability of getting an even number on the die and a head on the coin?
 #+end_quote
 + Probability of even numbers on a 6 sided die is 1/2
 + probability of a head on a coin flip is 1/2
 + \(\frac{1}{2}^2 = \frac{1}{4}\)
-*** 7
+* 7
 #+begin_quote
 Let \(f(x) = x^2\) What is its integral and differential?
 #+end_quote
 + Power rule of integration \(\int x^2dx = \frac{x^3}{3} + c\) Where c is an unknown constant.
 + Power rule of derivation \(\frac{df}{dx}x^2 = 2x\).
-*** 8
+* 8
 #+begin_quote
 Let A be a 3x4 matrix of the following format
 
@@ -74,46 +62,4 @@ What is the rank of A?
   \end{bmatrix} \rightarrow \begin{bmatrix}1 & 0 & 1 \\ 0 & 1 & 0 \\ 0 & 0 & 0 \\ 0 & 0 &
   0 \end{bmatrix} \)
 + 2 non zero rows, rank=2
-*** 9
-
-* Exploring data analysis
-+ n points with d attributes
-+ n by d matrix
-+ \(x_{ij}\) value of ith object jth attribute
-+ values can be blank
-+ Superscript is dimension j
-+ Subscript is row i
-* Geometric view 1d
-+ each dimension is \(\mathbb{R}\)
-+ \(x_i = (x_{i1}, x_{i2}, ..., x_{id}\))
-+ \(x_i \in \mathbb{R}^d\)
-* Probabilistic 1d
-+ Random variable is a value that each member of population shares (age, hair
-  color, etc)
-+ \(\frac{\text{universe}}{population}\) is all possible values
-+ What can you learn about the population from the sample
-+ populations have parameters (mean, variance)
-+ variance = \(\sigma^2\)
-+ \(M_x = E[x] = \int^\infty_{-\infty}x p(x) dx\)
-+ \(\hat{M_x} = \frac{\sum x_i}{n}\) estimated value of mean (hat is estimate)
-* Geometric 2d
-+ \(p_i \in \mathbb{R}^2\)
-+ \(p_i^T = (x_i, y_i) = 1e_1 + 2e_2\) e is standard unit vector in respective dimension
-+ \(p_i = \begin{bmatrix}x_i \\ y_i \end{bmatrix} \)
-+ Plot-able points
-+ Point == vector
-+ Magnitude is norm is length = \(||v|| = \sqrt{x^2 + y^2 + ... \)
-+ dot product = \(A\cdot B = AB^T = \begin{bmatrix}a_1 & a_2 \end{bmatrix}\begin{bmatrix} b_1 \\ b_2
-  \end{bmatrix} = a_1b_1 + a_2b_2\)
-+ orthogonal vectors have a dot product of 0
-+ 90 degree angle in 2 dimensions
-+ \(\cos \theta = \frac{x \cdot y}{||x||||y||}\)
-+ Distance = \(\sqrt{(x_1-x_2)^2 (y_1 - y_2)^2}\)
-* Correlation
-+ \(\sigma_{xy} = \frac{\sum(x_i-\mu_x)(y_i-\mu_y)}{n}\) is the covariance
-+ correlation is the standardized/normalized covariance
-+ \(\rho_{xy} = \frac{\sigma_{xy}}{\sigma_x\sigma_y} = \frac{\sigma_{xy}}{\sqrt{\sigma^2_x \sigma^2_y}} =
-  \frac{\frac{\sum(x_i-\mu_x)(y_i-\mu_y)}{n}}{\sqrt{\frac{\sum(x-\mu_x)^2}{n} +
-  \frac{\sum(y-\mu_y)^2}{n}}} = \frac{x' \cdot y'}{||x'||||y'||} = \cos \theta\)
-+ Center the data on the mean (subtraction) then find \(\cos \theta\) that is the correlation
-* Correlation and covariance matrices
+* 9
