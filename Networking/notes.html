@@ -51,7 +51,7 @@
 
 
   
-  <link href='tailwind.css?instanceId=63294bfa-853a-4837-af2b-df84101ab49f' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=c5b5434e-d566-4866-84bb-c1bef8be09e6' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -428,8 +428,8 @@
     </a>
     
       
-        <span class='text-gray-300' title='2 children inside'>
-          2
+        <span class='text-gray-300' title='9 children inside'>
+          9
         </span>
       
     
@@ -826,6 +826,174 @@
       
         <li>
           TP (twisted pair) cables (cat6): 10gbs
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Packet queuing and loss</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          packets can be lost(dropped) if packets exceed memory of router
+        </li>
+      
+        <li>
+          queuing delay: packets have higher latency depending on the length of the queue
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Two key network-core functions</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          local forwarding table
+        </li>
+      
+        <li>
+          forwarding table is constructed by the router using "routing algorithms"
+        </li>
+      
+        <li>
+          routing is a <strong>global action</strong>
+        </li>
+      
+        <li>
+          forwarding table is a <strong>local action</strong>
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Circuit switching</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          end-end resources allocated to <strong>reserved</strong> for "call" between source and destination
+        </li>
+      
+        <li>
+          restaurant reservation
+        </li>
+      
+        <li>
+          Signal cannot share connection
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Fequency Division Multiplexing (FDM)</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Divide signal into frequency bands
+        </li>
+      
+        <li>
+          each user can utilize 1 band
+        </li>
+      
+        <li>
+          Telephone networks (4KHz bands)
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Time Division Multiplexing (TDM)</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Time is divided into "frames"
+        </li>
+      
+        <li>
+          User gets full access to transmit data, but only during time slot in the frame.
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Packet switching</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          More users can use network
+        </li>
+      
+        <li>
+          Adjusts to intermittent data transmission better
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Isp structure</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Tier 1 isp is at the top
+        </li>
+      
+        <li>
+          regional isp connects user to internet exchange point connects back to tier 1
+        </li>
+      
+        <li>
+          Point of presence
+        </li>
+      
+        <li>
+          <span class='math inline'>\(d_{nodal} = d_{proc}+d_{queue}+d_{trans}+d_{prop}\)</span>
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>d<sub>proc</sub></h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          &lt;
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>transmission delay</h3>
+    <p class='mb-3'>
+      <span class='math inline'>\(d_{trans} = L/R\)</span>
+    </p>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Propegation</h3>
+    <p class='mb-3'>
+      Length/Rate
+    </p>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Traffic intensity</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          R (bits per second)
+        </li>
+      
+        <li>
+          L packet length (bits)
+        </li>
+      
+        <li>
+          a: average packet arrival rate
+        </li>
+      
+        <li>
+          La/R = traffic intensity
+        </li>
+      
+        <li>
+          Average queueing delay <span class='math inline'>\(= \infty\)</span> when <span class='math inline'>\(La/R=1\)</span>
+        </li>
+      
+        <li>
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>traceroute</code> shows delay between packet transmission
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Throughput</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Bits/time
+        </li>
+      
+        <li>
+          Instantaneous: rate at given point in time
+        </li>
+      
+        <li>
+          average: rate over longer period of time
         </li>
       
     </ul>
