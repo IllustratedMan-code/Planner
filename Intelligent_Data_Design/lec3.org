@@ -5,8 +5,9 @@
 + \(\sum = \begin{pmatrix}{\sigma^2_x && \sigma_{xy} \\ \sigma_{xy} && \sigma_{y^2}\end{pmatrix}\)
 + \(\rho_{xy} = \frac{\sigma_{xy}}{\sigma_x\sigma_y}\)
 + \(\rho_{xx} = 1\)
-+ \(det(\Sigma) \ge 1\)
++ \(det(\Sigma) \ge 0\)
 + positive semi definite matrix
++ Symmetric \(\Sigma^T = \Sigma\)
 * Covariance matrix in higher dimensions
 + h points in \(\mathbb{R}^d\)
 + n by d matrix

@@ -54,7 +54,7 @@ in the matrix.
 ** Cumulative Distribution Function
 + CDF \(F:\mathbb{R} \rightarrow [0,1]\)
 + \(F(x) = P(X\le x)\) for all \(-\infty < x < \infty\)
-+ Discrete CDF:  \(F(x) = P(X \le x) = \displaystyle\sum\limits_{u\lex}f(u)\)
++ Discrete CDF:  \(F(x) = P(X \le x) = \displaystyle{\sum\limits_{u\le x}}f(u)\)
 + Continuous CDF: \(F(x) = P(X \le x) = \displaystyle\int\limits^x_{-\infty}f(u)du\)
 ** Bivariate Random Variables
 + Analyze two attributes together as a bivariate random variable
@@ -63,8 +63,7 @@ in the matrix.
 + Assigns each outcome a pair of real numbers, a 2 dimensional vector
   \(\begin{pmatrix}x_1 \\ x_2 \end{pmatrix} \in \mathbb{R}^2\)
 ** Joint Probability Density Function
-+ \(\displaystyle\sum\limits_xf(x) =
-\dislaystyle\sum\limits_{x_1}\displaystyle\sum\limits_{x_2} f(x_1, x_2) = 1\)
++ \(\displaystyle\sum\limits_xf(x) = \dislaystyle\sum\limits_{x_1}\displaystyle\sum\limits_{x_2} f(x_1, x_2) = 1\)
 * Joint Probability Density Function
 + \(P(\boldsymbol{x} \in W) = \displaystyle\int\displaystyle\int\limits_{x \in W}f(x)dx =
   \dispalystyle\int\displaystyle\int\limits_{(x_1,x_2)^T\in W}f(x_1,x_2)dx_1dx_2\)

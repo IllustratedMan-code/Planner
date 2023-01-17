@@ -24,7 +24,7 @@
 + expected frequency \(= e_{ij} = n \cdot \hat\rho_{ij} = n \cdot \hat\rho^1_i \cdot \hat\rho^2_j = n
   \cdot \frac{n^1_in^2_j}{n}\)
 + \(X^2 = \displaystyle\sum\limits^{m_1}_{i=1}\displaystyle\sum\limits^{m_2}_{j=1}\frac{(n_{ij}-e_{ij})^2}{e_{ij}}\)
-+ dof = q = S-t+1 = \((m_1-1)(m_2-1)\)
++ degrees of freedom = dof = q = S-t+1 = \((m_1-1)(m_2-1)\)
 + m = # of columns or # rows respectively
 + S = number of cells in contingency table (excluding margins)
 + t = cells in margins

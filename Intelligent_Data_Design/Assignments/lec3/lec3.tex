@@ -1,0 +1,145 @@
+% Created 2023-01-17 Tue 15:23
+% Intended LaTeX compiler: lualatex
+\documentclass[11pt]{article}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage[margin=0.5in]{geometry}
+\author{David Lewis}
+\date{1/17/2022}
+\title{Lec 3: Classroom activity}
+\hypersetup{
+ pdfauthor={David Lewis},
+ pdftitle={Lec 3: Classroom activity},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.6)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\section*{1.}
+\label{sec:org1b8e936}
+Matrices need to be symmetric \textbf{and} positive semi-definite.
+\subsection*{a.}
+\label{sec:org54d6a9b}
+\begin{itemize}
+\item \(\begin{pmatrix}2 && 3 \\ 3 && 3 \end{pmatrix}^T = \begin{pmatrix}2 && 3 \\ 3 && 3 \end{pmatrix}\)
+\item This matrix is symmetric
+\item \(\begin{vmatrix}2 && 3 \\3 && 3\end{vmatrix} = 2 \times 3 - 3 \times 3 < 0\)
+\item Determinante is less than 0, so matrix is not positive semi-definite
+\item Matrix is not symmetric \textbf{and} semi-definite, therefore it is not a covariance matrix
+\end{itemize}
+\subsection*{b.}
+\label{sec:orge5ad79d}
+\begin{itemize}
+\item \(\begin{pmatrix}7 && 6 \\ 5 && 7 \end{pmatrix}^T = \begin{pmatrix}7 && 5 \\ 6 && 7 \end{pmatrix}\)
+\item This matrix is not symmetric
+\item Matrix is not symmetric \textbf{and} semi-definite, therefore it is not a covariance matrix
+\end{itemize}
+\section*{2.}
+\label{sec:orgbae3692}
+\begin{itemize}
+\item Distance = \(\sqrt{(x_1-y_1)^2 + (x_2-y_2)^2}\)
+\end{itemize}
+\begin{minted}[fontsize=\scriptsize]{python}
+import math
+def dist(x, y):
+    return math.sqrt(((x[0]-y[0])**2) + ((x[1]-y[1])**2))
+u = (2, 3)
+results = {}
+results["2, 5"] = dist(u, (2,5))
+results["-5, 3"] = dist(u, (-5,3))
+results["-2, 0"] = dist(u, (-2,0))
+
+return list(results.items())
+\end{minted}
+
+
+\begin{center}
+\begin{tabular}{lrr}
+point & distance from mean & Rank (decreasing probability density)\\
+\hline
+2, 5 & 2.0 & 1\\
+-2, 0 & 5.0 & 2\\
+-5, 3 & 7.0 & 3\\
+\end{tabular}
+\end{center}
+\section*{3.}
+\label{sec:org10f5d78}
+\begin{itemize}
+\item 4 variables: p, q, r, s
+\item \(\begin{pmatrix} \sigma_{p}^2 && \sigma_{pq} && \sigma_{pr} && \sigma_{ps} \\ \sigma_{qp}&& \sigma_{q}^2 &&
+  \sigma_{qr} && \sigma_{qs} \\  \sigma_{rp} && \sigma_{rq} && \sigma_{r}^2 && \sigma_{rs}  \\  \sigma_{sp} && \sigma_{sq} && \sigma_{sr} && \sigma_{s}^2\end{pmatrix}\)
+\item Covariance is defined as: \(\sigma_{xy} = \frac{\sum(x_i-\mu_x)(y_i-\mu_y)}{n}\)
+\end{itemize}
+\section*{4.}
+\label{sec:org1cc9540}
+\subsection*{1.}
+\label{sec:org7b523ab}
+Diagram 1 has a positive covariance (up from left to right) so the appropriate
+covariance matrix is: \(\begin{bmatrix}8 && 7 \\ 7 && 7\end{bmatrix}\)
+\subsection*{2.}
+\label{sec:org8d25f31}
+Diagram 2 has a negative covariance (down from left to right) so the appropriate
+covariance matrix is:
+\(\begin{bmatrix}7 && -5 \\
+                -5 && 6 \end{bmatrix}\)
+\subsection*{3.}
+\label{sec:org16d64bd}
+The covariance is 0 (no slope in distribution) and the points are distributed more
+along the x axis than the y axis, meaning the x variance is higher than
+the y variance. The appropriate matrix is therefore:
+\(\begin{bmatrix} 2 && 0 \\ 0 && 1 \end{bmatrix}\)
+\subsection*{4.}
+\label{sec:orgf35e578}
+This \emph{could} be solved by process of elimination, but the covariance is 0 (no
+slope in distribution), and the points are distributed more
+along the y axis than along the x axis, meaning that the y variance is higher than
+the x variance. The appropriate matrix is therefore:
+\(\begin{bmatrix}1 && 0 \\ 0 && 4 \end{bmatrix}\)
+\section*{5.}
+\label{sec:orgf517ce1}
+\subsection*{a.}
+\label{sec:org85344b0}
+Red is the mode (the most common value)
+\subsection*{b.}
+\label{sec:orge03ec8a}
+\begin{center}
+\begin{tabular}{l|rrr|r}
+ & Red & Black & White & Total\\
+\hline
+Nissan & 2 & 0 & 0 & 2\\
+Toyota & 1 & 1 & 1 & 3\\
+Honda & 1 & 1 & 2 & 4\\
+\hline
+Total & 4 & 2 & 3 & 9\\
+\end{tabular}
+\end{center}
+\subsection*{c.}
+\label{sec:org9a552b2}
+\begin{itemize}
+\item \(\rho(\text{Manufacturer}=\text{honda}) = \frac{4}{9}\)
+\item \(\rho(\text{Color}=\text{white}) = \frac{3}{9} = \frac{1}{3}\)
+\end{itemize}
+\subsection*{d.}
+\label{sec:orgc879e23}
+\begin{itemize}
+\item Expected number of points (ENP) = total * probability if variables are
+independent (which is 1/3 in this case)
+\item ENP(Manufacturer = Honda) = \(9 \cdot \frac{1}{3} = 3\)
+\item ENP(Color=White) = \(9 \cdot \frac{1}{3} = 3\)
+\end{itemize}
+\subsection*{e.}
+\label{sec:orgc2171d5}
+\begin{itemize}
+\item degrees of freedom = q = \((m_1-1)(m_0-1) = (3-1)^2 = 4\)
+\end{itemize}
+\end{document}
