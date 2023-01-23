@@ -1,0 +1,13 @@
+
+* Dimensionality reduction
+* PCA (Principal component analysis)
+** Best line approximation
+** Minimum squared error
+** Best 2-dimensional approximation
+** Total Projected Variance
+** Mean squared error
+** Best r-dimensional approximation
+*** Toal projected variance
+*** Mean squared error
+*** total variance
+*** Choosing the dimensionality

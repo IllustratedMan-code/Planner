@@ -1,0 +1,37 @@
+
+* High dimensional space
++ potentially millions of dimensions
++
+** Hypercube
++ higher dimensional cube
++ equal width in every dimensions
++ line -> square -> cube -> hypercube
++ unit hypercube is \(\epsilon\) in each dimension where \(\epsilon\) is the unit vector
++ hyper rectangle has unequal length in each dimension
++ \(H_d(\ell) = \{(x_1, x_2 ...) | 0 \le x \le \ell\}\)
+*** Volume
++ \(V(H_d(\ell)) = \ell^d\)
++ Unit hypercube has volume 1
+** hypersphere
++ equal radius in each dimension
++ point -> line -> circle -> sphere
++ hollow
++ \(S_d(\gamma) = \{(x_1 ...) | \sum(s_i)^2 = \gamma^2\}\)
++ hyperball is not hollow
++ \(B_d(\gamma) = \{ \vec x | \|x\|^2 \le \gamma^2\}\)
++ Volume of hyperball and hypersphere are the same
++ \(V(S_d(r)) = \int\limits^r_02\pi r dr = k_d r^d\)
++ Volume of hypersphere goes to 0 as dimensionality increases
++ \(\frac{2 \pi e}{d}^{d/2} \frac{1}{\sqrt{\pi d}}r^d\)
++ All points are in the corners
++ Diameter = \(1 - (1-\epsilon/r)^d\)
+** minimum bounding
++ rectangle
++ circle
+** Multidimensional gaussiens
+*** Density
++ Points around the mean
++ \(f(x|\vec0,I) = \frac{1}{\sqrt{2\pi}^d}e^{-\frac{x^T x}{2} \)
++ Peak density is \(1/\sqrt{2\pi}\)
++ \(f(0)\) is the peak density
++ as \(d \rightarrow \infty \quad p (\frac{f(x)}{f(0)} \le \infty) = 0\)

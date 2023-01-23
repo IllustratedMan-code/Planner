@@ -1,0 +1,122 @@
+
+* Graph concepts
+** Graphs
++ \(G = (V,E)\)
++ V = verticies, nodes
++ \(E \subseteq V \times V\) = unordered pairs of verticies = edges
++ an edge from a node to itself is a loop
++ a loop-less graph is a simple graph
++ edge is incident with its nodes
++ digraph uses ordered pairs of vertices for edges
+** Subgraphs
++ \(V_H \subseteq V \land E_H \subseteq E\)
++ A subgraph has vertices and edges that are in a graph
+** Degree
++ degree of node is the number of edges incident with it
++ Probability mass function = probability that node has degree k = \(f(k) = P(X=k) = \frac{N_k}{n} \)
++ \(N_k\) is the number of nodes with degree k, n is total number of nodes
+** Path and Distance
++ walk is an ordered sequence of vertices, an edge between every pair
++ Number of edges is the distance (number of hops)
++ trail: distinct edges
++ path: distinct vertices
++ closed path with length > 3 is a cycle
++ Minimum length path is the "shortest path"
++ minimum distance is called the distance \(d(x,y)\)
++ if no path exists between two vertices, distance is \(d(x,y) = \infty\)
+** Connectedness
++ nodes are connected if path exists between them
++ graphs are connects if path exists between all pairs of vertices
++ component is the maximal (biggest) connected subgraph. If graph has one
+  component it is connected, other it is disconnected
++ Directed graph is strongly connected if ordered path exists between all vertices
+** Adjacency Matrix
++ graph can be represented as an n x n symmetric binary adjacency matrix
++ \(A(i,j) = \begin{cases}1 \text{ if $v_i$ is adjacent to $v_j$} \\ 0
+  \text{ otherwise }\end{cases}}\)
++ Directed graph is not symmetric
++ weighted graph = \(A(i,j) = \begin{cases}w_{ij} \text{ if $v_i$ is adjacent to $v_j$} \\ 0
+  \text{ otherwise }\end{cases}}\)
++ threshold can converted weighted graph to binary graph
+** Graphs from Data Matrix
++ Graph is created from data where edges have weight \(w_{ij} = sim(x_i,x_j)\)
++ \(sim(x_i,x_j) = \) similarity between \(x_i\) and \(x_j\)
++ \(sim(x_i,x_j = \exp \left\{-\frac{\| x_i-x_j\|}{2\sigma^2}\right\}\)
++ \(\sigma\) is the spread parameter
+* Topological Attributes
+** Degree
++ \(d_i = \sum\limits_jA(i,j)\)
++ average degree: \(\mu_d = \frac{\sum_jd_i}{n}\)
++ Same for indegree and outdegree
+** Average Path Length
++ \(\mu_L = \frac{\sum_{i}\sum_{j>i}d(v_i, v_j)}{\begin{pmatrix}n \\2 \end{pmatrix}} =
+  \frac{2}{n(n-1)}\sum\limits_i\sum\limits_{j>i}d(v_i, v_j)\)
+** Eccentricity
++ Maximum distance between two nodes
++ \(e(v_i) = \max\limits_j\{d(v_i, v_j)\}\)
+** Radius and Diameter
++ radius is the minimum eccentricity of a graph
++ \(r(G) = \min\limits_i\{e(v_i)\} = \min\limits_i\left\{\max\limits_j\{d(v_i, v_j)\}\right\}\)
++ Diameter is the maximum eccentricity in a graph
++ \(d(G) = \max\limits_i\{e(v_i)\} = \max\limits_{i,j}\{d(v_i, v_j)\}\)
+** Clustering Coefficient
++ measure of the density of edges neighboring a vertex
++ \(C(v_i) = \frac{\text{no. of edges in $G_i$}}{\text{maximum number of edges in
+  $G_i$}} = \frac{m_i}{\left(\begin{smallmatrix}n_i \\ 2
+  \end{smallmatrix}\right)} = \frac{2 \cdot m_i}{n_i(n_i-1)}\)
++ The clustering coefficient of a graph is the average clustering coefficient
+  over all of the nodes
+** Efficiency
++ defined as \(\frac{1}{d(v_i,v_j)}\)
++ if not connected, \(d(v_i, v_j) = \infty\) and the efficiency is 0
++ Efficiency of a graph is the average efficiency over all pairs of nodes.
+* Centrality Analysis
+** Basic Centralities
+*** Degree Centrality
++ higher the degree, more important or central the vertex is
+*** Eccentricity Centrality
++ Less eccentric, the more central the vertex is
++ \(c(v_i) = \frac{1}{e(v_i)\)
+*** Closeness Centrality
++ sum of all the distances from a node, higher the distance, less central
++ \(c(v_i) = \frac{1}{\sum_jd(v_i, v_j)\)
++ node with the smallest total distance (most central) is the median node
+*** Betweenness Centrality
++ how many shortest paths between all pairs of nodes include the vertex
++ \(\gamma_{jk}(v_i) = \frac{n_{jk}(v_i)}{n_{jk}\)
++ betweeeness centrality = \(c(v_i) = \displaystyle\sum\limits_{j\ne i}
+  \displaystyle\sum\limits_{\begin{smallmatrix}k \ne i  \\ k > j\end{smallmatrix}} \gamma_{jk}\)
+* Web Centralities
+*** Prestige
++ eigenvector centrality
++ more links to node, higher the centrality
++ also depends on the prestige of linked nodes
+*** PageRank
++ webpages(Nodes) connected by hyperlinks(edges)
++ Rank is assigned based on probability of landing on a page
+*** Normalized Prestige
+*** Hub and Authority Scores
+
+*** Random Jumps
+** Graph Models
+*** Small World Property
+*** Scale-free Property
+*** Clustering Effect
+*** Average Degree
+*** Degree Distribution
+*** Clustering Coefficient
+*** Diameter
+** Watts-Strogatz Small-world Graph Model
+*** Clustering COefficient and Diameter of Regular Graph
+*** Random Perturbation of Regular Graph edge rewiring
+*** edge shortcuts
+*** Properties of Watts-Strogatz Graphs Degree Distribution
+*** Clustering Coefficient
+*** Diameter
+** Barabasi-Albert Scale-free Model
+*** Initilization
+*** Growth and Peferential Attachment
+*** Degree Distribution
+*** Discrete Approach
+*** Continous Approach
+*** Clustering Coefficient and Diameter

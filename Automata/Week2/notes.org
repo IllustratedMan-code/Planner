@@ -1,0 +1,71 @@
+* Notes
++ functions are overloaded depending on the context
++ \(\lambda \) is not a symbol, it is a string
+** Excercises
++ \(\{01^3, 1^30\} \circ \{1^20^2, 0^21^2\} = \{01111100, 01110011, 1111100, 11100011\}\)
++ \(\begin{Bmatrix}01^3 \\ 1^30 \end{Bmatrix} \circ \begin{Bmatrix} 1^20^2 \\ 0^2
+  1^2\end{Bmatrix} = \begin{Bmatrix}01^50^2 \\ 01^30^21^2 \\ 1^301^20^2 \\ 1^30^31^2\end{Bmatrix}\)
+*** klein star
++ \(\{0, 11\}^* = \{\lambda, 0, 11, 011, 110, 011110, 110011, 01^401^2\}\)
++ all binary strings that contain even length runs of 1
++ \(\{11, 111\}^* = \{\lambda, 1^2, 1^3, 1^5, 1^{10}\}\)
++ All binary strings containing 1s except for the binary string "1"
+*** Grammars
+**** simple grammar
++ V = \(\{s\}\)
++ T = \(\{0,1\}\)
++ S = s
++ p = \(\begin{Bmatrix}s \rightarrow 0s0 \\ s \rightarrow 1s1 \\s \rightarrow \lambda \end{Bmatrix}\)
++ \(s \Rightarrow \lambda\)
++ Sentential form is any intermediate string that contains variables or only
+  terminal symbols
++ All binary palindromes (even length)
+
+* Alphabet
++ Finite set of symbols (letters) to define a language
++ Alphabet = \(\Sigma\)
+* Strings
++ Finite (ordered) sequence of letters in alphabet
++ Also known as words
++ \(\Sigma^\ell\) is the set of all strings in the alphabet of length \(\ell\)
++ Set of all strings is the kleene-* closure or star closure \(\Sigma^*\)
++ Set of all non-empty strings is the positive closure \(\Sigma^+\)
++ Empty string is \(\lambda\)
+* Concatenation
++ \(u \circ v = uv \) is string concatenation
+* Reverse
++ \(s^R\) is the reversed string
++ length is always the same
+* Language
++ any subset of \(\Sigma^*\)
++ Any string in the language is a sentence
+* Set operations
++ Union,intersection, subtraction are all valid
++ Compliment language is the set of all strings in alphabet not in the language
+  \(\overline L = \Sigma^* \setminus L\)
++ Reverse language is \(L^R = \{s^R : s \in L\}\)
++ Concatenated languages is \(L_1L_2 = L_1 \circ \L_2 = \{s_1s_2 : s_1 \in L_1, s_2 \in L_2\}\)
++ \(L^i\) is \(L\) concatenated with itself i times
++ Star-closure of language is \(L^* = L^0 \cup L \cup L^2 \cup ...\)
++ \(L^0 = \{\lambda\}\)
++ positive closure = \(L^+ = L \cup L^2 \cup ...\)
+* Grammar
++ defines the structure of the language
++ \(G = (V, T, S, P\)
++ V is a finite set of variables
++ T is a finite set of terminal symbols (Not on the left side of a  production rule)
++ \(S \in V\) is the start variable
++ P is the finite set of productions (rules)
++ \(u \rightarrow v\) where u can be replaced by v
+** Derivation
++ \(u, v \in (V \cup T)^*\)
++ \(u \Rightarrow v\) 1 production rule is needed to transform u into v (derives in one step)
++ \(u \overset{*}\Rightarrow v\) finite number of production rules to transform u into v
++ \(S \rightarrow aSa\) then \(S \overset{*}\Rightarrow a^nSa^n\)
++ sentential form is a string that has been derived
++ Language generated from grammar L(G) is all sentential forms that are also
+  terminal symbols \(T^*\)
+* Automata
++ Abstract model of digital computer
++ input tape (input alphabet strings)
++ movable reading head (feeds input tape into automation)

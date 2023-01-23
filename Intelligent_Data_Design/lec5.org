@@ -1,0 +1,15 @@
+
+* Dimensionality reduction
++ high dimensional space analysis is hard
+** Feature selector
++ Select few dimensions of interest
++ Feature == dimension
++ Create new feature from several features
+** Prinicpal component analysis (PCA)
++ Remove linearly dependent dimensions from data
++ Gives intrinsic dimensionality
++ Linear combination of multiple dimensions
++ Maximize variance
++ minimize the sum of squared errors (sse)
++ mean point is a point that minimizes the sum of squared errors
++ Line that maximizes variance and minimizs the sum of squard errors

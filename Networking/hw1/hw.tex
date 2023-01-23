@@ -1,0 +1,129 @@
+% Created 2023-01-22 Sun 13:47
+% Intended LaTeX compiler: lualatex
+\documentclass[11pt]{article}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[margin=0.5in]{geometry}
+\author{David Lewis}
+\date{1/22/2023}
+\title{Homework 1}
+\hypersetup{
+ pdfauthor={David Lewis},
+ pdftitle={Homework 1},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.6)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\section*{1.}
+\label{sec:orgc364e5d}
+\begin{enumerate}
+\item (False) Cable based networks send signals along shared cables, but DSL does not.
+\item (False) Fiber leaving the central office is shared, goes into splitter which
+has a dedicated fiber for each home (about 100).
+\item (False) Many ISPs can only be reached through a tier 1 ISP, so content
+providers must pay tier 1 ISPs to access them.
+\end{enumerate}
+
+\section*{2.}
+\label{sec:org98b616d}
+\subsection*{a.}
+\label{sec:orgceb741f}
+16, consider if switch A made 4 connections with switch B, B made 4 connections
+with C, C made 4 connections with D, and D made 4 connections with A.
+\subsection*{b.}
+\label{sec:org1f03852}
+8, 4 connections between A and B or A and D, 4 connections between B and C or D
+and C.
+\subsection*{c.}
+\label{sec:org41833c4}
+yes, route 2 connections from A to C through B and 2 through D, route 2
+connections from B to D through A and 2 through C.
+\section*{3}
+\label{sec:orgdcfa2b0}
+\subsection*{a.}
+\label{sec:orgf653fc7}
+When using store-and-forward packet switching, the entire packet must arrive at
+each switch before it can be sent to next one, since the message is not being
+split into multiple packets, the entire message must arrive before it can be
+sent to the next link. There are 2 links in the chain, so 3 ``hops'' must occur.
+
+Depending on whether Megabit s or binary megabits (mebibits) are used, the time
+required will either be \((7.5 \cdot 10^6 / 1 \cdot 10^6) \cdot 3 \text{hops} = 22.5 \text{s}\) or \((7.5 \cdot 10^6
+/ 1024^2) \cdot 2 \text{hops}  = 21.45 \text{s}\) respectively.
+\subsection*{b.}
+\label{sec:org41a3917}
+\begin{itemize}
+\item Decimal megabits will be used for this question
+\item Each packet is \(\frac{7.5 \cdot 10^6}{2500} = 3000\text{bits/packet}\).
+\item First packet arrives in \((3000bits/1 \cdot 10^6) \cdot 3 \text{hops} = 0.009 \text{s}\)
+\item After the first packet arrives, each packet will arrive in 0.003 seconds
+\item Total time is \(0.009\text{s} + 2500 \cdot 0.003 = 7.509 \text{s}\)
+\end{itemize}
+
+\section*{4}
+\label{sec:org394f764}
+\subsection*{a.}
+\label{sec:org7bfdf1a}
+\begin{itemize}
+\item \(d_{prop} = \frac{20000000 \text{m}}{2.5 \cdot 10^8 \text{m/s}} = 0.08 \text{s}\)
+\item \(R \cdot d_{prop} = 2 \text{Mb/s} \cdot 0.08 \text{s} = 0.16 \text{Mb}\)
+\end{itemize}
+\subsection*{b.}
+\label{sec:org77cae34}
+The maximum number of bits that will be in the link is the same as the
+bandwidth-delay product, so \(0.16 \text{Mb} = 0.16 \cdot 10^6 \text{bits}\) or
+\(0.16 \cdot 1024^2 = 167772 \text{bits}\)  depending if you are using the new-ish
+decimal megabit or binary megabit(mebibit)
+
+\subsection*{c.}
+\label{sec:orgc758d0e}
+The bandwith delay product is the time it takes to propagate through the
+link for every bit multiplied by the number of bits that can travel
+through the link per time. This is essentially equivalent to filling up the
+link until it can take no more bits, then counting all of the bits.
+\subsection*{d.}
+\label{sec:org0682be8}
+Depending on whether one is using megabits or mebibits, the length of a bit in
+the link is \(\frac{20000000 \text{m}}{1.6 \cdot 10^5\text{bits}} = 125
+\text{m/bit}\) or \(\frac{20000000 \text{m}}{167772\text{bits}} = 119.2
+\text{m/bit}\). A football field is approxamately 91.44 meters, so the bit is
+longer in either case.
+\subsection*{e.}
+\label{sec:org0d3afbf}
+\begin{itemize}
+\item \(\text{bit length} = \frac{\text{m}}{R \cdot \frac{\text{m}}{\text{s}}} = \frac{s}{R}\)
+\end{itemize}
+
+\section*{5}
+\label{sec:orge041000}
+\begin{itemize}
+\item One advantage is the ability to change the implementation of a service without
+affecting the other components. This is really useful for determining the
+cause of and fixing a problem without affecting the rest of the system. It
+also allows for more flexibility, as the way an operation occurs could be
+changed (copper to fiber).
+\item Another advantage of layering is the structure it provides. Layering is
+conducive to discussion of a well-defined, specific part of a large and
+complex system, making communication and collaboration much simpler. This
+reduces the amount of prerequisite knowledge someone might need to contribute
+to a project (I wouldn't need to know how the entire system worked, only
+the part I was responsible for).
+\item One disadvantage is that one layer may duplicate a lower-layer functionality.
+This might mean that error recovery happens twice (double the processing time)
+without any benefit.
+\item Another disadvantage is that functionality on one layer may need information
+from another layer, which prevents layers from being separate. Maybe two
+layers need the current timestamp to function correctly, which if fixed, would
+destroy or complicate the layer structure.
+\end{itemize}
+\end{document}

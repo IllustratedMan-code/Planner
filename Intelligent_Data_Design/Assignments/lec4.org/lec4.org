@@ -1,0 +1,43 @@
+#+title: Lec 4: Classroom activity
+#+options: toc:nil num:nil
+#+date: 1/17/2022
+#+LATEX_HEADER: \usepackage[margin=0.5in]{geometry}
+* 1.
+** a.
+4 * 0.1^2 = 0.04 = 4% = 1/25
+** b.
+\(2^d \cdot \epsilon^d\) where \(\epsilon \le 0.1\)
+** c.
++ \((2 \cdot \epsilon) \le 0.2\)
++ \((2\epsilon)^d \rightarrow 0\) as d trends toward \(\infty\)
+** d.
++ \(V = 1 - (1-\epsilon)^d\)
++ volume of unit hypercube is 1
++ volume of inner hypercube is \((1-\epsilon)^d\)
++ volume of inner cube subtracted from outer cube is the volume of the shell
+** e.
++ \(1 - (1-\epsilon)^d \rightarrow 0\) as d trends toward \(\infty\) because \(\epsilon \le 0.1\)
+* 2.
+** a.
+#+attr_latex: :width 2in
+[[file:2a.png]]
+** b.
++ Diagonal: \((0,0,0)\rightarrow (1, 1, 1)\)
++ Anti-diagonal: \((1, 1, 0) \rightarrow (0,0,1)\)
+** c.
++ \(\theta = \arccos(\frac{(v_1 \cdot v_2)}{\|v_1\| \cdot \|v_2\|})\)
++ Change to standard vector notation
++ \(v_1 = (1,1,1), v_2 = (0-1, 0-1, 1-0)\)
++ \(\theta = \arccos(\frac{(-1 -1 + 1)}{\sqrt{3} \cdot \sqrt{3}}) = 109.47^\circ\)
+** e.
++ magnitude is the same for both vectors, equal to d
++ \(v_1 = (1, 1, ...)\)  with dimension d
++ \(v_2 = (-1, -1, ..., 1)\) with dimension d
++ \(v_1 \cdot v_2 = v_2 \cdot v_2\)
++ \(\theta_d = \arccos{(\frac{-(d-2)}{d})\)
+** e.
++ Intuitively the angle goes toward 180 degrees
++ Angle increases as dimension increases
++ definition of cos \(\theta\) in higher dimensions goes to 1
++ \(\frac{-(d-2)}{d} \rightarrow 1\) as d goes to \(\infty\)
++ \(\arccos(1) = 180^\circ\)

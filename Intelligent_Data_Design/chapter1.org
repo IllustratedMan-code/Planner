@@ -67,3 +67,4 @@ in the matrix.
 * Joint Probability Density Function
 + \(P(\boldsymbol{x} \in W) = \displaystyle\int\displaystyle\int\limits_{x \in W}f(x)dx =
   \displaystyle\int\displaystyle\int\limits_{(x_1,x_2)^T\in W}f(x_1,x_2)dx_1dx_2\)
+*
