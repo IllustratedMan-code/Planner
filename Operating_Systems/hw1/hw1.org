@@ -1,0 +1,14 @@
+
+* Task 1
+I followed the steps given in the assignment: I downloaded the ubuntu image from
+the website, loaded it into the virtual machine, and installed ubuntu. I used
+all the recommended specs given in the assignment. Additionally, I installed the
+virtualbox guest tools so I could fullscreen the vm. I have done this before, so
+did not run into many difficulties. The only minor difficulty was in getting
+virtualbox installed in my system (NixOS), but that was easily solved by
+following the directions on the NixOS wiki for virtualbox.
+* Task
+#+begin_src bash
+mkdir team_dropbox # create directory
+chmod 750 team_dropbox # owner has all permissions, group has read write, others have none
+#+end_src

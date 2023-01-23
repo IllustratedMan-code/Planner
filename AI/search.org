@@ -1,0 +1,31 @@
+
+* Uninformed search
+** Breadth-first search
++ Complete (if b is finite)
++ time: \(O(b^{d+1})\)
++ Space: \(O(b^{d+1}\)
++ Optimal is cost is 1 per step (not in general)
++ Space is biggest problem
+** Uniform-cost search
++ Complete (if step cost \(\ge \epsilon\))
++ Optimal
+*** Implementation
++ fringe = queue ordered by path cost, lowest first
+** Depth-first search
+Expande deepest unexpanded node
++ not complete without cycle detection, can be complete in finite spaces
++ time: \(O(b^m)\)
++ Space: \(O(bm)\), linear space
++ not optimal
+*** Implementation
++ fringe = LIFO queue, successors in front
+
+** Depth-limited search
++ like depth first search, but maximum depth is limited
+** Iterative deepening search
++ like depth first search, but depth is limited initiall
++ a bit like the combination of breadth-first and depth-first
++ Complete
++ time: \(O(b^d)\)
++ Space \(O(bd)\), linear space
++ Optimal if step cost = 1, or cost is uniform

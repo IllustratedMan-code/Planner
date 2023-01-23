@@ -1,12 +1,13 @@
 * Notes
 + functions are overloaded depending on the context
 + \(\lambda \) is not a symbol, it is a string
++ zero 1s is an even number of ones
 ** Excercises
 + \(\{01^3, 1^30\} \circ \{1^20^2, 0^21^2\} = \{01111100, 01110011, 1111100, 11100011\}\)
 + \(\begin{Bmatrix}01^3 \\ 1^30 \end{Bmatrix} \circ \begin{Bmatrix} 1^20^2 \\ 0^2
   1^2\end{Bmatrix} = \begin{Bmatrix}01^50^2 \\ 01^30^21^2 \\ 1^301^20^2 \\ 1^30^31^2\end{Bmatrix}\)
 *** klein star
-+ \(\{0, 11\}^* = \{\lambda, 0, 11, 011, 110, 011110, 110011, 01^401^2\}\)
++ \(\{0, 11\}^* = \{\lambda, 0, 11, 011, 110, 1100, 1111 011110, 110011, 01^401^2\}\)
 + all binary strings that contain even length runs of 1
 + \(\{11, 111\}^* = \{\lambda, 1^2, 1^3, 1^5, 1^{10}\}\)
 + All binary strings containing 1s except for the binary string "1"
@@ -33,6 +34,7 @@
 + Empty string is \(\lambda\)
 * Concatenation
 + \(u \circ v = uv \) is string concatenation
++ Concatenated languages is \(L_1L_2 = L_1 \circ \L_2 = \{s_1s_2 : s_1 \in L_1, s_2 \in L_2\}\)
 * Reverse
 + \(s^R\) is the reversed string
 + length is always the same

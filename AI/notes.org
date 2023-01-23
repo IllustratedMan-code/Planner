@@ -1,20 +1,16 @@
 
 * AI characteristics
-** episodic
-** sequential
-** deterministic
-** stochastic
-** static
-environment does not change
-** dynamic
-environment does change
-** semi-dynamic
-agent changes
-** discrete
-bounded
-** continuous
-** single agent
-** multi-agent
++ episodic
++ sequential
++ deterministic
++ stochastic
++ continuous
++ single agent
++ multi-agent
++ static: environment does not change
++ dynamic: environment does change
++ semi-dynamic agent changes
++ discrete bounded
 * Problem solving and search
 + converge upon the solution using estimation
 + Decision tree

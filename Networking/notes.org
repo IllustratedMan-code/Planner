@@ -100,3 +100,19 @@ Length/Rate
 + Bits/time
 + Instantaneous: rate at given point in time
 + average: rate over longer period of time
+** TCP
++ reliable transport
++ flow control
++ congestion control
++ Connection-oriented
+*** Vanilla
++ no encryption
++ cleartext passwords sent into socket traverse in cleartext
+*** TLS
++ provides encrypted TCP
++ Data integrity
++ https
+** UDP
++ Send message and hope for reply
++ Does not provide: anything that tcp has
++ Used for fast transfer of non-essential items
