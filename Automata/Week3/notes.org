@@ -1,0 +1,18 @@
+
+* Determinisitic finite acceptor(DFA)
++ M = \((Q, \Sigma, \delta, q_0, F)\)
++ Q is a finite set of internal states
++ \(\Sigma\): Input alphabet
++ \(\delta\): \(Q \times \Sigma \rightarrow Q\) is a total function (transition function)
++ \(q_0 \in Q\) is the initial/start state
++ \(F \subseteq Q\) is the set of final states
+** Example
++ Starts in \(q_0\), reading head is leftmost character in string
++ each time slot the state is computed from the \(\delta\) function based on the
+  current state and the character in the reading head. The reading head moves to
+  the next character after each time slot
++ Once the last character is read, the state is either accepted or rejected
+  based on whether the state is in \(F\)
+** Extended transition function
++ \(\delta^* : Q \times \Sigma \rightarrow Q\)
++ one shot identification of state change for any string

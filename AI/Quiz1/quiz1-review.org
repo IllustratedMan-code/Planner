@@ -1,0 +1,46 @@
+#+begin_quote
+Lets walk through the uninformed search example question(s)
+#+end_quote
+[[file:nodes.png]]
+Consider the above map of cities with edges between cities showing the costs of
+traveling between city pairs
+* Q1
+Show how the uniform-cost search would progress with this map of cities. Start
+city is A and the goal city is G.
+[[file:q1.png]]
+
++ Add starting node to open list
++ add connected nodes to open list, starting node to closed list
++ "open" the node with the lowest value, and add it to the closed list
++ Continue until a path is found
+** Two strategies to shorten computation
++ Compare new node with closed list, don't add if already there
++ Compare new node with open list, remove longer node
+* Q2
+Repeat the search process as in question 1, but handle duplicate states
+[[file:q2.png]]
+
++ This seemed the most intuitive way to do it
+* Q3
+Repeat the search process using BFS
+[[file:q3.png]]
+
++ Add each level of the tree into memory until all paths are stored.
++ This is a huge number of computations, even for this simple case.
++ Optimizations like dead ending at duplicate nodes would be required to make
+  this manageable
+* Q4
+Repeat the search process using DFS
+[[file:q4.png]]
++ Without cycle detection, this quickly falls into an infinite loop
++ With cycle detection, its still a similar amount of computations as BFS, but
+  without the insane memory requirement
+
+* Q5
+Intuitively find the least cost from A to G. Which search algorithm is the
+shortest (expands the fewest nodes)?
+
++ Shortest path: A->B->E->H
++ I found my intuition was most similar to uniform cost with the two strategies
+  outlined in question 1
++ BFS, DFS have to search all possible paths to find shortest, uniform cost does not
