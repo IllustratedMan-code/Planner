@@ -51,7 +51,7 @@
 
 
   
-  <link href='tailwind.css?instanceId=9dc079a4-cd5f-4968-89f6-07e572994018' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=88322063-8603-45a5-944e-b637e1c5270b' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -359,8 +359,8 @@
     </a>
     
       
-        <span class='text-gray-300' title='1 children inside'>
-          1
+        <span class='text-gray-300' title='3 children inside'>
+          3
         </span>
       
     
@@ -647,6 +647,45 @@
 
 
   
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Operating_Systems' href='Operating_Systems.html'>
+      Operating_Systems
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
 
 
 <!-- Rendering of this tree -->
@@ -740,6 +779,10 @@
           <span class='math inline'>\(\lambda \)</span> is not a symbol, it is a string
         </li>
       
+        <li>
+          zero 1s is an even number of ones
+        </li>
+      
     </ul>
   <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Excercises</h2>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
@@ -758,7 +801,7 @@
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          <span class='math inline'>\(\{0, 11\}^* = \{\lambda, 0, 11, 011, 110, 011110, 110011, 01^401^2\}\)</span>
+          <span class='math inline'>\(\{0, 11\}^* = \{\lambda, 0, 11, 011, 110, 1100, 1111 011110, 110011, 01^401^2\}\)</span>
         </li>
       
         <li>
@@ -863,6 +906,10 @@
       
         <li>
           <span class='math inline'>\(u \circ v = uv \)</span> is string concatenation
+        </li>
+      
+        <li>
+          Concatenated languages is <span class='math inline'>\(L_1L_2 = L_1 \circ \L_2 = \{s_1s_2 : s_1 \in L_1, s_2 \in L_2\}\)</span>
         </li>
       
     </ul>
