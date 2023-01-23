@@ -51,7 +51,7 @@
 
 
   
-  <link href='tailwind.css?instanceId=cf883a63-5937-4d2a-a120-e11a3442c183' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9dc079a4-cd5f-4968-89f6-07e572994018' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -389,8 +389,8 @@
     </a>
     
       
-        <span class='text-gray-300' title='2 children inside'>
-          2
+        <span class='text-gray-300' title='3 children inside'>
+          3
         </span>
       
     
@@ -464,8 +464,8 @@
     </a>
     
       
-        <span class='text-gray-300' title='2 children inside'>
-          2
+        <span class='text-gray-300' title='3 children inside'>
+          3
         </span>
       
     
@@ -882,6 +882,80 @@
   
 </div>
     
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
+        </path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='lec4' href='Intelligent_Data_Design/lec4.html'>
+      lec4
+    </a>
+    
+      
+        
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
+        </path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='lec5' href='Intelligent_Data_Design/lec5.html'>
+      lec5
+    </a>
+    
+      
+        
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
   
 </div>
             
@@ -911,8 +985,8 @@
     </a>
     
       
-        <span class='text-gray-300' title='2 children inside'>
-          2
+        <span class='text-gray-300' title='3 children inside'>
+          3
         </span>
       
     
@@ -961,6 +1035,45 @@
   
 </div>
             
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='bioinformatics' href='bioinformatics.html'>
+      bioinformatics
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
 
           </div>
         </nav>
@@ -975,7 +1088,341 @@
 </h1>
             <article class='overflow-auto'>
   <!-- What goes in this file will appear on top of note body-->
-  
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Graph concepts</h1><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Graphs</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(G = (V,E)\)</span>
+        </li>
+      
+        <li>
+          V = verticies, nodes
+        </li>
+      
+        <li>
+          <span class='math inline'>\(E \subseteq V \times V\)</span> = unordered pairs of verticies = edges
+        </li>
+      
+        <li>
+          an edge from a node to itself is a loop
+        </li>
+      
+        <li>
+          a loop-less graph is a simple graph
+        </li>
+      
+        <li>
+          edge is incident with its nodes
+        </li>
+      
+        <li>
+          digraph uses ordered pairs of vertices for edges
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Subgraphs</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(V_H \subseteq V \land E_H \subseteq E\)</span>
+        </li>
+      
+        <li>
+          A subgraph has vertices and edges that are in a graph
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Degree</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          degree of node is the number of edges incident with it
+        </li>
+      
+        <li>
+          Probability mass function = probability that node has degree k = <span class='math inline'>\(f(k) = P(X=k) = \frac{N_k}{n} \)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(N_k\)</span> is the number of nodes with degree k, n is total number of nodes
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Path and Distance</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          walk is an ordered sequence of vertices, an edge between every pair
+        </li>
+      
+        <li>
+          Number of edges is the distance (number of hops)
+        </li>
+      
+        <li>
+          trail: distinct edges
+        </li>
+      
+        <li>
+          path: distinct vertices
+        </li>
+      
+        <li>
+          closed path with length &gt; 3 is a cycle
+        </li>
+      
+        <li>
+          Minimum length path is the "shortest path"
+        </li>
+      
+        <li>
+          minimum distance is called the distance <span class='math inline'>\(d(x,y)\)</span>
+        </li>
+      
+        <li>
+          if no path exists between two vertices, distance is <span class='math inline'>\(d(x,y) = \infty\)</span>
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Connectedness</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          nodes are connected if path exists between them
+        </li>
+      
+        <li>
+          graphs are connects if path exists between all pairs of vertices
+        </li>
+      
+        <li>
+          component is the maximal (biggest) connected subgraph. If graph has one component it is connected, other it is disconnected
+        </li>
+      
+        <li>
+          Directed graph is strongly connected if ordered path exists between all vertices
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Adjacency Matrix</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          graph can be represented as an n x n symmetric binary adjacency matrix
+        </li>
+      
+        <li>
+          <span class='math inline'>\(A(i,j) = \begin{cases}1 \text{ if $v_i$ is adjacent to $v_j$} \\ 0
+ \text{ otherwise }\end{cases}}\)</span>
+        </li>
+      
+        <li>
+          Directed graph is not symmetric
+        </li>
+      
+        <li>
+          weighted graph = <span class='math inline'>\(A(i,j) = \begin{cases}w_{ij} \text{ if $v_i$ is adjacent to $v_j$} \\ 0
+ \text{ otherwise }\end{cases}}\)</span>
+        </li>
+      
+        <li>
+          threshold can converted weighted graph to binary graph
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Graphs from Data Matrix</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Graph is created from data where edges have weight <span class='math inline'>\(w_{ij} = sim(x_i,x_j)\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(sim(x_i,x_j) = \)</span> similarity between <span class='math inline'>\(x_i\)</span> and <span class='math inline'>\(x_j\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(sim(x_i,x_j = \exp \left\{-\frac{\| x_i-x_j\|}{2\sigma^2}\right\}\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\sigma\)</span> is the spread parameter
+        </li>
+      
+    </ul>
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Topological Attributes</h1><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Degree</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(d_i = \sum\limits_jA(i,j)\)</span>
+        </li>
+      
+        <li>
+          average degree: <span class='math inline'>\(\mu_d = \frac{\sum_jd_i}{n}\)</span>
+        </li>
+      
+        <li>
+          Same for indegree and outdegree
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Average Path Length</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(\mu_L = \frac{\sum_{i}\sum_{j&gt;i}d(v_i, v_j)}{\begin{pmatrix}n \\2 \end{pmatrix}} =
+ \frac{2}{n(n-1)}\sum\limits_i\sum\limits_{j&gt;i}d(v_i, v_j)\)</span>
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Eccentricity</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Maximum distance between two nodes
+        </li>
+      
+        <li>
+          <span class='math inline'>\(e(v_i) = \max\limits_j\{d(v_i, v_j)\}\)</span>
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Radius and Diameter</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          radius is the minimum eccentricity of a graph
+        </li>
+      
+        <li>
+          <span class='math inline'>\(r(G) = \min\limits_i\{e(v_i)\} = \min\limits_i\left\{\max\limits_j\{d(v_i, v_j)\}\right\}\)</span>
+        </li>
+      
+        <li>
+          Diameter is the maximum eccentricity in a graph
+        </li>
+      
+        <li>
+          <span class='math inline'>\(d(G) = \max\limits_i\{e(v_i)\} = \max\limits_{i,j}\{d(v_i, v_j)\}\)</span>
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Clustering Coefficient</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          measure of the density of edges neighboring a vertex
+        </li>
+      
+        <li>
+          <span class='math inline'>\(C(v_i) = \frac{\text{no. of edges in $G_i$}}{\text{maximum number of edges in
+ $G_i$}} = \frac{m_i}{\left(\begin{smallmatrix}n_i \\ 2
+ \end{smallmatrix}\right)} = \frac{2 \cdot m_i}{n_i(n_i-1)}\)</span>
+        </li>
+      
+        <li>
+          The clustering coefficient of a graph is the average clustering coefficient over all of the nodes
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Efficiency</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          defined as <span class='math inline'>\(\frac{1}{d(v_i,v_j)}\)</span>
+        </li>
+      
+        <li>
+          if not connected, <span class='math inline'>\(d(v_i, v_j) = \infty\)</span> and the efficiency is 0
+        </li>
+      
+        <li>
+          Efficiency of a graph is the average efficiency over all pairs of nodes.
+        </li>
+      
+    </ul>
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Centrality Analysis</h1><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Basic Centralities</h2><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Degree Centrality</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          higher the degree, more important or central the vertex is
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Eccentricity Centrality</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Less eccentric, the more central the vertex is
+        </li>
+      
+        <li>
+          <span class='math inline'>\(c(v_i) = \frac{1}{e(v_i)\)</span>
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Closeness Centrality</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          sum of all the distances from a node, higher the distance, less central
+        </li>
+      
+        <li>
+          <span class='math inline'>\(c(v_i) = \frac{1}{\sum_jd(v_i, v_j)\)</span>
+        </li>
+      
+        <li>
+          node with the smallest total distance (most central) is the median node
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Betweenness Centrality</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          how many shortest paths between all pairs of nodes include the vertex
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\gamma_{jk}(v_i) = \frac{n_{jk}(v_i)}{n_{jk}\)</span>
+        </li>
+      
+        <li>
+          betweeeness centrality = <span class='math inline'>\(c(v_i) = \displaystyle\sum\limits_{j\ne i}
+ \displaystyle\sum\limits_{\begin{smallmatrix}k \ne i  \\ k &gt; j\end{smallmatrix}} \gamma_{jk}\)</span>
+        </li>
+      
+    </ul>
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Web Centralities</h1><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Prestige</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          eigenvector centrality
+        </li>
+      
+        <li>
+          more links to node, higher the centrality
+        </li>
+      
+        <li>
+          also depends on the prestige of linked nodes
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>PageRank</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          webpages(Nodes) connected by hyperlinks(edges)
+        </li>
+      
+        <li>
+          Rank is assigned based on probability of landing on a page
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Normalized Prestige</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Hub and Authority Scores</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Random Jumps</h3><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Graph Models</h2><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Small World Property</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Scale-free Property</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Clustering Effect</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Average Degree</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Degree Distribution</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Clustering Coefficient</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Diameter</h3><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Watts-Strogatz Small-world Graph Model</h2><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Clustering COefficient and Diameter of Regular Graph</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Random Perturbation of Regular Graph edge rewiring</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>edge shortcuts</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Properties of Watts-Strogatz Graphs Degree Distribution</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Clustering Coefficient</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Diameter</h3><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Barabasi-Albert Scale-free Model</h2><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Initilization</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Growth and Peferential Attachment</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Degree Distribution</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Discrete Approach</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Continous Approach</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Clustering Coefficient and Diameter</h3>
 
   <div class='flex items-center justify-center mt-2'>
   
