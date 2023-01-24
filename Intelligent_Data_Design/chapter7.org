@@ -1,6 +1,12 @@
 
 * Dimensionality reduction
++ Each point can be expressed as: \(x = a_iu_i + a_2u_2 + ... + a_du_d\)
++ \(u_i\) is an orthonormal vector \(u_i \cdot u_k = 0\)
++ \(a = (a_1, a_2 ..., a_d)^T\) is the coordinate vector of x in the new basis \(u\)
++ \(u_i\) vectors can be represented as the matrix \(U\)
++ \(x = Ua\)
 * PCA (Principal component analysis)
++ Finds r-dimensional basis that best captures the variance of the data
 ** Best line approximation
 ** Minimum squared error
 ** Best 2-dimensional approximation
@@ -11,3 +17,9 @@
 *** Mean squared error
 *** total variance
 *** Choosing the dimensionality
+** Geometry of PCA
+* Kernel Principal Component Analysis
++ Finds linear combinations of the high-dimensional feature space obtained from
+  a non-linear transformations of the input dimensions
+* Singular Value Decomposition
+** Connection between SVD and PCA
