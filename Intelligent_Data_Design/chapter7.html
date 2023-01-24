@@ -51,7 +51,7 @@
 
 
   
-  <link href='tailwind.css?instanceId=0f240be2-c0eb-4215-93f6-257aeec5f8fb' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=c110622e-fd8e-4ba3-a7be-744cb626c2fa' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -1127,7 +1127,47 @@
 </h1>
             <article class='overflow-auto'>
   <!-- What goes in this file will appear on top of note body-->
-  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Dimensionality reduction</h1><h1 class='pb-2 mb-2 text-5xl font-bold text-center'>PCA (Principal component analysis)</h1><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Best line approximation</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Minimum squared error</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Best 2-dimensional approximation</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Total Projected Variance</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Mean squared error</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Best r-dimensional approximation</h2><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Toal projected variance</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Mean squared error</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>total variance</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Choosing the dimensionality</h3>
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Dimensionality reduction</h1>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Each point can be expressed as: <span class='math inline'>\(x = a_iu_i + a_2u_2 + ... + a_du_d\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(u_i\)</span> is an orthonormal vector <span class='math inline'>\(u_i \cdot u_k = 0\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(a = (a_1, a_2 ..., a_d)^T\)</span> is the coordinate vector of x in the new basis <span class='math inline'>\(u\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(u_i\)</span> vectors can be represented as the matrix <span class='math inline'>\(U\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(x = Ua\)</span>
+        </li>
+      
+    </ul>
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>PCA (Principal component analysis)</h1>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Finds r-dimensional basis that best captures the variance of the data
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Best line approximation</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Minimum squared error</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Best 2-dimensional approximation</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Total Projected Variance</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Mean squared error</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Best r-dimensional approximation</h2><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Toal projected variance</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Mean squared error</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>total variance</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Choosing the dimensionality</h3><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Geometry of PCA</h2><h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Kernel Principal Component Analysis</h1>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Finds linear combinations of the high-dimensional feature space obtained from a non-linear transformations of the input dimensions
+        </li>
+      
+    </ul>
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Singular Value Decomposition</h1><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Connection between SVD and PCA</h2>
 
   <div class='flex items-center justify-center mt-2'>
   
