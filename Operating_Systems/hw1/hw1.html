@@ -51,7 +51,7 @@
 
 
   
-  <link href='tailwind.css?instanceId=50eb57d8-3dac-406a-802a-3210dad04953' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=775c837c-6e87-4367-b0b0-17424df47207' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -599,6 +599,45 @@
   
 </div>
     
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='hw2' href='Operating_Systems/hw2.html'>
+      hw2
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
   
 </div>
             
@@ -696,8 +735,53 @@
     <p class='mb-3'>
       I followed the steps given in the assignment: I downloaded the ubuntu image from the website, loaded it into the virtual machine, and installed ubuntu. I used all the recommended specs given in the assignment. Additionally, I installed the virtualbox guest tools so I could fullscreen the vm. I have done this before, so did not run into many difficulties. The only minor difficulty was in getting virtualbox installed in my system (NixOS), but that was easily solved by following the directions on the NixOS wiki for virtualbox.
     </p>
-  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Task</h1><div class='py-0.5 mb-3 text-sm'><pre><code class='bash language-bash'>mkdir team_dropbox # create directory
-chmod 750 team_dropbox # owner has all permissions, group has read write, others have none
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Task 2.1</h1><div class='py-0.5 mb-3 text-sm'><pre><code class='bash language-bash'>mkdir team_dropbox && chmod 760 team_dropbox # create directory, owner has all permissions, group has read write, others have none
+</code></pre></div><h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Task 2.2</h1>
+    <p class='mb-3'>
+      <code class='verbatim py-0.5 px-0.5 bg-gray-100'>find</code> is recursive by default, <code class='verbatim py-0.5 px-0.5 bg-gray-100'>.</code> refers to the current directory, <code class='verbatim py-0.5 px-0.5 bg-gray-100'>-newermt</code> refers to "modified files newer than timestamp". The time stamp is the current date at midnight (00:00:00).
+    </p>
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='bash language-bash'>find . -newermt "$(date +'%m/%d/%y 00:00:00')"
+</code></pre></div><h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Task 3</h1>
+    <p class='mb-3'>
+      The tutorial linked in the assignment as well as the assignment instructions are out of date. The newest (stable) kernel is 6.1.8. The kernel listed (5.13.4) did not seem to be available through kernel.org. None of the grub instructions were relevant, they were all enabled by default. I did have to comment out <code class='verbatim py-0.5 px-0.5 bg-gray-100'>GRUB_HIDDEN_TIMEOUT</code> to get the grub menu to show up, which was not in the assignment instructions.
+    </p>
+  
+    <p class='mb-3'>
+      Also it is unclear whether or not I should have installed the kernel modules as well as the kernel. The instructions only mentioned running make 2 times. It would have been 3 to install the modules as well.
+    </p>
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Task 4</h1>
+    <p class='mb-3'>
+      This is a one-liner that removes all mention of the kernel and updates grub to reflect the change.
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>locate -b -e 6.1.8</code>: In my case the kernel was named 6.1.8. This command locates all files that contain 6.1.8 as a basename and also exist. This set of files happens to be the directories where the kernel is stored.
+        </li>
+      
+        <li>
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>grep -v /home</code>: the results from locate are piped into grep, which removes the results in the home directory. This ensures I don't delete the build directory
+        </li>
+      
+        <li>
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>xargs -n 1 -p sudo rm -r</code>: the results from grep are piped into xargs, which runs <code class='verbatim py-0.5 px-0.5 bg-gray-100'>sudo rm -r</code>, line by line, asking for permission each time.
+        </li>
+      
+        <li>
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>sudo update-grub</code>: this updates any grub related files, removing the kernel that no longer exists
+        </li>
+      
+        <li>
+          No manual edits were necessary to the grub configuration (not sure why instructions said they were needed?)
+        </li>
+      
+        <li>
+          The only instructions to repeat this is to run the following one-liner
+        </li>
+      
+    </ul>
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>locate -b -e 6.1.8 | grep -v /home | xargs -n 1 -p sudo rm -r && sudo update-grub
 </code></pre></div>
 
   <div class='flex items-center justify-center mt-2'>
