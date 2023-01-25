@@ -51,7 +51,7 @@
 
 
   
-  <link href='tailwind.css?instanceId=c110622e-fd8e-4ba3-a7be-744cb626c2fa' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=50eb57d8-3dac-406a-802a-3210dad04953' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -464,8 +464,8 @@
     </a>
     
       
-        <span class='text-gray-300' title='3 children inside'>
-          3
+        <span class='text-gray-300' title='4 children inside'>
+          4
         </span>
       
     
@@ -830,6 +830,43 @@
       </svg>
     
   
+    <a class='hover:underline truncate' title='important_notes' href='Intelligent_Data_Design/important_notes.html'>
+      important_notes
+    </a>
+    
+      
+        
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
+        </path>
+      </svg>
+    
+  
     <a class='hover:underline truncate' title='lec1' href='Intelligent_Data_Design/lec1.html'>
       lec1
     </a>
@@ -1159,7 +1196,121 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Best line approximation</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Minimum squared error</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Best 2-dimensional approximation</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Total Projected Variance</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Mean squared error</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Best r-dimensional approximation</h2><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Toal projected variance</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Mean squared error</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>total variance</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Choosing the dimensionality</h3><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Geometry of PCA</h2><h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Kernel Principal Component Analysis</h1>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Best line approximation</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(\mu = 0\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(x^{'}_i = \left(\frac{u^Tx_i}{u^Tu}\right)u = (u^Tx_i)u = a_iu\)</span> is the projection of <span class='math inline'>\(x_i\)</span> onto u
+        </li>
+      
+        <li>
+          <span class='math inline'>\(a_i = u^Tx_i\)</span> is the coordinate <span class='math inline'>\(x_i^'\)</span> along u
+        </li>
+      
+        <li>
+          since <span class='math inline'>\(\mu = 0\)</span> the coordinate alonge u is also 0
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\sigma^2_u = u^T\Sigma u\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\Sigma\)</span> is the covariance matrix for the centered data D
+        </li>
+      
+        <li>
+          lagrangian muliplier is used to maximize the variance subject to the orthogonality constraint
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\max\limits_u J(u) = u^T \Sigma u - \alpha(u^Tu-1)\)</span>
+        </li>
+      
+        <li>
+          Taking the derivative <span class='math inline'>\(\)</span>
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Minimum squared error</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(MSE(u) = \frac{1}{n}\displaystyle\sum\limits^{n}_{i=1} \| \epsilon_i \|^2 =
+ \displaystyle\sum\limits^{n}_{i=1} \frac{\|x_i\|^2}{n} - u^t\Sigma u = \displaystyle\sum\limits^{n}_{i=1} \sigma^2 - u^t\Sigma u\)</span>
+        </li>
+      
+        <li>
+          total variance of centered data is <span class='math inline'>\(var(D) =
+ \frac{1}{n}\displaystyle\sum\limits^n_{i=1} \|x_i\|^2\)</span>
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Best 2-dimensional approximation</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(\sigma^2_v = v^T \Sigma v\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\Sigma v = \alpha v\)</span>
+        </li>
+      
+        <li>
+          second principle component (<span class='math inline'>\(v = u_2\)</span>)
+        </li>
+      
+        <li>
+          u and v are both eigenvectors (λ) of <span class='math inline'>\(\Sigma\)</span>
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Total Projected Variance</h3>
+    <p class='mb-3'>
+      <span class='math inline'>\(var(A) = u^T_1\Sigma u_1 + u_2^T \Sigma u_2 = \lambda_1 + \lambda_2\)</span>
+    </p>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Mean squared error</h3>
+    <p class='mb-3'>
+      <span class='math inline'>\(Var(D) - Var(A)\)</span>
+    </p>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Best r-dimensional approximation</h2><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Toal projected variance</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(U_r = \)</span> r dimensional basis vector matrix
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Mean squared error</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(var(D) - \displaystyle\sum\limits^{r}_{i=1}\lambda_i\)</span>
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>total variance</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(var(D) = \displaystyle\sum\limits^{d}_{i=1}\lambda^i\)</span>
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Choosing the dimensionality</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(f(r) = \frac{\sum^r_{i=1} \lambda_i}{var(D)}\)</span>
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Geometry of PCA</h2><h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Kernel Principal Component Analysis</h1>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
