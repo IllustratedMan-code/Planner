@@ -8,15 +8,40 @@
 * PCA (Principal component analysis)
 + Finds r-dimensional basis that best captures the variance of the data
 ** Best line approximation
++ \(\mu = 0\)
++ \(x^{'}_i = \left(\frac{u^Tx_i}{u^Tu}\right)u = (u^Tx_i)u = a_iu\) is the
+  projection of \(x_i\) onto u
++ \(a_i = u^Tx_i\) is the coordinate \(x_i^'\) along u
++ since \(\mu = 0\) the coordinate alonge u is also 0
++ \(\sigma^2_u = u^T\Sigma u\)
++ \(\Sigma\) is the covariance matrix for the centered data D
++ lagrangian muliplier is used to maximize the variance subject to the
+  orthogonality constraint
++ \(\max\limits_u J(u) = u^T \Sigma u - \alpha(u^Tu-1)\)
++ Taking the derivative \(\)
 ** Minimum squared error
++ \(MSE(u) = \frac{1}{n}\displaystyle\sum\limits^{n}_{i=1} \| \epsilon_i \|^2 =
+  \displaystyle\sum\limits^{n}_{i=1} \frac{\|x_i\|^2}{n} - u^t\Sigma u = \displaystyle\sum\limits^{n}_{i=1} \sigma^2 - u^t\Sigma u\)
++ total variance of centered data is \(var(D) =
+  \frac{1}{n}\displaystyle\sum\limits^n_{i=1} \|x_i\|^2\)
 ** Best 2-dimensional approximation
-** Total Projected Variance
-** Mean squared error
++ \(\sigma^2_v = v^T \Sigma v\)
++ \(\Sigma v = \alpha v\)
++ second principle component (\(v = u_2\))
++ u and v are both eigenvectors (\lambda) of \(\Sigma\)
+*** Total Projected Variance
+\(var(A) = u^T_1\Sigma u_1 + u_2^T \Sigma u_2 = \lambda_1 + \lambda_2\)
+*** Mean squared error
+\(Var(D) - Var(A)\)
 ** Best r-dimensional approximation
 *** Toal projected variance
++ \(U_r = \) r dimensional basis vector matrix
 *** Mean squared error
++ \(var(D) - \displaystyle\sum\limits^{r}_{i=1}\lambda_i\)
 *** total variance
++ \(var(D) = \displaystyle\sum\limits^{d}_{i=1}\lambda^i\)
 *** Choosing the dimensionality
++ \(f(r) = \frac{\sum^r_{i=1} \lambda_i}{var(D)}\)
 ** Geometry of PCA
 * Kernel Principal Component Analysis
 + Finds linear combinations of the high-dimensional feature space obtained from

@@ -2,9 +2,9 @@
 * Dimensionality reduction
 + high dimensional space analysis is hard
 ** Feature selector
-+ Select few dimensions of interest
++ Select few dimensions
 + Feature == dimension
-+ Create new feature from several features
++ Create new feature from several other features
 ** Prinicpal component analysis (PCA)
 + Remove linearly dependent dimensions from data
 + Gives intrinsic dimensionality
