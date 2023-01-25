@@ -1,3 +1,4 @@
 *.pdf
 /.direnv/flake-inputs/90022i7ajd4v84cppvlnra6c1v18bry1-source
 *.iso
+vm

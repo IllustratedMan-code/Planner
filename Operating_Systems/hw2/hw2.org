@@ -1,0 +1,56 @@
+
+* 1.4
+False: a tainted kernel can work perfectly fine. The "taint" comes from a list
+of different reasons that may cause problems down the line. This is useful for debugging.
+* 1.5
+The current tainted state is recorded at =/proc/sys/kernel/tained=. When the kernel
+is not tained the taint state is 0. To view the current state, one can use the
+following command =cat /proc/sys/kernel/tainted=. This results in a decimal number
+corresponding to the various taints in the kernel. Converting this decimal
+number to binary and examining the bits, one can determine the various taints. I
+wrote the following script to do just that.
+
+#+begin_src bash :tangle kernel-checker.sh
+#!/usr/bin/env bash
+
+# this function is a little hard to explain, but essentially
+# the >> operator appends the tainted state to standard out
+# but the number gets bit shifted before hand, resulting in the
+# output of the binary digit specified by $1
+function tainted_state(){
+    echo $(($(cat /proc/sys/kernel/tainted)>>($1)&1))
+}
+
+# This is what each bit means if it has the value of 1
+# I used the table from: https://docs.kernel.org/admin-guide/tainted-kernels.html#more-detailed-explanation-for-tainting
+# as reference
+problems=( "G/P: proprietary module was loaded"
+           "F: module was force loaded"
+           "S: kernel running on an out of specification system"
+           "R: module was force unloaded"
+           "M: processor reported a Machine Check Exception (MCE)"
+           "B: bad page referenced or some unexpected page flags"
+           "U: taint requested by userspace application"
+           "D: kernel died recently, i.e. there was an OOPS or BUG"
+           "A: ACPI table overridden by user"
+           "W: kernel issued warning"
+           "C: staging driver was loaded"
+           "I: workaround for bug in platform firmware applied"
+           "O: externally-built (out-of-tree) module was loaded"
+           "E: unsigned module was loaded"
+           "L: soft lockup occurred"
+           "K: kernel has been live patched"
+           "X: Auxiliary taint, defined for and used by distros"
+           "T: kernel was built with the struct randomization plugin"
+           "N: an in-kernel test has been run"
+         )
+
+# there are 19 bits 0-18. If the bit is 1, the corresponding error is outputted.
+for i in {0..18}
+do
+    if [[ $(tainted_state $i) == "1" ]]; then
+        echo ${problems[$i]}
+    fi
+done
+#+end_src
+*

@@ -7,8 +7,44 @@ virtualbox guest tools so I could fullscreen the vm. I have done this before, so
 did not run into many difficulties. The only minor difficulty was in getting
 virtualbox installed in my system (NixOS), but that was easily solved by
 following the directions on the NixOS wiki for virtualbox.
-* Task
+* Task 2.1
 #+begin_src bash
-mkdir team_dropbox # create directory
-chmod 750 team_dropbox # owner has all permissions, group has read write, others have none
+mkdir team_dropbox && chmod 760 team_dropbox # create directory, owner has all permissions, group has read write, others have none
+#+end_src
+* Task 2.2
+=find= is recursive by default, =.=  refers to the current directory, =-newermt=
+refers to "modified files newer than timestamp". The time stamp is the current
+date at midnight (00:00:00).
+#+begin_src bash
+find . -newermt "$(date +'%m/%d/%y 00:00:00')"
+#+end_src
+* Task 3
+The tutorial linked in the assignment as well as the assignment instructions are
+out of date. The newest (stable) kernel is 6.1.8. The kernel listed (5.13.4) did
+not seem to be available through kernel.org. None of the grub instructions were
+relevant, they were all enabled by default. I did have to comment out
+=GRUB_HIDDEN_TIMEOUT= to get the grub menu to show up, which was not in the
+assignment instructions.
+
+Also it is unclear whether or not I should have installed the kernel modules as
+well as the kernel. The instructions only mentioned running make 2 times. It
+would have been 3 to install the modules as well.
+
+* Task 4
+This is a one-liner that removes all mention of the kernel and updates grub to
+reflect the change.
++ =locate -b -e 6.1.8=: In my case the kernel was named 6.1.8. This command
+  locates all files that contain 6.1.8 as a basename and also exist. This set of
+  files happens to be the directories where the kernel is stored.
++ =grep -v /home=: the results from locate are piped into grep, which removes the
+  results in the home directory. This ensures I don't delete the build directory
++ =xargs -n 1 -p sudo rm -r=: the results from grep are piped into xargs, which
+  runs =sudo rm -r=, line by line, asking for permission each time.
++ =sudo update-grub=: this updates any grub related files, removing the kernel
+  that no longer exists
++ No manual edits were necessary to the grub configuration (not sure why
+  instructions said they were needed?)
++ The only instructions to repeat this is to run the following one-liner
+#+begin_src
+locate -b -e 6.1.8 | grep -v /home | xargs -n 1 -p sudo rm -r && sudo update-grub
 #+end_src
