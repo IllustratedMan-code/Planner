@@ -21,6 +21,7 @@
             layersString = [ "." ];
             # port = 8080;
             baseUrl = "/Planner/"; # Change to "/" (or remove it entirely) if using CNAME
+            allowBrokenLinks = true;
             # prettyUrls = true;
           };
         };
