@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1' />
+  <title>
+    ecology – Planner
+  </title>
+  
+    
+      <meta property='og:description' content />
+      <meta property='og:site_name' content='Planner' />
+      <meta property='og:image' content />
+      <meta property='og:type' content='website' />
+      <meta property='og:title' content='ecology' />
+    
+    
+      <base href='/Planner/' />
+      <link href='favicon.svg' rel='icon' />
+    
+    <script>
+  window.MathJax = {
+    startup: {
+      ready: () => {
+        MathJax.startup.defaultReady();
+      }
+    }
+  };
+</script>
+<script async id='MathJax-script' src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>
+<!-- highlight.js -->
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/hybrid.min.css' />
+<script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js'></script>
+<!-- Include languages that Emanote itself uses -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/languages/haskell.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/languages/nix.min.js'></script>
+<script>hljs.highlightAll();</script>
+
+
+<script>
+  window.MathJax = {
+    startup: {
+      ready: () => {
+        MathJax.startup.defaultReady();
+      }
+    }
+  };
+</script>
+<script async id='MathJax-script' src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>
+
+
+  
+  <link href='tailwind.css?instanceId=7449574b-e7b6-465d-8125-b49957794d81' rel='stylesheet' type='text/css' />
+
+  <style>
+    /* Heist error element */
+    strong.error {
+      color: lightcoral;
+      font-size: 90%;
+      font-family: monospace;
+    }
+
+    /* External link icon */
+    a[data-linkicon=""]::after {
+      content: ""
+    }
+
+    a[data-linkicon=none]::after {
+      content: ""
+    }
+
+    a[data-linkicon="external"]::after {
+      content: url('data:image/svg+xml,\
+      <svg xmlns="http://www.w3.org/2000/svg" height="0.7em" viewBox="0 0 20 20"> \
+        <g style="stroke:gray;stroke-width:1"> \
+          <line x1="5" y1="5" x2="5" y2="14" /> \
+          <line x1="14" y1="9" x2="14" y2="14" /> \
+          <line x1="5" y1="14" x2="14" y2="14" /> \
+          <line x1="5" y1="5" x2="9" y2="5"  /> \
+          <line x1="10" y1="2" x2="17" y2="2"  /> \
+          <line x1="17" y1="2" x2="17" y2="9" /> \
+          <line x1="10" y1="9" x2="17" y2="2" style="stroke-width:1.0" /> \
+        </g> \
+      </svg>');
+    }
+
+    a[data-linkicon="external"][href^="mailto:"]::after {
+      content: url('data:image/svg+xml,\
+        <svg \
+          xmlns="http://www.w3.org/2000/svg" \
+          height="0.7em" \
+          fill="none" \
+          viewBox="0 0 24 24" \
+          stroke="gray" \
+          stroke-width="2"> \
+          <path \
+            stroke-linecap="round" \
+            stroke-linejoin="round" \
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /> \
+        </svg>');
+    }
+  </style>
+  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
+
+<style>
+  @font-face {
+    font-family: 'WorkSans';
+    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
+    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
+    font-display: swap;
+  }
+
+  body {
+    font-family: 'WorkSans', sans-serif;
+    font-variation-settings: 'wght' 350;
+  }
+
+  a.mavenLinkBold {
+    font-variation-settings: 'wght' 400;
+  }
+
+  strong {
+    font-variation-settings: 'wght' 500;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  header,
+  .header-font {
+    font-family: 'WorkSans', sans-serif;
+  }
+
+  h1 {
+    font-variation-settings: 'wght' 500;
+  }
+
+  h2 {
+    font-variation-settings: 'wght' 400;
+  }
+
+  h3 {
+    font-variation-settings: 'wght' 300;
+  }
+</style>
+
+
+  
+  <link rel='stylesheet' href='_emanote-static/stork/flat.css' />
+<!-- Custom Stork-search styling for Emanote -->
+<style>
+  #stork-search-container {
+    z-index: 1000;
+    background-color: rgb(15 23 42/.8);
+  }
+
+  .stork-overflow-hidden-important {
+    overflow: hidden !important;
+  }
+</style>
+
+
+<script src='_emanote-static/stork/stork.js'></script>
+
+  
+    <script data-emanote-base-url='/Planner/'>
+      window.emanote = {};
+      window.emanote.stork = {
+        searchShown: false,
+        toggleSearch: function () {
+          document.getElementById('stork-search-container').classList.toggle('hidden');
+          window.emanote.stork.searchShown = document.body.classList.toggle('stork-overflow-hidden-important');
+          if (window.emanote.stork.searchShown) {
+            document.getElementById('stork-search-input').focus();
+          }
+        },
+        clearSearch: function () {
+          document.getElementById('stork-search-container').classList.add('hidden');
+          document.body.classList.remove('stork-overflow-hidden-important');
+          window.emanote.stork.searchShown = false;
+        },
+
+        init: function () {
+          const indexName = 'emanote-search'; // used to match input[data-stork] attribute value
+          const baseUrl = document.currentScript.getAttribute('data-emanote-base-url') || '/';
+          const indexUrl = baseUrl + '-/stork.st';
+          if (document.readyState !== 'complete') {
+            window.addEventListener('load', function () {
+              stork.initialize(baseUrl + '_emanote-static/stork/stork.wasm');
+              stork.register(indexName, indexUrl);
+            });
+
+            document.addEventListener('keydown', event => {
+              if (window.emanote.stork.searchShown && event.key === 'Escape') {
+                window.emanote.stork.clearSearch();
+                event.preventDefault();
+              } else if ((event.key == 'k' || event.key == 'K') && (event.ctrlKey || event.metaKey)) {
+                window.emanote.stork.toggleSearch();
+                event.preventDefault();
+              }
+            });
+          } else {
+            // Override existing on Ema's hot-reload
+            stork.register(indexName, indexUrl, { forceOverwrite: true });
+          }
+        }
+      };
+
+      window.emanote.stork.init();
+    </script>
+  
+
+</head>
+
+<!-- DoNotFormat -->
+
+
+
+<!-- DoNotFormat -->
+
+<body class='bg-gray-400 overflow-y-scroll'>
+  
+    <div class='container mx-auto'>
+
+      <nav id='breadcrumbs' class='w-full text-gray-700 md:hidden'>
+  <div class='flex justify-left'>
+    <div class='w-full px-2 py-2 bg-gray-50'>
+      <ul class='flex flex-wrap text-lg'>
+        <li class='inline-flex items-center'>
+          
+            
+              <img style='width: 1rem;' src='favicon.svg' />
+            
+          
+        </li>
+        
+          
+            <li class='inline-flex items-center'>
+              <a class='px-1 font-bold' href=''>
+                David’s Notes
+              </a>
+              <svg fill='currentColor' viewBox='0 0 20 20' class='w-auto h-5 text-gray-400'>
+                <path fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd'></path>
+              </svg>
+            </li>
+          
+            <li class='inline-flex items-center'>
+              <a class='px-1 font-bold' href='ecology.html'>
+                ecology
+              </a>
+              <svg fill='currentColor' viewBox='0 0 20 20' class='w-auto h-5 text-gray-400'>
+                <path fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd'></path>
+              </svg>
+            </li>
+          
+        
+      </ul>
+    </div>
+    <button class='inline px-2 py-1 bg-gray-50 outline-none cursor-pointer focus:outline-none' title='Search (Ctrl+K)' type='button' onclick='window.emanote.stork.toggleSearch()'>
+      <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-green-700' f
+ fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
+  <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+</svg>
+    </button>
+    <button class='inline px-2 py-1 text-white bg-green-600 outline-none cursor-pointer focus:outline-none' title='Toggle sidebar' type='button' onclick="toggleHidden('sidebar')">
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6h16M4 12h16M4 18h16'></path>
+      </svg>
+    </button>
+    <script>
+      function toggleHidden(elemId) {
+        document.getElementById(elemId).classList.toggle("hidden");
+      }
+    </script>
+  </div>
+</nav>
+
+      <div id='container' class='flex flex-nowrap flex-col md:flex-row bg-gray-50 md:mt-8 md:shadow-2xl md:mb-8'>
+        <!-- Sidebar column -->
+        <nav id='sidebar' class='flex-shrink hidden leading-relaxed md:block md:sticky md:top-0 md:h-full md:w-48 xl:w-64'>
+          <div class='px-2 py-2 text-gray-800'>
+            <div id='indexing-links' class='flex flex-row float-right p-2 space-x-2 text-gray-500'>
+              <a href='-/tags.html' title='View tags'>
+                <svg style='width: 1rem;' class='hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
+                  </path>
+                </svg>
+              </a>
+              <a href='-/all.html' title='Expand full tree'>
+                <svg style='width: 1rem;' class='hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
+                  </path>
+                </svg>
+              </a>
+              <a title='Search (Ctrl+K)' class='cursor-pointer' onclick='window.emanote.stork.toggleSearch()'>
+                <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-green-700' f
+ fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
+  <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+</svg>
+              </a>
+            </div>
+
+            <div id='site-logo' class='pl-2'>
+              <div class='flex items-center my-2 space-x-2 justify-left'>
+                <a href='' title='Go to Home'>
+                  
+                    
+                      <!-- The style width attribute here is to prevent huge
+                      icon from displaying at those rare occasions when Tailwind
+                      hasn't kicked in immediately on page load 
+                      -->
+                      <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
+                    
+                  
+                </a>
+                <a class='font-bold truncate' title='Go to Home' href=''>
+                  Home
+                </a>
+              </div>
+            </div>
+
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='AI' href='AI.html'>
+      AI
+    </a>
+    
+      
+        <span class='text-gray-300' title='3 children inside'>
+          3
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Automata' href='Automata.html'>
+      Automata
+    </a>
+    
+      
+        <span class='text-gray-300' title='4 children inside'>
+          4
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Discrete-Structures' href='Discrete-Structures.html'>
+      Discrete-Structures
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Intelligent_Data_Design' href='Intelligent_Data_Design.html'>
+      Intelligent_Data_Design
+    </a>
+    
+      
+        <span class='text-gray-300' title='16 children inside'>
+          16
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Networking' href='Networking.html'>
+      Networking
+    </a>
+    
+      
+        <span class='text-gray-300' title='3 children inside'>
+          3
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Operating_Systems' href='Operating_Systems.html'>
+      Operating_Systems
+    </a>
+    
+      
+        <span class='text-gray-300' title='2 children inside'>
+          2
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Physics2001' href='Physics2001.html'>
+      Physics2001
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
+        </path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='README' href='README.html'>
+      README
+    </a>
+    
+      
+        
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='bioinformatics' href='bioinformatics.html'>
+      bioinformatics
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='comp-systems' href='comp-systems.html'>
+      comp-systems
+    </a>
+    
+      
+        <span class='text-gray-300' title='2 children inside'>
+          2
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+      
+      
+    
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
+        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
+        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      </svg>
+      
+  
+    <a class='font-bold hover:underline truncate' title='ecology' href='ecology.html'>
+      ecology
+    </a>
+    
+      
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+    
+      <!-- Variable bindings for this tree-->
+  
+  
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'>
+        </path>
+      </svg>
+      
+  
+    <a class='font-bold text-green-600 hover:underline truncate' title='ecology' href='ecology/ecology.html'>
+      ecology
+    </a>
+    
+      
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+    
+  
+</div>
+    
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='programming-languages' href='programming-languages.html'>
+      programming-languages
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+
+          </div>
+        </nav>
+
+        <!-- Main body column -->
+        <div class='flex-1 w-full overflow-x-auto bg-white'>
+          <main class='px-4 py-4'>
+            <h1 class='flex items-end justify-center mb-4 p-3 bg-green-100 text-5xl font-extrabold text-black rounded'>
+  <a class='z-40 tracking-tighter '>
+    ecology
+  </a>
+</h1>
+            <article class='overflow-auto'>
+  <!-- What goes in this file will appear on top of note body-->
+  <pre class='pandoc-raw-"org"'>#+hugo_base_dir: ../</pre><pre class='pandoc-raw-"org"'>#+hugo_section: ecology</pre><h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Setup</h1>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          no exams
+        </li>
+      
+        <li>
+          groups of 4
+        </li>
+      
+        <li>
+          group assignment in exam period
+        </li>
+      
+        <li>
+          Read the entire textbook
+        </li>
+      
+        <li>
+          4 field-trips
+        </li>
+      
+        <li>
+          august 31 lake
+        </li>
+      
+        <li>
+          9-14, 9-15 zoo
+        </li>
+      
+        <li>
+          forest lab
+        </li>
+      
+        <li>
+          october 26 UC field center
+        </li>
+      
+        <li>
+          learning outcomes determine quiz questions.
+        </li>
+      
+    </ul>
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center' export_hugo_section*='ch1' export_file_name='_index'>Chapter 1</h1><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Terms</h2><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Ecology</h3>
+    <p class='mb-3'>
+      The study of the interactions between an organism and its biological and physical environment.
+    </p>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Trait</h3>
+    <p class='mb-3'>
+      A combination of characteristics in an individual. A trait that increases evolutionary fitness is an <code class='verbatim py-0.5 px-0.5 bg-gray-100'>adaptation</code>.
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Hair color
+        </li>
+      
+        <li>
+          resistance to antibiotics.
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Population</h3>
+    <p class='mb-3'>
+      All of the organisms of a particular species in a particular area.
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          The population of snow hares in the Himalayas.
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Fitness</h3>
+    <p class='mb-3'>
+      The degree to which an organism is likely to survive in an environment. The fitter the organism, the more likely they are to survive in an environment suited to their adaptations. This is more useful in the context of the population.
+    </p>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Levels of Ecological organization</h2>
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          organism
+        </li>
+      
+        <li>
+          population
+        </li>
+      
+        <li>
+          community
+        </li>
+      
+        <li>
+          ecosystem
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Proximate Vs Ultimate</h2><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Proximate Factors</h3>
+    <p class='mb-3'>
+      Direct or Immediate causes/effects on the organism. The <code class='verbatim py-0.5 px-0.5 bg-gray-100'>How</code>.
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Changes in photoperiod
+        </li>
+      
+        <li>
+          Temperature changes
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Ultimate Factors</h3>
+    <p class='mb-3'>
+      The Indirect reason for an effect on the organism. The <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Why</code>.
+    </p>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Scientific Method and Hypothesis testing</h2>
+    <p class='mb-3'>
+      Good hypothesis lead to testable <code class='verbatim py-0.5 px-0.5 bg-gray-100'>predictions</code>. It is also falsifiable.
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          Observation
+        </li>
+      
+        <li>
+          Hypothesis
+        </li>
+      
+        <li>
+          Measurements
+        </li>
+      
+        <li>
+          Results
+        </li>
+      
+        <li>
+          Conclusion
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Predictions</h3>
+    <p class='mb-3'>
+      A prediction is an observation or a result that is expected if the hypothesis is true.
+    </p>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Hypotheses and tests</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Focus on a population
+        </li>
+      
+        <li>
+          Why does the population exist?
+        </li>
+      
+        <li>
+          What unique challenges does it face?
+        </li>
+      
+        <li>
+          Are circumstances changing?
+        </li>
+      
+        <li>
+          Will the population grow, shrink, disturbed
+        </li>
+      
+    </ul>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Resources
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          reproduction
+        </li>
+      
+        <li>
+          Survival
+        </li>
+      
+        <li>
+          Mate
+        </li>
+      
+        <li>
+          Food
+        </li>
+      
+        <li>
+          Shelter
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center' export_hugo_section*='ch-2' export_file_name='_index'>Chapter 2</h1><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>review</h2>
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          mutation
+        </li>
+      
+        <li>
+          allele
+        </li>
+      
+        <li>
+          gene frequencies
+        </li>
+      
+        <li>
+          genotype
+        </li>
+      
+        <li>
+          phenotype
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Important terms for the course</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Evolution</code> is the change of populations (species) over time due to heritable changes.
+        </li>
+      
+        <li>
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Natural Selection</code> is the "selection" of heritable traits due to their fitness
+        </li>
+      
+        <li>
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Adaptation</code> is the tendency for natural selection to select changes most well suited to the environment.
+        </li>
+      
+        <li>
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Fitness</code> is the likelihood that an organism will survive (pass its genes down) in its current environment.
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Mechanisms for evolutionary change</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Natural Selection
+        </li>
+      
+        <li>
+          Genetic drift
+        </li>
+      
+        <li>
+          Gene Flow
+        </li>
+      
+        <li>
+          Mutation pressure
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Natural section, genetic drift, gene flow</h2><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>genetic drift</h3>
+    <p class='mb-3'>
+      The random change of allele frequency based on non-random mating. Only affects populations with limited populations (non-random mating)
+    </p>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Gene flow</h3>
+    <p class='mb-3'>
+      Individuals can move from population to population, or form a new population. These fluctuations can change the allele frequencies in a population.
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Isolation
+    </p>
+  
+    <p class='mb-3'>
+      Differentiation is affected by Isolation. Isolation prevents gene flow.
+    </p>
+  
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Hardy Weinberg</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(P^2 + 2PQ + Q^2\)</span>
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Adaptation is an undirected process</h2>
+    <p class='mb-3'>
+      Traits are not created to adapt to the environment. Traits instead are randomly generated (through mutation) and the traits that are well suited to the environment are selected for.
+    </p>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Phenotypic Plasticity</h2>
+    <p class='mb-3'>
+      Development of physiological variation among phenotypes induced directly by the environment.
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Occurs during the development of an individual.
+        </li>
+      
+        <li>
+          Himalayan Rabbits are a good example, they have areas of black fur if born in a cold environment.
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Adaptive landscape</h2>
+    <p class='mb-3'>
+      An adaptive landscape is a three dimensional plot, where the x and y axis refer to allele frequency and the z axis refers to fitness. "Peaks" and "Valleys" show how different allele frequencies affect fitness and why genetic drift can be helpful for adaptation.
+    </p>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Red Queen Hypothesis</h2>
+    <p class='mb-3'>
+      Increased fitness in the short term does not always end well for the species. This discrepancy of fitness between two related organisms (parasites/hosts, predators/prey) is related to generational rate. One of the species in the relationship cannot keep up evolutionarily with its pair species. This may result in extinction of prey or predator or both.
+    </p>
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center' export_hugo_section*='ch-3' export_file_name='_index'>Chapter 3</h1><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Adaptation to environmental factors</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Change factors that limit growth (amount of food, composition of air)
+        </li>
+      
+        <li>
+          Change Tolerance Range (Temperature tolerance, ph tolerance )
+        </li>
+      
+        <li>
+          Change Behavior to adapt beyond Range ( avoid cold areas )
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Limiting environmental factors</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          physical factors (strength, ability to fly)
+        </li>
+      
+        <li>
+          Physical resources
+        </li>
+      
+        <li>
+          Tolerance bounds
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>optimality and <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Principle of allocation</code></h2>
+    <p class='mb-3'>
+      Adaptation to one challenge may decrease for another. The more an organism adapts to a stable environment (optimality), the less able it is to adapt to new environments that pose new challenges (moving from hot to cold, fresh water to salt water or vice versa)
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Large beaks make it easier to break large nuts, but harder to eat insects out of trees.
+        </li>
+      
+        <li>
+          Homeostasis allows humans to survive in a variety of environmental conditions, but requires more (is limited by) food.
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Normal Distribution and measures of variation</h2>
+    <p class='mb-3'>
+      Many biological factors rely on modifications to the normal distribution.
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          quantified as a probability or confidence interval (95% of samples fall within this range of values)
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\text{Sample Variance} = \frac{\sum_1^n (\bar x - x_i)^2}{n-1} = s^2\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\text{Sample Mean} = \frac{\sum_1^n}{n} = \bar x\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\text{confidence statistic (percentage)} = 1-\alpha\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\text{confidence interval} = \bar x \pm t_{1-\alpha} * s/\sqrt n\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\text{Standard Error (Estimate of the mean)} = \frac{s^2}{n}\)</span>
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Description of the plots used in ecology</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          y axis refers to the frequency of individuals (higher is more)
+        </li>
+      
+        <li>
+          x axis refers to some limiting factor (food, temperature)
+        </li>
+      
+        <li>
+          Peak refers to the mean of the sample
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>P Value</h3>
+    <p class='mb-3'>
+      The P value is the probability that the Null hypothesis is true. This value is calculated with a statistical test (t test when using a sample).
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Example
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(H_0 = \text{Cancer is randomly occuring}\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(H_a = \text{Cancer is caused by radiation damage}\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(P &lt; 0.05\)</span>
+        </li>
+      
+        <li>
+          There is less than a 5 percent chance that cancer is randomly occurring.
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>behavioral Thermoregulation.</h2>
+    <p class='mb-3'>
+      Animals will move to areas that are conducive to their optimal temperature range.
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Snakes bask in the sun to warm up (ectotherms)
+        </li>
+      
+        <li>
+          Humans will go inside (or put on clothes) to warm up (endotherms)
+        </li>
+      
+        <li>
+          Monkeys will bathe in hot springs in cold climates. (endotherms)
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Adaptive radiation</h2>
+    <p class='mb-3'>
+      The tendency for species to diversify to fill open ecological niches.
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Early Plants
+        </li>
+      
+        <li>
+          Finches
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Osmoregulation (water stress) and photosynthesis</h2>
+    <p class='mb-3'>
+      Organisms alter their internal concentration of solute (or consume water) to regulate their internal water content.
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Skin and scales prevent unintended evaporation of water
+        </li>
+      
+        <li>
+          C3 pathway is shared by all plants (the calvin cycle)
+        </li>
+      
+        <li>
+          C4 pathway allows plants to save water by closing the stomata when necessary.
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Adaptation vs Plasticity</h2>
+    <p class='mb-3'>
+      Some animals have larger optimal ranges of physical resources than others (plasticity)
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Evolution through natural selection adapts organisms to their environments
+        </li>
+      
+        <li>
+          Plasticity refers to the ability of an organism to survive in different environments
+        </li>
+      
+        <li>
+          Humans could be said to have high plasticity due to our tool making
+        </li>
+      
+        <li>
+          Octopi make extensive use of RNA editing sites to alter their expression <a href='https://www.nature.com/articles/d41586-017-00612-y' class='text-green-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Octopus RNA editing sites</a> (plasticity?)
+        </li>
+      
+    </ul>
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center' export_hugo_section*='ch-4' export_file_name='_index'>Chapter 4</h1><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>8 Major Biomes</h2><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Tundra</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Conifer and Evergreen Forest</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Temperate Deciduous Forest</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Temperate Grassland</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Mediterranean Shrubland</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Desert</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Tropical Savanna</h3><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Tropical Rainforest</h3><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Adaptations of plants to different biomes</h2><h1 class='pb-2 mb-2 text-5xl font-bold text-center' export_hugo_section*='ch-5' export_file_name='_index'>Chapter 5</h1><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Basic Aquatic Environments</h2>
+    <p class='mb-3'>
+      Salt vs freshwater systems
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Ice
+        </li>
+      
+        <li>
+          Oceans
+        </li>
+      
+        <li>
+          Lakes
+        </li>
+      
+        <li>
+          Rivers
+        </li>
+      
+        <li>
+          Ponds
+        </li>
+      
+        <li>
+          groundwater
+        </li>
+      
+        <li>
+          soil
+        </li>
+      
+        <li>
+          atmosphere
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Lentic System (freshwater)</h3><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Water Movement (air, land, water)</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Hydrologic cycle
+        </li>
+      
+        <li>
+          Transpiration (plants return water to air in photosynthesis)
+        </li>
+      
+        <li>
+          Infiltration, water moves into soil (between particles)
+        </li>
+      
+        <li>
+          Sheet flow, water directly moves to bodies of water
+        </li>
+      
+        <li>
+          Aquifer (underground water reservoir)
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Oxygen, Carbon, salt, nutrients move through aquatic environments</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>River Continuum hypothesis</h2>
+    <p class='mb-3'>
+      Ecological changes that occur from first order to high-order streams
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Species type concentration can be determined from this
+        </li>
+      
+        <li>
+          CPOM -&gt; Shredders
+        </li>
+      
+        <li>
+          FPOM -&gt; Collectors
+        </li>
+      
+        <li>
+          Algae -&gt; Grazers
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Regression and correlation plots</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Island Biogeography</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Habitat islands
+        </li>
+      
+        <li>
+          equilibrium = rate of arrival of new species vs Extinction rate
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Large islands have lower extinction rates
+        </li>
+      
+        <li>
+          Large islands have higher immigration rates.
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          change over time
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Meta-population</h2>
+    <p class='mb-3'>
+      Interconnected populations. Lots of movement between population fragments.
+    </p>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Theoretical models</h2>
+    <p class='mb-3'>
+      Doesn't account for all real-world issues. Prevalence of natural disasters can be an example.
+    </p>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Island biogeography vs evolutionary divergence</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Less Species = larger opportunity for divergence
+        </li>
+      
+    </ul>
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center' export_hugo_section*='ch-6' export_file_name='_index'>Chapter 6</h1><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Sexual Reproduction</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Increases genetic variation
+        </li>
+      
+        <li>
+          Environmental stress can cause massive sexual reproduction (to increase variation)
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Darwin-fisher</h2><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Balance vs Truth in advertising (Darwin Fisher)</h3>
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Balance
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          male traits are exaggerated by female choice (increases cost)
+        </li>
+      
+        <li>
+          Natural selection culls high cost male traits
+        </li>
+      
+        <li>
+          Male traits get "optimized" to a balance of excessive male traits, and functional survival traits
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Truth in advertising
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Male traits indicate natural fitness
+        </li>
+      
+        <li>
+          Males can have excessive traits and still survive better
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Mating Systems</h2><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Plants</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          outcrossing (mating among different individuals)
+        </li>
+      
+        <li>
+          autogamy (self fertilization)
+        </li>
+      
+        <li>
+          apomixix (asexual reproduction)
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Territoriality</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          When resources are divided in a way that males can defend them
+        </li>
+      
+        <li>
+          Females choose males that provide access to resources
+        </li>
+      
+        <li>
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Polygny</code> is a mating system in which each female mates with more than one male
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Leks</h3>
+    <p class='mb-3'>
+      Males demonstrate at predetermined (traditional) sites.
+    </p>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Vocab</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Relatedness: A measure of how many genes are shared between individuals
+        </li>
+      
+        <li>
+          Inbreeding: When an individual mates with a close relative, eventually causing side effects.
+        </li>
+      
+        <li>
+          kin selection: Individuals may increase fitness by helping a close relative (honeybees)
+        </li>
+      
+        <li>
+          Inclusive Fitness: cooperation increases fitness (humans)
+        </li>
+      
+        <li>
+          Social Systems: group size and composition, cooperation, mating system
+        </li>
+      
+    </ul>
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>CH 7</h1><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Evolutionary stable strategy, frequency-dependent selection and hypothesis of the evolution of sexual reproduction</h2><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Evolutionary stable strategy</h3>
+    <p class='mb-3'>
+      Adaptation increases in frequency when rare (beneficial for the survival of a species)
+    </p>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Frequency dependent selection</h3>
+    <p class='mb-3'>
+      Fitness is determined by frequency in population (sickle cell)
+    </p>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Evolution of sexual reproduction</h3>
+    <p class='mb-3'>
+      Related to the red-queen hypothesis. Host had to find a way to evolve at same rate as parasite.
+    </p>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Genetic distance among populations</h2>
+    <p class='mb-3'>
+      Number of differences or mutations between two sets of DNA.
+    </p>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Genetic bottlenecks, conservation genetics of small popululations</h2>
+    <p class='mb-3'>
+      SMall populations have increased effects due to change. Allele frequency from generation to generation is much more random.
+    </p>
+  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Genetic bottlenecks</h3>
+    <p class='mb-3'>
+      Reduction in diversity of alleles because of some event (excessive predation, natural disaster, etc)
+    </p>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Design a common garden experiment to disentangle phenotypici plasticity verses evolutionary divergencce</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Grow plants in the same garden (with different phenotypes)
+        </li>
+      
+        <li>
+          If phenotypes persist, it is a genetically controlled phenotype
+        </li>
+      
+        <li>
+          If phenotypes change, it is phenotypic plasticity
+        </li>
+      
+    </ul>
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>CH 8</h1><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Compare and contrast different life tables to infer different life history strategies.</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Interpret differences in survivorship curves</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Understand <em>r</em>, the intrinsic growth rate of a population</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>age structure pyramids in terms of population growth and reproduction</h2><h1 class='pb-2 mb-2 text-5xl font-bold text-center'>CH 9</h1>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Logistic Growth
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(dN/dt = rN (1 - N/K)\)</span>
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          Population regulation
+        </li>
+      
+        <li>
+          Top-down
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Predators
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          Bottom-up
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          food resources
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          K (carrying capacity)
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Density independent</h2>
+    <p class='mb-3'>
+      Population effects are a function of the population size (or makeup)
+    </p>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Density Dependent</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>ESS and group selection</h2><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Many factors</h2>
+
+  <div class='flex items-center justify-center mt-2'>
+  
+    
+      <a class='text-gray-300 hover:text-green-600 text-sm' title='Edit this page on GitHub' href='https://github.com/IllustratedMan-code/Planner/blob/main/ecology/ecology.org'>
+        <svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'></path>
+        </svg>
+      </a>
+    
+  
+</div>
+</article>
+            <div class='flex flex-col lg:flex-row lg:space-x-2'>
+              
+              
+            </div>
+            
+  <section class='flex flex-wrap items-end justify-center my-4 space-x-2 space-y-2 font-mono text-sm'>
+    
+  </section>
+
+            <!-- What goes in this file will at the very end of the main div -->
+          </main>
+        </div>
+      </div>
+      <footer class='flex items-center justify-center mt-2 mb-8 space-x-4 text-center text-gray-800'>
+  
+  <div>
+    <a href='' title='Go to Home page'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'></path>
+      </svg>
+    </a>
+  </div>
+  <div>
+    <a href='-/all.html' title='View Index'>
+      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
+        </path>
+      </svg>
+    </a>
+  </div>
+  <div>
+    <a href='https://emanote.srid.ca' target='_blank' title='Generated by Emanote 1.0.1.6'>
+      <img class='w-6 h-6 hover:text-green-700' src='_emanote-static/emanote-logo.svg' />
+    </a>
+  </div>
+  <div>
+    <a href='-/tags.html' title='View tags'>
+      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
+        </path>
+      </svg>
+    </a>
+  </div>
+  <div>
+    <a href='-/tasks.html' title='View tasks'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+      </svg>
+    </a>
+  </div>
+</footer>
+    </div>
+  
+  <div id='stork-search-container' class='hidden fixed w-screen h-screen inset-0 backdrop-filter backdrop-blur-sm'>
+  <div class='fixed w-screen h-screen inset-0' onclick='window.emanote.stork.toggleSearch()'></div>
+
+  <div class='container mx-auto p-10 mt-10'>
+    <div class='stork-wrapper-flat container mx-auto'>
+      <input id='stork-search-input' data-stork='emanote-search' class='stork-input' placeholder='Search (Ctrl+K) ...' />
+      <div data-stork='emanote-search-output' class='stork-output'></div>
+    </div>
+  </div>
+</div>
+  
+    
+  
+</body>
+
+</html>
