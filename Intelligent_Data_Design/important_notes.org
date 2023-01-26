@@ -1,7 +1,7 @@
 * Covariance
 + \(\sigma_{xy} = \frac{\sum(x_i-\mu_x)(y_i-\mu_y)}{n}\) is the covariance
 + covariance matrix: \(\Sigma = \begin{pmatrix} \sigma^2_{x_1} && \sigma_{x_1x_2} && ... && \sigma_{x_1x_d} \\ && \sigma^2{x_2}
- \\ && && ... \\ && && && \sigma^2_{x_d}\end{pmatrix}\)
+ \\ && && ... \\ && && && \sigma^2_{x_d}\end{pmatrix} = (x - \mu)^T(x-\mu)\)
 * PCA
 + \(\mu = \frac{1}{n}\sum^n_{i=1}x_i\) compute the mean
 + \(Z = D-\mu^T\) center the data

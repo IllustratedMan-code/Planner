@@ -1,0 +1,10 @@
+
+* PCA review
++ computes covariance matrix in reduced dimensions
++ compute principal components from eigenvalues
++ Choose dimensionality \(r\) relevant to \(\alpha\)
++ \(\Sigma = U \Delta U^T = \sum^d_{i=1}\lambda_i u_i u_i^T\)
++ \(\Sigma\) is just a combination of these rank one matricies
+* SVD
++ \(\Sigma = V \Delta V^T \)
++ \(X = U \Delta V^T\)

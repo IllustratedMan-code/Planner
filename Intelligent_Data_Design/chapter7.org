@@ -47,4 +47,13 @@
 + Finds linear combinations of the high-dimensional feature space obtained from
   a non-linear transformations of the input dimensions
 * Singular Value Decomposition
++ \(\Sigma = V \Delta V^T \)
++ \(X = U \Delta V^T\)
++ \(D = L \Delta R^T\)
++ L is orthogonal n x n, R is d x d, \Delta is d x d
++ \delta is the eigenvalues of D in a diagonal matrix \(\Delta\)
++ R is the eighenvectors of \(D^TD\)
++ L is the eigenvectors of \(DD^T\)
 ** Connection between SVD and PCA
++ \(n\lambda_i = \delta_i^2\)
++ \(D^TD = n\Sigma\)

@@ -1,0 +1,294 @@
+#+hugo_base_dir: ../
+#+hugo_section: ecology
+* Setup
++ no exams
++ groups of 4
++ group assignment in exam period
++ Read the entire textbook
++ 4 field-trips
++ august 31 lake
++ 9-14, 9-15 zoo
++ forest lab
++ october 26 UC field center
++ learning outcomes determine quiz questions.
+* Chapter 1
+:PROPERTIES:
+:EXPORT_HUGO_SECTION*: ch1
+:EXPORT_FILE_NAME: _index
+:END:
+** Terms
+*** Ecology
+The study of the interactions between an organism and its biological and physical environment.
+*** Trait
+A combination of characteristics in an individual. A trait that increases evolutionary fitness is an =adaptation=.
++ Hair color
++ resistance to antibiotics.
+*** Population
+All of the organisms of a particular species in a particular area.
++ The population of snow hares in the Himalayas.
+*** Fitness
+The degree to which an organism is likely to survive in an environment. The fitter the organism, the more likely they are to survive in an environment suited to their adaptations. This is more useful in the context of the population.
+** Levels of Ecological organization
+1. organism
+2. population
+3. community
+4. ecosystem
+** Proximate Vs Ultimate
+*** Proximate Factors
+Direct or Immediate causes/effects on the organism. The =How=.
++ Changes in photoperiod
++ Temperature changes
+*** Ultimate Factors
+The Indirect reason for an effect on the organism. The =Why=.
+
+** Scientific Method and Hypothesis testing
+Good hypothesis lead to testable =predictions=. It is also falsifiable.
+1. Observation
+2. Hypothesis
+3. Measurements
+4. Results
+5. Conclusion
+*** Predictions
+A prediction is an observation or a result that is expected if the hypothesis is true.
+*** Hypotheses and tests
++ Focus on a population
++ Why does the population exist?
++ What unique challenges does it face?
++ Are circumstances changing?
++ Will the population grow, shrink, disturbed
+**** Resources
++ reproduction
++ Survival
++ Mate
++ Food
++ Shelter
+* Chapter 2
+:PROPERTIES:
+:EXPORT_HUGO_SECTION*: ch-2
+:EXPORT_FILE_NAME: _index
+:END:
+** review
+1. mutation
+2. allele
+3. gene frequencies
+4. genotype
+5. phenotype
+** Important terms for the course
++ =Evolution= is the change of populations (species) over time due to heritable changes.
++ =Natural Selection= is the "selection" of heritable traits due to their fitness
++ =Adaptation= is the tendency for natural selection to select changes most well suited to the environment.
++ =Fitness= is the likelihood that an organism will survive (pass its genes down) in its current environment.
+** Mechanisms for evolutionary change
++ Natural Selection
++ Genetic drift
++ Gene Flow
++ Mutation pressure
+** Natural section, genetic drift, gene flow
+*** genetic drift
+The random change of allele frequency based on non-random mating. Only affects populations with limited populations (non-random mating)
+*** Gene flow
+Individuals can move from population to population, or form a new population.
+These fluctuations can change the allele frequencies in a population.
+**** Isolation
+Differentiation is affected by Isolation. Isolation prevents gene flow.
+*** Hardy Weinberg
++ \(P^2 + 2PQ + Q^2\)
+** Adaptation is an undirected process
+Traits are not created to adapt to the environment. Traits instead are randomly generated (through mutation) and the traits that are well suited to the environment are selected for.
+** Phenotypic Plasticity
+Development of physiological variation among phenotypes induced directly by the environment.
++ Occurs during the development of an individual.
++ Himalayan Rabbits are a good example, they have areas of black fur if born in a cold environment.
+** Adaptive landscape
+An adaptive landscape is a three dimensional plot, where the x and y axis refer to allele frequency and the z axis refers to fitness. "Peaks" and "Valleys" show how different allele frequencies affect fitness and why genetic drift can be helpful for adaptation.
+** Red Queen Hypothesis
+Increased fitness in the short term does not always end well for the species.
+This discrepancy of fitness between two related organisms (parasites/hosts, predators/prey) is related to generational rate. One of the species in the relationship cannot keep up evolutionarily with its pair species. This may result in extinction of prey or predator or both.
+* Chapter 3
+:PROPERTIES:
+:EXPORT_HUGO_SECTION*: ch-3
+:EXPORT_FILE_NAME: _index
+:END:
+** Adaptation to environmental factors
++ Change factors that limit growth (amount of food, composition of air)
++ Change Tolerance Range (Temperature tolerance, ph tolerance )
++ Change Behavior to adapt beyond Range ( avoid cold areas )
+** Limiting environmental factors
++ physical factors (strength, ability to fly)
++ Physical resources
++ Tolerance bounds
+** optimality and =Principle of allocation=
+Adaptation to one challenge may decrease for another. The more an organism adapts to a stable environment (optimality), the less able it is to adapt to new environments that pose new challenges (moving from hot to cold, fresh water to salt water or vice versa)
++ Large beaks make it easier to break large nuts, but harder to eat insects out of trees.
++ Homeostasis allows humans to survive in a variety of environmental conditions, but requires more (is limited by) food.
+** Normal Distribution and measures of variation
+Many biological factors rely on modifications to the normal distribution.
++ quantified as a probability or confidence interval (95% of samples fall within this range of values)
++ \(\text{Sample Variance} = \frac{\sum_1^n (\bar x - x_i)^2}{n-1} = s^2\)
++ \(\text{Sample Mean} = \frac{\sum_1^n}{n} = \bar x\)
++ \(\text{confidence statistic (percentage)} = 1-\alpha\)
++ \(\text{confidence interval} = \bar x \pm t_{1-\alpha} * s/\sqrt n\)
++ \(\text{Standard Error (Estimate of the mean)} = \frac{s^2}{n}\)
+*** Description of the plots used in ecology
++ y axis refers to the frequency of individuals (higher is more)
++ x axis refers to some limiting factor (food, temperature)
++ Peak refers to the mean of the sample
+*** P Value
+The P value is the probability that the Null hypothesis is true. This value is calculated with a statistical test (t test when using a sample).
+**** Example
++ \(H_0 = \text{Cancer is randomly occuring}\)
++ \(H_a = \text{Cancer is caused by radiation damage}\)
++ \(P < 0.05\)
++ There is less than a 5 percent chance that cancer is randomly occurring.
+** behavioral Thermoregulation.
+Animals will move to areas that are conducive to their optimal temperature range.
++ Snakes bask in the sun to warm up (ectotherms)
++ Humans will go inside (or put on clothes) to warm up (endotherms)
++ Monkeys will bathe in hot springs in cold climates. (endotherms)
+** Adaptive radiation
+The tendency for species to diversify to fill open ecological niches.
++ Early Plants
++ Finches
+** Osmoregulation (water stress) and photosynthesis
+Organisms alter their internal concentration of solute (or consume water) to regulate their internal water content.
++ Skin and scales prevent unintended evaporation of water
++ C3 pathway is shared by all plants (the calvin cycle)
++ C4 pathway allows plants to save water by closing the stomata when necessary.
+** Adaptation vs Plasticity
+Some animals have larger optimal ranges of physical resources than others (plasticity)
++ Evolution through natural selection adapts organisms to their environments
++ Plasticity refers to the ability of an organism to survive in different environments
++ Humans could be said to have high plasticity due to our tool making
++ Octopi make extensive use of RNA editing sites to alter their expression [[https://www.nature.com/articles/d41586-017-00612-y][Octopus RNA editing sites]] (plasticity?)
+* Chapter 4
+:PROPERTIES:
+:EXPORT_HUGO_SECTION*: ch-4
+:EXPORT_FILE_NAME: _index
+:END:
+** 8 Major Biomes
+*** Tundra
+*** Conifer and Evergreen Forest
+*** Temperate Deciduous Forest
+*** Temperate Grassland
+*** Mediterranean Shrubland
+*** Desert
+*** Tropical Savanna
+*** Tropical Rainforest
+
+** Adaptations of plants to different biomes
+* Chapter 5
+:PROPERTIES:
+:EXPORT_HUGO_SECTION*: ch-5
+:EXPORT_FILE_NAME: _index
+:END:
+** Basic Aquatic Environments
+Salt vs freshwater systems
++ Ice
++ Oceans
++ Lakes
++ Rivers
++ Ponds
++ groundwater
++ soil
++ atmosphere
+*** Lentic System (freshwater)
+** Water Movement (air, land, water)
++ Hydrologic cycle
++ Transpiration (plants return water to air in photosynthesis)
++ Infiltration, water moves into soil (between particles)
++ Sheet flow, water directly moves to bodies of water
++ Aquifer (underground water reservoir)
+** Oxygen, Carbon, salt, nutrients move through aquatic environments
+** River Continuum hypothesis
+Ecological changes that occur from first order to high-order streams
++ Species type concentration can be determined from this
++ CPOM -> Shredders
++ FPOM -> Collectors
++ Algae -> Grazers
+** Regression and correlation plots
+** Island Biogeography
++ Habitat islands
++ equilibrium = rate of arrival of new species vs Extinction rate
+  + Large islands have lower extinction rates
+  + Large islands have higher immigration rates.
++ change over time
+** Meta-population
+Interconnected populations. Lots of movement between population fragments.
+** Theoretical models
+Doesn't account for all real-world issues. Prevalence of natural disasters can be an example.
+** Island biogeography vs evolutionary divergence
++ Less Species = larger opportunity for divergence
+* Chapter 6
+:PROPERTIES:
+:EXPORT_HUGO_SECTION*: ch-6
+:EXPORT_FILE_NAME: _index
+:END:
+** Sexual Reproduction
++ Increases genetic variation
++ Environmental stress can cause massive sexual reproduction (to increase variation)
+** Darwin-fisher
+*** Balance vs Truth in advertising (Darwin Fisher)
+**** Balance
++ male traits are exaggerated by female choice (increases cost)
++ Natural selection culls high cost male traits
++ Male traits get "optimized" to a balance of excessive male traits, and functional
+  survival traits
+
+**** Truth in advertising
++ Male traits indicate natural fitness
++ Males can have excessive traits and still survive better
+
+** Mating Systems
+*** Plants
++ outcrossing (mating among different individuals)
++ autogamy (self fertilization)
++ apomixix (asexual reproduction)
+** Territoriality
++ When resources are divided in a way that males can defend them
++ Females choose males that provide access to resources
++ =Polygny= is a mating system in which each female mates with more than one male
+*** Leks
+Males demonstrate at predetermined (traditional) sites.
+** Vocab
++ Relatedness: A measure of how many genes are shared between individuals
++ Inbreeding: When an individual mates with a close relative, eventually causing side effects.
++ kin selection: Individuals may increase fitness by helping a close relative (honeybees)
++ Inclusive Fitness: cooperation increases fitness (humans)
++ Social Systems: group size and composition, cooperation, mating system
+* CH 7
+** Evolutionary stable strategy, frequency-dependent selection and hypothesis of the evolution of sexual reproduction
+*** Evolutionary stable strategy
+Adaptation increases in frequency when rare (beneficial for the survival of a species)
+*** Frequency dependent selection
+Fitness is determined by frequency in population (sickle cell)
+*** Evolution of sexual reproduction
+Related to the red-queen hypothesis. Host had to find a way to evolve at same rate as parasite.
+** Genetic distance among populations
+Number of differences or mutations between two sets of DNA.
+** Genetic bottlenecks, conservation genetics of small popululations
+SMall populations have increased effects due to change. Allele frequency from generation to generation is much more random.
+*** Genetic bottlenecks
+Reduction in diversity of alleles because of some event (excessive predation, natural disaster, etc)
+** Design a common garden experiment to disentangle phenotypici plasticity verses evolutionary divergencce
++ Grow plants in the same garden (with different phenotypes)
++ If phenotypes persist, it is a genetically controlled phenotype
++ If phenotypes change, it is phenotypic plasticity
+* CH 8
+** Compare and contrast different life tables to infer different life history strategies.
+** Interpret differences in survivorship curves
+** Understand /r/, the intrinsic growth rate of a population
+** age structure pyramids in terms of population growth and reproduction
+* CH 9
++ Logistic Growth
+  + \(dN/dt = rN (1 - N/K)\)
++ Population regulation
++ Top-down
+  + Predators
++ Bottom-up
+  + food resources
++ K (carrying capacity)
+** Density independent
+Population effects are a function of the population size (or makeup)
+** Density Dependent
+** ESS and group selection
+** Many factors
