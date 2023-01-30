@@ -33,10 +33,10 @@
 ** Adjacency Matrix
 + graph can be represented as an n x n symmetric binary adjacency matrix
 + \(A(i,j) = \begin{cases}1 \text{ if $v_i$ is adjacent to $v_j$} \\ 0
-  \text{ otherwise }\end{cases}}\)
+  \text{ otherwise }\end{cases}\)
 + Directed graph is not symmetric
 + weighted graph = \(A(i,j) = \begin{cases}w_{ij} \text{ if $v_i$ is adjacent to $v_j$} \\ 0
-  \text{ otherwise }\end{cases}}\)
+  \text{ otherwise }\end{cases}\)
 + threshold can converted weighted graph to binary graph
 ** Graphs from Data Matrix
 + Graph is created from data where edges have weight \(w_{ij} = sim(x_i,x_j)\)
