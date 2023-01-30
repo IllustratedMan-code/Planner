@@ -45,6 +45,6 @@ reflect the change.
 + No manual edits were necessary to the grub configuration (not sure why
   instructions said they were needed?)
 + The only instructions to repeat this is to run the following one-liner
-#+begin_src
+#+begin_src bash
 locate -b -e 6.1.8 | grep -v /home | xargs -n 1 -p sudo rm -r && sudo update-grub
 #+end_src
