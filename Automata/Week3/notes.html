@@ -51,7 +51,7 @@
 
 
   
-  <link href='tailwind.css?instanceId=7449574b-e7b6-465d-8125-b49957794d81' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=f6bd30f9-6d5f-4eb1-a48d-82fad2fc14c4' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -665,8 +665,8 @@
     </a>
     
       
-        <span class='text-gray-300' title='16 children inside'>
-          16
+        <span class='text-gray-300' title='17 children inside'>
+          17
         </span>
       
     
@@ -704,8 +704,8 @@
     </a>
     
       
-        <span class='text-gray-300' title='3 children inside'>
-          3
+        <span class='text-gray-300' title='4 children inside'>
+          4
         </span>
       
     
@@ -743,8 +743,8 @@
     </a>
     
       
-        <span class='text-gray-300' title='2 children inside'>
-          2
+        <span class='text-gray-300' title='3 children inside'>
+          3
         </span>
       
     
@@ -1002,6 +1002,30 @@
 </h1>
             <article class='overflow-auto'>
   <!-- What goes in this file will appear on top of note body-->
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>notes</h1>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          non-determinism is not the same as randomization
+        </li>
+      
+        <li>
+          trajectory implies randomization
+        </li>
+      
+        <li>
+          randomization will yield random results (probability that string will be accepted/denied)
+        </li>
+      
+        <li>
+          non-determinism implies all trajectories are explored simultaniously
+        </li>
+      
+        <li>
+          NFA will always return an accept or reject (no infinite loops)
+        </li>
+      
+    </ul>
   <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Determinisitic finite acceptor(DFA)</h1>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
@@ -1058,7 +1082,63 @@
         </li>
       
     </ul>
-  
+  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>non-Determinisitic finite acceptor(NFA)</h1>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          M = <span class='math inline'>\((Q, \Sigma, \delta, q_0, F)\)</span>
+        </li>
+      
+        <li>
+          Q is a finite set of internal states
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\Sigma\)</span>: Input alphabet
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\delta\)</span>: <span class='math inline'>\(Q \times (\Sigma \cup \{\lambda\})\rightsquigarrow 2^Q\)</span> is a total function (transition function)
+        </li>
+      
+        <li>
+          <span class='math inline'>\(q_0 \in Q\)</span> is the initial/start state
+        </li>
+      
+        <li>
+          <span class='math inline'>\(F \subseteq Q\)</span> is the set of final states
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>attributes</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          all sets and rules are finite
+        </li>
+      
+        <li>
+          partial function that incorporates non-determinisim
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>language accepted</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          at least one trajectory must end in a final state
+        </li>
+      
+        <li>
+          not all parallel trajectories need to end in a final state
+        </li>
+      
+        <li>
+          string is only in the language if the final state is one of the possible parallel trajectories
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>extended transition funciton</h2><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Rule 1</h3>
 
   <div class='flex items-center justify-center mt-2'>
   
