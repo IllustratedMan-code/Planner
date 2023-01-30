@@ -126,3 +126,4 @@ Length/Rate
 + hostname tp IP address translation
 + host aliasing
   + canonical, alias names
++ each ISP has local DNA nae server
