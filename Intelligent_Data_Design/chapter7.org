@@ -11,7 +11,7 @@
 + \(\mu = 0\)
 + \(x^{'}_i = \left(\frac{u^Tx_i}{u^Tu}\right)u = (u^Tx_i)u = a_iu\) is the
   projection of \(x_i\) onto u
-+ \(a_i = u^Tx_i\) is the coordinate \(x_i^'\) along u
++ \(a_i = u^Tx_i\) is the coordinate \(x_i'\) along u
 + since \(\mu = 0\) the coordinate alonge u is also 0
 + \(\sigma^2_u = u^T\Sigma u\)
 + \(\Sigma\) is the covariance matrix for the centered data D
