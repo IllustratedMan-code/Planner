@@ -1,0 +1,32 @@
+#+title: lab1
+#+options: toc:nil num:nil
+* 1.
+#+attr_latex: :width 0.8\textwidth
+[[file:http1-annotated.pdf]]
+[[file:http2-annotated.pdf]]
+1. Http version 1.1 for both request (me) and reponse (server)
+2. =en-US, en;q=0.5\r\n=
+3. =10.11.143.36= (me), =128.119.245.12= (server)
+4. 200
+5. =Fri, 27 Jan 2023 6:59:01 GMT\r\n=
+6. 128 bytes
+7. All the headers can be displayed in the listing window, some parts of the
+   data are not expanded in the http section, like the html content
+* 2.
+#+attr_latex: :width 0.8\textwidth
+[[file:http5-annotated.pdf]]
+#+attr_latex: :width 0.8\textwidth
+[[file:http6-annotated.pdf]]
+1. No if modified on first packet
+2. if modified on second packet
+
+
+* 3.
+1. 1 get (not including icon get), packet 12
+2. packet 14
+3. status code 200 (OK)
+4. 1 TCP segment, not sure why it is only one, might have something to do with TCP-segmentation offload, but not sure (I am on NixOS).
+* 4.
+1. 4 get requests to 128.119.245.12
+2. The images were downloaded one after the other, serially. This can be
+   determined by the timestamps.

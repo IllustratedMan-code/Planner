@@ -1,4 +1,9 @@
-
+* notes
++ non-determinism is not the same as randomization
++ trajectory implies randomization
++ randomization will yield random results (probability that string will be accepted/denied)
++ non-determinism implies all trajectories are explored simultaniously
++ NFA will always return an accept or reject (no infinite loops)
 * Determinisitic finite acceptor(DFA)
 + M = \((Q, \Sigma, \delta, q_0, F)\)
 + Q is a finite set of internal states
@@ -16,3 +21,20 @@
 ** Extended transition function
 + \(\delta^* : Q \times \Sigma \rightarrow Q\)
 + one shot identification of state change for any string
+* non-Determinisitic finite acceptor(NFA)
++ M = \((Q, \Sigma, \delta, q_0, F)\)
++ Q is a finite set of internal states
++ \(\Sigma\): Input alphabet
++ \(\delta\): \(Q \times (\Sigma \cup \{\lambda\})\rightsquigarrow 2^Q\) is a total function (transition function)
++ \(q_0 \in Q\) is the initial/start state
++ \(F \subseteq Q\) is the set of final states
+** attributes
++ all sets and rules are finite
++ partial function that incorporates non-determinisim
+** language accepted
++ at least one trajectory must end in a final state
++ not all parallel trajectories need to end in a final state
++ string is only in the language if the final state is one of the possible
+  parallel trajectories
+** extended transition funciton
+*** Rule 1

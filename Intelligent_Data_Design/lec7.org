@@ -1,0 +1,5 @@
+
+* LDA linear discriminant analysis
++ PCA/SVD does not consider the classes (labels)
++ LDA will try to take the classes into account
++ LDA finds the direction that separates the classes

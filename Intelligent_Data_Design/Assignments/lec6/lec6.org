@@ -1,0 +1,56 @@
+#+title: Lec 6: Classroom activity
+#+options: toc:nil num:nil
+#+date: 1/26/2023
+#+LATEX_HEADER: \usepackage[margin=0.5in]{geometry}
+#+latex_header: \usepackage{minted}
+* 1.
+** a.
+#+attr_latex: :width 8cm
+[[file:a.png]]
++ \(\begin{bmatrix} 1 & 0 & 0 \\
+                    0 & 0.25 & -0.25 \\
+                    0 & -0.25 & 0.25 \end{bmatrix}\)
+** b.
++ \(\begin{bmatrix} 1 & 0 & 0 \\
+                    0 & 0.25 & -0.25 \\
+                    0 & -0.25 & 0.25 \end{bmatrix} \begin{bmatrix}1 \\ 0 \\ 0
+  \end{bmatrix} = \begin{bmatrix}1 \\ 0 \\ 0
+  \end{bmatrix} \)
++ normalized is \(\frac{ \begin{bmatrix}1 \\ 0 \\ 0
+  \end{bmatrix}} {1}  \)
++ first eigenvector is \(\begin{bmatrix}1 \\ 0 \\ 0
+  \end{bmatrix}\)
++ first eigenvalue is 1
+** c.
++ \(B = A - \lambda vv^T = \(\begin{bmatrix} 1 & 0 & 0 \\
+                    0 & 0.25 & -0.25 \\
+                    0 & -0.25 & 0.25 \end{bmatrix} - \(\begin{bmatrix} 1 & 0 & 0 \\
+                    0 & 0 & 0 \\
+                    0 & 0 & 0 \end{bmatrix} = \(\begin{bmatrix} 0 & 0 & 0 \\
+                    0 & 0.25 & -0.25 \\
+                    0 & -0.25 & 0.25 \end{bmatrix}\)
+
+** d.
+#+attr_latex: :width 8cm
+[[file:d.png]]
+** e and f.
+#+attr_latex: :width 8cm
+[[file:ef.png]]
+
+* 2.
+** a.
+\(\begin{bmatrix} 4.26 & 0.323 & 0.323 \\
+3.14 & 0.238 & 0.561 \\
+2.0 & 0.152 & 0.713 \\
+1.92 & 0.146 & 0.859 \\
+1.03 & 0.078 & 0.936 \\
+0.84 & 0.064 & 1.0 \end{bmatrix}
+\)
+** b.
+The first two principal directions correspond to the first two eigenvalues
+(largest 2). The variance from these two directions is the sum of these
+eigenvalues \(4.26 + 3.14 = 7.4\)
+** c.
+The number of eigenvectors needed to explain at least 80% of the variance is 4.
+This is shown in the table above by the cumulative proportion of variance
+captured, which is 85.9% at 4 eigenvalues.

@@ -1,0 +1,21 @@
+
+* LDA Linear discriminant analysis
+** optimal linear discriminant
++ LDA maximizes the separation by ensuring that the scatter is small
++ \(s^2_i = \sum\limits_{x_j \in D_i}(a_j-m_i)^2 = n_i\sigma^2_i\)
++ \(n_i = |D_i|\) is the size
++ \(\max\limits_w j(w) = \frac{(m_1-m_2)^2}{s^2_1+s^2_2}\)
++ goal of lda is to find the vector \(w\) that maximizes \(j(w)\). This
+  maximizes the separation between \(m_1 \) and \(m_2\) and minimizes the total
+  scatter \(s^2_1+s^2_2\) of the two classes
++ \((m_1-m_2)^2 = w^TBw\)
++ \(B = (\mu_1-\mu_2)(\mu_1-\mu_2)^T\) is a d x d rank one matrix (between class scatter
+  matrix)
++ \(s^2 = w^TS_1w\)
++ \(s^2_2 = w^TS_2w\)
++ \(S_i = n_i\Sigma_i\)
++ \(\max\limits_w J(w) = \frac{w^TBw}{w^TSw}\)
++ \(bW =\lambda Sw\)
++ \(S^{-1}Bw = \lambda w\)
++ computing S takes \(O(nd^2)\) time
++ computing the dominant eigenvalue-eigenvector pair takes \(O(d^3)\) time

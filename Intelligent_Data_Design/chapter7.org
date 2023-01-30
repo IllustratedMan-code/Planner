@@ -43,6 +43,7 @@
 *** Choosing the dimensionality
 + \(f(r) = \frac{\sum^r_{i=1} \lambda_i}{var(D)}\)
 ** Geometry of PCA
++ Principal components are always ortholinear
 * Kernel Principal Component Analysis
 + Finds linear combinations of the high-dimensional feature space obtained from
   a non-linear transformations of the input dimensions

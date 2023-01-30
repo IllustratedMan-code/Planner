@@ -116,3 +116,13 @@ Length/Rate
 + Send message and hope for reply
 + Does not provide: anything that tcp has
 + Used for fast transfer of non-essential items
+** HTTP/2
++ increased flexibility at server
++ MTU
++ packet loss still stalls object transfer
+** Http/1.1
++ client requests 1 large object
+** DNS
++ hostname tp IP address translation
++ host aliasing
+  + canonical, alias names
