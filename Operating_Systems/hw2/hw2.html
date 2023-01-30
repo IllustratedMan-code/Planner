@@ -51,7 +51,7 @@
 
 
   
-  <link href='tailwind.css?instanceId=74abe912-9e45-4c38-b609-ab44438654cc' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=27273181-0aa3-4d85-a3cb-1cbe11017c5f' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -320,7 +320,7 @@
                     
                       <!-- The style width attribute here is to prevent huge
                       icon from displaying at those rare occasions when Tailwind
-                      hasn't kicked in immediately on page load 
+                      hasn't kicked in immediately on page load
                       -->
                       <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
                     
@@ -963,11 +963,11 @@
 </h1>
             <article class='overflow-auto'>
   <!-- What goes in this file will appear on top of note body-->
-  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>1.4</h1>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>1.4</h1>
     <p class='mb-3'>
       False: a tainted kernel can work perfectly fine. The "taint" comes from a list of different reasons that may cause problems down the line. This is useful for debugging.
     </p>
-  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>1.5</h1>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>1.5</h1>
     <p class='mb-3'>
       The current tainted state is recorded at <code class='verbatim py-0.5 px-0.5 bg-gray-100'>/proc/sys/kernel/tained</code>. When the kernel is not tained the taint state is 0. To view the current state, one can use the following command <code class='verbatim py-0.5 px-0.5 bg-gray-100'>cat /proc/sys/kernel/tainted</code>. This results in a decimal number corresponding to the various taints in the kernel. Converting this decimal number to binary and examining the bits, one can determine the various taints. I wrote the following script to do just that.
     </p>

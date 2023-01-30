@@ -51,7 +51,7 @@
 
 
   
-  <link href='tailwind.css?instanceId=74abe912-9e45-4c38-b609-ab44438654cc' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=27273181-0aa3-4d85-a3cb-1cbe11017c5f' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -320,7 +320,7 @@
                     
                       <!-- The style width attribute here is to prevent huge
                       icon from displaying at those rare occasions when Tailwind
-                      hasn't kicked in immediately on page load 
+                      hasn't kicked in immediately on page load
                       -->
                       <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
                     
@@ -963,17 +963,17 @@
 </h1>
             <article class='overflow-auto'>
   <!-- What goes in this file will appear on top of note body-->
-  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Task 1</h1>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Task 1</h1>
     <p class='mb-3'>
       I followed the steps given in the assignment: I downloaded the ubuntu image from the website, loaded it into the virtual machine, and installed ubuntu. I used all the recommended specs given in the assignment. Additionally, I installed the virtualbox guest tools so I could fullscreen the vm. I have done this before, so did not run into many difficulties. The only minor difficulty was in getting virtualbox installed in my system (NixOS), but that was easily solved by following the directions on the NixOS wiki for virtualbox.
     </p>
-  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Task 2.1</h1><div class='py-0.5 mb-3 text-sm'><pre><code class='bash language-bash'>mkdir team_dropbox && chmod 760 team_dropbox # create directory, owner has all permissions, group has read write, others have none
-</code></pre></div><h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Task 2.2</h1>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Task 2.1</h1><div class='py-0.5 mb-3 text-sm'><pre><code class='bash language-bash'>mkdir team_dropbox && chmod 760 team_dropbox # create directory, owner has all permissions, group has read write, others have none
+</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Task 2.2</h1>
     <p class='mb-3'>
       <code class='verbatim py-0.5 px-0.5 bg-gray-100'>find</code> is recursive by default, <code class='verbatim py-0.5 px-0.5 bg-gray-100'>.</code> refers to the current directory, <code class='verbatim py-0.5 px-0.5 bg-gray-100'>-newermt</code> refers to "modified files newer than timestamp". The time stamp is the current date at midnight (00:00:00).
     </p>
   <div class='py-0.5 mb-3 text-sm'><pre><code class='bash language-bash'>find . -newermt "$(date +'%m/%d/%y 00:00:00')"
-</code></pre></div><h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Task 3</h1>
+</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Task 3</h1>
     <p class='mb-3'>
       The tutorial linked in the assignment as well as the assignment instructions are out of date. The newest (stable) kernel is 6.1.8. The kernel listed (5.13.4) did not seem to be available through kernel.org. None of the grub instructions were relevant, they were all enabled by default. I did have to comment out <code class='verbatim py-0.5 px-0.5 bg-gray-100'>GRUB_HIDDEN_TIMEOUT</code> to get the grub menu to show up, which was not in the assignment instructions.
     </p>
@@ -981,7 +981,7 @@
     <p class='mb-3'>
       Also it is unclear whether or not I should have installed the kernel modules as well as the kernel. The instructions only mentioned running make 2 times. It would have been 3 to install the modules as well.
     </p>
-  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Task 4</h1>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Task 4</h1>
     <p class='mb-3'>
       This is a one-liner that removes all mention of the kernel and updates grub to reflect the change.
     </p>

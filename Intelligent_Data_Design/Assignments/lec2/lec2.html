@@ -51,7 +51,7 @@
 
 
   
-  <link href='tailwind.css?instanceId=74abe912-9e45-4c38-b609-ab44438654cc' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=27273181-0aa3-4d85-a3cb-1cbe11017c5f' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -329,7 +329,7 @@
                     
                       <!-- The style width attribute here is to prevent huge
                       icon from displaying at those rare occasions when Tailwind
-                      hasn't kicked in immediately on page load 
+                      hasn't kicked in immediately on page load
                       -->
                       <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
                     
@@ -1715,7 +1715,7 @@
         </li>
       
     </ul>
-  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>2</h1><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>a</h2>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>2</h1><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>a</h2>
     <p class='mb-3'>
       1 dimensional scatter plot of points shows the geometric view.
     </p>
@@ -1725,7 +1725,7 @@ fig, ax = plt.subplots()
 ax.scatter(d, [0] * len(d))
 ax.yaxis.set_visible(False)
 fig.savefig("2a.png")
-</code></pre></div><img class='inline mb-3' src='Intelligent_Data_Design/Assignments/lec2/2a.png' alt style='width: inherit;' /><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>b</h2>
+</code></pre></div><img class='inline mb-3' src='Intelligent_Data_Design/Assignments/lec2/2a.png' alt style='width: inherit;' /><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>b</h2>
     <p class='mb-3'>
       <span class='math inline'>\(\mu = \frac{1+5+5+2+1+6}{6} = \frac{10}{3}\)</span>, <span class='math inline'>\(\sigma^2 =
    \frac{(1-\frac{10}{3})^2+(5-\frac{10}{3})^2+(5-\frac{10}{3})^2+(2-\frac{10}{3})^2+(1-\frac{10}{3})^2+(6-\frac{10}{3})^2}{6-1}
@@ -1733,7 +1733,7 @@ fig.savefig("2a.png")
     </p>
   <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>u = 10/3
 return (((1-u)**2) + ((5-u)**2) + ((5-u)**2) + ((2-u)**2) + ((1-u)**2) + ((6-u)**2))/(6-1)
-</code></pre></div><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>c</h2>
+</code></pre></div><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>c</h2>
     <p class='mb-3'>
       Three points with lower x and higher y are clustered together as well as three points with higher x and higher y are clustered together.
     </p>
@@ -1742,7 +1742,7 @@ d = {"score1":[1, 5, 5, 2, 1, 6], "score2":[4, 1, 0, 4, 5, 1]}
 fig, ax = plt.subplots()
 ax.scatter(d["score1"], d["score2"])
 fig.savefig("2c.png")
-</code></pre></div><img class='inline mb-3' src='Intelligent_Data_Design/Assignments/lec2/2c.png' alt style='width: inherit;' /><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>d</h2>
+</code></pre></div><img class='inline mb-3' src='Intelligent_Data_Design/Assignments/lec2/2c.png' alt style='width: inherit;' /><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>d</h2>
     <p class='mb-3'>
       The formula for <span class='math inline'>\(\cos \theta\)</span> is <span class='math inline'>\(\frac{a \cdot b}{||a||||b||}\)</span> where a and b are vectors with the same dimesionality. Implementing this in python using the given points:
     </p>
@@ -1764,7 +1764,7 @@ a["2,6"] = cos(2, 6)
 a["3,5"] = cos(3, 5)
 return list(a.items())
 
-</code></pre></div><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1,5</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.9988681377244377</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1,6</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.39872611141445</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2,6</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.9994801143396996</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3,5</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.19611613513818404</td></tr></tbody></table><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>e</h2><div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>d = tuple(zip([1, 5, 5, 2, 1, 6],[4, 1, 0, 4, 5, 1]))
+</code></pre></div><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1,5</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.9988681377244377</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1,6</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.39872611141445</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2,6</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.9994801143396996</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3,5</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.19611613513818404</td></tr></tbody></table><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>e</h2><div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>d = tuple(zip([1, 5, 5, 2, 1, 6],[4, 1, 0, 4, 5, 1]))
 import math
 def dist(p1, p2):
    p1 = d[p1-1]
@@ -1778,11 +1778,11 @@ a["2,6"] = dist(2, 6)
 a["4,6"] = dist(4, 6)
 return list(a.items())
 
-</code></pre></div><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>f</h2>
+</code></pre></div><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>f</h2>
     <p class='mb-3'>
       The values along the diagonal are all equal for both matrices.
     </p>
-  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>3</h1>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>3</h1>
     <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
       
         <li>
@@ -1811,7 +1811,7 @@ return list(a.items())
         </li>
       
     </ul>
-  <h1 class='pb-2 mb-2 text-5xl font-bold text-center'>Bonus</h1>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Bonus</h1>
     <p class='mb-3'>
       Correlation is the normalized/standardized covariance. They both show the type of linear relationship with their sign (positive or negative) and they share the meaning of the sign. The significant difference between correlation and covariance is that the correlation is equal to the cosine of the angle between the two centered attribute vectors.
     </p>

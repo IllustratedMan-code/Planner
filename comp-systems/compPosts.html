@@ -51,7 +51,7 @@
 
 
   
-  <link href='tailwind.css?instanceId=74abe912-9e45-4c38-b609-ab44438654cc' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=27273181-0aa3-4d85-a3cb-1cbe11017c5f' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -311,7 +311,7 @@
                     
                       <!-- The style width attribute here is to prevent huge
                       icon from displaying at those rare occasions when Tailwind
-                      hasn't kicked in immediately on page load 
+                      hasn't kicked in immediately on page load
                       -->
                       <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
                     
@@ -876,27 +876,27 @@
 </h1>
             <article class='overflow-auto'>
   <!-- What goes in this file will appear on top of note body-->
-  <pre class='pandoc-raw-"org"'>#+hugo_base_dir: ../</pre><pre class='pandoc-raw-"org"'>#+hugo_section: Intro-to-Comp-Systems</pre><h1 class='pb-2 mb-2 text-5xl font-bold text-center' export_hugo_section*='How To Write a micro-instruction' export_file_name='_index'>How to write a micro-instruction</h1>
+  <pre class='pandoc-raw-"org"'>#+hugo_base_dir: ../</pre><pre class='pandoc-raw-"org"'>#+hugo_section: Intro-to-Comp-Systems</pre><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4' export_hugo_section*='How To Write a micro-instruction' export_file_name='_index'>How to write a micro-instruction</h1>
     <p class='mb-3'>
       A micro-instruction is just a binary (often converted to hex) number that represents a list of control signals, and points to the next micro-instruction. Micro-instructions can be changed by changing the A set of micro-instructions forms a micro-routine (otherwise known as an instruction).
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Control signals</h2>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Control signals</h2>
     <p class='mb-3'>
       To understand the micro-instruction, you must understand what the control signals do. I will be referencing the Hard vs Micro paper. It has LA (load accumulator), and EA (enable accumulator) signals. They are essentially just wires connected to the control unit (referenced by the 16 coming out of CONTROL) Each register also generally has a clock signal (CLK), but that is connected directly to the clock circuit and is not required for the micro-instructions. The naming system for the signals is somewhat arbitrary but usually follows the pattern (L, E) (register). This is subverted somewhat by the ALU, but that will most likely be directly defined. The other main difference is the inclusion of I, which just means increment.
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Load (L)</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Load (L)</h3>
     <p class='mb-3'>
       A load signal allows the contents of a register to be changed by the state of the bus (a collection of wires). This signal must be paired with an E signal to do anything.
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Enable (E)</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Enable (E)</h3>
     <p class='mb-3'>
       An enable signal changes the state of the bus to match the contents of the register. Say a register contains the value 1111, when the enable signal is used for that register, the contents of the bus will now be 1111. This signal must be paired with a L signal to do anything.
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Micro-instructions</h2>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Micro-instructions</h2>
     <p class='mb-3'>
       A micro-instruction is a binary number composed of several <code class='verbatim py-0.5 px-0.5 bg-gray-100'>fields</code> stored at a specific address in the ROM (read only memory) of the control unit.
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Control field</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Control field</h3>
     <p class='mb-3'>
       This is just a binary representation of the signals. In the hard vs micro document, the letters are signals are abbreviated into the following order:
     </p>
@@ -912,7 +912,7 @@
     <p class='mb-3'>
       A micro instruction will generally contain a pair of signals (L E) that transfers the contents of one register into another. The contents of the enabled register moves into the loaded register through the bus. A 1 means that the signal is on while a 0 means the signal is off.
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Next Address field</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Next Address field</h3>
     <p class='mb-3'>
       This field has 4 different sub fields. it is used to determine the next micro instruction.
     </p>
@@ -956,7 +956,7 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>LDA micro-routine</h2>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>LDA micro-routine</h2>
     <p class='mb-3'>
       here is a step by step on how to write this instruction with micro-instructions.
     </p>
@@ -1068,11 +1068,11 @@
         </li>
       
     </ul>
-  <h1 class='pb-2 mb-2 text-5xl font-bold text-center' export_hugo_section*='Mock Exam Questions' export_file_name='_index'>Mock Exam Questions</h1>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4' export_hugo_section*='Mock Exam Questions' export_file_name='_index'>Mock Exam Questions</h1>
     <p class='mb-3'>
       Question 1 and 2 seem to reference this article: <span title='Link is broken'><s>[8086-8088](pdfs/8086.pdf)</s>❌</span>
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Q1</h2>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q1</h2>
     <p class='mb-3'>
       If a physical branch target address is 5A230 when CS = 5200, what will it be if the CS = 7800 ?
     </p>
@@ -1104,7 +1104,7 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Q2</h2>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q2</h2>
     <p class='mb-3'>
       Given that the EA of a data is 2359 and DS = 490B, what is the PA of data?
     </p>
@@ -1136,7 +1136,7 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Q3</h2>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q3</h2>
     <p class='mb-3'>
       Assuming, W, X, Y and Z as memory addresses. Write a program using any machine sequence that will carry out the following: Z ← W + (Z-X).
     </p>
@@ -1167,7 +1167,7 @@ W: .word 5 #arbitrary value
     <p class='mb-3'>
       <a href='comp-systems/code-examples/Q3.asm' class='text-green-600 mavenLinkBold hover:underline'>Downloadable solution</a> prints 7
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Q4</h2>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q4</h2>
     <p class='mb-3'>
       Assume that the code below is run on a machine with a 2 GHz clock that requires the following number of cycles for each instruction: add, addi, sll, sra take 4cc each, lw takes 5cc, bne, beq take 3cc each. How many seconds will it take to execute this code. The values of registers are $4=0x20, $5= 0x20, $6= 0x30, $7= 0x10.
     </p>
@@ -1187,7 +1187,7 @@ L1: add $11, $5, $9 #marks L1, $11 = 0x20 + $9, $9 is iterator
     bne $9, $7, L1 # goes to L1 if $9 != $7  0x0 + 0x4 * 0x10 = 0x40 = $9 loop executes 0x10 times
     addi $8, $8, 4 # $8 = $8 + 4
     beq $8, $6, L2 # goes to L2 if $8 == $6 exits before  $8 can equal $6
-</code></pre></div><h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Instruction definitions</h3>
+</code></pre></div><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Instruction definitions</h3>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1207,7 +1207,7 @@ L1: add $11, $5, $9 #marks L1, $11 = 0x20 + $9, $9 is iterator
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Calculate number of clock cycles</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Calculate number of clock cycles</h3>
     <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
       
         <li>
@@ -1323,11 +1323,11 @@ L1: add $11, $5, $9 #marks L1, $11 = 0x20 + $9, $9 is iterator
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Calculate time</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Calculate time</h3>
     <p class='mb-3'>
       288cc/(2*10<sup>9cc</sup>/s) = 1.44 * 10<sup>-7</sup> seconds
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Q5</h2>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q5</h2>
     <p class='mb-3'>
       <code class='verbatim py-0.5 px-0.5 bg-gray-100'>X[i] = A[B[i]] + C[i+4]</code>
     </p>
@@ -1379,11 +1379,11 @@ main:
     add     $t1, $s1, $s2       # adds A[B[i]] + C[i+4]
     add     $s3, $4, $s4        # offsets address of X by i
     sw      $t1, ($s3)          # stores $t1 to address of ($s3)
-</code></pre></div><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Q6</h2>
+</code></pre></div><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q6</h2>
     <p class='mb-3'>
       The memory units that follow are specified by the number of words times the number of bits per word. How many address lines and input/output data lines are needed in each case? (a) 8K X 16 (b) 2G X 8 (c) 16M X 32 (d) 256K X 64
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Part A</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Part A</h3>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1411,7 +1411,7 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Part B</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Part B</h3>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1431,7 +1431,7 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Part C</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Part C</h3>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1451,7 +1451,7 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Part D</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Part D</h3>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1471,11 +1471,11 @@ main:
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Q7</h2>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q7</h2>
     <p class='mb-3'>
       Find the number of bytes that can be stored in the memories: (a) 8K X 16 (b) 2G X 8 (c) 16M X 32 (d) 256K X 64
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Part A</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Part A</h3>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1499,7 +1499,7 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Part B</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Part B</h3>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1511,7 +1511,7 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Part C</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Part C</h3>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1519,7 +1519,7 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Part D</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Part D</h3>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1527,7 +1527,7 @@ main:
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'><span class='todo TODO'>TODO</span> Q8</h2>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'><span class='todo TODO'>TODO</span> Q8</h2>
     <p class='mb-3'>
       How many 128 x 8 memory chips are needed to provide a memory capacity of 4096 x 16?
     </p>
@@ -1539,7 +1539,7 @@ main:
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Q9</h2>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q9</h2>
     <p class='mb-3'>
       Given a 32 x 8 ROM chip with an enable input, show the external connections necessary to construct a 128 x 8 ROM with four chips and a decoder. <a href='https://www.youtube.com/watch?v=y3vIqPplSdQ' class='text-green-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Useful Video</a>
     </p>
@@ -1575,7 +1575,7 @@ main:
         </li>
       
     </ul>
-  <img class='inline mb-3' src='comp-systems/images/Q9.png' alt style='width: inherit;' /><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Q10</h2>
+  <img class='inline mb-3' src='comp-systems/images/Q9.png' alt style='width: inherit;' /><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q10</h2>
     <p class='mb-3'>
       Assume we have 8GB of word addressable memory with a word size of 64 bits and each refill line of memory stores 16 words. We have a direct-mapped cache with 1024 refill lines. Answer the following questions. <span title='Link is broken'><s>[More examples](pdfs/Q10.pdf)</s>❌</span>
     </p>
@@ -1595,7 +1595,7 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Solution</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Solution</h3>
     <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
       
         <li>
@@ -1723,7 +1723,7 @@ main:
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Hard Drive Sample question</h2>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Hard Drive Sample question</h2>
     <p class='mb-3'>
       This is a writeup of question 1 from <span title='Link is broken'><s>[here](pdfs/MagneticDisk.pdf)</s>❌</span>.
     </p>
@@ -1731,7 +1731,7 @@ main:
     <p class='mb-3'>
       Consider a disk pack with the following specifications 16 surfaces, 128 tracks per surface, 256 sectors per track, 512 bytes per sector
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Capacity of Disk Space</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Capacity of Disk Space</h3>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1747,7 +1747,7 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Bit Required to address sector</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Bit Required to address sector</h3>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1767,7 +1767,7 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Formatted Disk Space (32 bytes per sector format overhead)</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Formatted Disk Space (32 bytes per sector format overhead)</h3>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1799,11 +1799,11 @@ main:
         </li>
       
     </ul>
-  <h1 class='pb-2 mb-2 text-5xl font-bold text-center' export_hugo_section*='Formulas and References' export_file_name='_index'>Useful formulas and references</h1><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Hard Drives</h2>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4' export_hugo_section*='Formulas and References' export_file_name='_index'>Useful formulas and references</h1><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Hard Drives</h2>
     <p class='mb-3'>
       <a href='https://www.gatevidyalay.com/magnetic-disk-secondary-memory-coa/' class='text-green-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Hard Drive Website</a> <span title='Link is broken'><s>[Hard Drive Document from nitin](pdfs/MagneticDisk.pdf)</s>❌</span>
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Formulas</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Formulas</h3>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1867,7 +1867,7 @@ main:
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Circuit reference</h2>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Circuit reference</h2>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1879,11 +1879,11 @@ main:
         </li>
       
     </ul>
-  <img class='inline mb-3' src='comp-systems/images/fullAdder.png' alt style='width: inherit;' /><h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Computer Arithmetic</h2>
+  <img class='inline mb-3' src='comp-systems/images/fullAdder.png' alt style='width: inherit;' /><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Computer Arithmetic</h2>
     <p class='mb-3'>
       <span title='Link is broken'><s>[Computer arithemetic document from nitin](pdfs/Computer Arithemtic.pdf)</s>❌</span>
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Memory + Cache</h2>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Memory + Cache</h2>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1907,7 +1907,7 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Formulas</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Formulas</h3>
     <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
       
         <li>
@@ -1979,11 +1979,11 @@ main:
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>Pipelining</h2>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Pipelining</h2>
     <p class='mb-3'>
       <span title='Link is broken'><s>[pipelining document from nitin](pdfs/Pipelining in Computer Architecture.pdf)</s>❌</span>
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold text-gray-700'>Formulas</h3>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Formulas</h3>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -2075,7 +2075,7 @@ main:
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-4xl font-bold text-gray-700 border-b-2'>MIPS</h2>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>MIPS</h2>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
