@@ -1,20 +1,20 @@
 
 * Connor topics <2023-01-30 Mon>
-01/30/23
-3.2
-4.2
-Vector Logical Clock
-PCB
-Medium Term Scheduler
-I/O Bound Processes
-Paging
-Segmentation
-Segmented Paging
-Swapping
-Thrashing
-Differentiate between a frame and a page
-Context Switch
-Lightweight Processes and Heavyweight processes
-Shared memory
-Tightly Coupled Processes
-Message Passing
++ 01/30/23
++ 3.2
++ 4.2
++ Vector Logical Clock
++ PCB
++ Medium Term Scheduler
++ I/O Bound Processes
++ Paging
++ Segmentation
++ Segmented Paging
++ Swapping
++ Thrashing
++ Differentiate between a frame and a page
++ Context Switch
++ Lightweight Processes and Heavyweight processes
++ Shared memory
++ Tightly Coupled Processes
++ Message Passing
