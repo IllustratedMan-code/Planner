@@ -1,0 +1,51 @@
+#+title: Lec 7: Classroom activity
+#+options: toc:nil num:nil
+#+date: 1/31/2023
+#+LATEX_HEADER: \usepackage[margin=0.5in]{geometry}
+#+latex_header: \usepackage{minted}
+* 1.
++ \(S_B = (\mu_1-\mu_2)(\mu_1-\mu_2)^T\)
++ \(\mu_1 = \begin{bmatrix} 2 \\ 0 \end{bmatrix}, \mu_2 = \begin{bmatrix} 4 \\ 0 \end{bmatrix}\)
++ \(\mu_1-\mu_2 = \begin{bmatrix}-2 \\ 0 \end{bmatrix}\)
++ \(S_B = \begin{bmatrix}-2 \\ 0 \end{bmatrix} \begin{bmatrix}-2 & 0 \end{bmatrix}
+  = \begin{bmatrix} 4 & 0 \\ 0 & 0 \end{bmatrix}\)
++ \(S_w = S_1 + S_2 \)
++ \(S_1 = n_1 \Sigma_1 = (x-\mu)(x- \mu)^T = \begin{bmatrix} 0 & 0 \\ 0 & 8 \end{bmatrix} \)
++ \(S_2 = n_1 \Sigma_1 = (x-\mu)(x- \mu)^T = \begin{bmatrix} 0 & 0 \\ 0 & 32 \end{bmatrix} \)
++ \(S_w = \begin{bmatrix} 0 & 0 \\ 0 & 40 \end{bmatrix}\)
++ \(|S_w| = 0\) so \(S_w\) is singular
+* 2.
++ LDA is only successful in A, not B or C
++ A is not the same as the PCA, it would be diagonal
++ B is not the same as the PCA, it would be vertical
++ C is the same as the PCA
+#+attr_latex: :width 8cm
+[[xournalpp:lda.xopp]]
+* 3.
++ the separation can be done with multiple curves. THis is best suited to B and C.
+#+attr_latex: :width 8cm
+[[xournalpp:lda2.xopp]]
+* 4.
++ \(X_{n\times d}, Y_{n\times 1}\)
++ \(x_i\) is a row vector of \(X_{n\times d}\)
++ \(y_i\) is an element of \(Y_{n\times1}\)
++ \(D_i \leftarrow \{x_j | y_i, j=1, ..., n\}, i = 1,2\)
++ \(\mu_i \leftarrow \text{mean}(D_i), i = 1,2\) =calculate the mean for
++ \(S_B \leftarrow \(\mu_1-\mu_2)(\mu_1-\mu_2)^T\) =Calculate between class matrix by multiplying the two mean vectors=
++ \(Z_i \leftarrow D_i-\mu_i^T, i = 1,2\) =Subtract the mean from matrix=
++ \(S_i \leftarrow Z^T_iZ_i, i= 1,2 \) =S matrix is n * covariance matrix for each class=
++ \(S_w \leftarrow S_1 + S_2\) =Calculate Sw by summing the two S matricies=
++ \(\lambda_1,w \leftarrow eigen(S^{-1}B)\) =get dominant eigenvector,eigenvalue using the eigen function in the previous homework=
+* 5.
++ \(K(w) = \frac{w^TS_Ww}{w^TS_Bw}\)
++ \(\frac{d}{dx}\left(\frac{f(x)}{g(x)}\right) = \frac{f'(x)g(x) -
+  g'(x)f(x)}{g(x)^2} \) definition of derivative for multiple functions
++ \(\frac{d}{dw}K(w) = \frac{2S_ww(w^TS_Bw) -  2S_Bw(w^TS_Sw)}{(w^TS_Bw)^2} =
+  0\) set derivative equal to 0 to minimize the function.
++ \(2S_ww(w^TS_Bw) = 2S_Bw(w^TS_Sw)\) simplyifing
++ \(S_ww = S_Bw\frac{(w^TS_Sw)}{(w^TS_Bw)} = S_BwK(w) = \lambda S_Bw\) Substituting in
+  K(w), which is by definition an eigenvalue of \(S_B\) and \(S_w\).
++ If \(S_B^{-1}\) exists (nonsingular), then \(S_B^{-1}S_ww = \lambda S_B^{-1}S_Bw =
+  \lambda w \) This changes the form to be the regular eigenvector eigenvalue equation.
++ \(S_B^{-1}S_ww = \lambda w\) this is the regular eigenvector eigenvalue equation,
+  solvable using the LDA algorithm

@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+find . \PYGZhy{}newermt \PYG{l+s+s2}{\PYGZdq{}}\PYG{k}{\PYGZdl{}(}date +\PYG{l+s+s1}{\PYGZsq{}\PYGZpc{}m/\PYGZpc{}d/\PYGZpc{}y 00:00:00\PYGZsq{}}\PYG{k}{)}\PYG{l+s+s2}{\PYGZdq{}}
+\end{Verbatim}

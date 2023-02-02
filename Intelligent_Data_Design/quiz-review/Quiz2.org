@@ -1,0 +1,46 @@
+
+* 1.
+#+begin_quote
+A data-point in a dataset can be written as [1, 1, 1]. What is the dimensionality of this dataset?
+#+end_quote
+** Answer
++ [x] usermod -aG sudo username3
++ [ ] 1
++ [ ] 2
++ [ ] 0
+* 2.
+#+begin_quote
+Vectors are generally represented as:
+#+end_quote
+** Answer
++ [x] column vector
++ [ ] linked-list
++ [ ] matrix
++ [ ] row vector
+* 3.
+#+begin_quote
+Which of the following is true about a statistic?
+#+end_quote
+** Answer
++ [x] Parameter of the population estimated from samples
++ [ ] Parameter of the population estimated by the entire population
++ [ ] geoemetric view in 1D
++ [ ] geometrix view in 2D
+* 4.
+#+begin_quote
+Which of these statements is false
+#+end_quote
+** Answer
++ [x] In geometric view, each attribute is a random variable
++ [ ] In geometric 2D, each data-point is a vector
++ [ ] In probablilitic view, parameters are estimated
++ [ ] For continuous attributes, mean of an attribute is expressed as an
+  integration \(\int_{-\infty}^{\infty}xp\left(x\right)dx\)
+* 5.
+#+begin_quote
+Which of the following is false
+#+end_quote
+ + [ ] Correlation measures linear relationships
+ + [ ] Cos(\theta) is a measure of similarity
+ + [ ]Euclidean distance is a good measure for geometric distances
+ + [x] Covariance is normalized correlation

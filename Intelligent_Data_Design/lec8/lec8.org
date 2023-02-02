@@ -1,0 +1,68 @@
+#+title: Lecture 8 notes
+#+options: toc:nil num:nil
+#+latex_header: \usepackage[margin=0.5in]{geometry}
+
+* Guest lecturer: Abhiram Natarajan
+#+begin_quote
+Methods in Algebraic Geometry towards Data Science Applications
+#+end_quote
+** Intro
++ Algebraic geometry deals with  non-linar objects(Polynomials)
++ more computationally expensive
+*** algebraic geometry
++ study the 0s of polynomials
++ \(Z(f):=\{X \) such that \(f(X) = 0\}\)
+| Polynomial         | Zeros                   |
+|--------------------+-------------------------|
+| f(x) = x - 7       | Z(f) = \{7\}            |
+| \(f_1(x,y) = y-x\) | line through the origin |
+[[xournalpp:1.xopp]]
+**** Question
++ Given a set of polynomials, find all the common zeros
++ Gaussien elimination is used in the linear case
+
+** Grobner Bases
++ 2 equations, two variables
+*** Gausiien alimination
++ Elimiminate leading term for every pair of linear equations
++ Continue until you reach and equation with just one variable
++ Solve system with back substitution
+*** Two polynomials
++ \(x^2y^3 - 4 = 0\)
++ \(x^3y^2 - 2 = 0\)
++ multiply first polynomial by x, second by y
++ \(x^3y^3 - 4x = 0\)
++ \(x^3y^3 - 4y = 0\)
++ subtract the equations
++ \(y = 2x\)
++ plug into original polynomial
++ \(x = 1\)
+*** generalized gaussian
++ modified gaussian works in the non-linear case
++ S-polynomial of f and g is S(f,g)
++ compute every S polynomial of every possible pair of polynomials until system
+  can be solved
++ set of all S-polynomials is called a Grobner Basis
+*** Buchberger's Algorithm for Grobner Basis
++ iterate over every pair of polynomials in S
++ compute S(f,G) and add it to S'
++ repeat until S is solvable
+*** Geometrity of gaussian elimination
+[[xournalpp:geometry.xopp]]
+*** Geometry of Grobner Basis
+[[xournalpp:grobner.xopp]]
+
+** Applications of Grobner Bases
++ S is not solvable if and only if the grobner basis contains a constant
+  polynomial
++ This is show gemetrically by intersections in the zero polynomials
+*** Sudoku
+[[xournalpp:sudoku.xopp]]
++ Must contain all numbers 1,4 exactly once
++ All columns and rows must add up to 10
++ Use grobner basis to reduce polynomial to solvable state
+** Conclusion
++ Grobner bases are a very power notion
++ many applications (automated geometry theorem, robotics, sudoku, etc)
++ critical insight into any system of polynomials
++ lots of software can compute grobner bases

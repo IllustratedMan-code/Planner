@@ -3,3 +3,28 @@
 + PCA/SVD does not consider the classes (labels)
 + LDA will try to take the classes into account
 + LDA finds the direction that separates the classes
+  [[xournalpp:LDA.xopp]]
++ \(x^p_i = \frac{w^Tx_i}{w^Tw\)
++ mean of the projected points is the projection of the mean
++ \(m_1 = \frac{1}{n_i} \sum\limits_{x_i \in D_1}w^Tx_i\)
++ \(m_2 = w^T\mu_2\)
++ \(J(w) = \frac{(m_1-m_2)^2}{s^2_1+s^2_1} = w^T(\mu_1-\mu_2) = w^T(\mu_1-\mu_2)(\mu_1-\mu_2)^T\)
++ \(S_b\) between class scatter matrix
++ \(x^TAx \ge0\)
++ \(s^2_1 + s^2_2\) projected scatter (variance without dividing by n)
++ \(S_1 \equiv \Sigma_1\)
++ \(S^2_1 = w^Ts_1w\)
++ \(w^Ts_ww\) within class scatter matrix \(w^T(S_1 + S_2)w\)
++ \(J(w) = \frac{w^TS_Bw}{w^TS_ww}\)
++ take the derivative and set it to 0
++ solve for \(w\)
++ \(S_Bw = \lambda S_ww\) generalized eigenvalue problem
++ \(A_x = \lambdax = Ax = \lambda Bx\)
++ \((S^T_wS_B)w = \lambda w\)
++ \(\lambda\) is an eigenvalue of \(S_w^{-1}S_B\)
++ \(w\) is an eigenvector \(S_w^{-1}S_B\)
+** Alternative formulation
++ \(J(w) = \frac{w^TS_Bw}{w^TS_ww}\)
++ \((\mu_1-\mu_2)(\mu_1-\mu_2)^T = S_b\)
++ \(w = S_w^{-1}(\frac{b}{\lambda} (\mu_1-\mu2))\)
++ \(S_w^{-1}(\mu_1 - \mu_2) = w\) rotated vector (direction \(w\))

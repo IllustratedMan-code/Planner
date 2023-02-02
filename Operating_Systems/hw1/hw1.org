@@ -1,5 +1,11 @@
-
+#+title: Homework 1
+#+options: toc:nil num:nil
+#+date: 2/5/2023
+#+LATEX_HEADER: \usepackage[margin=0.5in]{geometry}
+#+latex_header: \usepackage{minted}
 * Task 1
+#+attr_latex: :width 8cm
+[[file:ubuntu-settings.jpg]]
 I followed the steps given in the assignment: I downloaded the ubuntu image from
 the website, loaded it into the virtual machine, and installed ubuntu. I used
 all the recommended specs given in the assignment. Additionally, I installed the
@@ -19,6 +25,8 @@ date at midnight (00:00:00).
 find . -newermt "$(date +'%m/%d/%y 00:00:00')"
 #+end_src
 * Task 3
+#+attr_latex: :width 8cm
+[[file:grub2.jpg]]
 The tutorial linked in the assignment as well as the assignment instructions are
 out of date. The newest (stable) kernel is 6.1.8. The kernel listed (5.13.4) did
 not seem to be available through kernel.org. None of the grub instructions were
@@ -31,20 +39,23 @@ well as the kernel. The instructions only mentioned running make 2 times. It
 would have been 3 to install the modules as well.
 
 * Task 4
+#+begin_src bash
+locate -b -e 6.1.8 | grep -v /home | xargs -n 1 -p sudo rm -r && sudo update-grub
+#+end_src
 This is a one-liner that removes all mention of the kernel and updates grub to
 reflect the change.
 + =locate -b -e 6.1.8=: In my case the kernel was named 6.1.8. This command
   locates all files that contain 6.1.8 as a basename and also exist. This set of
   files happens to be the directories where the kernel is stored.
 + =grep -v /home=: the results from locate are piped into grep, which removes the
-  results in the home directory. This ensures I don't delete the build directory
+  results in the home directory. This ensures I don't delete the build directory.
 + =xargs -n 1 -p sudo rm -r=: the results from grep are piped into xargs, which
   runs =sudo rm -r=, line by line, asking for permission each time.
 + =sudo update-grub=: this updates any grub related files, removing the kernel
-  that no longer exists
+  that no longer exists.
 + No manual edits were necessary to the grub configuration (not sure why
-  instructions said they were needed?)
-+ The only instructions to repeat this is to run the following one-liner
-#+begin_src bash
-locate -b -e 6.1.8 | grep -v /home | xargs -n 1 -p sudo rm -r && sudo update-grub
-#+end_src
+  instructions said they were needed?).
++ The only instructions needed to repeat this process is to run the one-liner in
+  a bash shell.
+#+attr_latex: :width 8cm
+[[file:grub1.jpg]]
