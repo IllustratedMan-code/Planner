@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+locate \PYGZhy{}b \PYGZhy{}e \PYG{l+m}{6}.1.8 \PYG{p}{|} grep \PYGZhy{}v /home \PYG{p}{|} xargs \PYGZhy{}n \PYG{l+m}{1} \PYGZhy{}p sudo rm \PYGZhy{}r \PYG{o}{\PYGZam{}\PYGZam{}} sudo update\PYGZhy{}grub
+\end{Verbatim}
