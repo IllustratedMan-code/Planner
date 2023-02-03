@@ -1,0 +1,40 @@
+
+* 1.
+#+begin_quote
+Your dataset has d binary attributes. Which of the following best describe the points?
+#+end_quote
++ [ ] The origin in d-dimensions
++ [x] The corners of a d-dimensional hypercube
++ [ ] The surface of a d-dimensional hypershere
++ [ ] The shell of a d-dimensional hypersphere
+* 2.
+#+begin_quote
+As \(d \rightarrow \infty,\) the volume of a unit hypershere goes to
+#+end_quote
++ [ ] \(\infty\)
++ [ ] 1
++ [ ] Correct!
++ [ ] 0
+
+* 3.
+As \(d \rightarrow \infty\), which of the following is false?
++ [x] The probability of sampling points near the origin is high
++ [ ] The volume of a unit hypercube is 1
++ [ ] The volume of a hypercube with sides of length 2 goes to \infty
++ [ ] The "corners" of a hypercube occupies more space than the inscribed hypercube
+* 4.
+#+begin_quote
+In d-dimensional space, how many orthogonal axes do we have in addition to the major axes?
+#+end_quote
++ [ ] \(\mathcal{O}(d)\)
++ [ ] \(\mathcal{O}(d^2)\)
++ [x] \(\mathcal{O}(2^d)\)
++ [ ] \(\mathcal{O}(d^3)\)
+* 5.
+#+begin_quote
+A unit hypercube in 2D is best described as:
+#+end_quote
++ [ ] a line with length = 1
++ [ ] a circle with radius = 1
++ [x] a square with side = 1
++ [ ] a circle with diameter = 1

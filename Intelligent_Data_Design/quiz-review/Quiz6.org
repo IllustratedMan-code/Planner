@@ -1,0 +1,49 @@
+* 1.
+#+begin_quote
+If \(u_1, u_2, \dots, u_d\) , are eigenvectors (column vectors) of the covariance matrix \(\Sigma\), and \(\lambda_1, \lambda_2, \dots, \lambda_n\) are the eigenvalues, then:
+
+#+end_quote
+** Answer
++ [ ] \(\Sigma = \lambda_1 u_1^T u_1 + \lambda_2 u_2^T u_2 + \dots \lambda_d u_d^T u_d\)
++ [ ] \(\Sigma = \lambda_1 u_1^T + \lambda_2 u_2^T + \dots \lambda_d u_d^T\)
++ [x] \(\Sigma = \lambda_1 u_1 u_1^T + \lambda_2 u_2 u_2^T + \dots \lambda_d u_d u_d^T\)
++ [ ] \(\Sigma = \lambda_1 u_1 + \lambda_2 u_2 + \dots \lambda_d u_d\)
+
+* Question 2
+#+begin_quote
+The power method can determine (select the best answer)
+#+end_quote
+** Answer
++ [x] All eigenvalues and eigenvectors by deflation
++ [ ] Eigen value/eigen vector corresponding to second-largest variance
++ [ ] Eigen value/eigen vector corresponding to largest variance
++ [ ] Eigen value/eigen vector corresponding to the smallest variance
+
+* Question 3
+#+begin_quote
+If \(X^c \in \mathbb{R}^{n \times d}\)  is a centered matrix and \Sigma its covariance matrix, which of the following is PCA?
+#+end_quote
+** Answer
++ [x] \(\Sigma = V\Delta V^T\)
++ [ ] \(X = U\Delta V^T\)
++ [ ] \(\Sigma = U\Delta V^T\)
++ [ ] \(X = V\Delta V^T\)
+* question 4
+#+begin_quote
+If \(X^c \in \mathbb{R}^{n \times d}\)  is a centered matrix and \Sigma its covariance matrix, which of the following is SVD?
+#+end_quote
+** Answer
++ [x] \(X = U\Delta V^T\)
++ [ ] \(\Sigma = U\Delta V^T\)
++ [ ] \(X = V\Delta V^T\)
++ [ ] \(\Sigma = V\Delta V^T\)
+
+* Question 5
+#+begin_quote
+In Singular Value Decomposition, what does the matrix V represent?
+#+end_quote
+** Answer
++ [x] Eigenvectors of covariance of attributes
++ [ ] Eigenvectors of covariance of data-points
++ [ ] Matrix of eigenvalues on diagonal
++ [ ] Deflated matrix after removing first Principal Component

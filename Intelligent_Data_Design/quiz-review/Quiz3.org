@@ -1,0 +1,46 @@
+
+* 1.
+#+begin_quote
+A matrix $\Sigma$ is positive semidefinite if:
+#+end_quote
+** Answer
++ [ ] \( x^T\Sigma x\in\mathbb{Z}\)
++ [ ] \(x^T\Sigma x=0\)
++ [x] x^T\Sigma x\geq0
++ [ ] x^T\Sigma x\leq 0
+* 2.
+#+begin_quote
+The probability density of the Gaussian/Normal distribution is highest at
+#+end_quote
+** Answer
++ [ ] \(\mu + \sigma\)
++ [ ] \(\mu - \sigma\)
++ [x] \(\mu\)
++ [ ] \(\mu + 2\sigma\)
+* 3.
+#+begin_quote
+Similarity between pairs of categorical attributes can be obtained by
+#+end_quote
+** Answer
+ + [ ] Correlation
+ + [ ] Cosine
+ + [ ] Covariance
+ + [x] $\chi^{2}$ test
+* 4.
+#+begin_quote
+CLT states that when random samples are drawn from any distribution:
+#+end_quote
+** Answer
++ [ ] The samples are uniformly distributed
++ [x] The means of the samples are normally distributed
++ [ ] The means of the samples are uniformly distributed
++ [ ] The samples are normally distributed
+* 5.
+#+begin_quote
+An attribute A takes 2 values {yes,no}, and attribute B takes 3 values {high,medium,low}. Which of the following is not true?
+#+end_quote
+** Answer
++ [ ] The confusion matrix is of size 2 x 3
++ [x] If p-value of \chi^{2} test is 0.3 implies that A & B are independent
++ [ ] Since A & B are categorical, correlation is NOT the correct metric to measure similarity
++ [ ] The null hypothesis of \chi^2 test is that variables are independent

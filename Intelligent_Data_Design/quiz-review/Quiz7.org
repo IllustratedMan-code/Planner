@@ -1,0 +1,49 @@
+* 1.
+#+begin_quote
+Which one of the following is not LDA?
+#+end_quote
+** Answer
++ [ ] \(\max \frac{|m_1 - m_2|}{s_1^2 + s_2^2}\)
++ [ ] \(\min \frac{s_1^2 + s_2^2}{(m_1 - m_2) . (m_1 - m_2)}\)
++ [x] \(\min \frac{|m_1 - m_2|}{s_1^2 + s_2^2}\)
++ [ ] \(\max \frac{|m_2 - m_1|}{s_1^2 + s_2^2}\)
+
+* Question 2
+#+begin_quote
+A dataset lies in d dimensions. Which one of the following is true (Choose best option)?
+#+end_quote
+** Answer
++ [ ] PCA and LDA project data to 1 < d' <= d dimensions
++ [ ] PCA projects data to 1 dimension, LDA projects data to 1 < d' <=d dimensions
++ [x] PCA projects data to d' <= d and LDA projects data to 1 dimension
++ [ ] PCA and LDA project data to 1 dimension
+
+* Question 3
+#+begin_quote
+Which of the following is true?
+#+end_quote
+** Answer
++ [ ] LDA inputs data only. PCA inputs data and labels
++ [x] LDA inputs dataset and label. PCA inputs only dataset
++ [ ] Both PCA & LDA input dataset only
++ [ ] Both PCA & LDA input dataset and labels
+
+* Question 4
+#+begin_quote
+A dataset lies in d dimensions. Which of the following is true of PCA & LDA?
+#+end_quote
+** Answer
++ [ ] Both methods project data to higher dimension
++ [x] Both methods project data to lower dimension
++ [ ] Both maximize variance in \mathbb{R}^d
++ [ ] Both minimize variance in  \mathbb{R}^d
+
+* Question 5
+#+begin_quote
+Which of the following is a generalized eigenvector problem?
+#+end_quote
+** Answer
++ [ ] \(Ax = \lambda x\)
++ [ ] \(Ax = A^{-1}x\)
++ [x] \(Ax = \lambda B x\)
++ [ ] \(Ax = x\)

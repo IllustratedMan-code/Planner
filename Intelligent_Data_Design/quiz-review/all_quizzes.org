@@ -1,0 +1,359 @@
+* Quiz 1
+** 1
+#+begin_quote
+You have a fair coin that you toss eight times. What is the probability that you’ll get no more than seven heads? 
+#+end_quote 
++ Probability is 1-chance of getting 8 heads
++ \(\frac{1}{2}^8 = \frac{1}{256}\)
+** 2
+#+begin_quote
+You have a fair coin that you toss eight times. What is the probability that
+you’ll get exactly seven heads?
+#+end_quote
++ 7 different ways to get exactly seven heads
++ \(\frac{1}{2}^8 = \frac{1}{256}\) chance for each way
++ \(7 \cdot \frac{1}{256} = \frac{7}{256}\)
+** 3
+#+begin_quote
+Let P(X) = 0.2, P(Y) = 0.4, P(X|Y) = 0.5. What is P(Y|X)? 
+#+end_quote
++ Bayes rule is \(P(A|B) = \frac{P(B|A)\cdot P(A)}{B}\)
++ \(P(Y|X) = \frac{0.5 \cdot 0.4}{0.2} = 1\)
+** 4
+#+begin_quote
+Let P(X) = 0.2, P(Y) = 0.4. If P(X|Y) = 0.2, what can you say about X & Y?
+#+end_quote
++ Bayes rule can be used again, but this can also be reasoned out
++ \(P(X) = 0.2 = P(X|Y)\)
++ The probability of X is the same as the probability of X given Y
++ Y has no relationship to X
++ They are independent
+** 5
+#+begin_quote
+Which of these numbers cannot be a probability?
+
+0, 1.0, 1.5, 0.5
+#+end_quote
+Probabilities are given as a chance of an event occurring against some other
+condition. This means that probabilities cannot be greater than 1 or less than 0.
++ 1.5
+** 6
+#+begin_quote
+A die is rolled and a coin is tossed simultaneously. What is the probability of getting an even number on the die and a head on the coin?
+#+end_quote
++ Probability of even numbers on a 6 sided die is 1/2
++ probability of a head on a coin flip is 1/2
++ \(\frac{1}{2}^2 = \frac{1}{4}\)
+** 7
+#+begin_quote
+Let \(f(x) = x^2\) What is its integral and differential?
+#+end_quote
++ Power rule of integration \(\int x^2dx = \frac{x^3}{3} + c\) Where c is an unknown constant.
++ Power rule of derivation \(\frac{df}{dx}x^2 = 2x\).
+** 8
+#+begin_quote
+Let A be a 3x4 matrix of the following format
+
+\(A = \begin{bmatrix}1 & 0 & 1 \\ 0 & 1 & 0 \\ 2 & 0 & 2 \\ 1 & 1 & 1 \end{bmatrix} \)
+
+What is the rank of A?
+#+end_quote
++ Compute echelon form
++ \(A = \begin{bmatrix}1 & 0 & 1 \\ 0 & 1 & 0 \\ 2 & 0 & 2 \\ 1 & 1 & 1
+  \end{bmatrix} \rightarrow \begin{bmatrix}1 & 0 & 1 \\ 0 & 1 & 0 \\ 0 & 0 & 0 \\ 0 & 0 &
+  0 \end{bmatrix} \)
++ 2 non zero rows, rank=2
+** 9
+* Quiz 2
+
+** 1.
+#+begin_quote
+A data-point in a dataset can be written as [1, 1, 1]. What is the dimensionality of this dataset?
+#+end_quote
+*** Answer
++ [x] 3
++ [ ] 1
++ [ ] 2
++ [ ] 0
+** 2.
+#+begin_quote
+Vectors are generally represented as:
+#+end_quote
+*** Answer
++ [x] column vector
++ [ ] linked-list
++ [ ] matrix
++ [ ] row vector
+** 3.
+#+begin_quote
+Which of the following is true about a statistic?
+#+end_quote
+*** Answer
++ [x] Parameter of the population estimated from samples
++ [ ] Parameter of the population estimated by the entire population
++ [ ] geoemetric view in 1D
++ [ ] geometrix view in 2D
+** 4.
+#+begin_quote
+Which of these statements is false
+#+end_quote
+*** Answer
++ [x] In geometric view, each attribute is a random variable
++ [ ] In geometric 2D, each data-point is a vector
++ [ ] In probablilitic view, parameters are estimated
++ [ ] For continuous attributes, mean of an attribute is expressed as an
+  integration \(\int_{-\infty}^{\infty}xp\left(x\right)dx\)
+** 5.
+#+begin_quote
+Which of the following is false
+#+end_quote
+ + [ ] Correlation measures linear relationships
+ + [ ] Cos(\theta) is a measure of similarity
+ + [ ] Euclidean distance is a good measure for geometric distances
+ + [x] Covariance is normalized correlation
+* Quiz 3
+** 1.
+#+begin_quote
+A matrix $\Sigma$ is positive semidefinite if:
+#+end_quote
+*** Answer
++ [ ] \( x^T\Sigma x\in\mathbb{Z}\)
++ [ ] \(x^T\Sigma x=0\)
++ [x] x^T\Sigma x\geq0
++ [ ] x^T\Sigma x\leq 0
+** 2.
+#+begin_quote
+The probability density of the Gaussian/Normal distribution is highest at
+#+end_quote
+*** Answer
++ [ ] \(\mu + \sigma\)
++ [ ] \(\mu - \sigma\)
++ [x] \(\mu\)
++ [ ] \(\mu + 2\sigma\)
+** 3.
+#+begin_quote
+Similarity between pairs of categorical attributes can be obtained by
+#+end_quote
+*** Answer
+ + [ ] Correlation
+ + [ ] Cosine
+ + [ ] Covariance
+ + [x] $\chi^{2}$ test
+** 4.
+#+begin_quote
+CLT states that when random samples are drawn from any distribution:
+#+end_quote
+*** Answer
++ [ ] The samples are uniformly distributed
++ [x] The means of the samples are normally distributed
++ [ ] The means of the samples are uniformly distributed
++ [ ] The samples are normally distributed
+** 5.
+#+begin_quote
+An attribute A takes 2 values {yes,no}, and attribute B takes 3 values {high,medium,low}. Which of the following is not true?
+#+end_quote
+*** Answer
++ [ ] The confusion matrix is of size 2 x 3
++ [x] If p-value of \chi^{2} test is 0.3 implies that A & B are independent
++ [ ] Since A & B are categorical, correlation is NOT the correct metric to measure similarity
++ [ ] The null hypothesis of \chi^2 test is that variables are independent
+* Quiz 4
+
+** 1.
+#+begin_quote
+Your dataset has d binary attributes. Which of the following best describe the points?
+#+end_quote
+*** Answer
++ [ ] The origin in d-dimensions
++ [x] The corners of a d-dimensional hypercube
++ [ ] The surface of a d-dimensional hypershere
++ [ ] The shell of a d-dimensional hypersphere
+** 2.
+#+begin_quote
+As \(d \rightarrow \infty,\) the volume of a unit hypershere goes to
+#+end_quote
+*** Answer
++ [ ] \(\infty\)
++ [ ] 1
++ [x] 0
++ [ ] e
+
+** 3.
+#+begin_quote
+As \(d \rightarrow \infty\), which of the following is false?
+#+end_quote
+*** Answer
++ [x] The probability of sampling points near the origin is high
++ [ ] The volume of a unit hypercube is 1
++ [ ] The volume of a hypercube with sides of length 2 goes to \infty
++ [ ] The "corners" of a hypercube occupies more space than the inscribed hypercube
+** 4.
+#+begin_quote
+In d-dimensional space, how many orthogonal axes do we have in addition to the major axes?
+#+end_quote
+*** Answer
++ [ ] \(\mathcal{O}(d)\)
++ [ ] \(\mathcal{O}(d^2)\)
++ [x] \(\mathcal{O}(2^d)\)
++ [ ] \(\mathcal{O}(d^3)\)
+** 5.
+#+begin_quote
+A unit hypercube in 2D is best described as:
+#+end_quote
+*** Answer
++ [ ] a line with length = 1
++ [ ] a circle with radius = 1
++ [x] a square with side = 1
++ [ ] a circle with diameter = 1
+* Quiz 5
+
+** 1.
+#+begin_quote
+Let \(x_1,x_2,x_3 \) represent 3 features. Which of the following are NOT linear combinations of these features?
+#+end_quote
+*** Answer
++ [ ] \(0.4x_1 + 0.3x_2 + 0.6x_3\)
++ [x] \(4x_1^2 + 3x_2^2 + x_3^2\)
++ [ ] \(4^2 x_1 + 3^2 x_2 + 6^2 x_3\)
++ [ ] \(4x_1 + 3x_2 + 6x_3\)
+
+** Question 2
+#+begin_quote
+Which one of the following statements about PCA is false?
+#+end_quote
+*** Answer
++ [ ] PCA projects the attributes into a space where covariance matrix is diagonal
++ [ ] The first Principal Component points in the direction of maximum variance
++ [x] PCA is a non-linear dimensionality reduction technique
++ [ ] PCA is useful for exploratory data analysis
+
+** Question 3
+#+begin_quote
+Which one of the following statements about PCA is false?
+#+end_quote
+*** Answer
++ [x] PCA works well for circular data
++ [ ] The first PC points to maximum variance
++ [ ] PCA computes eigen-value eigen-vector decomposition of the covariance matrix
++ [ ] PCA works well for ellipsoidal data
+
+** Question 4
+#+begin_quote
+The magnitude of vector x projected onto a unit vector u is
+#+end_quote
+*** Answer
++ [ ] \(x \times u\)
++ [ ] \((x - \mu_x) \cdot (u - \mu_u)\)
++ [x] \(x\cdot u\)
++ [ ] \(||x||||u||\)
+
+** Question 5
+#+begin_quote
+Feature selection is:
+#+end_quote
+*** Answer
++ [x] selecting a subset of attributes
++ [ ] selecting principal components with maximum variance
++ [ ] combining many features into one
++ [ ] selecting principal components that are not orthogonal to each other
+* Quiz 6
+
+** 1.
+#+begin_quote
+If \(u_1, u_2, \dots, u_d\) , are eigenvectors (column vectors) of the covariance matrix \(\Sigma\), and \(\lambda_1, \lambda_2, \dots, \lambda_n\) are the eigenvalues, then:
+
+#+end_quote
+*** Answer
++ [ ] \(\Sigma = \lambda_1 u_1^T u_1 + \lambda_2 u_2^T u_2 + \dots \lambda_d u_d^T u_d\)
++ [ ] \(\Sigma = \lambda_1 u_1^T + \lambda_2 u_2^T + \dots \lambda_d u_d^T\)
++ [x] \(\Sigma = \lambda_1 u_1 u_1^T + \lambda_2 u_2 u_2^T + \dots \lambda_d u_d u_d^T\)
++ [ ] \(\Sigma = \lambda_1 u_1 + \lambda_2 u_2 + \dots \lambda_d u_d\)
+
+** Question 2
+#+begin_quote
+The power method can determine (select the best answer)
+#+end_quote
+*** Answer
++ [x] All eigenvalues and eigenvectors by deflation
++ [ ] Eigen value/eigen vector corresponding to second-largest variance
++ [ ] Eigen value/eigen vector corresponding to largest variance
++ [ ] Eigen value/eigen vector corresponding to the smallest variance
+
+** Question 3
+#+begin_quote
+If \(X^c \in \mathbb{R}^{n \times d}\)  is a centered matrix and \Sigma its covariance matrix, which of the following is PCA?
+#+end_quote
+*** Answer
++ [x] \(\Sigma = V\Delta V^T\)
++ [ ] \(X = U\Delta V^T\)
++ [ ] \(\Sigma = U\Delta V^T\)
++ [ ] \(X = V\Delta V^T\)
+** question 4
+#+begin_quote
+If \(X^c \in \mathbb{R}^{n \times d}\)  is a centered matrix and \Sigma its covariance matrix, which of the following is SVD?
+#+end_quote
+*** Answer
++ [x] \(X = U\Delta V^T\)
++ [ ] \(\Sigma = U\Delta V^T\)
++ [ ] \(X = V\Delta V^T\)
++ [ ] \(\Sigma = V\Delta V^T\)
+
+** Question 5
+#+begin_quote
+In Singular Value Decomposition, what does the matrix V represent?
+#+end_quote
+*** Answer
++ [x] Eigenvectors of covariance of attributes
++ [ ] Eigenvectors of covariance of data-points
++ [ ] Matrix of eigenvalues on diagonal
++ [ ] Deflated matrix after removing first Principal Component
+* Quiz 7
+** 1.
+#+begin_quote
+Which one of the following is not LDA?
+#+end_quote
+*** Answer
++ [ ] \(\max \frac{|m_1 - m_2|}{s_1^2 + s_2^2}\)
++ [ ] \(\min \frac{s_1^2 + s_2^2}{(m_1 - m_2) . (m_1 - m_2)}\)
++ [x] \(\min \frac{|m_1 - m_2|}{s_1^2 + s_2^2}\)
++ [ ] \(\max \frac{|m_2 - m_1|}{s_1^2 + s_2^2}\)
+
+** Question 2
+#+begin_quote
+A dataset lies in d dimensions. Which one of the following is true (Choose best option)?
+#+end_quote
+*** Answer
++ [ ] PCA and LDA project data to 1 < d' <= d dimensions
++ [ ] PCA projects data to 1 dimension, LDA projects data to 1 < d' <=d dimensions
++ [x] PCA projects data to d' <= d and LDA projects data to 1 dimension
++ [ ] PCA and LDA project data to 1 dimension
+
+** Question 3
+#+begin_quote
+Which of the following is true?
+#+end_quote
+*** Answer
++ [ ] LDA inputs data only. PCA inputs data and labels
++ [x] LDA inputs dataset and label. PCA inputs only dataset
++ [ ] Both PCA & LDA input dataset only
++ [ ] Both PCA & LDA input dataset and labels
+
+** Question 4
+#+begin_quote
+A dataset lies in d dimensions. Which of the following is true of PCA & LDA?
+#+end_quote
+*** Answer
++ [ ] Both methods project data to higher dimension
++ [x] Both methods project data to lower dimension
++ [ ] Both maximize variance in \mathbb{R}^d
++ [ ] Both minimize variance in  \mathbb{R}^d
+
+** Question 5
+#+begin_quote
+Which of the following is a generalized eigenvector problem?
+#+end_quote
+*** Answer
++ [ ] \(Ax = \lambda x\)
++ [ ] \(Ax = A^{-1}x\)
++ [x] \(Ax = \lambda B x\)
++ [ ] \(Ax = x\)

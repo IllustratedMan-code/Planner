@@ -1,10 +1,9 @@
-
 * 1.
 #+begin_quote
 A data-point in a dataset can be written as [1, 1, 1]. What is the dimensionality of this dataset?
 #+end_quote
 ** Answer
-+ [x] usermod -aG sudo username3
++ [x] 3
 + [ ] 1
 + [ ] 2
 + [ ] 0
@@ -42,5 +41,5 @@ Which of the following is false
 #+end_quote
  + [ ] Correlation measures linear relationships
  + [ ] Cos(\theta) is a measure of similarity
- + [ ]Euclidean distance is a good measure for geometric distances
+ + [ ] Euclidean distance is a good measure for geometric distances
  + [x] Covariance is normalized correlation
