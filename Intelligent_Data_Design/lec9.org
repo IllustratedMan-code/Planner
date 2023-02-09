@@ -1,0 +1,46 @@
+
+* Itemset mining
++ itemset patterns (sets that follow itemset structure)
++ Customer -> Browsing + logs
++ Frequently occuring sets (frequet co-occurrences)
++ Helps with shelf placement (bananas and cereal frequently bought together)
+** Terminlogy
++ I = items (books)
++ T = transaction ids
++ x is an itemset \(x \subseteq I\)
++ \(2^I \) is the powerset (all possible subsets)
++ k itemset \(\Rightarrow |x| = k\), cardinality of x is k
++ Tid set y \(\subseteq T\)
++ sup(x) = number of times x occurs in the database
++ Absolute support : number of times
++ relative support : number of times/n
++ sup(x) = |t(y)|
+*** Example
+1. ABCDE
+2. BCE
+3. ABDEE
+4. ADCE
+5. ABCDE
+6. BDC
+** Apriori algorithm
++ minsp (s)
++ 2^I subsets (exponential search space)
++ Naive algorithm: for all x subset of I, compute the support, if support is
+  larger than min support, print
++ \(O(2^{|I|} * |D| * |I|)\)
++ Want to avoid duplicate elimination
++ Prune the space
++ if x is frequent, then any subset of x must be frequent
++ level wise/breadth-first (sum all occurences of substring, increasing the size
+  of each string at each level)
++ O(l * (dadabase size in bytes))
++ O(2^l * |D| * l)
+** Vertical approach
++ log each single string occurance in vertical set
++ Successivley
+** Projection + prefix tree (FP growth)
++ sort items in decreasing order of support (optional)
++ create a prefix tree with counts
++ This tree is the tree-index
++ Project the tree from the end of each long branch
++ O(2^l * |D|)

@@ -1,7 +1,27 @@
-* Covariance
+* Background
++ \(\det(A) = |A| = a_{11}a_{22} - a_{21}b_{21}\)
++ Projection onto u: \(\frac{u^Tx}{u^Tu}u\)
+* Data, Attributes, Points
++ Dimensionality
++ feature vector
++ Attribute type (numerical/categorical && nominal, ordinal, discrete, continuous)
+* Geometric View
++ 1D,2D,3D
++ correlation: \(\rho_{xy} = \frac{\sigma_{xy}}{\sigma_x\sigma_y} = \frac{\sigma_{xy}}{\sqrt{\sigma^2_x \sigma^2_y}} =
+  \frac{\frac{\sum(x_i-\mu_x)(y_i-\mu_y)}{n}}{\sqrt{\frac{\sum(x-\mu_x)^2}{n} +
+  \frac{\sum(y-\mu_y)^2}{n}}} = \frac{x' \cdot y'}{||x'||||y'||} = \cos \theta\)
+* Eigenvectors and values
++ eigenvalue = \(\lambda\)
++ \(\)
+* Covariance/variance
 + \(\sigma_{xy} = \frac{\sum(x_i-\mu_x)(y_i-\mu_y)}{n}\) is the covariance
 + covariance matrix: \(\Sigma = \begin{pmatrix} \sigma^2_{x_1} && \sigma_{x_1x_2} && ... && \sigma_{x_1x_d} \\ && \sigma^2{x_2}
  \\ && && ... \\ && && && \sigma^2_{x_d}\end{pmatrix} = (x - \mu)^T(x-\mu)\)
++ Total variance = \(|\Sigma|\)
+* Power rule
++ \(\lambda = \frac{Ax \cdot x}{x \cdot x}\)
++ \(B = A - \lambda v v^T\) is how compression works
++ [[https://ergodic.ugr.es/cphys/LECCIONES/FORTRAN/power_method.pdf][exercise]]
 * PCA
 + \(\mu = \frac{1}{n}\sum^n_{i=1}x_i\) compute the mean
 + \(Z = D-\mu^T\) center the data
@@ -10,6 +30,7 @@
 + compute eigenvectors
 + compute fraction of total variance so that the smallest \(f(r) \ge \alpha\) to choose dimensionality
 + \(U_r\) is the reduced basis
-* Eigenvectors and values
-+ eigenvalue = \(\lambda\)
-+ \(\)
++ transformation matrix is \(P = U_rU_r^T\)
++ \(PX = X'\)
+
+* LDA

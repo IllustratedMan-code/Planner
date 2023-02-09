@@ -1,0 +1,5 @@
+
+* Determine if string is accepted by 2 Nfas
++ convert to DFA
++ Perform cartesian product
++ perform search to determine if path exists between start and final states

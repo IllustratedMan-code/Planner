@@ -1,0 +1,15 @@
+
+* Itemset mining
+** Frequent Itemsets and accosiation rules
++ \(I \subseteq \mathcal{I} = \{x_1, x_2,..., x_m\}\) (itemset)
++ \(T \subseteq \mathcal{T} = \{t_1, t_2, ..., t_m\}\) (tidset)
++ \((t, X)\) transaction (itenditfier t)
+** Database Representation
++ D is a binary relation on the set of tids and items
++ \(2^\mathcal I\) power set (all possible subsets)
+
+** Support and frequent subsets
+* Itemset mining algorithms
+** Candidate generation
+** Support computation
+** Level wise approach apriori algorithm

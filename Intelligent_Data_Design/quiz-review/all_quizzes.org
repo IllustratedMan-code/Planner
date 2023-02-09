@@ -1,25 +1,37 @@
 * Quiz 1
 ** 1
+:PROPERTIES:
+:ID:       37d4b4c6-855b-4534-ae24-cd19906c372d
+:END:
 #+begin_quote
 You have a fair coin that you toss eight times. What is the probability that you’ll get no more than seven heads? 
 #+end_quote 
 + Probability is 1-chance of getting 8 heads
 + \(\frac{1}{2}^8 = \frac{1}{256}\)
 ** 2
+:PROPERTIES:
+:ID:       6b153c66-158a-4b1c-b153-c763d98593af
+:END:
 #+begin_quote
 You have a fair coin that you toss eight times. What is the probability that
 you’ll get exactly seven heads?
 #+end_quote
 + 7 different ways to get exactly seven heads
-+ \(\frac{1}{2}^8 = \frac{1}{256}\) chance for each way
 + \(7 \cdot \frac{1}{256} = \frac{7}{256}\)
++ \(\frac{1}{2}^8 = \frac{1}{256}\) chance for each way
 ** 3
+:PROPERTIES:
+:ID:       291cd9f8-647a-4391-8f8e-8ecd716f0eac
+:END:
 #+begin_quote
 Let P(X) = 0.2, P(Y) = 0.4, P(X|Y) = 0.5. What is P(Y|X)? 
 #+end_quote
 + Bayes rule is \(P(A|B) = \frac{P(B|A)\cdot P(A)}{B}\)
 + \(P(Y|X) = \frac{0.5 \cdot 0.4}{0.2} = 1\)
 ** 4
+:PROPERTIES:
+:ID:       5afab81d-8c5d-4f91-812b-37c406eb1b09
+:END:
 #+begin_quote
 Let P(X) = 0.2, P(Y) = 0.4. If P(X|Y) = 0.2, what can you say about X & Y?
 #+end_quote
@@ -29,6 +41,9 @@ Let P(X) = 0.2, P(Y) = 0.4. If P(X|Y) = 0.2, what can you say about X & Y?
 + Y has no relationship to X
 + They are independent
 ** 5
+:PROPERTIES:
+:ID:       5243a412-5ce8-4809-b326-f2aef3b2a148
+:END:
 #+begin_quote
 Which of these numbers cannot be a probability?
 
@@ -38,6 +53,18 @@ Probabilities are given as a chance of an event occurring against some other
 condition. This means that probabilities cannot be greater than 1 or less than 0.
 + 1.5
 ** 6
+SCHEDULED: <2023-02-08 Wed>
+:PROPERTIES:
+:ID:       e9a0b73e-58f0-4181-b2da-c1745059b6b0
+:DRILL_LAST_INTERVAL: 4.14
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 5.0
+:DRILL_EASE: 2.6
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2023-02-04 Sat 13:49]
+:END:
 #+begin_quote
 A die is rolled and a coin is tossed simultaneously. What is the probability of getting an even number on the die and a head on the coin?
 #+end_quote
@@ -45,12 +72,18 @@ A die is rolled and a coin is tossed simultaneously. What is the probability of 
 + probability of a head on a coin flip is 1/2
 + \(\frac{1}{2}^2 = \frac{1}{4}\)
 ** 7
+:PROPERTIES:
+:ID:       3db6e2ad-b215-453c-b5c5-e5344aae34aa
+:END:
 #+begin_quote
 Let \(f(x) = x^2\) What is its integral and differential?
 #+end_quote
 + Power rule of integration \(\int x^2dx = \frac{x^3}{3} + c\) Where c is an unknown constant.
 + Power rule of derivation \(\frac{df}{dx}x^2 = 2x\).
 ** 8
+:PROPERTIES:
+:ID:       659a98b9-44f9-4fcc-b5f5-6c60839cbb20
+:END:
 #+begin_quote
 Let A be a 3x4 matrix of the following format
 
@@ -64,46 +97,106 @@ What is the rank of A?
   0 \end{bmatrix} \)
 + 2 non zero rows, rank=2
 ** 9
-* Quiz 2
+* Quiz 2 :explain:
 
-** 1.
+** 1. :drill:
+SCHEDULED: <2023-02-11 Sat>
+:PROPERTIES:
+:ID:       c695950e-eed7-4e30-9a35-468f00004210
+:DRILL_LAST_INTERVAL: 4.14
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 5.0
+:DRILL_EASE: 2.6
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2023-02-07 Tue 08:21]
+:END:
 #+begin_quote
-A data-point in a dataset can be written as [1, 1, 1]. What is the dimensionality of this dataset?
+A data-point in a dataset can be written as (1, 1, 1). What is the dimensionality of this dataset?
 #+end_quote
-*** Answer
+
 + [x] 3
 + [ ] 1
 + [ ] 2
 + [ ] 0
-** 2.
+** 2. :drill:
+SCHEDULED: <2023-02-11 Sat>
+:PROPERTIES:
+:ID:       46a47686-f200-478b-afde-d5262285ce0a
+:DRILL_LAST_INTERVAL: 4.14
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 5.0
+:DRILL_EASE: 2.6
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2023-02-07 Tue 08:19]
+:END:
 #+begin_quote
 Vectors are generally represented as:
 #+end_quote
-*** Answer
+
 + [x] column vector
 + [ ] linked-list
 + [ ] matrix
 + [ ] row vector
-** 3.
+** 3. :drill:
+SCHEDULED: <2023-02-11 Sat>
+:PROPERTIES:
+:ID:       c8a248f8-9606-436e-bc8f-bdd299ee906f
+:DRILL_LAST_INTERVAL: 4.14
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 5.0
+:DRILL_EASE: 2.6
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2023-02-07 Tue 09:03]
+:END:
 #+begin_quote
 Which of the following is true about a statistic?
 #+end_quote
-*** Answer
+
 + [x] Parameter of the population estimated from samples
 + [ ] Parameter of the population estimated by the entire population
 + [ ] geoemetric view in 1D
 + [ ] geometrix view in 2D
-** 4.
+** 4. :drill:
+SCHEDULED: <2023-02-11 Sat>
+:PROPERTIES:
+:ID:       9a241979-a48e-4317-9ce0-23de1a898c22
+:DRILL_LAST_INTERVAL: 4.14
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 5.0
+:DRILL_EASE: 2.6
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2023-02-07 Tue 08:20]
+:END:
 #+begin_quote
 Which of these statements is false
 #+end_quote
-*** Answer
+
 + [x] In geometric view, each attribute is a random variable
 + [ ] In geometric 2D, each data-point is a vector
 + [ ] In probablilitic view, parameters are estimated
 + [ ] For continuous attributes, mean of an attribute is expressed as an
   integration \(\int_{-\infty}^{\infty}xp\left(x\right)dx\)
-** 5.
+** 5. :drill:
+SCHEDULED: <2023-02-08 Wed>
+:PROPERTIES:
+:ID:       dbed8cbc-3d29-47b4-88af-1b9e3e9b2cb1
+:DRILL_LAST_INTERVAL: 4.14
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 5.0
+:DRILL_EASE: 2.6
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2023-02-04 Sat 13:49]
+:END:
 #+begin_quote
 Which of the following is false
 #+end_quote
@@ -111,248 +204,422 @@ Which of the following is false
  + [ ] Cos(\theta) is a measure of similarity
  + [ ] Euclidean distance is a good measure for geometric distances
  + [x] Covariance is normalized correlation
-* Quiz 3
-** 1.
+* Quiz 3 :explain:
+** 1. :drill:
+SCHEDULED: <2023-02-11 Sat>
+:PROPERTIES:
+:ID:       7178d0b2-54b4-4bcc-9546-98a602c98ef6
+:DRILL_LAST_INTERVAL: 4.14
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 5.0
+:DRILL_EASE: 2.6
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2023-02-07 Tue 08:19]
+:END:
 #+begin_quote
 A matrix $\Sigma$ is positive semidefinite if:
 #+end_quote
-*** Answer
+
 + [ ] \( x^T\Sigma x\in\mathbb{Z}\)
 + [ ] \(x^T\Sigma x=0\)
-+ [x] x^T\Sigma x\geq0
-+ [ ] x^T\Sigma x\leq 0
-** 2.
++ [x] \(x^T\Sigma x\geq0\)
++ [ ] \(x^T\Sigma x\leq 0\)
+** 2. :drill:
+:PROPERTIES:
+:ID:       274b0600-74e5-42c7-8fe5-44f156808a78
+:END:
 #+begin_quote
 The probability density of the Gaussian/Normal distribution is highest at
 #+end_quote
-*** Answer
+
 + [ ] \(\mu + \sigma\)
 + [ ] \(\mu - \sigma\)
 + [x] \(\mu\)
 + [ ] \(\mu + 2\sigma\)
-** 3.
+** 3. :drill:
+SCHEDULED: <2023-02-11 Sat>
+:PROPERTIES:
+:ID:       65f4b5b9-9d24-45b5-93da-5a9a246fadfb
+:DRILL_LAST_INTERVAL: 4.14
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 5.0
+:DRILL_EASE: 2.6
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2023-02-07 Tue 08:21]
+:END:
 #+begin_quote
 Similarity between pairs of categorical attributes can be obtained by
 #+end_quote
-*** Answer
+
  + [ ] Correlation
  + [ ] Cosine
  + [ ] Covariance
  + [x] $\chi^{2}$ test
-** 4.
+** 4. :drill:
+:PROPERTIES:
+:ID:       e8127b67-f169-4fde-8ca5-47d6270630d2
+:END:
 #+begin_quote
 CLT states that when random samples are drawn from any distribution:
 #+end_quote
-*** Answer
+
 + [ ] The samples are uniformly distributed
 + [x] The means of the samples are normally distributed
 + [ ] The means of the samples are uniformly distributed
 + [ ] The samples are normally distributed
-** 5.
+** 5. :drill:
+SCHEDULED: <2023-02-11 Sat>
+:PROPERTIES:
+:ID:       e37c1a78-e110-4b15-8ee4-9d17d87e8982
+:DRILL_LAST_INTERVAL: 4.14
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 5.0
+:DRILL_EASE: 2.6
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2023-02-07 Tue 08:19]
+:END:
 #+begin_quote
 An attribute A takes 2 values {yes,no}, and attribute B takes 3 values {high,medium,low}. Which of the following is not true?
 #+end_quote
-*** Answer
-+ [ ] The confusion matrix is of size 2 x 3
-+ [x] If p-value of \chi^{2} test is 0.3 implies that A & B are independent
-+ [ ] Since A & B are categorical, correlation is NOT the correct metric to measure similarity
-+ [ ] The null hypothesis of \chi^2 test is that variables are independent
-* Quiz 4
 
-** 1.
++ [ ] The confusion matrix is of size 2 x 3
++ [x] If p-value of \(\chi^{2}\) test is 0.3 implies that A & B are independent
++ [ ] Since A & B are categorical, correlation is NOT the correct metric to measure similarity
++ [ ] The null hypothesis of \(\chi^2\) test is that variables are independent
+* Quiz 4 :explain:
+
+** 1. :drill:
+:PROPERTIES:
+:ID:       89102aa6-f132-485d-bba3-ba75f0381d9b
+:END:
 #+begin_quote
 Your dataset has d binary attributes. Which of the following best describe the points?
 #+end_quote
-*** Answer
+
 + [ ] The origin in d-dimensions
 + [x] The corners of a d-dimensional hypercube
 + [ ] The surface of a d-dimensional hypershere
 + [ ] The shell of a d-dimensional hypersphere
-** 2.
+** 2. :drill:
+SCHEDULED: <2023-02-11 Sat>
+:PROPERTIES:
+:ID:       f386cb06-c037-416b-8cf8-dd1dcc224d83
+:DRILL_LAST_INTERVAL: 4.0
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 4.0
+:DRILL_EASE: 2.5
+:DRILL_LAST_QUALITY: 4
+:DRILL_LAST_REVIEWED: [2023-02-07 Tue 08:20]
+:END:
 #+begin_quote
 As \(d \rightarrow \infty,\) the volume of a unit hypershere goes to
 #+end_quote
-*** Answer
+
 + [ ] \(\infty\)
 + [ ] 1
 + [x] 0
 + [ ] e
 
-** 3.
+** 3. :drill:
+SCHEDULED: <2023-02-11 Sat>
+:PROPERTIES:
+:ID:       fbe11c74-075c-450c-88b6-8e525b3b746e
+:DRILL_LAST_INTERVAL: 4.14
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 5.0
+:DRILL_EASE: 2.6
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2023-02-07 Tue 08:19]
+:END:
 #+begin_quote
 As \(d \rightarrow \infty\), which of the following is false?
 #+end_quote
-*** Answer
+
 + [x] The probability of sampling points near the origin is high
 + [ ] The volume of a unit hypercube is 1
 + [ ] The volume of a hypercube with sides of length 2 goes to \infty
 + [ ] The "corners" of a hypercube occupies more space than the inscribed hypercube
-** 4.
+** 4. :drill:
+:PROPERTIES:
+:ID:       f114db6e-e11f-44dc-8f26-12e525262d18
+:END:
 #+begin_quote
 In d-dimensional space, how many orthogonal axes do we have in addition to the major axes?
 #+end_quote
-*** Answer
+
 + [ ] \(\mathcal{O}(d)\)
 + [ ] \(\mathcal{O}(d^2)\)
 + [x] \(\mathcal{O}(2^d)\)
 + [ ] \(\mathcal{O}(d^3)\)
-** 5.
+** 5. :drill:
+:PROPERTIES:
+:ID:       7aaa981d-fd10-4269-883c-9557005e9f3e
+:END:
 #+begin_quote
 A unit hypercube in 2D is best described as:
 #+end_quote
-*** Answer
+
 + [ ] a line with length = 1
 + [ ] a circle with radius = 1
 + [x] a square with side = 1
 + [ ] a circle with diameter = 1
-* Quiz 5
+* Quiz 5 :explain:
 
-** 1.
+** 1. :drill:
+:PROPERTIES:
+:ID:       a27ccaaa-7915-4c16-9dd5-748ae944b2ad
+:END:
 #+begin_quote
 Let \(x_1,x_2,x_3 \) represent 3 features. Which of the following are NOT linear combinations of these features?
 #+end_quote
-*** Answer
+
 + [ ] \(0.4x_1 + 0.3x_2 + 0.6x_3\)
 + [x] \(4x_1^2 + 3x_2^2 + x_3^2\)
 + [ ] \(4^2 x_1 + 3^2 x_2 + 6^2 x_3\)
 + [ ] \(4x_1 + 3x_2 + 6x_3\)
 
-** Question 2
+** Question 2 :drill:
+:PROPERTIES:
+:ID:       2d49d1be-741f-44e3-a384-636371209853
+:END:
 #+begin_quote
 Which one of the following statements about PCA is false?
 #+end_quote
-*** Answer
+
 + [ ] PCA projects the attributes into a space where covariance matrix is diagonal
 + [ ] The first Principal Component points in the direction of maximum variance
 + [x] PCA is a non-linear dimensionality reduction technique
 + [ ] PCA is useful for exploratory data analysis
 
-** Question 3
+** Question 3 :drill:
+:PROPERTIES:
+:ID:       d7d96709-4448-424d-aa20-e59b4afad73c
+:END:
 #+begin_quote
 Which one of the following statements about PCA is false?
 #+end_quote
-*** Answer
+
 + [x] PCA works well for circular data
 + [ ] The first PC points to maximum variance
 + [ ] PCA computes eigen-value eigen-vector decomposition of the covariance matrix
 + [ ] PCA works well for ellipsoidal data
 
-** Question 4
+** Question 4 :drill:
+SCHEDULED: <2023-02-11 Sat>
+:PROPERTIES:
+:ID:       f32e5b8e-2306-486c-8a4d-5a8c58d36bac
+:DRILL_LAST_INTERVAL: 4.14
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 5.0
+:DRILL_EASE: 2.6
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2023-02-07 Tue 08:20]
+:END:
 #+begin_quote
 The magnitude of vector x projected onto a unit vector u is
 #+end_quote
-*** Answer
+
 + [ ] \(x \times u\)
 + [ ] \((x - \mu_x) \cdot (u - \mu_u)\)
 + [x] \(x\cdot u\)
 + [ ] \(||x||||u||\)
 
-** Question 5
+** Question 5 :drill:
+SCHEDULED: <2023-02-11 Sat>
+:PROPERTIES:
+:ID:       f0aa28d1-facd-4cb7-8f15-dc12670e2f61
+:DRILL_LAST_INTERVAL: 4.14
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 5.0
+:DRILL_EASE: 2.6
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2023-02-07 Tue 08:18]
+:END:
 #+begin_quote
 Feature selection is:
 #+end_quote
-*** Answer
+
 + [x] selecting a subset of attributes
 + [ ] selecting principal components with maximum variance
 + [ ] combining many features into one
 + [ ] selecting principal components that are not orthogonal to each other
-* Quiz 6
+* Quiz 6 :explain:
+Covariance matrix, eigenvectors, eigenvalues
 
 ** 1.
-#+begin_quote
+#+begin_quote :drill:
 If \(u_1, u_2, \dots, u_d\) , are eigenvectors (column vectors) of the covariance matrix \(\Sigma\), and \(\lambda_1, \lambda_2, \dots, \lambda_n\) are the eigenvalues, then:
 
 #+end_quote
-*** Answer
+
 + [ ] \(\Sigma = \lambda_1 u_1^T u_1 + \lambda_2 u_2^T u_2 + \dots \lambda_d u_d^T u_d\)
 + [ ] \(\Sigma = \lambda_1 u_1^T + \lambda_2 u_2^T + \dots \lambda_d u_d^T\)
 + [x] \(\Sigma = \lambda_1 u_1 u_1^T + \lambda_2 u_2 u_2^T + \dots \lambda_d u_d u_d^T\)
 + [ ] \(\Sigma = \lambda_1 u_1 + \lambda_2 u_2 + \dots \lambda_d u_d\)
 
-** Question 2
+** Question 2 :drill:
+SCHEDULED: <2023-02-08 Wed>
+:PROPERTIES:
+:ID:       ccd59efa-8ce1-45eb-883c-2fa3aea9b9aa
+:DRILL_LAST_INTERVAL: 4.0
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 4.0
+:DRILL_EASE: 2.5
+:DRILL_LAST_QUALITY: 4
+:DRILL_LAST_REVIEWED: [2023-02-04 Sat 13:50]
+:END:
 #+begin_quote
 The power method can determine (select the best answer)
 #+end_quote
-*** Answer
+
 + [x] All eigenvalues and eigenvectors by deflation
 + [ ] Eigen value/eigen vector corresponding to second-largest variance
 + [ ] Eigen value/eigen vector corresponding to largest variance
 + [ ] Eigen value/eigen vector corresponding to the smallest variance
 
-** Question 3
+** Question 3 :drill:
+:PROPERTIES:
+:ID:       14a6d899-7157-4f9c-94c9-8ae98c9441b7
+:END:
 #+begin_quote
 If \(X^c \in \mathbb{R}^{n \times d}\)  is a centered matrix and \Sigma its covariance matrix, which of the following is PCA?
 #+end_quote
-*** Answer
+
 + [x] \(\Sigma = V\Delta V^T\)
 + [ ] \(X = U\Delta V^T\)
 + [ ] \(\Sigma = U\Delta V^T\)
 + [ ] \(X = V\Delta V^T\)
-** question 4
+** question 4 :drill:
+SCHEDULED: <2023-02-08 Wed>
+:PROPERTIES:
+:ID:       78678f76-bf5f-431d-ab0b-d6ac1ae6c440
+:DRILL_LAST_INTERVAL: 4.14
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 5.0
+:DRILL_EASE: 2.6
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2023-02-04 Sat 13:49]
+:END:
 #+begin_quote
 If \(X^c \in \mathbb{R}^{n \times d}\)  is a centered matrix and \Sigma its covariance matrix, which of the following is SVD?
 #+end_quote
-*** Answer
+
 + [x] \(X = U\Delta V^T\)
 + [ ] \(\Sigma = U\Delta V^T\)
 + [ ] \(X = V\Delta V^T\)
 + [ ] \(\Sigma = V\Delta V^T\)
 
-** Question 5
+** Question 5 :drill:
+:PROPERTIES:
+:ID:       963cf00e-0175-437d-9bd0-09096412dd65
+:END:
 #+begin_quote
 In Singular Value Decomposition, what does the matrix V represent?
 #+end_quote
-*** Answer
+
 + [x] Eigenvectors of covariance of attributes
 + [ ] Eigenvectors of covariance of data-points
 + [ ] Matrix of eigenvalues on diagonal
 + [ ] Deflated matrix after removing first Principal Component
-* Quiz 7
-** 1.
+* Quiz 7 :explain:
+LDA/PCA
+
+** 1. :drill:
+:PROPERTIES:
+:ID:       6f67a6e6-a66f-4cb4-b947-4edb6e9950bd
+:END:
 #+begin_quote
 Which one of the following is not LDA?
 #+end_quote
-*** Answer
+
 + [ ] \(\max \frac{|m_1 - m_2|}{s_1^2 + s_2^2}\)
 + [ ] \(\min \frac{s_1^2 + s_2^2}{(m_1 - m_2) . (m_1 - m_2)}\)
 + [x] \(\min \frac{|m_1 - m_2|}{s_1^2 + s_2^2}\)
 + [ ] \(\max \frac{|m_2 - m_1|}{s_1^2 + s_2^2}\)
 
-** Question 2
+** Question 2 :drill:
+SCHEDULED: <2023-02-11 Sat>
+:PROPERTIES:
+:ID:       faae19f3-6304-4f11-bc92-3a913fd86550
+:DRILL_LAST_INTERVAL: 4.0
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 4.0
+:DRILL_EASE: 2.5
+:DRILL_LAST_QUALITY: 4
+:DRILL_LAST_REVIEWED: [2023-02-07 Tue 08:20]
+:END:
 #+begin_quote
 A dataset lies in d dimensions. Which one of the following is true (Choose best option)?
 #+end_quote
-*** Answer
+
 + [ ] PCA and LDA project data to 1 < d' <= d dimensions
 + [ ] PCA projects data to 1 dimension, LDA projects data to 1 < d' <=d dimensions
 + [x] PCA projects data to d' <= d and LDA projects data to 1 dimension
 + [ ] PCA and LDA project data to 1 dimension
 
-** Question 3
+** Question 3 :drill:
+SCHEDULED: <2023-02-08 Wed>
+:PROPERTIES:
+:ID:       5f52cf6d-c073-4320-88f9-0a7f7889c0ee
+:DRILL_LAST_INTERVAL: 4.14
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 5.0
+:DRILL_EASE: 2.6
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2023-02-04 Sat 13:50]
+:END:
 #+begin_quote
 Which of the following is true?
 #+end_quote
-*** Answer
+
 + [ ] LDA inputs data only. PCA inputs data and labels
 + [x] LDA inputs dataset and label. PCA inputs only dataset
 + [ ] Both PCA & LDA input dataset only
 + [ ] Both PCA & LDA input dataset and labels
 
-** Question 4
+** Question 4 :drill:
+:PROPERTIES:
+:ID:       f9859dc4-55fb-4e54-810b-ad0c9ed9957e
+:END:
 #+begin_quote
 A dataset lies in d dimensions. Which of the following is true of PCA & LDA?
 #+end_quote
-*** Answer
+
 + [ ] Both methods project data to higher dimension
 + [x] Both methods project data to lower dimension
 + [ ] Both maximize variance in \mathbb{R}^d
 + [ ] Both minimize variance in  \mathbb{R}^d
 
-** Question 5
+** Question 5 :drill:
+:PROPERTIES:
+:ID:       ecf61e99-8844-4669-93ff-ed72b39a5a52
+:END:
 #+begin_quote
 Which of the following is a generalized eigenvector problem?
 #+end_quote
-*** Answer
+
 + [ ] \(Ax = \lambda x\)
 + [ ] \(Ax = A^{-1}x\)
 + [x] \(Ax = \lambda B x\)
