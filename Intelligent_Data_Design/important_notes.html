@@ -51,7 +51,7 @@
 
 
   
-  <link href='tailwind.css?instanceId=4169e5eb-6232-48cb-8df6-41da28ac67e4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=8dbca77f-c76c-4957-a20b-5de2d4009717' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -389,8 +389,8 @@
     </a>
     
       
-        <span class='text-gray-300' title='4 children inside'>
-          4
+        <span class='text-gray-300' title='5 children inside'>
+          5
         </span>
       
     
@@ -581,8 +581,8 @@
     </a>
     
       
-        <span class='text-gray-300' title='8 children inside'>
-          8
+        <span class='text-gray-300' title='9 children inside'>
+          9
         </span>
       
     
@@ -1110,6 +1110,43 @@
   
 </div>
     
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
+        </path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='lec9' href='Intelligent_Data_Design/lec9.html'>
+      lec9
+    </a>
+    
+      
+        
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
   
 </div>
             
@@ -1178,8 +1215,8 @@
     </a>
     
       
-        <span class='text-gray-300' title='3 children inside'>
-          3
+        <span class='text-gray-300' title='2 children inside'>
+          2
         </span>
       
     
@@ -1437,7 +1474,61 @@
 </h1>
             <article class='overflow-auto'>
   <!-- What goes in this file will appear on top of note body-->
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Covariance</h1>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Background</h1>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(\det(A) = |A| = a_{11}a_{22} - a_{21}b_{21}\)</span>
+        </li>
+      
+        <li>
+          Projection onto u: <span class='math inline'>\(\frac{u^Tx}{u^Tu}u\)</span>
+        </li>
+      
+    </ul>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Data, Attributes, Points</h1>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Dimensionality
+        </li>
+      
+        <li>
+          feature vector
+        </li>
+      
+        <li>
+          Attribute type (numerical/categorical && nominal, ordinal, discrete, continuous)
+        </li>
+      
+    </ul>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Geometric View</h1>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          1D,2D,3D
+        </li>
+      
+        <li>
+          correlation: <span class='math inline'>\(\rho_{xy} = \frac{\sigma_{xy}}{\sigma_x\sigma_y} = \frac{\sigma_{xy}}{\sqrt{\sigma^2_x \sigma^2_y}} =
+ \frac{\frac{\sum(x_i-\mu_x)(y_i-\mu_y)}{n}}{\sqrt{\frac{\sum(x-\mu_x)^2}{n} +
+ \frac{\sum(y-\mu_y)^2}{n}}} = \frac{x' \cdot y'}{||x'||||y'||} = \cos \theta\)</span>
+        </li>
+      
+    </ul>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Eigenvectors and values</h1>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          eigenvalue = <span class='math inline'>\(\lambda\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\)</span>
+        </li>
+      
+    </ul>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Covariance/variance</h1>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1447,6 +1538,26 @@
         <li>
           covariance matrix: <span class='math inline'>\(\Sigma = \begin{pmatrix} \sigma^2_{x_1} && \sigma_{x_1x_2} && ... && \sigma_{x_1x_d} \\ && \sigma^2{x_2}
 \\ && && ... \\ && && && \sigma^2_{x_d}\end{pmatrix} = (x - \mu)^T(x-\mu)\)</span>
+        </li>
+      
+        <li>
+          Total variance = <span class='math inline'>\(|\Sigma|\)</span>
+        </li>
+      
+    </ul>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Power rule</h1>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(\lambda = \frac{Ax \cdot x}{x \cdot x}\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(B = A - \lambda v v^T\)</span> is how compression works
+        </li>
+      
+        <li>
+          <a href='https://ergodic.ugr.es/cphys/LECCIONES/FORTRAN/power_method.pdf' class='text-green-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>exercise</a>
         </li>
       
     </ul>
@@ -1481,20 +1592,16 @@
           <span class='math inline'>\(U_r\)</span> is the reduced basis
         </li>
       
-    </ul>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Eigenvectors and values</h1>
-    <ul class='my-3 ml-6 space-y-1 list-disc'>
-      
         <li>
-          eigenvalue = <span class='math inline'>\(\lambda\)</span>
+          transformation matrix is <span class='math inline'>\(P = U_rU_r^T\)</span>
         </li>
       
         <li>
-          <span class='math inline'>\(\)</span>
+          <span class='math inline'>\(PX = X'\)</span>
         </li>
       
     </ul>
-  
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>LDA</h1>
 
   <div class='flex items-center justify-center mt-2'>
   
