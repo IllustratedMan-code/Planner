@@ -1,0 +1,345 @@
+% Created 2023-02-16 Thu 18:08
+% Intended LaTeX compiler: lualatex
+\documentclass[11pt]{article}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{physics}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{tcolorbox} \usepackage{etoolbox}
+\BeforeBeginEnvironment{minted}{\begin{tcolorbox}}%
+\AfterEndEnvironment{minted}{\end{tcolorbox}}%
+\BeforeBeginEnvironment{verbatim}{\begin{tcolorbox}}%
+\AfterEndEnvironment{verbatim}{\end{tcolorbox}}%
+\author{David Lewis}
+\date{\today}
+\title{lec12 activity}
+\hypersetup{
+ pdfauthor={David Lewis},
+ pdftitle={lec12 activity},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.6)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\section*{1.}
+\label{sec:org4e80a23}
+\subsection*{train}
+\label{sec:org6143ea8}
+\subsubsection*{inputs}
+\label{sec:org8907a52}
+\begin{itemize}
+\item Data matrix \(D_{n_1 \times d}\)
+\item Label vector \(L_{n_1}\) (the class labels of the training set)
+\item complexity scalar \(c\)
+\end{itemize}
+\subsubsection*{outputs}
+\label{sec:org8c9259d}
+\begin{itemize}
+\item The model that was trained (function)
+\item The accuracy on the training set (scalar)
+\end{itemize}
+\subsection*{test}
+\label{sec:org1c374cc}
+\subsubsection*{inputs}
+\label{sec:org200299e}
+\begin{itemize}
+\item The model to test (function)
+\item Data matrix \(T_{n_2 \times d}\) (testing data omitted from the training data)
+\item Label vector \(L_{n2}\) (class labels of the test set)
+\end{itemize}
+\subsubsection*{outputs}
+\label{sec:orgb54c545}
+\begin{itemize}
+\item The accuracy on the test set (scalar)
+\end{itemize}
+\section*{2.}
+\label{sec:org36f76d0}
+\subsection*{a}
+\label{sec:org7edfb3b}
+Yes, this is possible with this dataset because it is very small, it is easy to
+note that when Z==T, the class is 1, when it is false, Y==R determines the
+class. For large data sets with many conditions this would very prohibitive to
+do by hand.
+\subsection*{b}
+\label{sec:orgdd4a153}
+\begin{itemize}
+\item \(-1(P(1|D)\log_2P(1|D) + P(2|D)\log_2P(2|D) + P(3|D)\log_2P(3|D))\)
+\item \(0.5\log_20.5 + 0.25\log_20.25 + 0.25\log_20.25 = 1.5\)
+\end{itemize}
+\subsection*{c}
+\label{sec:org8bcd0e4}
+\begin{itemize}
+\item X < 4
+\begin{center}
+\begin{tabular}{rr}
+YES & NO\\
+1 & 3\\
+2 & 4\\
+5 & 7\\
+6 & 8\\
+\end{tabular}
+\end{center}
+\item \(Y == P\)
+\begin{center}
+\begin{tabular}{rr}
+YES & NO\\
+1 & 2\\
+5 & 3\\
+ & 4\\
+ & 6\\
+ & 7\\
+ & 8\\
+\end{tabular}
+\end{center}
+
+\item \(Y == Q\)
+\begin{center}
+\begin{tabular}{rr}
+YES & NO\\
+2 & 1\\
+6 & 3\\
+ & 4\\
+ & 5\\
+ & 7\\
+ & 8\\
+ & \\
+\end{tabular}
+\end{center}
+
+\item \(Y == R\)
+\begin{center}
+\begin{tabular}{rr}
+YES & NO\\
+3 & 1\\
+4 & 2\\
+7 & 5\\
+8 & 6\\
+\end{tabular}
+\end{center}
+
+\item \(Z = T\)
+\begin{center}
+\begin{tabular}{rr}
+YES & NO\\
+1 & 5\\
+2 & 6\\
+3 & 7\\
+4 & 8\\
+\end{tabular}
+\end{center}
+\end{itemize}
+\subsection*{d.}
+\label{sec:org2b84ed1}
+\begin{minted}[fontsize=\scriptsize]{python}
+import math
+
+classes = {1:1, 2:1, 3:1, 4:1, 5:2, 6:2, 7:3, 8:3}
+
+xl4 = {"yes":[1, 2, 5, 6], "no":[3, 4, 7, 8]}
+yep = {"yes":[1, 5], "no":[2, 3, 4, 6, 7, 8]}
+yeq = {"yes":[2,6], "no":[1,3,4,5,7,8]}
+yer = {"yes":[3,4,7,8], "no":[1,2,5,6]}
+zeT = {"yes":[1, 2, 3, 4], "no":[5, 6, 7, 8]}
+
+def entropyyesno(D):
+    def entropy(Data):
+        entropy = 0
+        for i in set(classes.values()):
+            sum = 0
+            for j in Data:
+                if classes[j] == i:
+                    sum+=1
+
+            prob = sum/len(Data)
+            if prob > 0:
+                entropy += -prob * math.log2(prob)
+        return entropy
+    return entropy(D["yes"]), entropy( D["no"])
+output = []
+output.append(["x < 4"] + list(entropyyesno(xl4)))
+output.append(["y == p"] + list(entropyyesno(yep)))
+output.append(["y == q"] + list(entropyyesno(yeq)))
+output.append(["y == r"] + list(entropyyesno(yer)))
+output.append(["z == T"] + list(entropyyesno(zeT)))
+return output
+\end{minted}
+
+\begin{center}
+\begin{tabular}{lrr}
+ & YES & NO\\
+\hline
+x < 4 & 1.0 & 1.0\\
+y == p & 1.0 & 1.4591479170272446\\
+y == q & 1.0 & 1.4591479170272446\\
+y == r & 1.0 & 1.0\\
+z == T & 0.0 & 1.0\\
+\end{tabular}
+\end{center}
+\subsection*{e.}
+\label{sec:org88f13ef}
+\begin{minted}[fontsize=\scriptsize]{python}
+import math
+
+classes = {1:1, 2:1, 3:1, 4:1, 5:2, 6:2, 7:3, 8:3}
+D = [1,2,3,4,5,6,7,8]
+xl4 = {"yes":[1, 2, 5, 6], "no":[3, 4, 7, 8]}
+yep = {"yes":[1,5], "no":[2, 3, 4,  6, 7, 8]}
+yeq = {"yes":[2,6], "no":[1,3,4,5,7,8]}
+yer = {"yes":[3,4,7,8], "no":[1,2,5,6]}
+zeT = {"yes":[1, 2, 3, 4], "no":[5, 6, 7, 8]}
+
+def entropy(Data):
+    entropy = 0
+    for i in set(classes.values()):
+        sum = 0
+        for j in Data:
+            if classes[j] == i:
+                sum+=1
+
+        prob = sum/len(Data)
+        if prob > 0:
+            entropy += -prob * math.log2(prob)
+    return entropy
+def entropyyesno(D):
+    return entropy(D["yes"]), entropy( D["no"])
+def Gain(D, Dyn):
+    G = entropy(D) - ((len(Dyn["yes"])/len(D)) * entropy(Dyn[
+"yes"]) + (len(Dyn["no"])/len(D)) * entropy(Dyn["no"]))
+    return [G]
+G1 = Gain(D, xl4)
+G2 = Gain(D, yep)
+G4 = Gain(D, yeq)
+G5 = Gain(D, yer)
+G3 = Gain(D, zeT)
+
+output = []
+output.append(["x < 4"] + G1)
+output.append(["y == p"] + G2)
+output.append(["y == q"] + G4)
+output.append(["y == r"] + G5)
+output.append(["z == T"] + G3)
+return output
+\end{minted}
+
+\begin{center}
+\begin{tabular}{lr}
+x < 4 & 0.5\\
+y == p & 0.1556390622295667\\
+y == q & 0.1556390622295667\\
+y == r & 0.5\\
+z == T & 1.0\\
+\end{tabular}
+\end{center}
+
+Z == T has the most information gain, so it should be used for the root.
+\subsection*{f}
+\label{sec:org455d1a0}
+The right branch (the NOs) needs to be split. all z == T is class 1 (the left branch)
+\subsection*{g.}
+\label{sec:orga826d53}
+The split criteria is  Y==P  Y==q, Y==r, x < 4.
+\subsection*{h.}
+\label{sec:org0639e6b}
+\begin{minted}[fontsize=\scriptsize]{python}
+import math
+
+classes = {1:1, 2:1, 3:1, 4:1, 5:2, 6:2, 7:3, 8:3}
+D = [5,6,7,8]
+xl4 = {"yes":[1, 2, 5, 6], "no":[3, 4, 7, 8]}
+yeq = {"yes":[2,6], "no":[1,3,4,5,7,8]}
+yer = {"yes":[3,4,7,8], "no":[1,2,5,6]}
+yep = {"yes":[1,5], "no":[2, 3, 4, 6, 7, 8]}
+
+def entropy(data):
+    entropy = 0
+    Data = [i for i in data if i in D]
+    for i in set(classes.values()):
+        sum = 0
+        for j in Data:
+            if classes[j] == i:
+                sum+=1
+
+        prob = sum/len(Data)
+        if prob > 0:
+            entropy += -prob * math.log2(prob)
+    return entropy
+def Gain(D, yn):
+    Dyn = {}
+    Dyn["yes"] = [i for i in yn["yes"] if i in D]
+    Dyn["no"] = [i for i in yn["no"] if i in D]
+    G = entropy(D) - ((len(Dyn["yes"])/len(D)) * entropy(Dyn[
+"yes"]) + (len(Dyn["no"])/len(D)) * entropy(Dyn["no"]))
+    return [G]
+G1 = Gain(D, xl4)
+G3 = Gain(D, yep)
+G4 = Gain(D, yeq)
+G5 = Gain(D, yer)
+
+output = []
+output.append(["x < 4"] + G1)
+output.append(["y == p"] + G3)
+output.append(["y == q"] + G4)
+output.append(["y == r"] + G5)
+return output
+\end{minted}
+
+\begin{center}
+\begin{tabular}{lr}
+x < 4 & 1.0\\
+y == p & 0.31127812445913283\\
+y == q & 0.31127812445913283\\
+y == r & 1.0\\
+\end{tabular}
+\end{center}
+
+Both X < 4 and Y == R have the same information gain, so either can be used, and the
+other, tossed out.
+\subsection*{i}
+\label{sec:org1e4a0e2}
+\begin{center}
+\includegraphics[width=\textwidth]{tree.pdf}
+\end{center}
+\subsection*{j}
+\label{sec:org8eaf655}
+\begin{minted}[fontsize=\scriptsize]{python}
+Data = [[2.0,"P","T",1],
+[2.0,"Q","T",1],
+[4.0,"R","T",1],
+[4.0,"R","T",1],
+[2.0,"P","F",2],
+[2.0,"Q","F",2],
+[4.0,"R","F",3],
+[4.0,"R","F",3]]
+
+def tree(point):
+    if point[0] == "T":
+        return point[3] == 1
+    elif point[1] == "R":
+        return point[3] == 3
+    else:
+        return point[3] == 2
+
+sum = 0
+for i in Data:
+    if tree(i):
+        sum+=1
+return sum/len(Data)
+\end{minted}
+
+\begin{verbatim}
+0.5
+\end{verbatim}
+
+
+The accuracy is 50\%.
+\end{document}
