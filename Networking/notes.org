@@ -127,3 +127,14 @@ Length/Rate
 + host aliasing
   + canonical, alias names
 + each ISP has local DNA nae server
+* Finite state machines
+** Rdt2.0 channel with bit errors
++ acknowledgments
++ Check FSM in slides for more details (lots of verbal description about this)
++ state of receiver isn't known to sender
++ Fatal flaw (sender doesn't knwo what happend at reciever)
++ discards duplicate pkt
+** Rdt2.1 sender, handling garbled ACK/NAKS
++ check slides (walk through each step)
+** Rdt3.0
+App

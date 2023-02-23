@@ -1,0 +1,8 @@
+
+* Itemset mining
++ X is a maximal frequent itemset if it has no frequent superset
++ if ABCD is a maximal frequent itemset, then if AB is frequent, it is not a
+  maximal frequent itemset
+* Closed itemset
++ THe maximal frequent itemset is always closed
++ A closed itemset has no superset with the same support

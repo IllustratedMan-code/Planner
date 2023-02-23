@@ -1,0 +1,53 @@
+
+* Support vector machines (SVMs)
++ Linear classifier
++ hyperplane that separates the two classes (can be generalized to more than 2 classes)
++ LDA is linear classifier as well
+** Objective function
+Find the optimal hyperplane that separates two classes
++ optimal: maximum margin of separation between two classes
+*** Hyperplane
++ set of all points that satisfy \(w^Tx + b = 0\)
++ \(h(\vecx) \equiv \(w^Tx + b = 0\)\)
++ \(x, w \in \mathbb{R}^d\)
++ \(b \in \mathbb R\)
++ (d-1) dimensional hyperplane in a d dimensional space into 2 half spaces
+*** example
++ There exists a case where classes are perfectly separated
++ This implies infinite solutions
++ margin is the smallest distance to any point from the dividing hyperplane
++ maximize margin for SVM
+*** Summary
++ determine w
++ determine separation (p)
+* Proofs on properties of hyperplane
++ \(h(x_1) = w^Tx_1 + b = 0\)
++ \(h(x_2) = w^Tx_2 + b = 0\)
++ \(w^T(x_1-x_2) = 0\)
++ w is orthagonal to all vectors \(h(x) = 0\)
+** Margin
++ \(h(\vec x) = h(\vec x_p + \vec r)\)
++ \(h(\vec x) = h(\vec x_p + r \cdot \frac{\vec w}{\|w\|})\)
++ \(r = \frac{h(x)}{\|w\|} = \frac{w^Tx + b}{\|w\|}\) distance from any point to hyperplane
++ \(r_0 = \frac{b}{\|w\|}\) the distance from origin to hyperplane (offset)
++ Margin maximizes distance to margin
++ Scale so that smallest distance equal to 1
+* Objective function of SVM
++ \(S^+_k = \min \{\frac{y_i h(x_i)}{\|w\|}\}  \xrightarrow{scale}  \frac{1}{\|w\|}\)
++ \(sh(x) = sw^Tx + sb = s0 = 0\)
++ closest point to dividing line is 1 (margin is 1)
++ constraints: all distances must be \(\ge 1\)
++
+* MIT lecture
++ decision boundaries (hyperplane)
++ Widest street (largest margin)
++ project unknown value onto the orthogonal vector w
++ \(\vec w \cdot \vec u \ge c\)
++ \(\vec w \cdot \vec u + b \ge 0\) then it is a positive sample
++ \(\vec w \cdot \vec x + b \ge 1\)
++ \(\vec w \cdot \vec x + b \le 1\)
++ \(y_i = +1 \text{\:for\:} + \text{samples}\)
++ \(y_i = -1 \text{\:for\:} - \text{positive samples}\)
++ \(\vec x \veca + b) -1 \ge 0\)
++ WIDTH = \(\vec x_+-\vec x_- \cdot \frac{\vec w}{\|w\|} = \frac{2}{\|w\|\)
++ maximize \(\frac {2}{\|w\|} = \max \frac{1}{\|x\|} = \min \frac{1}{2}\|w\|^2\)

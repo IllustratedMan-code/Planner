@@ -1,0 +1,20 @@
+
+#+title: Lecture 9
+#+options: toc:nil num:nil
+#+LATEX_HEADER: \usepackage[margin=0.5in]{geometry}
+
+* 1.
+#+attr_latex: :width \textwidth
+[[file:2.pdf]]
+
+* 2
++ Lower bound \(\ge 0\)
++ Lower bound \(\ge  support(AB) + support(AD) - support(A) = (3 + 2 - 5) = 0\)
++ Lower bound \(\ge support(AB) + support(BD) - support(B) = 3 + 0 -3 = 0\)
++ Lower bound \(\ge support(AD) + support(BD) - support(D) = 2 +0 - 2 = 0\)
++ Max(lower bound) = 0
++ upper bound \(\le support(AB) = 3\)
++ upper bound \(\le support(AD) = 2\)
++ upper bound \(\le support(BD) = 0\)
++ Min(upper bound) = 0
++ \(0 = 0\) so it is derivable

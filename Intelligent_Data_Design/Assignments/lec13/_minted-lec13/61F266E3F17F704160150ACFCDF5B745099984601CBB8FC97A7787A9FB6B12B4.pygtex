@@ -1,0 +1,30 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{pandas} \PYG{k}{as} \PYG{n+nn}{pd}
+\PYG{n}{d} \PYG{o}{=} \PYG{p}{[[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+    \PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+    \PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{4}\PYG{p}{,}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+    \PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{4}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+    \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{],}
+    \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{4}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{],}
+    \PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{4}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{],}
+    \PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{4}\PYG{p}{,}\PYG{l+m+mi}{5}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{]]}
+\PYG{n}{d} \PYG{o}{=} \PYG{n}{pd}\PYG{o}{.}\PYG{n}{DataFrame}\PYG{p}{(}\PYG{n}{d}\PYG{p}{,} \PYG{n}{columns}\PYG{o}{=}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}X\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Y\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Z\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}C\PYGZdq{}}\PYG{p}{))}
+\PYG{k}{def} \PYG{n+nf}{distance}\PYG{p}{(}\PYG{n}{xi}\PYG{p}{,} \PYG{n}{xj}\PYG{p}{):}
+    \PYG{k}{return} \PYG{p}{(}\PYG{n}{xi}\PYG{o}{\PYGZhy{}}\PYG{n}{xj}\PYG{p}{)}\PYG{o}{**}\PYG{l+m+mi}{2}
+\PYG{k}{def} \PYG{n+nf}{L}\PYG{p}{(}\PYG{n}{xi}\PYG{p}{,} \PYG{n}{yi}\PYG{p}{,} \PYG{n}{zi}\PYG{p}{,} \PYG{n}{xj}\PYG{p}{,} \PYG{n}{yj}\PYG{p}{,} \PYG{n}{zj}\PYG{p}{):}
+    \PYG{n}{dist} \PYG{o}{=} \PYG{n}{distance}\PYG{p}{(}\PYG{n}{xi}\PYG{p}{,}\PYG{n}{xj}\PYG{p}{)} \PYG{o}{+} \PYG{n}{distance}\PYG{p}{(}\PYG{n}{yi}\PYG{p}{,}\PYG{n}{yj}\PYG{p}{)} \PYG{o}{+} \PYG{n}{distance}\PYG{p}{(}\PYG{n}{zi}\PYG{p}{,}\PYG{n}{zj}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{dist}
+
+\PYG{n}{d}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}distance1\PYGZdq{}}\PYG{p}{]} \PYG{o}{=} \PYG{n}{d}\PYG{o}{.}\PYG{n}{apply}\PYG{p}{(}\PYG{k}{lambda} \PYG{n}{row} \PYG{p}{:} \PYG{n}{L}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{row}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}X\PYGZdq{}}\PYG{p}{],} \PYG{n}{row}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}Y\PYGZdq{}}\PYG{p}{],} \PYG{n}{row}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}Z\PYGZdq{}}\PYG{p}{]),} \PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{n}{d}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}distance2\PYGZdq{}}\PYG{p}{]} \PYG{o}{=} \PYG{n}{d}\PYG{o}{.}\PYG{n}{apply}\PYG{p}{(}\PYG{k}{lambda} \PYG{n}{row} \PYG{p}{:} \PYG{n}{L}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{4}\PYG{p}{,} \PYG{n}{row}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}X\PYGZdq{}}\PYG{p}{],} \PYG{n}{row}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}Y\PYGZdq{}}\PYG{p}{],} \PYG{n}{row}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}Z\PYGZdq{}}\PYG{p}{]),} \PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}
+
+\PYG{n}{k11} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{d}\PYG{o}{.}\PYG{n}{sort\PYGZus{}values}\PYG{p}{(}\PYG{n}{by}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}distance1\PYGZdq{}}\PYG{p}{])}\PYG{o}{.}\PYG{n}{head}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)[}\PYG{l+s+s2}{\PYGZdq{}C\PYGZdq{}}\PYG{p}{])}
+\PYG{n}{k12} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{d}\PYG{o}{.}\PYG{n}{sort\PYGZus{}values}\PYG{p}{(}\PYG{n}{by}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}distance2\PYGZdq{}}\PYG{p}{])}\PYG{o}{.}\PYG{n}{head}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)[}\PYG{l+s+s2}{\PYGZdq{}C\PYGZdq{}}\PYG{p}{])}
+\PYG{n}{k21} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{d}\PYG{o}{.}\PYG{n}{sort\PYGZus{}values}\PYG{p}{(}\PYG{n}{by}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}distance1\PYGZdq{}}\PYG{p}{])}\PYG{o}{.}\PYG{n}{head}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{)[}\PYG{l+s+s2}{\PYGZdq{}C\PYGZdq{}}\PYG{p}{]}\PYG{o}{.}\PYG{n}{mode}\PYG{p}{())}
+\PYG{n}{k22} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{d}\PYG{o}{.}\PYG{n}{sort\PYGZus{}values}\PYG{p}{(}\PYG{n}{by}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}distance2\PYGZdq{}}\PYG{p}{])}\PYG{o}{.}\PYG{n}{head}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{)[}\PYG{l+s+s2}{\PYGZdq{}C\PYGZdq{}}\PYG{p}{]}\PYG{o}{.}\PYG{n}{mode}\PYG{p}{())}
+
+\PYG{n}{l} \PYG{o}{=} \PYG{p}{[[}\PYG{l+s+s2}{\PYGZdq{}ID\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}K=1\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}K=3\PYGZdq{}}\PYG{p}{],}
+     \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{k11}\PYG{p}{,} \PYG{n}{k21}\PYG{p}{],}
+     \PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n}{k12}\PYG{p}{,} \PYG{n}{k22}\PYG{p}{]]}
+\PYG{k}{return} \PYG{n}{l}
+\end{Verbatim}

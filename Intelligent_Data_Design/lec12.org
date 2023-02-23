@@ -1,0 +1,21 @@
+
+* Bayes classifier
++ \(x_i \in \mathbb R^d\)
++ m: full bayes classifer
+  + \( P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}\)
+  + \(m(x) = \max\{P(c_i|x)\}\)
+  + \(P(c_i|x) = \frac{P(x|c_i) \cdot P(c_i)}{\displaystyle \sum\limits^k_{i=1}
+    P(x|c_i) P(c_i)}\)
+  + \(P(x|c_i) = P((x_1, x_2 ...)|c_i)\)
+** Numerical
++ O(d^d) time
+** Categorical
+estimate number of times each element occurs in D divided by the length of D
++ worse than numerical
++ O(2^d) if each attribute only has 2 values
+* Naive bayes
++ full bayes is extremely inefficient (exponential time)
++ asuume that all attrubtes are independant
++ \(P(x|c_i) = \prod P(x_j|c_i)\)
++ compute mean, variance for each dimension to estimate probability
++ linear in d dimensions O(d)

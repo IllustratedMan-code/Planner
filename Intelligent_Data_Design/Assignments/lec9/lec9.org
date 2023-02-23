@@ -1,0 +1,38 @@
+#+title: Lecture 9
+#+options: toc:nil num:nil
+#+LATEX_HEADER: \usepackage[margin=0.5in]{geometry}
+* 1.
+#+attr_latex: :width 0.8 \textwidth
+[[file:1.pdf]]
+* 2.
+#+attr_latex: :width 0.8 \textwidth
+[[file:2.pdf]]
+* 3.
+** a.
+| A | B | C | D |
+|---+---+---+---|
+| 1 | 1 | 4 | 4 |
+| 2 | 2 | 5 | 5 |
+| 3 | 3 | 6 | 6 |
+| 4 | 4 | 7 | 7 |
+| 5 | 5 | 8 | 8 |
+** b, c, d, e, f.
+#+attr_latex: :width 0.8 \textwidth
+[[file:3.pdf]]
+** g.
+It is possible, but not necessary if the objective is to find the itemsets with
+minimum support. In the algorithm, all the possiblilites have already been
+expanded, so there is no need to do so again.
+* 4.
+** a.
+#+attr_latex: :width 0.8 \textwidth
+[[file:4a.pdf]]
+
+** b.
+The order is in increasing order of support. This makes sense because it is an
+inversion of how the tree is created. Projecting the tree removes the least
+common item in the set, making the remaining tree more likely to occur.
+
+** c.
+#+attr_latex: :width 0.8 \textwidth
+[[file:4b.pdf]]

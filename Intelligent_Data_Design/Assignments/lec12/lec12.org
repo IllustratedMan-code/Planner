@@ -1,0 +1,256 @@
+#+title: lec12 activity
+#+options: toc:nil num:nil
+#+latex_header: \usepackage[margin=0.5in]{geometry}
+#+latex_header: \usepackage{tcolorbox} \usepackage{etoolbox}
+#+latex_header: \BeforeBeginEnvironment{minted}{\begin{tcolorbox}}%
+#+latex_header: \AfterEndEnvironment{minted}{\end{tcolorbox}}%
+#+latex_header: \BeforeBeginEnvironment{verbatim}{\begin{tcolorbox}}%
+#+latex_header: \AfterEndEnvironment{verbatim}{\end{tcolorbox}}%
+* 1.
+** train
+*** inputs
++ Data matrix \(D_{n_1 \times d}\)
++ Label vector \(L_{n_1}\) (the class labels of the training set)
++ complexity scalar \(c\)
+*** outputs
++ The model that was trained (function)
++ The accuracy on the training set (scalar)
+** test
+*** inputs
++ The model to test (function)
++ Data matrix \(T_{n_2 \times d}\) (testing data omitted from the training data)
++ Label vector \(L_{n2}\) (class labels of the test set)
+*** outputs
++ The accuracy on the test set (scalar)
+* 2.
+** a
+Yes, this is possible with this dataset because it is very small, it is easy to
+note that when Z==T, the class is 1, when it is false, Y==R determines the
+class. For large data sets with many conditions this would very prohibitive to
+do by hand.
+** b
++ \(-1(P(1|D)\log_2P(1|D) + P(2|D)\log_2P(2|D) + P(3|D)\log_2P(3|D))\)
++ \(0.5\log_20.5 + 0.25\log_20.25 + 0.25\log_20.25 = 1.5\)
+** c
++ X < 4
+  | YES | NO |
+  |   1 |  3 |
+  |   2 |  4 |
+  |   5 |  7 |
+  |   6 |  8 |
++ \(Y == P\)
+  | YES | NO |
+  |   1 |  2 |
+  |   5 |  3 |
+  |     |  4 |
+  |     |  6 |
+  |     |  7 |
+  |     |  8 |
+
++ \(Y == Q\)
+  | YES | NO |
+  |   2 |  1 |
+  |   6 |  3 |
+  |     |  4 |
+  |     |  5 |
+  |     |  7 |
+  |     |  8 |
+  |     |    |
+
++ \(Y == R\)
+  | YES | NO |
+  |   3 |  1 |
+  |   4 |  2 |
+  |   7 |  5 |
+  |   8 |  6 |
+
++ \(Z = T\)
+  | YES | NO |
+  |   1 |  5 |
+  |   2 |  6 |
+  |   3 |  7 |
+  |   4 |  8 |
+** d.
+#+begin_src python :exports code
+import math
+
+classes = {1:1, 2:1, 3:1, 4:1, 5:2, 6:2, 7:3, 8:3}
+
+xl4 = {"yes":[1, 2, 5, 6], "no":[3, 4, 7, 8]}
+yep = {"yes":[1, 5], "no":[2, 3, 4, 6, 7, 8]}
+yeq = {"yes":[2,6], "no":[1,3,4,5,7,8]}
+yer = {"yes":[3,4,7,8], "no":[1,2,5,6]}
+zeT = {"yes":[1, 2, 3, 4], "no":[5, 6, 7, 8]}
+
+def entropyyesno(D):
+    def entropy(Data):
+        entropy = 0
+        for i in set(classes.values()):
+            sum = 0
+            for j in Data:
+                if classes[j] == i:
+                    sum+=1
+
+            prob = sum/len(Data)
+            if prob > 0:
+                entropy += -prob * math.log2(prob)
+        return entropy
+    return entropy(D["yes"]), entropy( D["no"])
+output = []
+output.append(["x < 4"] + list(entropyyesno(xl4)))
+output.append(["y == p"] + list(entropyyesno(yep)))
+output.append(["y == q"] + list(entropyyesno(yeq)))
+output.append(["y == r"] + list(entropyyesno(yer)))
+output.append(["z == T"] + list(entropyyesno(zeT)))
+return output
+#+end_src
+
+|        | YES |                 NO |
+|--------+-----+--------------------|
+| x < 4  | 1.0 |                1.0 |
+| y == p | 1.0 | 1.4591479170272446 |
+| y == q | 1.0 | 1.4591479170272446 |
+| y == r | 1.0 |                1.0 |
+| z == T | 0.0 |                1.0 |
+** e.
+#+begin_src python :exports both
+import math
+
+classes = {1:1, 2:1, 3:1, 4:1, 5:2, 6:2, 7:3, 8:3}
+D = [1,2,3,4,5,6,7,8]
+xl4 = {"yes":[1, 2, 5, 6], "no":[3, 4, 7, 8]}
+yep = {"yes":[1,5], "no":[2, 3, 4,  6, 7, 8]}
+yeq = {"yes":[2,6], "no":[1,3,4,5,7,8]}
+yer = {"yes":[3,4,7,8], "no":[1,2,5,6]}
+zeT = {"yes":[1, 2, 3, 4], "no":[5, 6, 7, 8]}
+
+def entropy(Data):
+    entropy = 0
+    for i in set(classes.values()):
+        sum = 0
+        for j in Data:
+            if classes[j] == i:
+                sum+=1
+
+        prob = sum/len(Data)
+        if prob > 0:
+            entropy += -prob * math.log2(prob)
+    return entropy
+def entropyyesno(D):
+    return entropy(D["yes"]), entropy( D["no"])
+def Gain(D, Dyn):
+    G = entropy(D) - ((len(Dyn["yes"])/len(D)) * entropy(Dyn[
+"yes"]) + (len(Dyn["no"])/len(D)) * entropy(Dyn["no"]))
+    return [G]
+G1 = Gain(D, xl4)
+G2 = Gain(D, yep)
+G4 = Gain(D, yeq)
+G5 = Gain(D, yer)
+G3 = Gain(D, zeT)
+
+output = []
+output.append(["x < 4"] + G1)
+output.append(["y == p"] + G2)
+output.append(["y == q"] + G4)
+output.append(["y == r"] + G5)
+output.append(["z == T"] + G3)
+return output
+#+end_src
+
+#+RESULTS:
+| x < 4  |                0.5 |
+| y == p | 0.1556390622295667 |
+| y == q | 0.1556390622295667 |
+| y == r |                0.5 |
+| z == T |                1.0 |
+
+Z == T has the most information gain, so it should be used for the root.
+** f
+The right branch (the NOs) needs to be split. all z == T is class 1 (the left branch)
+** g.
+The split criteria is  Y==P  Y==q, Y==r, x < 4.
+** h.
+#+begin_src python :exports both
+import math
+
+classes = {1:1, 2:1, 3:1, 4:1, 5:2, 6:2, 7:3, 8:3}
+D = [5,6,7,8]
+xl4 = {"yes":[1, 2, 5, 6], "no":[3, 4, 7, 8]}
+yeq = {"yes":[2,6], "no":[1,3,4,5,7,8]}
+yer = {"yes":[3,4,7,8], "no":[1,2,5,6]}
+yep = {"yes":[1,5], "no":[2, 3, 4, 6, 7, 8]}
+
+def entropy(data):
+    entropy = 0
+    Data = [i for i in data if i in D]
+    for i in set(classes.values()):
+        sum = 0
+        for j in Data:
+            if classes[j] == i:
+                sum+=1
+
+        prob = sum/len(Data)
+        if prob > 0:
+            entropy += -prob * math.log2(prob)
+    return entropy
+def Gain(D, yn):
+    Dyn = {}
+    Dyn["yes"] = [i for i in yn["yes"] if i in D]
+    Dyn["no"] = [i for i in yn["no"] if i in D]
+    G = entropy(D) - ((len(Dyn["yes"])/len(D)) * entropy(Dyn[
+"yes"]) + (len(Dyn["no"])/len(D)) * entropy(Dyn["no"]))
+    return [G]
+G1 = Gain(D, xl4)
+G3 = Gain(D, yep)
+G4 = Gain(D, yeq)
+G5 = Gain(D, yer)
+
+output = []
+output.append(["x < 4"] + G1)
+output.append(["y == p"] + G3)
+output.append(["y == q"] + G4)
+output.append(["y == r"] + G5)
+return output
+#+end_src
+
+#+RESULTS:
+| x < 4  |                 1.0 |
+| y == p | 0.31127812445913283 |
+| y == q | 0.31127812445913283 |
+| y == r |                 1.0 |
+
+Both X < 4 and Y == R have the same information gain, so either can be used, and the
+other, tossed out.
+** i
+#+attr_latex: :width \textwidth
+[[file:tree.pdf]]
+** j
+#+begin_src python :exports both
+Data = [[2.0,"P","T",1],
+[2.0,"Q","T",1],
+[4.0,"R","T",1],
+[4.0,"R","T",1],
+[2.0,"P","F",2],
+[2.0,"Q","F",2],
+[4.0,"R","F",3],
+[4.0,"R","F",3]]
+
+def tree(point):
+    if point[0] == "T":
+        return point[3] == 1
+    elif point[1] == "R":
+        return point[3] == 3
+    else:
+        return point[3] == 2
+
+sum = 0
+for i in Data:
+    if tree(i):
+        sum+=1
+return sum/len(Data)
+#+end_src
+
+#+RESULTS:
+: 0.5
+
+The accuracy is 50%.

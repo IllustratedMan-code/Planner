@@ -1,0 +1,128 @@
+#+title: lec12 activity
+#+options: toc:nil num:nil
+#+latex_header: \usepackage[margin=0.5in]{geometry}
+#+latex_header: \usepackage{tcolorbox} \usepackage{etoolbox}
+#+latex_header: \BeforeBeginEnvironment{minted}{\begin{tcolorbox}}%
+#+latex_header: \AfterEndEnvironment{minted}{\end{tcolorbox}}%
+#+latex_header: \BeforeBeginEnvironment{verbatim}{\begin{tcolorbox}}%
+#+latex_header: \AfterEndEnvironment{verbatim}{\end{tcolorbox}}%
+
+* 1.
+** a, b.
++ Calculate relative distance (square root is not required)
++ save the top k results and take the mode
+#+begin_src python
+import pandas as pd
+d = [[1,1,1,0],
+    [2,1,3,0],
+    [2,4,3,0],
+    [4,1,4,0],
+    [0,2,2,1],
+    [1,4,1,1],
+    [2,2,4,1],
+    [2,4,5,1]]
+d = pd.DataFrame(d, columns=("X", "Y", "Z", "C"))
+def distance(xi, xj):
+    return (xi-xj)**2
+def L(xi, yi, zi, xj, yj, zj):
+    dist = distance(xi,xj) + distance(yi,yj) + distance(zi,zj)
+    return dist
+
+d["distance1"] = d.apply(lambda row : L(1, 2, 1, row["X"], row["Y"], row["Z"]), axis=1)
+d["distance2"] = d.apply(lambda row : L(3, 2, 4, row["X"], row["Y"], row["Z"]), axis=1)
+
+k11 = int(d.sort_values(by=["distance1"]).head(1)["C"])
+k12 = int(d.sort_values(by=["distance2"]).head(1)["C"])
+k21 = int(d.sort_values(by=["distance1"]).head(3)["C"].mode())
+k22 = int(d.sort_values(by=["distance2"]).head(3)["C"].mode())
+
+l = [["ID", "K=1", "K=3"],
+     [1, k11, k21],
+     [2, k12, k22]]
+return l
+#+end_src
+
+| ID | K=1 | K=3 |
+|----+-----+-----|
+|  1 |   0 |   1 |
+|  2 |   1 |   0 |
+** c.
+The opposite result was determined based on the length of k. This was caused by
+the top 3 results having more of the opposite class in the latter two results.
+* 2.
+** a.
+P(C=0) = P(C=1) = 1/2
+** b.
+| /           | <     |       |
+|             | C = 0 | C = 1 |
+|-------------+-------+-------|
+| X=1 Y=1 Z=1 | 1/4   |     0 |
+| X=0 Y=1 Z=1 | 0     |     0 |
+| X=1 Y=0 Z=1 | 1/4   |     0 |
+| X=0 Y=0 Z=1 | 1/4   |   1/2 |
+| X=1 Y=0 Z=0 | 0     |   1/2 |
+| X=0 Y=0 Z=0 | 0     |     0 |
+| X=0 Y=1 Z=0 | 1/4   |     0 |
+| X=1 Y=1 Z=0 | 0     |     0 |
+** c.
+ + \(P(C = 0|r) = 0\) r not in dataset so \(n_i(v)\) is zero, and zero in table
+ + \(P(C = 1|r) = 0\) r not in dataset so \(n_i(v)\) is zero, and zero in table
+** d.
+| /         | <   |     |
+|           | C=0 | C=1 |
+|-----------+-----+-----|
+| p(X=0\vert C) | 1/2 | 1/2 |
+| p(X=1\vert C) | 1/2 | 1/2 |
+
+
+| /         | <   |     |
+|           | C=0 | C=1 |
+|-----------+-----+-----|
+| p(Y=0\vert C) | 1/2 |   1 |
+| p(Y=1\vert C) | 1/2 |   0 |
+
+
+| /         | <   |     |
+|           | C=0 | C=1 |
+|-----------+-----+-----|
+| p(Z=0\vert C) | 1/4 | 1/2 |
+| p(Z=1\vert C) | 3/4 | 1/2 |
+** e.
++ \(P(Y|C)\) requires a laplace corrrection because one of the probabilities in
+  the table is 0.
+** f.
+
+| /         | <   |     |
+|           | C=0 | C=1 |
+|-----------+-----+-----|
+| p(X=0\vert C) | 1/2 | 1/2 |
+| p(X=1\vert C) | 1/2 | 1/2 |
+
+
+| /         | <   |     |
+|           | C=0 | C=1 |
+|-----------+-----+-----|
+| p(Y=0\vert C) | 1/2 | 5/6 |
+| p(Y=1\vert C) | 1/2 | 1/6 |
+
+
+| /         | <   |     |
+|           | C=0 | C=1 |
+|-----------+-----+-----|
+| p(Z=0\vert C) | 1/4 | 1/2 |
+| p(Z=1\vert C) | 3/4 | 1/2 |
+** g.
+| /         | <   |     |
+|             | C = 0           | C = 1           |
+|-------------+-----------------+-----------------|
+| X=1 Y=1 Z=1 | 1/2 * 1/2 * 3/4 | 1/2 * 1/6 * 1/2 |
+| X=0 Y=1 Z=1 | 1/2 * 1/2 * 3/4 | 1/2 * 1/6 * 1/2 |
+| X=1 Y=0 Z=1 | 1/2 * 1/2 * 3/4 | 1/2 * 5/6 * 1/2 |
+| X=0 Y=0 Z=1 | 1/2 * 1/2 * 3/4 | 1/2 * 5/6 * 1/2 |
+| X=1 Y=0 Z=0 | 1/2 * 1/2 * 1/4 | 1/2 * 5/6 * 1/2 |
+| X=0 Y=0 Z=0 | 1/2 * 1/2 * 1/4 | 1/2 * 5/6 * 1/2 |
+| X=0 Y=1 Z=0 | 1/2 * 1/2 * 1/4 | 1/2 * 1/6 * 1/2 |
+| X=1 Y=1 Z=0 | 1/2 * 1/2 * 1/4 | 1/2 * 1/6 * 1/2 |
+** h.
+ + \(P(C = 0|r) = 1/2 \cdot 1/2 \cdot 1/4 * 1/2 = 1/32\)
+ + \(P(C = 1|r) = 1/2 \cdot 5/6 \cdot 1/4 * 1/2 = 5/96\)

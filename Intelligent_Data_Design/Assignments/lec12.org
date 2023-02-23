@@ -1,0 +1,48 @@
+
+* Classification
++ supervised learning
++ (\(\vec{x_i}, y_i\))
++ \(\vec{x_i} \in \mathbb R^d\)
++ \(y_i = \{1, 2, ..., k\}\)
++ \(m \vec x \rightarrow \hat y\)
++ build a model that classifies
++ Testing data vs training data (build model from training that can classify test)
++ Split original data into training and test
++ compare model accuracy with test data labels
+** Classes of models
++ more complex = more trend capturing
++ \(f(\vec{x}) \rightarrow \hat y\)
++ f is linear (hyperplane)
++ some trends are not linearly classifiable
++ too much complexity leads to overfitting
++ can't accurately describe the test set, but high accuracy on test set
++ high complexity models overfit
++ low complexity models underfit
++ goal is to find the middle ground
+** example
++ classification = risk (high, medium, low)
++ dimensions = (age, car, location, etc)
++ Goal is to classify data point according to risk
++ ulitmatley a partition of data into class (labels) in reduced dimensions (discriminitive)
+* Decision trees
+** Example
+| age | car type | risk |
+|-----+----------+------|
+|  25 | Sports   | L    |
+|  20 | SUV      | H    |
++ Numeric and categorical descisions
++ Example of descision Age \(\le\) 25
++ binary descision (yes or no)
++ leaf nodes represent classes
++ Goal is to build tree to represent model
+** Construction
++ if stopping criteria is met, choose the majority class in D to make a leaf
++ for all attributes, compute the deiscrimination score for A_i
++ (numerical)for all values \(v_j\) evaluate \(A \le v_j\)
++ (categorical)for all values \(v_j\) evaluate \(A \in v_j\)
++ Partition data into tree
++ Cutoff = purity = \(\frac{n_{in tree}}{n_{out tree}\)
++ Calculate score \(f(D, D_{yes}, D_{no}\)
++ Entropy measures amount of disorder (high entropy = high disorder)
+*** Shannon entropy
++ \(H(D) = - ( \sum^k p_i \log(p_i)\) where p is the purity
