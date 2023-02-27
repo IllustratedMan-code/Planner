@@ -1,0 +1,124 @@
+#+title: lec12 activity
+#+options: toc:nil num:nil
+#+latex_header: \usepackage[margin=0.5in]{geometry}
+#+latex_header: \usepackage{tcolorbox} \usepackage{etoolbox}
+#+latex_header: \BeforeBeginEnvironment{minted}{\begin{tcolorbox}}%
+#+latex_header: \AfterEndEnvironment{minted}{\end{tcolorbox}}%
+#+latex_header: \BeforeBeginEnvironment{verbatim}{\begin{tcolorbox}}%
+#+latex_header: \AfterEndEnvironment{verbatim}{\end{tcolorbox}}%
+* 1
+** a-c
+#+attr_latex: :width \textwidth
+[[file:1a.pdf]]
+** d
+\(\begin{cases} (1,3)x -11 < 0 \\ (1,3)x-11 > 0 \end{cases}\)
+** e.
+The above hyperplane does split all points accurately. See the python results.
+#+begin_src python :exports both
+d = [[3,1,-1],
+    [4,1,-1],
+    [4,2,-1],
+    [5,1,-1],
+    [0,5,1],
+    [1,5,1],
+    [1,4,1],
+    [2,4,1]]
+def h(x):
+    return 1 * x[0] + 3 * x[1] -11
+def half_space():
+    s = []
+    for x in d:
+        if h(x) > 0:
+            s.append("+")
+        else:
+            s.append("-")
+    return s
+
+
+return [[i, d] for i,d in zip(range(1,len(half_space())+1), half_space())]
+#+end_src
+
+#+RESULTS:
+| 1 | - |
+| 2 | - |
+| 3 | - |
+| 4 | - |
+| 5 | + |
+| 6 | + |
+| 7 | + |
+| 8 | + |
+** f.
+\(\sigma = \frac{yh(x)}{\|w\|}\)
+#+begin_src python
+import math
+d_w = math.sqrt(1**2 + 3**2)
+
+d = [[3,1,-1],
+    [4,1,-1],
+    [4,2,-1],
+    [5,1,-1],
+    [0,5,1],
+    [1,5,1],
+    [1,4,1],
+    [2,4,1]]
+
+def h(x):
+    return 1 * x[0] + 3 * x[1] -11
+distances = []
+for i in d:
+    distances.append(h(i)*i[-1]/d_w)
+
+return [[i, d] for i,d in zip(range(1,len(distances)+1), distances)]
+#+end_src
+
+#+RESULTS:
+| 1 |  1.5811388300841895 |
+| 2 |  1.2649110640673518 |
+| 3 | 0.31622776601683794 |
+| 4 |  0.9486832980505138 |
+| 5 |  1.2649110640673518 |
+| 6 |  1.5811388300841895 |
+| 7 |  0.6324555320336759 |
+| 8 |  0.9486832980505138 |
+** g.
+the closest vector to hyperplane is 3, with a distance of 0.32. This does not
+align with the analysis above, meaning that this hyperplane does not maximize
+the margin. This hyperplane is not canonical.
+* 2.
+** a.
+\(\min L = \frac{1}{2}\|w\|^2 - \displaystyle \sum \limits^n_{i=1}\alpha_i(y_i(w^Tx_i + b)-1)\)
+** b.
++ w is the weight vector that is orthogonal to the hyperplane
++ x is the data points in the dataset
++ y is the class labels (+ or -)
++ \(\alpha\) is the set of lagrangian multipliers, a set of scalar values that when signed
+  sum to zero. Additionally \(\alpha_i\) satisifies the constraints
+  \(\alpha_i(y_i(w^Tx_i + b)-1) = 0\) and \(\alpha_i \ge 0\)
+** c.
++ THe first term \(1/2\|w\|^2\) is the equivalent to \(\frac{1}{\|w\|}\), which is
+  equivalent to the margin of the hyperplane. The goal of the objective function
+  is to maximize this margin according to the contraints given by
+  \(y_i(w^Tx_i + a) \ge 1\) for all x in D.
++ The second term is the sum of the lagrangian multipler multiplied by the
+  contraint equation for every constraint.
+** d.
++ Y: known, given
++ x: known, given
++ w: unknown
++ b: unknown
++ \(\alpha\): unknown
+* 3.
+** a.
++ \(\underset{\alpha}\max \quad L_{dual} = \displaystyle \sum\limits^n_{i=1}\alpha_i -
+  \frac{1}{2}\displaystyle \sum\limits^n_{i=1}\displaystyle \sum\limits^n_{j=1}\alpha_i\alpha_jy_iy_jx^T_ix_j\)
++ and linear constraints \(\alpha_i \ge 0, \forall i \in D, \displaystyle \sum \limits^n_{i=1} \alpha_i
+  y_i = 0\)
+** b.
++ \(y_i, y_j\) known
++ \(x_i^T, x_j\) known
++ \(\alpha_i\) is not known, but can be determined with quadratic optimization
+** c.
+The \(\alpha_i\alpha_j\) term implies that the equation is quadradic and thus can be
+solved using quadratic programming (optimization) techniques. Specifically, the
+sum of the \(\alpha_i\alpha_j\) terms can be rearranged into the formula \(\alpha_1^2 + ... +
+\alpha_n^2\) which is a standard multivariate quadradic.

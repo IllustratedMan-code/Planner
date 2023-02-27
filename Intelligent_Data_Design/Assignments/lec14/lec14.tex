@@ -1,0 +1,169 @@
+% Created 2023-02-23 Thu 15:34
+% Intended LaTeX compiler: lualatex
+\documentclass[11pt]{article}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{physics}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{tcolorbox} \usepackage{etoolbox}
+\BeforeBeginEnvironment{minted}{\begin{tcolorbox}}%
+\AfterEndEnvironment{minted}{\end{tcolorbox}}%
+\BeforeBeginEnvironment{verbatim}{\begin{tcolorbox}}%
+\AfterEndEnvironment{verbatim}{\end{tcolorbox}}%
+\author{David Lewis}
+\date{\today}
+\title{lec12 activity}
+\hypersetup{
+ pdfauthor={David Lewis},
+ pdftitle={lec12 activity},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.6)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\section*{1}
+\label{sec:org081970e}
+\subsection*{a-c}
+\label{sec:org612c30e}
+\begin{center}
+\includegraphics[width=\textwidth]{1a.pdf}
+\end{center}
+\subsection*{d}
+\label{sec:org92da8e6}
+\(\begin{cases} (1,3)x -11 < 0 \\ (1,3)x-11 > 0 \end{cases}\)
+\subsection*{e.}
+\label{sec:orga36db17}
+The above hyperplane does split all points accurately. See the python results.
+\begin{minted}[fontsize=\scriptsize]{python}
+d = [[3,1,-1],
+    [4,1,-1],
+    [4,2,-1],
+    [5,1,-1],
+    [0,5,1],
+    [1,5,1],
+    [1,4,1],
+    [2,4,1]]
+def h(x):
+    return 1 * x[0] + 3 * x[1] -11
+def half_space():
+    s = []
+    for x in d:
+        if h(x) > 0:
+            s.append("+")
+        else:
+            s.append("-")
+    return s
+
+
+return [[i, d] for i,d in zip(range(1,len(half_space())+1), half_space())]
+\end{minted}
+
+\begin{center}
+\begin{tabular}{rl}
+1 & -\\
+2 & -\\
+3 & -\\
+4 & -\\
+5 & +\\
+6 & +\\
+7 & +\\
+8 & +\\
+\end{tabular}
+\end{center}
+\subsection*{f.}
+\label{sec:orgb80ca74}
+\(\sigma = \frac{yh(x)}{\|w\|}\)
+\begin{minted}[fontsize=\scriptsize]{python}
+import math
+d_w = math.sqrt(1**2 + 3**2)
+
+d = [[3,1,-1],
+    [4,1,-1],
+    [4,2,-1],
+    [5,1,-1],
+    [0,5,1],
+    [1,5,1],
+    [1,4,1],
+    [2,4,1]]
+
+def h(x):
+    return 1 * x[0] + 3 * x[1] -11
+distances = []
+for i in d:
+    distances.append(h(i)*i[-1]/d_w)
+
+return [[i, d] for i,d in zip(range(1,len(distances)+1), distances)]
+\end{minted}
+\subsection*{g.}
+\label{sec:orge8aaa0c}
+the closest vector to hyperplane is 3, with a distance of 0.32. This does not
+align with the analysis above, meaning that this hyperplane does not maximize
+the margin. This hyperplane is not canonical.
+\section*{2.}
+\label{sec:org9ed0033}
+\subsection*{a.}
+\label{sec:orgd79afe7}
+\(\min L = \frac{1}{2}\|w\|^2 - \displaystyle \sum \limits^n_{i=1}\alpha_i(y_i(w^Tx_i + b)-1)\)
+\subsection*{b.}
+\label{sec:org81dc9db}
+\begin{itemize}
+\item w is the weight vector that is orthogonal to the hyperplane
+\item x is the data points in the dataset
+\item y is the class labels (+ or -)
+\item \(\alpha\) is the set of lagrangian multipliers, a set of scalar values that when signed
+sum to zero. Additionally \(\alpha_i\) satisifies the constraints
+\(\alpha_i(y_i(w^Tx_i + b)-1) = 0\) and \(\alpha_i \ge 0\)
+\end{itemize}
+\subsection*{c.}
+\label{sec:org2e4ee5b}
+\begin{itemize}
+\item THe first term \(1/2\|w\|^2\) is the equivalent to \(\frac{1}{\|w\|}\), which is
+equivalent to the margin of the hyperplane. The goal of the objective function
+is to maximize this margin according to the contraints given by
+\(y_i(w^Tx_i + a) \ge 1\) for all x in D.
+\item The second term is the sum of the lagrangian multipler multiplied by the
+contraint equation for every constraint.
+\end{itemize}
+\subsection*{d.}
+\label{sec:orga140517}
+\begin{itemize}
+\item Y: known, given
+\item x: known, given
+\item w: unknown
+\item b: unknown
+\item \(\alpha\): unknown
+\end{itemize}
+\section*{3.}
+\label{sec:org46662e1}
+\subsection*{a.}
+\label{sec:orgdc3ba91}
+\begin{itemize}
+\item \(\underset{\alpha}\max \quad L_{dual} = \displaystyle \sum\limits^n_{i=1}\alpha_i -
+  \frac{1}{2}\displaystyle \sum\limits^n_{i=1}\displaystyle \sum\limits^n_{j=1}\alpha_i\alpha_jy_iy_jx^T_ix_j\)
+\item and linear constraints \(\alpha_i \ge 0, \forall i \in D, \displaystyle \sum \limits^n_{i=1} \alpha_i
+  y_i = 0\)
+\end{itemize}
+\subsection*{b.}
+\label{sec:orge028861}
+\begin{itemize}
+\item \(y_i, y_j\) known
+\item \(x_i^T, x_j\) known
+\item \(\alpha_i\) is not known, but can be determined with quadratic optimization
+\end{itemize}
+\subsection*{c.}
+\label{sec:orgb05e89f}
+The \(\alpha_i\alpha_j\) term implies that the equation is quadradic and thus can be
+solved using quadratic programming (optimization) techniques. Specifically, the
+sum of the \(\alpha_i\alpha_j\) terms can be rearranged into the formula \(\alpha_1^2 + ... +
+\alpha_n^2\) which is a standard multivariate quadradic.
+\end{document}

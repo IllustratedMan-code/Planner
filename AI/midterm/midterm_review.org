@@ -1,0 +1,140 @@
+
+* In the context of uniformed state-space search
+They try to examine all the possibilities. They are bad and inefficient for
+finding the smallest path.
++ Breadth first search
++ Depth first search
++ depth limited search
++ iterative deepening depth first search
++ uniform cost search
++ bidirection search (don' think we covered this one)
+** What is a state space
+All the possible states that can exist for a given problem, ie all possible
+positions of a set of queens on a chessboard.
+** What are the successor states of a state
+All the possible states that can follow the current state, ie all the possible
+*moves* that a set of queens can make on a chessboard.
+** Which states are present on the Open List?
+All the states that have not been searched and are neighboring the current state.
+** Which states are present on the Closed List?
+All the states that have been searched.
+** We want to solve the 4-queens problem as an uninformed search problem.
++ How would you formulate
+  1. the start state
+  2. the goal state
+  3. the set of possible moves
+  4. the path cost between the start and the goal state?
+
+*** Answer
++ Start state is some random position for 4 queens
++ goal state has 0 conflicts (queens threatening each other)
++ The set of possible moves for each queen (up down, left right, diagonal(not
+  needed?)) forms the neighboring set of states.
++ Search all possibilities until goal state is reached, depth of tree is the
+  path cost
+** What is the problem caused by repeated states during the search process? What are the advantages and disadvantages of letting the repeated states get added to the Open List?
+The issue is that the search can get into an endless loop of repeated states.
+This is therefore bad as long as it is possible to repeat states.
+
+There is a cost associated with preventing repeats. It can be prohibitively
+expensive (computationally and or storage-wise) to prevent repeats.
+
+
+
+**  Briefly outline how breadth-first search is used for finding a path from the start state to a goal state?
++ Every possible neigboring state is examined
++ if no goal states are found, repeat the process for every neigboring state
+  until a goal state is found.
+**  Briefly outline how uniform-cost search is used for finding a path from the start state to a goal state?
++ Examine all neighboring nodes, add the lowest cost node to the open list
++ repeat with the lowest cost node until the goal is reached.
+**  What are some advantages/disadvantages of using the depth-first search as opposed to the breadth-first search?
+Depth first search does not have to keep each level of the tree in memory, but
+is not complete without backtracking, making it very vulnerable to loops.
+** How does the iterative deepening depth-first search work?
++ A chosen depth is decided
++ depth first search is done on the tree to the chosen depth
++ if no solution is found at the depth, the depth is increased and depth first
+  search is repeated to the new depth
+** When is a search algorithm said to be complete?
++ It searches all possiblilites, breadth first search is complete
+** When is a search algorithm said to be optimal?
++ It finds the ideal solution (least cost)
+* In the context of informed state-space search
+** What is a hueristic function
+It is a function h(n) that estimates the cost of a path between the current state and
+the final state.
+** What value is used to order the nodes on the open list?
+The value of the f(n) + h(n) + current cost or g(n) is used to order the nodes.
+** At what stage do you know that you have found the shortest path to the goal state?
+When the goal state is reached, the current path is the shortest, but this is
+not necessarily accurate depending on the heuristic.
+** Admissible? consequences?
++ admissible heuristics always have a value smaller than the actual path cost.
++ The estimation will always be less than the real value, meaning that it is
+  inaccurate to some degree.
+** consistent? consequences?
++ consistent heuristics always  less than or equal to the estimated cost of the
+  neighboring nodes + cost to get to neighbors.
++ Estimated cost f(n) is non-decreasing.
+** A* algorithm optimal?
+If nodes have finite branching factor, the heuristic is admissible and
+  consistent, then A* is optimal
+** What happens when a heuristic dominates another heuristic?
+\(h_2 \ge h_1\) and both are admissible, h2 is better
+* In the context of hill climbing search
+** What is the main idea underlying the hill climbing search
++ You climb a hill to find the local max. the surrounding values are both less
+  (or greater if min)
+** What are the local and global maxima and minimal
+[[file:min-max.png]]
+** Select a random state for a 4 queens problem and show all neighboring states
+\(\mathbb{NO}\)
+** How can we avoid local minima
++ cycle detection
++ blacklist previously visited states
+** When is hill climbing better
++ it is more memory and computationally efficient, so for larger amounts of
+  possibilities, it performs better.
+** Map coloring with hill climbing?
+Use some hueristic to score the different regions of the map ajoining the
+current region.
+[[file:map_color.png]]
+* In the context of adversarial search
+** How does minmax algorithm work?
+2 players (min and max) that want the opposite thing. At each level of tree, the
+min or the max is found, depending on the player.
+[[file:min_max.png]]
+** What guarantee does each player have
+The move will be the best based on the best moves the other player makes
+** What is the advantaged gained by alpha beta pruning
++ don't have to do as much work! only some of the values need to be compared.
+** Is pruning expected to be different right to left and left to right?
+yes, consider the above example, no pruning would occur right to left, but 4
+nodes can be pruned left to right.
+** Move ordering, is it good?
+Move ordering can be used to maximize the amount of pruning that occurs. Again
+consider the above example. It has ideal ordering for left to right pruning.
+* In the context of constrain satisfaction problems
+** Unary, binary, and global constraints
+[[file:contraints.png]]
+[[file:global_constraints.png]]
+** What is the meaning of arc-consistency
+[[file:arc.png]]
+
+| X | Y |
+| 1 | 2 |
+| 2 | 3 |
+| 3 | 4 |
+The arc Y = X+1 is consistent
+** backtracking in CSPs
+[[file:backtracking.png]]
+[[file:backtracking_algo.png]]
+
+** Variable and value ordering
+[[https://ktiml.mff.cuni.cz/~bartak/constraints/ordering.html][some nice stuff here]]
+** Least constraining value
+[[file:least.png]]
+** AC-3
+Iterate through each condition (arc), adding the reverse to the open list, until
+consistency is reached (the lists stop changing).

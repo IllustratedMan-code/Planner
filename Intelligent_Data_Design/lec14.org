@@ -1,0 +1,12 @@
+
+* Support vector machines
++ maximize margin of hyperplane
++ \(h(x) = w^Tx + b = 0\)
++ canonical form: closest point in dataset is always \(\frac{1}{\|w\|}\) (scaled)
++ \(\frac{y_i(w^Tx_i+b)}{\|w\|}\) = distance from point \(x_i\) from h(x) = 0
++ \(\max\frac{1}{\|w\|} = \min\frac{1}{2}\|w\|^2\) = primal formulation
++ add b to w term
++ \(h(x) = w^Tx = 0\) after removing b
++ \(\min \frac{1}{2}\|\vec w\|^2 - \sum^h_{i=1}\alpha_i(y_iw^Tx - 1)\)
++ \(w = \sum\alpha_iy_ix_i\)
++ \(\alpha(y_iw^Tx_i) = 0\) and \(\alpha \ge 0\)

@@ -38,6 +38,10 @@ Find the optimal hyperplane that separates two classes
 + closest point to dividing line is 1 (margin is 1)
 + constraints: all distances must be \(\ge 1\)
 +
+* Solve the objective function
++ lagrange multipler for each constraint
++ \(y_i(w^Tx_i+b)-1 \ge 0\)
++ w is juat a linear combination of the support vectors
 * MIT lecture
 + decision boundaries (hyperplane)
 + Widest street (largest margin)
@@ -50,4 +54,4 @@ Find the optimal hyperplane that separates two classes
 + \(y_i = -1 \text{\:for\:} - \text{positive samples}\)
 + \(\vec x \veca + b) -1 \ge 0\)
 + WIDTH = \(\vec x_+-\vec x_- \cdot \frac{\vec w}{\|w\|} = \frac{2}{\|w\|\)
-+ maximize \(\frac {2}{\|w\|} = \max \frac{1}{\|x\|} = \min \frac{1}{2}\|w\|^2\)
++ maximize \(\frac {2}{\|w\|} = \max \frac{1}{\|x\|} = \min \frac{1}{2}\|w\|^2 = \min \|w\|^2\)
