@@ -51,7 +51,7 @@
 
 
   
-  <link href='tailwind.css?instanceId=8412fb02-ba0f-4c3a-ba61-2d577f324594' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=3306d6a8-8be3-45c3-a6c8-d97d352611a5' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -2309,7 +2309,7 @@ accuracy = right/len(data)
 error_rate = 1 - accuracy
 out = [["accuracy:", accuracy],["error rate:", error_rate]]
 return out
-</code></pre></div><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>b</h2><table class='mb-3'><thead><tr class='border-b-2 border-t-2 border-gray-300'><th class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'></th><th class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>True</th><th class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'></th></tr></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>predicted</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>-1</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>-1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td></tr></tbody></table>
+</code></pre></div><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>b</h2><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>True</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>/</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>&lt;&gt;</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>predicted</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>-1</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>-1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td></tr></tbody></table>
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -2317,7 +2317,7 @@ return out
         </li>
       
         <li>
-          False positive: 2
+          False positive: 3
         </li>
       
         <li>
@@ -2325,7 +2325,7 @@ return out
         </li>
       
         <li>
-          false negative: 3
+          false negative: 2
         </li>
       
     </ul>
@@ -2371,15 +2371,18 @@ return out
     true_positives_5 = 0
     false_positives_5 = 0
     for i in data:
-        if i[1] ==1:
             if i[3] == 1:
-                true_positives_8 += 1
-            else:
-                false_positives_8 += 1
+
+                if i[1] ==1:
+                    true_positives_8 += 1
+                else:
+                    false_positives_8 += 1
             if i[4] == 1:
-                true_positives_5 += 1
-            else:
-                false_positives_5 += 1
+                if i[1] == 1:
+                    true_positives_5 += 1
+                else:
+                    false_positives_5 += 1
+
     def recall(r1 ,r2):
         return r1/(r1+r2)
 
@@ -2389,19 +2392,51 @@ return out
         ]
     return out
 return true_false("Table 1", table1) + true_false("Table2", table2)
-</code></pre></div><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Table 1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>p &gt;= 0.8</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>p &gt;= 0.5</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>true positive rate</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1.0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.5</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>false positive rate</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.5</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Table2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>p &gt;= 0.8</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>p &gt;= 0.5</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>true positive rate</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1.0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.0</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>false positive rate</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1.0</td></tr></tbody></table><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>c-d</h2><div class='py-0.5 mb-3 text-sm'><pre><code class='jupyter-python language-jupyter-python' var='data=bayes' kernel='python3' session='py'>import matplotlib.pyplot as plt
+</code></pre></div><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Table 1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>p &gt;= 0.8</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>p &gt;= 0.5</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>true positive rate</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.6666666666666666</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.5</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>false positive rate</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.3333333333333333</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.5</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Table2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>p &gt;= 0.8</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>p &gt;= 0.5</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>true positive rate</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.6666666666666666</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.0</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>false positive rate</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.3333333333333333</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1.0</td></tr></tbody></table><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>c-d</h2><div class='py-0.5 mb-3 text-sm'><pre><code class='jupyter-python language-jupyter-python' var='data=bayes' kernel='python3' session='py'>import matplotlib.pyplot as plt
 p1 = data[1][1], data[2][1]
 p2 = data[1][2], data[2][2]
 p3 = data[4][1], data[5][1]
 p4 = data[4][2], data[5][2]
-fig,(axes1, axes2) = plt.subplots(1, 2)
-
-p = axes1.plot((p1[0], p1[1]),[p3[0], p3[1]])
+fig,(axes1, axes2) = plt.subplots(1, 2, sharex=True, sharey=True)
+axes1.plot((p1[0], p3[0]),[p1[1], p3[1]])
+axes1.scatter((p1[0], p3[0]),[p1[1], p3[1]])
 axes1.set_title("P &gt;= 0.8")
+axes2.plot((p2[0], p4[0]),[p2[1], p4[1]])
+axes2.scatter((p2[0], p4[0]),[p2[1], p4[1]])
 axes2.set_title("P &gt;= 0.5")
-p2 = axes2.plot((p2[0], p2[1]),[p4[0], p4[1]])
+fig.supxlabel("True Positive rate")
+fig.supylabel("False Positive rate")
 
-</code></pre></div><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>3.</h2>
+plt.show()
+</code></pre></div>
+    <p class='mb-3'>
+      The P &gt;= 0.8 classifier is ~66% likely to have a true positive, which did not change across training data. The P &gt;= 0.5 classifier actually had a negative ROC curve, which is probably impossible, but implies that as the false positive rate goes down, the true positive rate actually increases. There isn't enough data to make a good prediction either way, but it does appear that the P &gt;= 0.8 classifier is more effective.
+    </p>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>3.</h2>
+    <p class='mb-3'>
+      5 fold validation implies 5 separate "folds" or groups of test data as follows:
+    </p>
+  <table class='mb-3'><thead><tr class='border-b-2 border-t-2 border-gray-300'><th class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>fold</th><th class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>train</th><th class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>test</th></tr></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>{id<sub>3</sub>, … id<sub>10</sub>}</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>{id<sub>1</sub>, id<sub>2</sub>}</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>{id<sub>1</sub>, i<sub>2</sub>, id<sub>5</sub>, … id<sub>10</sub>}</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>{id<sub>3</sub>, id<sub>4</sub>}</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>{id<sub>1</sub>, … id<sub>4</sub>, id<sub>7</sub>, … id<sub>10</sub>}</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>{id<sub>5</sub>, id<sub>6</sub>}</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>4</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>{id<sub>1</sub>, … id<sub>6</sub>, id<sub>9</sub>, id<sub>10</sub>}</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>{id<sub>7</sub>, id<sub>8</sub>}</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>5</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>{id<sub>1</sub>, … id<sub>8</sub>}</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>{id<sub>9</sub>, id<sub>10</sub>}</td></tr></tbody></table><pre class='pandoc-raw-"org"'>#+tblfm: $1=@# -1</pre><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>4.</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Boostrapping selects sets of data of a fixed size an arbitrary number of times, this forms a new "fake" training set for each member of the ensemble (a set of weak learners)
+        </li>
+      
+        <li>
+          In boosting, data in random is assigned a weight based on the performance of the previous classifier, (initialized equal). This method iterates upon previous classifiers by increasing the weight of data that is misclassified. This technique aims to minimize bias, while bagging aims to reduce variance.
+        </li>
+      
+        <li>
+          Bagging reduces the variance by averaging output of many classifiers that are trained on random samples of the data. Using the independent and representative nature of random samples, prevents weak learners from being fully independent.
+        </li>
+      
+        <li>
+          Boosting reduces the bias by assigning weights to data that is incorrectly classified. This successive optimization minimizes the amount of prejudiced results (bias).
+        </li>
+      
+    </ul>
+  
 
   <div class='flex items-center justify-center mt-2'>
   
