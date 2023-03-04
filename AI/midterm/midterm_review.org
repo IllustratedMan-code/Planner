@@ -133,8 +133,10 @@ The arc Y = X+1 is consistent
 
 ** Variable and value ordering
 [[https://ktiml.mff.cuni.cz/~bartak/constraints/ordering.html][some nice stuff here]]
+
 ** Least constraining value
 [[file:least.png]]
+
 ** AC-3
 Iterate through each condition (arc), adding the reverse to the open list, until
 consistency is reached (the lists stop changing).

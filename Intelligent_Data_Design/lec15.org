@@ -1,0 +1,30 @@
+
+* Kernel SVM (non-linear support vector case)
++ manipulate the feature space to make it pseudo-linear
++ n points in d dimensional space
++ change input space into feature space
++ map x \to \(\phi(x)\) (higher dimensional space)
+** example
+#+begin_equation
+\(\mathbb{R}^2 \to \phi(\vec x) = (1, \sqrt{2}x_1, \sqrt{2}x_2, x_1^2, x_2^2, \sqrt{2}, x,
+x_2) \to \mathbb R^6\)
+#+end_equation
++ linear separation now works in new dimensionality (feature space)
++ identity kernel (every points maps each point to itself)
++ 2nd degree polynomial kernel is this example
+** Kernels
++ Move from low dimensional to high dimensional space
++ what class of function should \(\phi\) be?
++ User must choose the correct kernel
++ Hope to increase the boundary between classes.
+* Kernel trick
++ primal formation
++ \(\frac{1}{2}\|w\|^2 + C\sum\limits^n_{i=1}(\xi_i)^k\)
++ \(w = \sum^n_{i=1} \alpha_iy_i \phi(x_i)\)
++ dual formation
++ \(b =  \frac{1}{n}\left( \sum y_i - w^T ( \sum \phi(x_i)\right)\)
++ Only the dot product \(\phi(x_i)^T\phi(x_j)\) is needed
++ w is not needed in the dual formation, no need to transform
++ not all kernels have the above dot product formation, kernel should have a
+  product expressible as a product of \(x_i\) and \(x_j\)
++ Kernel should be positive semidefinite and symmetric

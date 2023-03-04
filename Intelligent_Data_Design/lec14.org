@@ -10,3 +10,4 @@
 + \(\min \frac{1}{2}\|\vec w\|^2 - \sum^h_{i=1}\alpha_i(y_iw^Tx - 1)\)
 + \(w = \sum\alpha_iy_ix_i\)
 + \(\alpha(y_iw^Tx_i) = 0\) and \(\alpha \ge 0\)
+* Hingle loss

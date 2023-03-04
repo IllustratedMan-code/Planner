@@ -1,0 +1,45 @@
+% Created 2023-02-28 Tue 12:06
+% Intended LaTeX compiler: lualatex
+\documentclass[11pt]{article}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{physics}
+\author{David Lewis}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={David Lewis},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.6)}, 
+ pdflang={English}}
+\begin{document}
+
+\tableofcontents
+
+\section{Support vector machines}
+\label{sec:org3ede74c}
+\begin{itemize}
+\item maximize margin of hyperplane
+\item \(h(x) = w^Tx + b = 0\)
+\item canonical form: closest point in dataset is always \(\frac{1}{\|w\|}\) (scaled)
+\item \(\frac{y_i(w^Tx_i+b)}{\|w\|}\) = distance from point \(x_i\) from h(x) = 0
+\item \(\max\frac{1}{\|w\|} = \min\frac{1}{2}\|w\|^2\) = primal formulation
+\item add b to w term
+\item \(h(x) = w^Tx = 0\) after removing b
+\item \(\min \frac{1}{2}\|\vec w\|^2 - \sum^h_{i=1}\alpha_i(y_iw^Tx - 1)\)
+\item \(w = \sum\alpha_iy_ix_i\)
+\item \(\alpha(y_iw^Tx_i) = 0\) and \(\alpha \ge 0\)
+\end{itemize}
+\section{Hingle loss}
+\label{sec:orgddfc887}
+\end{document}

@@ -1,0 +1,12 @@
+
+* Theorems on worst case performance
+** No-free-lunch theorem
+There is no single  classifier that is general over the space of the possible problems
+** Ugly duckling theorem
+Over all the possible pfratuer sets, there is no real way to measure similarity
+of points
+* Classifier evaluation
+Break data into two chunks (training and test), hide the label for half the
+dataset.
+
+Accuracy of a classifier is the number of correct predictions/test cases
