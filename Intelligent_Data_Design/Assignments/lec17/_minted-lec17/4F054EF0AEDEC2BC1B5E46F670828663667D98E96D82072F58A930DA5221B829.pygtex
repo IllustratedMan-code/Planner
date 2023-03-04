@@ -1,0 +1,29 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{true\PYGZus{}false}\PYG{p}{(}\PYG{n}{name}\PYG{p}{,} \PYG{n}{data}\PYG{p}{):}
+    \PYG{n}{true\PYGZus{}positives\PYGZus{}8} \PYG{o}{=} \PYG{l+m+mi}{0}
+    \PYG{n}{false\PYGZus{}positives\PYGZus{}8} \PYG{o}{=} \PYG{l+m+mi}{0}
+    \PYG{n}{true\PYGZus{}positives\PYGZus{}5} \PYG{o}{=} \PYG{l+m+mi}{0}
+    \PYG{n}{false\PYGZus{}positives\PYGZus{}5} \PYG{o}{=} \PYG{l+m+mi}{0}
+    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{data}\PYG{p}{:}
+            \PYG{k}{if} \PYG{n}{i}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{:}
+
+                \PYG{k}{if} \PYG{n}{i}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{==}\PYG{l+m+mi}{1}\PYG{p}{:}
+                    \PYG{n}{true\PYGZus{}positives\PYGZus{}8} \PYG{o}{+=} \PYG{l+m+mi}{1}
+                \PYG{k}{else}\PYG{p}{:}
+                    \PYG{n}{false\PYGZus{}positives\PYGZus{}8} \PYG{o}{+=} \PYG{l+m+mi}{1}
+            \PYG{k}{if} \PYG{n}{i}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{:}
+                \PYG{k}{if} \PYG{n}{i}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{:}
+                    \PYG{n}{true\PYGZus{}positives\PYGZus{}5} \PYG{o}{+=} \PYG{l+m+mi}{1}
+                \PYG{k}{else}\PYG{p}{:}
+                    \PYG{n}{false\PYGZus{}positives\PYGZus{}5} \PYG{o}{+=} \PYG{l+m+mi}{1}
+
+    \PYG{k}{def} \PYG{n+nf}{recall}\PYG{p}{(}\PYG{n}{r1} \PYG{p}{,}\PYG{n}{r2}\PYG{p}{):}
+        \PYG{k}{return} \PYG{n}{r1}\PYG{o}{/}\PYG{p}{(}\PYG{n}{r1}\PYG{o}{+}\PYG{n}{r2}\PYG{p}{)}
+
+    \PYG{n}{out} \PYG{o}{=} \PYG{p}{[[}\PYG{n}{name}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}p \PYGZgt{}= 0.8\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}p \PYGZgt{}= 0.5\PYGZdq{}}\PYG{p}{],}
+        \PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}true positive rate\PYGZdq{}}\PYG{p}{,} \PYG{n}{recall}\PYG{p}{(}\PYG{n}{true\PYGZus{}positives\PYGZus{}8}\PYG{p}{,} \PYG{n}{false\PYGZus{}positives\PYGZus{}8}\PYG{p}{),} \PYG{n}{recall}\PYG{p}{(}\PYG{n}{true\PYGZus{}positives\PYGZus{}5}\PYG{p}{,} \PYG{n}{false\PYGZus{}positives\PYGZus{}5}\PYG{p}{)],}
+        \PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}false positive rate\PYGZdq{}}\PYG{p}{,} \PYG{n}{recall}\PYG{p}{(}\PYG{n}{false\PYGZus{}positives\PYGZus{}8}\PYG{p}{,} \PYG{n}{true\PYGZus{}positives\PYGZus{}8}\PYG{p}{),} \PYG{n}{recall}\PYG{p}{(}\PYG{n}{false\PYGZus{}positives\PYGZus{}5}\PYG{p}{,} \PYG{n}{true\PYGZus{}positives\PYGZus{}5}\PYG{p}{)]}
+        \PYG{p}{]}
+    \PYG{k}{return} \PYG{n}{out}
+\PYG{k}{return} \PYG{n}{true\PYGZus{}false}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Table 1\PYGZdq{}}\PYG{p}{,} \PYG{n}{table1}\PYG{p}{)} \PYG{o}{+} \PYG{n}{true\PYGZus{}false}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Table2\PYGZdq{}}\PYG{p}{,} \PYG{n}{table2}\PYG{p}{)}
+\end{Verbatim}

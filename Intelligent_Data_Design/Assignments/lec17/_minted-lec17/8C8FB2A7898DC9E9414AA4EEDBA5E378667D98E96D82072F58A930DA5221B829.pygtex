@@ -1,0 +1,18 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{matplotlib.pyplot} \PYG{k}{as} \PYG{n+nn}{plt}
+\PYG{n}{p1} \PYG{o}{=} \PYG{n}{data}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{data}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{n}{p2} \PYG{o}{=} \PYG{n}{data}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{2}\PYG{p}{],} \PYG{n}{data}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{][}\PYG{l+m+mi}{2}\PYG{p}{]}
+\PYG{n}{p3} \PYG{o}{=} \PYG{n}{data}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{data}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{n}{p4} \PYG{o}{=} \PYG{n}{data}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{][}\PYG{l+m+mi}{2}\PYG{p}{],} \PYG{n}{data}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{][}\PYG{l+m+mi}{2}\PYG{p}{]}
+\PYG{n}{fig}\PYG{p}{,(}\PYG{n}{axes1}\PYG{p}{,} \PYG{n}{axes2}\PYG{p}{)} \PYG{o}{=} \PYG{n}{plt}\PYG{o}{.}\PYG{n}{subplots}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n}{sharex}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,} \PYG{n}{sharey}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{)}
+\PYG{n}{axes1}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{((}\PYG{n}{p1}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{p3}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]),[}\PYG{n}{p1}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{p3}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]])}
+\PYG{n}{axes1}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{((}\PYG{n}{p1}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{p3}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]),[}\PYG{n}{p1}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{p3}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]])}
+\PYG{n}{axes1}\PYG{o}{.}\PYG{n}{set\PYGZus{}title}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}P \PYGZgt{}= 0.8\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{axes2}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{((}\PYG{n}{p2}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{p4}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]),[}\PYG{n}{p2}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{p4}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]])}
+\PYG{n}{axes2}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{((}\PYG{n}{p2}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{p4}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]),[}\PYG{n}{p2}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{p4}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]])}
+\PYG{n}{axes2}\PYG{o}{.}\PYG{n}{set\PYGZus{}title}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}P \PYGZgt{}= 0.5\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{fig}\PYG{o}{.}\PYG{n}{supxlabel}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}True Positive rate\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{fig}\PYG{o}{.}\PYG{n}{supylabel}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}False Positive rate\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+\end{Verbatim}

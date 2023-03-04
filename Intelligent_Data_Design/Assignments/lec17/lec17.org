@@ -121,7 +121,7 @@ return true_false("Table 1", table1) + true_false("Table2", table2)
 | false positive rate | 0.3333333333333333 |      1.0 |
 
 ** c-d
-#+begin_src jupyter-python :var data=bayes :kernel python3 :session py
+#+begin_src jupyter-python :var data=bayes :kernel python3 :session py :exports both
 import matplotlib.pyplot as plt
 p1 = data[1][1], data[2][1]
 p2 = data[1][2], data[2][2]
@@ -139,7 +139,7 @@ fig.supylabel("False Positive rate")
 
 plt.show()
 #+end_src
-
+#+attr_latex: :width 0.8\textwidth
 #+RESULTS:
 [[file:./.ob-jupyter/56aa79352d69672f8941ac1a635528d4d749ff50.png]]
 

@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{right} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{data}\PYG{p}{:}
+    \PYG{k}{if} \PYG{n}{i}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{==} \PYG{n}{i}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]:}
+        \PYG{n}{right} \PYG{o}{+=} \PYG{l+m+mi}{1}
+\PYG{n}{accuracy} \PYG{o}{=} \PYG{n}{right}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{data}\PYG{p}{)}
+\PYG{n}{error\PYGZus{}rate} \PYG{o}{=} \PYG{l+m+mi}{1} \PYG{o}{\PYGZhy{}} \PYG{n}{accuracy}
+\PYG{n}{out} \PYG{o}{=} \PYG{p}{[[}\PYG{l+s+s2}{\PYGZdq{}accuracy:\PYGZdq{}}\PYG{p}{,} \PYG{n}{accuracy}\PYG{p}{],[}\PYG{l+s+s2}{\PYGZdq{}error rate:\PYGZdq{}}\PYG{p}{,} \PYG{n}{error\PYGZus{}rate}\PYG{p}{]]}
+\PYG{k}{return} \PYG{n}{out}
+\end{Verbatim}
