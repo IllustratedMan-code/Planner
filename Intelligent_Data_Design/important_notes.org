@@ -33,4 +33,11 @@
 + transformation matrix is \(P = U_rU_r^T\)
 + \(PX = X'\)
 
-* LDA
+* Frequent pattern mining
+** Vocab
++ tidset
++ inverted index
+** Naive algorithm
+Manually compute
+** Apriori algorithm
+** Eclat algorithm

@@ -1,0 +1,16 @@
+
+* We say that a model is "overfit" when :drill:
+** Answer
+prediction accuracy is low on test and high on train
+* The decision tree algorithm you learn is: :drill:
+** Answer
+recursive
+* In decision tree construction , the purity of a partition is determined by using :drill:
+** Answer
+entropy
+* The descision tree construction algorithm effectively draws
+** Answer
+axis-parralel lines to identify pure partition
+* In decision tree construction, the best criterion for spltting an internal node is:
+** Answer
+information gain

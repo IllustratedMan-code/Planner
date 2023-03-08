@@ -1,0 +1,18 @@
+
+* When bias is implicit, each data point is in:
++ [ ] n dimensions
++ [ ] n + 1 dimensions
++ [x] d dimensions
++ [ ] d+1 dimensions
+* What is the slack for a data point $x_i$ that is classified correctly, but lies inside the margin
+** Answer
+$0\leq \xi_i \leq 1$
+* In the dual formulation, the objective has [n] unknowns
+** Answer
+n
+
+* Gradient ascent is the solution for [ ]
++ [ ] the primal formulation
++ [ ] both primal and dual formulations
++ [ ] neither primal and dual formulation
++ [ ] the dual formulation

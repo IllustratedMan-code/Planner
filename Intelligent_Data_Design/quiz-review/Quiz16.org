@@ -1,0 +1,23 @@
+
+* To use SVMs in non-separable, nonlinear case
+** Answer
+We map data to \(\mathbb{R}^h\) where h is typically much larger than original dimensionality
+* Which of the following statements is TRUE about kernel SVM
++ [ ] Knowing $\phi(x_i) \forall i \in \{1\dots n\}$ is necessary to predict
++ [ ] $\mathbf{K}(x_i, x_j)$ must be a positive-definite matrix
++ [ ] Knowing $\mathbf{K}(x_i,x_j), \forall i,j \in \{1, \dots, n\}$ is sufficient to predict,
++ [x] Knowing $\mathbf{K}(x_i,x_j), \alpha_i, \alpha_j \forall i,j \in \{1, \dots, n\}$ is enough to predict,
+* Which of the following is FALSE about kernels
++ [ ] Kernel matrices are of size $n \times n$
++ [ ] Kernels should be symmetric
++ [ ] Kernels should be positive semidefinite matrices
++ [x] Kernels should not be a dot product of non-linear functions.
+* Which of the following are FALSE:
++ [x] Association rules mining is suited for non-overlapping rules
++ [ ] When rules overlap, we need to determine the ranking
++ [ ] Association rules mining is suited for discrete attributes
+* Which of the following is FALSE about association rules
++ [ ] Rules are ranked on the basis of confidence
++ [ ] Class labels are always on the RHS of the rules (a => labels)
++ [ ] Itemsets without labels are irrelevant
++ [x] Only maximal itemsets are used for learning rules

@@ -1,0 +1,14 @@
+
+* A Hyperplane can be expressed as:
+** Answer
+$w^Tx+b$ where w is orthogonal to the hyperplane
+* For n points in \(\mathbb{R}^d\), the hyperplane lies in:
+
+** Answer
+d-1 dimensions
+* Support vectors are:
+** Answer
+at  a distance of 1 from the hyperplane (on the margin)
+* Given a dataset D, the margin is:
+** Answer
+ the minimum distance from every datapoint in D to the optimal hyperplane

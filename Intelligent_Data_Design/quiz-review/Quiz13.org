@@ -1,0 +1,22 @@
+
+* A disadvantage of kNN is:
++ [x] time complexity to predict
++ [ ] time complexity to train
++ [ ] space complexity to train
++ [ ] space complexity to predict
+* For bayes classifier
++ [x] estimating \(p(x|c_i)\) is hard
++ [ ] estimating \(p(c_i)\) is hard
++ [ ] The assumption of independence is hard
++ [ ] dealing with numerical data is hard
+* Naive bayes assumes that
++ [ ] $p(x_1,\dots,x_d) = p(x_1) . \ldots . p(x_d)$
++ [x] $p(x_1,\dots,x_d | c_i) = p(x_1|c_i) . \ldots . p(x_d | c_i)$
++ [ ] $p(c_i | x_1,\dots,x_d) = p(c_i| x_1) . \ldots . p(c_i | x_d)$
++ [ ] $p(x_1,\dots,x_d) = p(x_1|c_i) . \ldots . p(x_d | c_i)$
+* In the context of Naive Bayes classifier, Laplace correction is used to address
+
++ [ ] Ensuring that $p(x_j = t | c_i) = 0$ when there are no points with $x_j = t$ for all data points of $c_i$
++ [ ] Ensuring that $p(x_j= t) = 0$ even when there are no points with $x_j = t$ for all data points of $c_i$
++ [x] Ensuring that $p(x_j= t | c_i) \neq 0$ even when there are no points with $x_j = t$ for all data points of $c_i$
++ [ ] Ensuring that $p(c_i) \neq 0$ no data point belongs to class $c_i$
