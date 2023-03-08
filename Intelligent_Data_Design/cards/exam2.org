@@ -13,3 +13,199 @@ Create a table of the following form
 |-------------------+-------+-------|
 | X = 1, Y = 1, etc |       |       |
 | All combinations  |       |       |
+* Primal formulation
+:PROPERTIES:
+:ANKI_DECK: IDA
+:ANKI_NOTE_TYPE: Basic
+:ANKI_NOTE_ID: 1678311757183
+:END:
+What does each of the variables in the primal formation of the SVM mean?
+
+\(\min L = \frac{1}{2} \|\vec w \| ^2 - \sum\limits^n_{i=1}\alpha_i(y_i(\vec w^T\vec
+x_i + b) - 1) \)
+constraints:
+- \(\alpha_i(y_i(\vec w^T\vec x_i + b) - 1) = 0\)
+- \(\alpha_i \ge 0\)
+** Answer
++ \(\alpha_i\) is a lagrange multiplier, an additional variable introduced to enable
+  the formulation of the dual objective. The set of lagrange multipers \(\alpha\) is
+  summed to 0 when the sign is given (class label)
++ \(\vec w\) is the weight vector that is orthogonal to the hyperplane
++ \(\vec x\) is the set of given points in the dataset
++ \(y_i\) is the given class labels
+* Support2
+:PROPERTIES:
+:ANKI_DECK: IDA
+:ANKI_NOTE_TYPE: Basic
+:ANKI_NOTE_ID: 1678315961856
+:END:
+What is the support formula for
+
+\[sup(C\overline{AD})\]?
+
+** Answer
+\[sup(C\overline{AD}) = sup(C) - sup(AC) - sup(CD) + sup(ACD)\]
+
+or more generalized as:
+
+\[sup(Y\overline Z) = \sum_{Y \subseteq W \subseteq X}-1^{|W\setminus Y|} \cdot sup(W)\]
+
+Where \(X = Y \cup Z = YZ\)
+
+
+* Dual formulation
+:PROPERTIES:
+:ANKI_DECK: IDA
+:ANKI_NOTE_TYPE: Basic
+:ANKI_NOTE_ID: 1678311757306
+:END:
+What does each of the variables in the dual formulation of the SVM mean?
+
+\(\underset{\alpha} \max  \sum
+\limits_{i=1}^n\alpha_i-\frac{1}{2}\sum^n_{i=1}\sum^n_{j=1}\alpha_i\alpha_jy_iy_j\vec
+x^T_i\vec x_j\)
+
+constraints:
+- \(\alpha_i \ge 0\)
+- \(\forall i \in D\)
+- \(\sum\limits^n_{i=1}\alpha_iy_i = 0\)
+
+** Answer
++ \(\alpha_i/\alpha_j\) is a lagrange multiplier, an additional variable introduced to enable
+  the formulation of the dual objective. The set of lagrange multipers \(\alpha\) is
+  summed to 0 when the sign is given (class label)
++ \(y_i/y_j\) is the given class labels
++ The dual formulation is obtained by taking the derivitive of the primal
+  formulation with respect to \(\vec w\) and \(b\)
+* Implicit bias
+:PROPERTIES:
+:ANKI_NOTE_TYPE: Basic
+:ANKI_DECK: IDA
+:ANKI_NOTE_ID: 1678314969754
+:END:
+What is implicit bias? How would you rewrite the following hyperplane using
+implicit bias?
+
+\(h(x) = {1 \choose 5}^Tx - 5 \)
+** Answer
+Implicit bias incorporates the b from the normal hyperplane definition into the
+weight vector by adding another dimension. b stands for bias in this case.
+
+\(h(x) = \begin{pmatrix} 1 \\ 5 \\ -5 \end{pmatrix}^T\overset {\rightarrow} {(x, 1)} \)
+* Slack
+:PROPERTIES:
+:ANKI_NOTE_TYPE: Basic
+:ANKI_DECK: IDA
+:ANKI_NOTE_ID: 1678314970005
+:END:
+What is slack \(\xi\)?
+** Answer
+Slack is a measurement of how far away a point is from the correct side of the
+margin. If a slack term \(\xi_i \ge 1\) then the point is misclassified.
+Slack occurs in the case where a linear separation of points that maximizes the
+margin is not possible.
+[[file:soft_margin.png]]
+* Non-linear primal
+:PROPERTIES:
+:ANKI_NOTE_TYPE: Basic
+:ANKI_DECK: IDA
+:ANKI_NOTE_ID: 1678314970104
+:END:
+What do the variables mean in the non-linear primal formulation of SVM?
+
+[[file:non_linear_primal.png]]
+** Answer
++ \(\vec w\) is the weight vector that is orthogonal to the hyperplane
++ \(\vec x\) is the set of given points in the dataset
++ \(y_i\) is the given class labels
++ C is the regularization constant, controls the trade off between minimizing
+  slack terms and maximizing margin.
++ \(\xi\) is the slack term, which indicates how much a given point violates the
+  separabilty condition (at least 1/||w||) away from hyperplane
+* Non-linear dual
+:PROPERTIES:
+:ANKI_NOTE_TYPE: Basic
+:ANKI_DECK: IDA
+:ANKI_NOTE_ID: 1678314970180
+:END:
+What do the variables mean in the non-linear dual formulation of SVM?
+
+[[file:non_linear_primal.png]]
+** Answer
++ \(\vec x\) is the set of given points in the dataset
++ \(y_i\) is the given class labels
++ C is the regularization constant, controls the trade off between minimizing
+  slack terms and maximizing margin.
++ \(\xi\) is the slack term, which indicates how much a given point violates the
+  separabilty condition (at least 1/||w||) away from hyperplane
+* True positive rate
+:PROPERTIES:
+:ANKI_NOTE_TYPE: Basic
+:ANKI_DECK: IDA
+:ANKI_NOTE_ID: 1678314970254
+:END:
+What is the formula for true positive rate?
+** Answer
+\[ \frac{TP}{TP + FN}\]
+* False positive rate
+:PROPERTIES:
+:ANKI_NOTE_TYPE: Basic
+:ANKI_DECK: IDA
+:ANKI_NOTE_ID: 1678314970330
+:END:
+What is the formula for false positive rate?
+** Answer
+\[\frac{FP}{N} = \frac{FP}{FP + TN}\]
+* True negative rate
+:PROPERTIES:
+:ANKI_NOTE_TYPE: Basic
+:ANKI_DECK: IDA
+:ANKI_NOTE_ID: 1678314970605
+:END:
+What is the formula for true negative rate?
+** Answer
+\[\frac{TN}{TN + FP}\]
+* Confidence
+:PROPERTIES:
+:ANKI_NOTE_TYPE: Basic
+:ANKI_DECK: IDA
+:ANKI_NOTE_ID: 1678314970705
+:END:
+How is confidence calculated for association mining?
+
+** Answer
+\[conf(X \to Y) = P(Y|X) = \frac{sup(XY)}{sup(X)}\]
+
+Note that the above formula works no matter what the length of X or Y.
+* Bayes theorem
+:PROPERTIES:
+:ANKI_NOTE_TYPE: Basic
+:ANKI_DECK: IDA
+:ANKI_NOTE_ID: 1678314970779
+:END:
+What is Bayes theorem?
+
+** Answer
+\[P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}\]
+* Boosting
+:PROPERTIES:
+:ANKI_NOTE_TYPE: Basic
+:ANKI_DECK: IDA
+:ANKI_NOTE_ID: 1678314970879
+:END:
+What is boosting? How is it different than bagging?
+** Answwer
+Boosting is an iterative learning approach where samples are weighted based on
+the performance of a previous classifier. This method minimises the bias,
+whereas bagging minimizes the variance.
+* Bagging
+:PROPERTIES:
+:ANKI_NOTE_TYPE: Basic
+:ANKI_DECK: IDA
+:ANKI_NOTE_ID: 1678314970979
+:END:
+What is bagging?
+** Answer
+Bagging is a learning approach that can be executed in parallel. random samples
+are chosen and the output of many weak learners is averaged in some way. This
+minimizes the variance, rather than the bias in the case of boosting.

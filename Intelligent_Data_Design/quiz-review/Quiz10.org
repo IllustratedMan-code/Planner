@@ -1,5 +1,10 @@
 * A Given this dataset, what is t{A,B}? :drill:
-
+:PROPERTIES:
+:ANKI_DECK: IDA
+:ANKI_NOTE_TYPE: Basic
+:ANKI_NOTE_ID: 1678317076332
+:END:
+ A Given this dataset, what is t{A,B}?
 | Trans. | A | B | C | D | E |
 |--------+---+---+---+---+---|
 |      1 | 1 | 1 | 0 | 1 | 1 |
@@ -11,6 +16,12 @@
 ** Answer
 {1, 3, 4, 5}
 * For this dataset what is an example of itemset :drill:
+:PROPERTIES:
+:ANKI_DECK: IDA
+:ANKI_NOTE_TYPE: Basic
+:ANKI_NOTE_ID: 1678317076436
+:END:
+For this dataset what is an example of itemset :drill:
 | Trans. | A | B | C | D | E |
 |--------+---+---+---+---+---|
 |      1 | 1 | 1 | 0 | 1 | 1 |
@@ -22,6 +33,12 @@
 ** Answer
 {B,C,D}
 * For this dataset, what would the inverted (vertical entry for D look like? :drill:
+:PROPERTIES:
+:ANKI_DECK: IDA
+:ANKI_NOTE_TYPE: Basic
+:ANKI_NOTE_ID: 1678317076533
+:END:
+For this dataset, what would the inverted (vertical entry for D look like? :drill:
 | Trans. | A | B | C | D | E |
 |--------+---+---+---+---+---|
 |      1 | 1 | 1 | 0 | 1 | 1 |

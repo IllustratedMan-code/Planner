@@ -1,0 +1,5 @@
+* Anki Decks can be viewed here:
+http://fasiha.github.io/fuzzy-anki/
+
+* Exam 2
++ [[file:exam2.colpkg][deck]]
