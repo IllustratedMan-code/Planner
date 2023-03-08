@@ -1,4 +1,4 @@
-% Created 2023-03-04 Sat 15:13
+% Created 2023-03-07 Tue 12:50
 % Intended LaTeX compiler: lualatex
 \documentclass[11pt]{article}
 \usepackage[margin=0.5in]{geometry}
@@ -27,7 +27,7 @@
 \usepackage{minted}
 \usepackage{physics}
 \author{David Lewis}
-\date{\today}
+\date{2023-03-07}
 \title{lec17}
 \hypersetup{
  pdfauthor={David Lewis},
@@ -39,9 +39,8 @@
 \begin{document}
 
 \maketitle
-
 \section*{1.}
-\label{sec:org7c2f43e}
+\label{sec:org023c775}
 \begin{table}[htbp]
 \label{data}
 \centering
@@ -60,7 +59,7 @@ ID & y & haty\\
 \end{table}
 
 \subsection*{a.}
-\label{sec:org63a388c}
+\label{sec:orge18afce}
 I went ahead and computed the values anyway with python:
 \begin{minted}[fontsize=\scriptsize]{python}
 right = 0
@@ -80,7 +79,7 @@ error rate: & 0.625\\
 \end{tabular2}
 \end{center}
 \subsection*{b}
-\label{sec:org75b06a1}
+\label{sec:org392d40e}
 \begin{center}
 \begin{tabular2}{r|r|r}
  & True & \\
@@ -99,38 +98,38 @@ predicted & 1 & -1\\
 \end{itemize}
 
 \subsection*{c, d}
-\label{sec:org61e2793}
+\label{sec:org0ddebf3}
 \begin{itemize}
-\item Sensitivity = true positive rate = 2/5
-\item Specificity = true negative rate = 1/3
+\item Sensitivity = true positive rate = 1/2
+\item Specificity = true negative rate = 1/4
 \end{itemize}
 
 The classifier does not have very good performance. It is more likely to return
 a false positive or false negative than a true positive or negative.
 \subsection*{e.}
-\label{sec:orga9a0938}
+\label{sec:org4879692}
 \begin{itemize}
-\item Accuracy = precision = (2/(2+2)) = 2/4
-\item recall = 2/(2+3) = 2/5
+\item Accuracy = precision = (2/(2+3)) = 2/5
+\item recall = 2/(2+2) = 1/2
 \end{itemize}
 The accuracy and recall are very far from 1, this is a bad classifier.
 \subsection*{f.}
-\label{sec:orgff414be}
-\(F1 = \frac{2 \cdot pred \cdot recall}{pred + recall} = \frac{8/20}{18/20} = 1/2\)
+\label{sec:org7816d2c}
+\(F1 = \frac{2 \cdot pred \cdot recall}{pred + recall} = \frac{8/20}{18/20}\)
 \section*{2.}
-\label{sec:org4716197}
+\label{sec:orga8389eb}
 \subsection*{a-b}
-\label{sec:orgd8b2b38}
+\label{sec:orgbc10397}
 \begin{table}[htbp]
 \caption{\label{t1}table 2}
 \centering
 \begin{tabular2}{rrrrr}
 ID & y & p & p >= 0.8 & p >= 0.5\\
 \hline
-1 & -1 & 0.9 & -1 & -1\\
-2 & 1 & 0.8 & 1 & -1\\
-3 & -1 & 0.5 & 1 & 1\\
-4 & 1 & 0.3 & 1 & 1\\
+1 & -1 & 0.9 & 1 & 1\\
+2 & 1 & 0.8 & 1 & 1\\
+3 & -1 & 0.5 & -1 & 1\\
+4 & 1 & 0.3 & -1 & -1\\
 \end{tabular2}
 \end{table}
 
@@ -140,10 +139,10 @@ ID & y & p & p >= 0.8 & p >= 0.5\\
 \begin{tabular2}{rrrrr}
 ID & y & p & p >= 0.8 & p >= 0.5\\
 \hline
-1 & -1 & 0.5 & 1 & 1\\
-2 & 1 & 0.8 & 1 & -1\\
-3 & -1 & 0.9 & -1 & -1\\
-4 & 1 & 0.7 & 1 & -1\\
+1 & -1 & 0.5 & -1 & 1\\
+2 & 1 & 0.8 & 1 & 1\\
+3 & -1 & 0.9 & 1 & 1\\
+4 & 1 & 0.7 & -1 & 1\\
 \end{tabular2}
 \end{table}
 
@@ -151,8 +150,12 @@ ID & y & p & p >= 0.8 & p >= 0.5\\
 def true_false(name, data):
     true_positives_8 = 0
     false_positives_8 = 0
+    true_negatives_8 = 0
+    false_negatives_8 = 0
     true_positives_5 = 0
     false_positives_5 = 0
+    true_negatives_5 = 0
+    false_negatives_5 = 0
     for i in data:
             if i[3] == 1:
 
@@ -160,18 +163,30 @@ def true_false(name, data):
                     true_positives_8 += 1
                 else:
                     false_positives_8 += 1
+            if i[3] == -1:
+
+                if i[1] ==1:
+                    false_negatives_8 += 1
+                else:
+                    true_negatives_8 += 1
             if i[4] == 1:
                 if i[1] == 1:
                     true_positives_5 += 1
                 else:
                     false_positives_5 += 1
+            if i[4] == -1:
+
+                if i[1] ==1:
+                    false_negatives_5 += 1
+                else:
+                    true_negatives_5 += 1
 
     def recall(r1 ,r2):
         return r1/(r1+r2)
 
     out = [[name, "p >= 0.8", "p >= 0.5"],
-        ["true positive rate", recall(true_positives_8, false_positives_8), recall(true_positives_5, false_positives_5)],
-        ["false positive rate", recall(false_positives_8, true_positives_8), recall(false_positives_5, true_positives_5)]
+        ["true positive rate", recall(true_positives_8, false_negatives_8), recall(true_positives_5, false_negatives_5)],
+        ["false positive rate", recall(false_positives_8, true_negatives_8), recall(false_positives_5, true_negatives_5)]
         ]
     return out
 return true_false("Table 1", table1) + true_false("Table2", table2)
@@ -180,16 +195,16 @@ return true_false("Table 1", table1) + true_false("Table2", table2)
 \begin{center}
 \begin{tabular2}{lrr}
 Table 1 & p >= 0.8 & p >= 0.5\\
-true positive rate & 0.6666666666666666 & 0.5\\
-false positive rate & 0.3333333333333333 & 0.5\\
+true positive rate & 0.5 & 0.5\\
+false positive rate & 0.5 & 1.0\\
 Table2 & p >= 0.8 & p >= 0.5\\
-true positive rate & 0.6666666666666666 & 0.0\\
-false positive rate & 0.3333333333333333 & 1.0\\
+true positive rate & 0.5 & 1.0\\
+false positive rate & 0.5 & 1.0\\
 \end{tabular2}
 \end{center}
 
 \subsection*{c-d}
-\label{sec:org263a8ee}
+\label{sec:orgb7e5b0e}
 \begin{minted}[fontsize=\scriptsize]{python}
 import matplotlib.pyplot as plt
 p1 = data[1][1], data[2][1]
@@ -197,31 +212,27 @@ p2 = data[1][2], data[2][2]
 p3 = data[4][1], data[5][1]
 p4 = data[4][2], data[5][2]
 fig,(axes1, axes2) = plt.subplots(1, 2, sharex=True, sharey=True)
-axes1.plot((p1[0], p3[0]),[p1[1], p3[1]])
-axes1.scatter((p1[0], p3[0]),[p1[1], p3[1]])
-axes1.set_title("P >= 0.8")
-axes2.plot((p2[0], p4[0]),[p2[1], p4[1]])
-axes2.scatter((p2[0], p4[0]),[p2[1], p4[1]])
-axes2.set_title("P >= 0.5")
-fig.supxlabel("True Positive rate")
-fig.supylabel("False Positive rate")
+axes1.plot((0, p1[1], p2[1]),[0, p1[0], p2[0]])
+axes1.scatter((0, p1[1], p2[1]),[0, p1[0], p2[0]])
+axes1.set_title("NB1")
+axes2.plot((0, p3[1], p4[1]),[0, p3[0], p4[0]])
+axes2.scatter((0, p3[1], p4[1]),[0, p3[0], p4[0]])
+axes2.set_title("NB2")
+fig.supxlabel("False Positive rate")
+fig.supylabel("True Positive rate")
 
 plt.show()
 \end{minted}
 \begin{center}
-\includegraphics[width=0.8\textwidth]{./.ob-jupyter/56aa79352d69672f8941ac1a635528d4d749ff50.png}
+\includegraphics[width=0.8\textwidth]{./.ob-jupyter/e4ef7cede22065a8a8d63ee0061849500d831c04.png}
 \end{center}
 
-The P >= 0.8 classifier is \textasciitilde{}66\% likely to have a true positive, which did not
-change across training data.  The P >= 0.5 classifier actually had a negative
-ROC curve, which is probably impossible, but implies that as the false positive
-rate goes down, the true positive rate actually increases. There isn't enough
-data to make a good prediction either way, but it does appear that the P >= 0.8
-classifier is more effective.
-
+NB1 is the better classifier because it continues to improve the true
+positive rate across the graph, while NB2 is initially good, but after 0.5
+true positive rate, it no longer improves.
 
 \subsection*{3.}
-\label{sec:org1e38c58}
+\label{sec:org1f36627}
 5 fold validation implies 5 separate ``folds'' or groups of test data as follows:
 
 \begin{center}
@@ -236,7 +247,7 @@ fold & train & test\\
 \end{tabular2}
 \end{center}
 \subsection*{4.}
-\label{sec:org7713a35}
+\label{sec:org20acbe3}
 \begin{itemize}
 \item Boostrapping selects sets of data of a fixed size an arbitrary number of
 times, this forms a new ``fake'' training set for each member of the ensemble (a
