@@ -1,3 +1,0 @@
-
-* Anki Decks can be viewed here:
-http://fasiha.github.io/fuzzy-anki/
