@@ -1,5 +1,5 @@
 #+title: lec17
-
+#+date: 2023-03-07
 * 1.
 #+name: data
 | ID |  y | haty |
@@ -44,50 +44,54 @@ return out
 + false negative: 2
 
 ** c, d
-+ Sensitivity = true positive rate = 2/5
-+ Specificity = true negative rate = 1/3
++ Sensitivity = true positive rate = 1/2
++ Specificity = true negative rate = 1/4
 
 The classifier does not have very good performance. It is more likely to return
 a false positive or false negative than a true positive or negative.
 ** e.
-+ Accuracy = precision = (2/(2+2)) = 2/4
-+ recall = 2/(2+3) = 2/5
++ Accuracy = precision = (2/(2+3)) = 2/5
++ recall = 2/(2+2) = 1/2
 The accuracy and recall are very far from 1, this is a bad classifier.
 ** f.
-\(F1 = \frac{2 \cdot pred \cdot recall}{pred + recall} = \frac{8/20}{18/20} = 1/2\)
+\(F1 = \frac{2 \cdot pred \cdot recall}{pred + recall} = \frac{8/20}{18/20}\)
 * 2.
 ** a-b
 #+caption: table 2
 #+name: t1
 | ID |  y |   p | p >= 0.8 | p >= 0.5 |
 |----+----+-----+----------+----------|
-|  1 | -1 | 0.9 |       -1 |       -1 |
-|  2 |  1 | 0.8 |        1 |       -1 |
-|  3 | -1 | 0.5 |        1 |        1 |
-|  4 |  1 | 0.3 |        1 |        1 |
+|  1 | -1 | 0.9 |        1 |        1 |
+|  2 |  1 | 0.8 |        1 |        1 |
+|  3 | -1 | 0.5 |       -1 |        1 |
+|  4 |  1 | 0.3 |       -1 |       -1 |
 #+tblfm: $1=@#-1
-#+tblfm: $4='(if (<= $3 0.8) 1 -1 );N
-#+tblfm: $5='(if (<= $3 0.5) 1 -1 );N
+#+tblfm: $4='(if (>= $3 0.8) 1 -1 );N
+#+tblfm: $5='(if (>= $3 0.5) 1 -1 );N
 
 #+caption: table 2
 #+name: t2
 | ID |  y |   p | p >= 0.8 | p >= 0.5 |
 |----+----+-----+----------+----------|
-|  1 | -1 | 0.5 |        1 |        1 |
-|  2 |  1 | 0.8 |        1 |       -1 |
-|  3 | -1 | 0.9 |       -1 |       -1 |
-|  4 |  1 | 0.7 |        1 |       -1 |
+|  1 | -1 | 0.5 |       -1 |        1 |
+|  2 |  1 | 0.8 |        1 |        1 |
+|  3 | -1 | 0.9 |        1 |        1 |
+|  4 |  1 | 0.7 |       -1 |        1 |
 #+tblfm: $1=@#-1
-#+tblfm: $4='(if (<= $3 0.8) 1 -1 );N
-#+tblfm: $5='(if (<= $3 0.5) 1 -1 );N
+#+tblfm: $4='(if (>= $3 0.8) 1 -1 );N
+#+tblfm: $5='(if (>= $3 0.5) 1 -1 );N
 
 #+name: bayes
-#+begin_src python :var table1=t1 :var table2=t2
+#+begin_src python :var table1=t1 :var table2=t2 :exports both
 def true_false(name, data):
     true_positives_8 = 0
     false_positives_8 = 0
+    true_negatives_8 = 0
+    false_negatives_8 = 0
     true_positives_5 = 0
     false_positives_5 = 0
+    true_negatives_5 = 0
+    false_negatives_5 = 0
     for i in data:
             if i[3] == 1:
 
@@ -95,30 +99,42 @@ def true_false(name, data):
                     true_positives_8 += 1
                 else:
                     false_positives_8 += 1
+            if i[3] == -1:
+
+                if i[1] ==1:
+                    false_negatives_8 += 1
+                else:
+                    true_negatives_8 += 1
             if i[4] == 1:
                 if i[1] == 1:
                     true_positives_5 += 1
                 else:
                     false_positives_5 += 1
+            if i[4] == -1:
+
+                if i[1] ==1:
+                    false_negatives_5 += 1
+                else:
+                    true_negatives_5 += 1
 
     def recall(r1 ,r2):
         return r1/(r1+r2)
 
     out = [[name, "p >= 0.8", "p >= 0.5"],
-        ["true positive rate", recall(true_positives_8, false_positives_8), recall(true_positives_5, false_positives_5)],
-        ["false positive rate", recall(false_positives_8, true_positives_8), recall(false_positives_5, true_positives_5)]
+        ["true positive rate", recall(true_positives_8, false_negatives_8), recall(true_positives_5, false_negatives_5)],
+        ["false positive rate", recall(false_positives_8, true_negatives_8), recall(false_positives_5, true_negatives_5)]
         ]
     return out
 return true_false("Table 1", table1) + true_false("Table2", table2)
 #+end_src
 
 #+RESULTS: bayes
-| Table 1             |           p >= 0.8 | p >= 0.5 |
-| true positive rate  | 0.6666666666666666 |      0.5 |
-| false positive rate | 0.3333333333333333 |      0.5 |
-| Table2              |           p >= 0.8 | p >= 0.5 |
-| true positive rate  | 0.6666666666666666 |      0.0 |
-| false positive rate | 0.3333333333333333 |      1.0 |
+| Table 1             | p >= 0.8 | p >= 0.5 |
+| true positive rate  |      0.5 |      0.5 |
+| false positive rate |      0.5 |      1.0 |
+| Table2              | p >= 0.8 | p >= 0.5 |
+| true positive rate  |      0.5 |      1.0 |
+| false positive rate |      0.5 |      1.0 |
 
 ** c-d
 #+begin_src jupyter-python :var data=bayes :kernel python3 :session py :exports both
@@ -128,28 +144,24 @@ p2 = data[1][2], data[2][2]
 p3 = data[4][1], data[5][1]
 p4 = data[4][2], data[5][2]
 fig,(axes1, axes2) = plt.subplots(1, 2, sharex=True, sharey=True)
-axes1.plot((p1[0], p3[0]),[p1[1], p3[1]])
-axes1.scatter((p1[0], p3[0]),[p1[1], p3[1]])
-axes1.set_title("P >= 0.8")
-axes2.plot((p2[0], p4[0]),[p2[1], p4[1]])
-axes2.scatter((p2[0], p4[0]),[p2[1], p4[1]])
-axes2.set_title("P >= 0.5")
-fig.supxlabel("True Positive rate")
-fig.supylabel("False Positive rate")
+axes1.plot((0, p1[1], p2[1]),[0, p1[0], p2[0]])
+axes1.scatter((0, p1[1], p2[1]),[0, p1[0], p2[0]])
+axes1.set_title("NB1")
+axes2.plot((0, p3[1], p4[1]),[0, p3[0], p4[0]])
+axes2.scatter((0, p3[1], p4[1]),[0, p3[0], p4[0]])
+axes2.set_title("NB2")
+fig.supxlabel("False Positive rate")
+fig.supylabel("True Positive rate")
 
 plt.show()
 #+end_src
 #+attr_latex: :width 0.8\textwidth
 #+RESULTS:
-[[file:./.ob-jupyter/56aa79352d69672f8941ac1a635528d4d749ff50.png]]
+[[file:./.ob-jupyter/e4ef7cede22065a8a8d63ee0061849500d831c04.png]]
 
-The P >= 0.8 classifier is ~66% likely to have a true positive, which did not
-change across training data.  The P >= 0.5 classifier actually had a negative
-ROC curve, which is probably impossible, but implies that as the false positive
-rate goes down, the true positive rate actually increases. There isn't enough
-data to make a good prediction either way, but it does appear that the P >= 0.8
-classifier is more effective.
-
+NB1 is the better classifier because it continues to improve the true
+positive rate across the graph, while NB2 is initially good, but after 0.5
+true positive rate, it no longer improves.
 
 ** 3.
 5 fold validation implies 5 separate "folds" or groups of test data as follows:

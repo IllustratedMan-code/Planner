@@ -33,6 +33,7 @@
 + transformation matrix is \(P = U_rU_r^T\)
 + \(PX = X'\)
 
+* LDA
 * Frequent pattern mining
 ** Vocab
 + tidset
@@ -41,3 +42,7 @@
 Manually compute
 ** Apriori algorithm
 ** Eclat algorithm
+* support vector machines
++ dual formation: \(\underset \alpha \max \sum \limits^n_{i=1}\alpha_i - \frac{1}{2}
+  \sum^n_{i=1}\sum^n_{j=1}\alpha_i\alpha_jy_iy_j(\vec x^T_i\vec x_j)\)
+>>>>>>> Stashed changes

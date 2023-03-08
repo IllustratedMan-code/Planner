@@ -1,0 +1,15 @@
+* Item :drill:
+:PROPERTIES:
+:ANKI_DECK: IDA
+:ANKI_NOTE_TYPE: Basic
+:ANKI_NOTE_ID: 1678297141427
+:ID:       8fa99f08-ca63-48de-a292-c246253673b8
+:END:
+How do you write a joint probability table?
+** Answer
+Create a table of the following form
+|                   | C = 0 | C = 1 |
+| /                 | <>    |       |
+|-------------------+-------+-------|
+| X = 1, Y = 1, etc |       |       |
+| All combinations  |       |       |
