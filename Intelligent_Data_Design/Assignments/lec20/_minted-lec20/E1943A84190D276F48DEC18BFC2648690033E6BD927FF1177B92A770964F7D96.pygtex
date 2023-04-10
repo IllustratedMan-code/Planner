@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{min\PYGZus{}points} \PYG{o}{=} \PYG{l+m+mi}{3}
+\PYG{n}{C} \PYG{o}{=} \PYG{p}{[]}
+\PYG{k}{for} \PYG{n}{point}\PYG{p}{,} \PYG{n}{neighbors} \PYG{o+ow}{in} \PYG{n}{D}\PYG{p}{:}
+    \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{neighbors}\PYG{p}{)} \PYG{o}{\PYGZgt{}=} \PYG{n}{min\PYGZus{}points}\PYG{p}{:}
+        \PYG{n}{C}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{point}\PYG{p}{)}
+\PYG{n}{C}
+\end{Verbatim}

@@ -1,0 +1,260 @@
+#+title: lec20
+#+date:
+
+* 1.
+** a.
+
+| I | B | C | D | E |
+|---+---+---+---+---|
+| / | < |   |   |   |
+| A | 9 | 1 | 4 | 6 |
+| B |   | 4 | 1 | 4 |
+| C |   |   | 4 | 4 |
+| D |   |   |   | 4 |
+
+A merged with C
+
+|    | B    | D   | E |
+|----+------+-----+---|
+| /  | <    |     |   |
+| AC | 13/2 | 5/2 | 5 |
+| B  |      | 1   | 4 |
+| D  |      |     | 4 |
+
+B merged with D
+|    | BD | E |
+|----+----+---|
+| /  |    |   |
+| AC |  9 | 5 |
+| BD |    | 4 |
+
+BD merged with E
+|      | BDE |
+|------+-----|
+| /    |     |
+| AC   | 7   |
+
+[[file:1.png]]
+
+Reformat table to check with python
+#+name: d
+| I | A | B | C | D | E |
+|---+---+---+---+---+---|
+| / |   | < |   |   |   |
+| A | 0 | 9 | 1 | 4 | 6 |
+| B | 9 | 0 | 4 | 1 | 4 |
+| C | 1 | 4 |0  | 4 | 4 |
+| D | 4 | 1 | 4 | 0 | 4 |
+| E | 6 | 4 | 4 | 4 |0  |
+
+#+begin_src jupyter-python :kernel python3 :session jpy :exports both :var D=d
+import scipy.cluster.hierarchy as shc
+from scipy.spatial.distance import squareform, pdist
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy.spatial.distance import squareform, pdist
+
+D = pd.DataFrame(D)
+D.columns = ["I", "A", "B", "C", "D", "E"]
+D = D.set_index("I")
+
+D = D.drop("/")
+fig, ax = plt.subplots()
+dend = shc.dendrogram(shc.linkage(squareform(D), method='average'), labels=D.index, ax=ax)
+plt.show()
+#+end_src
+
+#+RESULTS:
+[[file:./.ob-jupyter/3a11fd48cbe6a3069ecc828cee581839012b140d.png]]
+
+** b.
+
++ \(d(ij)k = \alpha_id_{ik} + \alpha_jd_{jk} + \beta d_{ij} + \gamma|d_{ik} - d_{jk}\)
++ \(d(ij)k = \frac{n_i}{n_i + n_j} d_{ik} + \frac{n_j}{n_i + n_j} d_{jk} + 0 \)
++ \(\sum_{x \in C_i \cup C_j}a = \sum_{x \in C_i}a + \sum_{x \in C_j}a\)
++ \(\delta(C_i\cup C_j, C_k) = \frac{\left[\sum \limits_{x \in C_i} \sum \limits_{y \in C_k} d(x, y)\right] +
+  \left[\sum \limits_{x \in C_j} \sum \limits_{y \in C_k} d(x, y)\right]}{(n_i + n_j)n_k} \)
++ \(d_{ik} = \frac{\sum_{x \in C_i}\sum_{y \in C_k}}{n_in_k} \)
++
++ \( \sum _{x \in C_i} \sum _{x \in C_k} d(x, y) = n_id_{ik}/n_k\)
++ \(\delta(C_i \cup C_j, C_k) = \frac{n_id_{ik} + n_jd_{jk}}{(n_i + n_j)}\)
++ \(d(ij)k = \delta(C_i \cup C_j, C_k) =  \frac{n_i}{n_i + n_j} d_{ik} + \frac{n_j}{n_i + n_j} d_{jk}\)
+* 2.
+** a.
+Neighbors are within \(\epsilon\) of each point
+#+begin_src python :session py
+D = [1, 3, 4, 5, 8, 9, 10, 11, 20]
+N = []
+e = 2
+
+for point in D:
+    n = []
+    for p in range(point-2, point+e+1):
+        if p in D and p is not point:
+            n.append(p)
+    N.append(n)
+
+D = list(zip(D, N))
+D
+#+end_src
+
+#+RESULTS:
+|  1 | (3)       |
+|  3 | (1 4 5)   |
+|  4 | (3 5)     |
+|  5 | (3 4)     |
+|  8 | (9 10)    |
+|  9 | (8 10 11) |
+| 10 | (8 9 11)  |
+| 11 | (9 10)    |
+| 20 | nil       |
+** b.
+A point is a core point if it has at least min points
+#+begin_src python :session py
+min_points = 3
+C = []
+for point, neighbors in D:
+    if len(neighbors) >= min_points:
+        C.append(point)
+C
+#+end_src
+
+#+RESULTS:
+| 3 | 9 | 10 |
+** c.
+A point is a border point if it is within \(\epsilon\) of a core point (a neighbor) and
+is not also a core point
+#+begin_src python :session py
+B = []
+for point, neighbors in D:
+    if point in C:
+        B += [n for n in neighbors if n not in C]
+B = set(B)
+B
+#+end_src
+
+#+RESULTS:
+| 1 | 4 | 5 | 8 | 11 |
+** d.
+A point is a noise point if is not a border point or a core point.
+#+begin_src python :session py
+# * operator unpacks list
+[i for i in list(zip(*D))[0] if i not in B and i not in C]
+#+end_src
+
+#+RESULTS:
+| 20 |
+** e.
+#+begin_src python :session py
+clusters = C
+def reach(c, D):
+    N = []
+    for i in range(len(D)):
+
+        if D[i] <= c+e and D[i] >= c-e:
+            N.append(i)
+    if N == []:
+        return []
+    left = min(N)
+    right = max(N)
+    return reach(D[left], D[0:left]) + [D[i] for i in N] + reach(D[right], D[right+1:-1])
+P = list(zip(*D))[0]
+#reach(C[0], P)
+[reach(c, P) for c in C]
+
+
+#+end_src
+
+#+RESULTS:
+| 1 | 3 |  4 |  5 |
+| 8 | 9 | 10 | 11 |
+| 8 | 9 | 10 | 11 |
+
+As you can see, there can be some extra handling to avoid duplicate clusters
+when core points are in the same cluster. 20 is a noise point, so should not be
+added to any of the clusters.
+* 3.
+** a.
+#+begin_src jupyter-python :session jupy :kernel python3 :exports both :file scatter.png
+
+D = {"point":["A", "B", "C", "D", "E", "F", "G", "H"],"x":[1, 1, 1, 1, 3, 3, 3, 3], "y":[1, 2, 4, 5, 1, 2, 4, 5]}
+
+import matplotlib.pyplot as plt
+import pandas as pd
+D = pd.DataFrame(D)
+D = D.set_index("point")
+
+
+fig, ax = plt.subplots()
+ax.scatter(D["x"], D["y"] )
+for i, x, y in zip(D.index.values, D["x"], D["y"]):
+    if x > 2:
+        ax.annotate(i, (x, y), textcoords="offset points", xytext=(-10, -3), ha="center")
+    else:
+        ax.annotate(i, (x, y), textcoords="offset points", xytext=(10, -3), ha="center")
+
+plt.show()
+#+end_src
+
+#+RESULTS:
+[[file:scatter.png]]
+** b.
+let's recompute the distance matrix for fun!
+#+begin_src jupyter-python :session jupy :kernel python3 :exports both
+import scipy.cluster.hierarchy as shc
+from scipy.spatial.distance import squareform, pdist
+
+
+dist = pd.DataFrame(squareform(pdist(D[['x', 'y']]), 'euclidean'),
+                    columns=D.index.values,
+                    index=D.index.values)
+dist
+#+end_src
+
+#+RESULTS:
+#+begin_example
+          A         B         C         D         E         F         G  \
+A  0.000000  1.000000  3.000000  4.000000  2.000000  2.236068  3.605551
+B  1.000000  0.000000  2.000000  3.000000  2.236068  2.000000  2.828427
+C  3.000000  2.000000  0.000000  1.000000  3.605551  2.828427  2.000000
+D  4.000000  3.000000  1.000000  0.000000  4.472136  3.605551  2.236068
+E  2.000000  2.236068  3.605551  4.472136  0.000000  1.000000  3.000000
+F  2.236068  2.000000  2.828427  3.605551  1.000000  0.000000  2.000000
+G  3.605551  2.828427  2.000000  2.236068  3.000000  2.000000  0.000000
+H  4.472136  3.605551  2.236068  2.000000  4.000000  3.000000  1.000000
+
+          H
+A  4.472136
+B  3.605551
+C  2.236068
+D  2.000000
+E  4.000000
+F  3.000000
+G  1.000000
+H  0.000000
+#+end_example
+
+This kind of clustering works by finding the closest euclidian points, merging
+them into a cluster, then defining the distance to the cluster as the closest
+point in the cluster. We'll use scipy to avoid the tedium.
+#+begin_src jupyter-python :session jupy :kernel python3 :exports both
+fig, ax = plt.subplots()
+dend = shc.dendrogram(shc.linkage(D[['x', 'y']], method='single'), labels=D.index, ax=ax)
+plt.show()
+#+end_src
+
+#+RESULTS:
+[[file:./.ob-jupyter/9f5d3dc1356fe526c54aa18efddc8612d3017ce8.png]]
+** c.
+
+This kind of clustering works by finding the closest euclidian points, merging
+them into a cluster, then defining the distance to the cluster as the farthest point
+point in the cluster. We'll use scipy again to avoid the tedium.
+#+begin_src jupyter-python :session jupy :kernel python3 :exports both
+fig, ax = plt.subplots()
+dend = shc.dendrogram(shc.linkage(D[['x', 'y']], method='complete'), labels=D.index, ax=ax)
+plt.show()
+#+end_src
+
+#+RESULTS:
+[[file:./.ob-jupyter/32df2fc3bda014e92a08d750e03efcf510f513fa.png]]

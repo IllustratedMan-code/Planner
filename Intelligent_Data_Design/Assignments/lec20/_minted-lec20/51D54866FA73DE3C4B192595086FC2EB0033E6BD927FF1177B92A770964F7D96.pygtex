@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{scipy.cluster.hierarchy} \PYG{k}{as} \PYG{n+nn}{shc}
+\PYG{k+kn}{from} \PYG{n+nn}{scipy.spatial.distance} \PYG{k+kn}{import} \PYG{n}{squareform}\PYG{p}{,} \PYG{n}{pdist}
+\PYG{k+kn}{import} \PYG{n+nn}{pandas} \PYG{k}{as} \PYG{n+nn}{pd}
+\PYG{k+kn}{import} \PYG{n+nn}{matplotlib.pyplot} \PYG{k}{as} \PYG{n+nn}{plt}
+\PYG{k+kn}{from} \PYG{n+nn}{scipy.spatial.distance} \PYG{k+kn}{import} \PYG{n}{squareform}\PYG{p}{,} \PYG{n}{pdist}
+
+\PYG{n}{D} \PYG{o}{=} \PYG{n}{pd}\PYG{o}{.}\PYG{n}{DataFrame}\PYG{p}{(}\PYG{n}{D}\PYG{p}{)}
+\PYG{n}{D}\PYG{o}{.}\PYG{n}{columns} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}I\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}A\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}B\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}C\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}D\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}E\PYGZdq{}}\PYG{p}{]}
+\PYG{n}{D} \PYG{o}{=} \PYG{n}{D}\PYG{o}{.}\PYG{n}{set\PYGZus{}index}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}I\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{D} \PYG{o}{=} \PYG{n}{D}\PYG{o}{.}\PYG{n}{drop}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}/\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{fig}\PYG{p}{,} \PYG{n}{ax} \PYG{o}{=} \PYG{n}{plt}\PYG{o}{.}\PYG{n}{subplots}\PYG{p}{()}
+\PYG{n}{dend} \PYG{o}{=} \PYG{n}{shc}\PYG{o}{.}\PYG{n}{dendrogram}\PYG{p}{(}\PYG{n}{shc}\PYG{o}{.}\PYG{n}{linkage}\PYG{p}{(}\PYG{n}{squareform}\PYG{p}{(}\PYG{n}{D}\PYG{p}{),} \PYG{n}{method}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}average\PYGZsq{}}\PYG{p}{),} \PYG{n}{labels}\PYG{o}{=}\PYG{n}{D}\PYG{o}{.}\PYG{n}{index}\PYG{p}{,} \PYG{n}{ax}\PYG{o}{=}\PYG{n}{ax}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+\end{Verbatim}

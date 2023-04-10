@@ -1,0 +1,110 @@
+% Created 2023-04-03 Mon 12:20
+% Intended LaTeX compiler: lualatex
+\documentclass[11pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{syntax}
+\usepackage{pdfpages}
+\usepackage{tcolorbox}
+\usepackage{etoolbox}
+\usepackage{environ}
+\AtBeginEnvironment{quote}{\itshape}
+\usepackage[ruled]{algorithm2e}
+\let\oldtabular\tabular
+\let\oldendtabular\endtabular
+\NewEnviron{tabular2}[1]{\tcbox[left=0mm, right=0mm, top=0mm, bottom=0mm]{\oldtabular{#1}\BODY\oldendtabular}}
+\BeforeBeginEnvironment{minted}{\begin{tcolorbox}}%
+\AfterEndEnvironment{minted}{\end{tcolorbox}}
+\BeforeBeginEnvironment{verbatim}{\begin{tcolorbox}}%
+\AfterEndEnvironment{verbatim}{\end{tcolorbox}}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{physics}
+\author{David Lewis}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={David Lewis},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 30.0.50 (Org mode 9.6.1)}, 
+ pdflang={English}}
+\begin{document}
+
+\section*{Multi dimensional CFG}
+\label{sec:orgd42ca1f}
+\begin{itemize}
+\item The idea is that grammar can generate characters in multiple dimensions in parallel
+\item Once a production rule is ``finished'', ie doesn't use the same symbol, the
+extra dimenional characters will be ``folded'' into the one dimensional paradigm
+\item I don't think this new grammar really fits the notion of a ``context free'' grammar,
+however it is closest in syntax
+\item I'll define the syntax using the following example
+\end{itemize}
+\subsection*{Example}
+\label{sec:org20baae5}
+\begin{itemize}
+\item consider the language \(L = \{a^ib^ic^i: i \ge 0\}\)
+\item This language \textbf{cannot} be generated using traditional context free grammars
+\item we \emph{could} generate the language \(L_c = \{a^ib^i : i \ge 0\}\)
+\item The resulting \(G_c\) would be: \(S \to aSb | \lambda\)
+\item Context free grammars are limited by the number of parallel operations
+(Left + Right=2)
+\item We can define the ``number of parallel operations'' as degrees of freedom
+\item If we allow the context free grammar more degrees of freedom we can generate a
+2 dimensional projection of \(L\)
+\end{itemize}
+
+Consider the following grammar:
+\setlength\arraycolsep{1pt}
+\begin{tcolorbox}
+\begin{equation}
+\begin{matrix}&  b\\ S\to a & S & c & | & \lambda\end{matrix}
+\end{equation}
+\end{tcolorbox}
+
+In the ``multi-dimensional'' grammar paradigm, the following derivation would be
+valid:
+\begin{tcolorbox}\begin{equation}
+\begin{equation}
+\begin{matrix}
+      &   &   &   &    & b\\
+      & b &   &   &    & b\\
+ S\Rightarrow a & S & c & \Rightarrow & aa & S & cc \Rightarrow aabb\lambda cc \Rightarrow aabbcc  \end{matrix}
+\end{equation}
+\end{tcolorbox}
+
+As you can see, this grammar generates the language \(L = \{a^ib^ic^i: i \ge
+0\}\). This is possible because of what I'm going to call a ``fold''. When S is
+substituted with a non-S symbol (\(\lambda\) in this case), the higher dimensions are projected down into
+one dimension. Syntactically, I'm defining ``above'' as projecting to ``left'' and
+vice versa.
+
+The above example is showing the two dimensional case, but this concept should
+be applicable to higher dimensions (not sure how useful they would be).
+
+\subsection*{Advantages}
+\label{sec:orge0b75be}
+\begin{itemize}
+\item I have a suspicion that this concept has feature parity with push down
+automata (would love help proving!).
+\item If that is the case, then this might be an easier way to define languages
+accepted by push down automata
+\end{itemize}
+\subsection*{Limitations}
+\label{sec:org959a4a2}
+\begin{itemize}
+\item I haven't done a lot of experimenting, but I don't think it is possible to
+generate \(L = \{a^{i^2}: i\ge 0\}\)
+\item I think you would need at least two symbols that generate in parallel, to
+emulate two stacks in a turing machine
+\end{itemize}
+\end{document}

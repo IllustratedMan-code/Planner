@@ -1,0 +1,57 @@
+
+* Multi dimensional CFG
++ The idea is that grammar can generate characters in multiple dimensions in parallel
++ Once a production rule is "finished", ie doesn't use the same symbol, the
+  extra dimenional characters will be "folded" into the one dimensional paradigm
++ I don't think this new grammar really fits the notion of a "context free" grammar,
+  however it is closest in syntax
++ I'll define the syntax using the following example
+** Example
++ consider the language \(L = \{a^ib^ic^i: i \ge 0\}\)
++ This language *cannot* be generated using traditional context free grammars
++ we /could/ generate the language \(L_c = \{a^ib^i : i \ge 0\}\)
++ The resulting \(G_c\) would be: \(S \to aSb | \lambda\)
++ Context free grammars are limited by the number of parallel operations
+  (Left + Right=2)
++ We can define the "number of parallel operations" as degrees of freedom
++ If we allow the context free grammar more degrees of freedom we can generate a
+  2 dimensional projection of \(L\)
+
+Consider the following grammar:
+#+latex: \setlength\arraycolsep{1pt}
+\begin{tcolorbox}
+\begin{equation}
+\begin{matrix}&  b\\ S\to a & S & c & | & \lambda\end{matrix}
+\end{equation}
+\end{tcolorbox}
+
+In the "multi-dimensional" grammar paradigm, the following derivation would be
+valid:
+\begin{tcolorbox}\begin{equation}
+\begin{equation}
+\begin{matrix}
+      &   &   &   &    & b\\
+      & b &   &   &    & b\\
+ S\Rightarrow a & S & c & \Rightarrow & aa & S & cc \Rightarrow aabb\lambda cc \Rightarrow aabbcc  \end{matrix}
+\end{equation}
+\end{tcolorbox}
+
+As you can see, this grammar generates the language \(L = \{a^ib^ic^i: i \ge
+0\}\). This is possible because of what I'm going to call a "fold". When S is
+substituted with a non-S symbol (\lambda in this case), the higher dimensions are projected down into
+one dimension. Syntactically, I'm defining "above" as projecting to "left" and
+vice versa.
+
+The above example is showing the two dimensional case, but this concept should
+be applicable to higher dimensions (not sure how useful they would be).
+
+** Advantages
++ I have a suspicion that this concept has feature parity with push down
+  automata (would love help proving!).
++ If that is the case, then this might be an easier way to define languages
+  accepted by push down automata
+** Limitations
++ I haven't done a lot of experimenting, but I don't think it is possible to
+  generate \(L = \{a^{i^2}: i\ge 0\}\)
++ I think you would need at least two symbols that generate in parallel, to
+  emulate two stacks in a turing machine

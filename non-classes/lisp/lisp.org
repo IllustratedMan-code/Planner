@@ -1,0 +1,49 @@
+
+* What is lisp?
+#+begin_src lisp
+(defun average (b &rest a )
+  (loop for i in a
+        do (print i)))
+(average 1 1 1 1 4)
+#+end_src
+
+#+RESULTS:
+: 3
+
+* What is a lisp image?
+A lisp image is a collection of all of the information that the lisp
+compiler/interpreter needs to run a program
+
+* Lisp macros
+Macros are a way to add additional syntax to the lisp language.
+
+Consider the case where we want to set one value to multiple variables.
+
+I'll write two macros to do this for me, one using a loop, and another using
+mapcar (maps function to each member of the list).
+
+mapcar is definitly the more lispy way to do it, but I feel the loop way allows
+for more clarity in what is going on.
+#+begin_src lisp
+(defmacro setq* (value &rest variables)
+  `(progn ,@(mapcar (lambda (x) (list 'setq x value)) variables)))
+(defmacro setq-* (value &rest variables)
+  `(progn ,@(loop for variable in variables
+                  collect (list 'setq variable value))))
+(setq-* "hi" x y z)
+#+end_src
+
+#+RESULTS:
+: hi
+Essentially, we are creating a list of lists, or a list of statements. The ,@
+sytax essentially just unwraps the outer list, leaving a sequence of
+evaluate-able statements.
+
+#+begin_src lisp
+(setq-* "hi" x y z)
+;; this turns into
+'((setq x "hi") (setq y "hi" ) (setq x "hi"))
+;; which turns into (because of ,@)
+(progn (setq x "hi") (setq y "hi" ) (setq x "hi"))
+;; neat!
+#+end_src

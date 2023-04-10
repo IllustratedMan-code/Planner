@@ -1,0 +1,126 @@
+#+title: lecture 24
+#+date:
+
+* 1.
+** a.
+Both A and C have well defined clusters in their similarity matricies. A is the
+best suited to hierarchical clustering because there appears to be clusters
+within clusters. Even B has visible clusters, but not as
+well defined as the other cases.
+** b.
+C is the most well suited to kmeans clustering because kmeans is very sensitive
+to noise. C has almost none.
+** c.
+Density based clustering is most well suited to remove noise, and it can also
+determine the number of clusters. B has a lot of noise, so it is well suited
+for density based clustering.
+** d.
+If the above matricies were not ordered, it would be impossible to tell where
+the clustering was, so I could not make the above judgments based on the matrix
+alone. However, if I had access to the data, I could make judgments based on similarity.
+* 2.
+** a.
+|   | A | B | C | D | E |
+| / | < |   |   |   |   |
+|---+---+---+---+---+---|
+| A | 1 | 1 | 1 | 0 | 0 |
+| B | 1 | 1 | 1 | 0 | 0 |
+| C | 1 | 1 | 1 | 0 | 0 |
+| D | 0 | 0 | 0 | 1 | 1 |
+| E | 0 | 0 | 0 | 1 | 1 |
+** b.
+|   | A | B | C | D | E |
+| / | < |   |   |   |   |
+|---+---+---+---+---+---|
+| A | 1 | 1 | 1 | 1 | 0 |
+| B | 1 | 1 | 1 | 1 | 0 |
+| C | 1 | 1 | 1 | 1 | 0 |
+| D | 1 | 1 | 1 | 1 | 0 |
+| E | 0 | 0 | 0 | 0 | 1 |
+** c.
++ f_00 means (not in C1 and not in C2)
++ f_01 means (not in C1 and in C2)
++ f_10 means (in C1 and not in C2)
++ f_11 means (in C1 and in C2)
+
+#+begin_src python
+from itertools import combinations
+# represent letters as indexes for conveniance
+D = (0, 1, 2, 3, 4)
+
+C1 = [[1, 1, 1, 0, 0],
+      [1, 1, 1, 0, 0],
+      [1, 1, 1, 0, 0],
+      [0, 0, 0, 1, 1],
+      [0, 0, 0, 1, 1]]
+C2 = [[1, 1, 1, 1, 0],
+      [1, 1, 1, 1, 0],
+      [1, 1, 1, 1, 0],
+      [1, 1, 1, 1, 0],
+      [0, 0, 0, 0, 1]]
+
+# get pairs of letters
+pairs = list(combinations(D, 2))
+f00 = 0
+f01 = 0
+f10 = 0
+f11 = 0
+
+for [p1, p2] in pairs:
+    if C1[p1][p2] and C2[p1][p2]:
+        f11 +=1
+    if C1[p1][p2] and not C2[p1][p2]:
+        f10 +=1
+    if not C1[p1][p2] and not C2[p1][p2]:
+        f00 +=1
+    if not C1[p1][p2] and  C2[p1][p2]:
+        f01 +=1
+return list(zip(["f00", "f01", "f10", "f11"], [f00, f01, f10, f11]))
+#+end_src
+
+#+RESULTS:
+| f00 | 3 |
+| f01 | 3 |
+| f10 | 1 |
+| f11 | 3 |
+** d.
+\(R = \frac{f_{11} + f_{00}}{f_{01} + f_{10} + f_{00} + f_{11} }= \frac{3 + 3}{10
+}  = 0.6\)
+** e.
+\(J(A, B) = \frac{|A \cap B |}{|A \cup B|} = \frac{f_{11}}{f_{10} + f_{01} + f_{11}} =
+\frac{3}{7}
+\)
+* 3.
++ C4 matches with M1 because it is the furthest away from the other clusters,
+  making it have a high level of separation
++ C5 goes to M3 because it has a smaller number of points than C2
++ C2 goes to M2 because there are less points (height is different)
++ C1 goes to M4 because it is closer to the other clusters
++ C3 goes to M5 because it is the only one left and it is either C1 or C3
+  because they are close together, and have few points.
+* 4.
+** a.
+|   |    A |    B |    C |    D |    E |
+| / |    < |      |      |      |      |
+|---+------+------+------+------+------|
+| A |    0 |  8.5 | 11.5 | 21.5 | 21.5 |
+| B |  8.5 |    0 | 11.5 | 21.5 | 21.5 |
+| C | 11.5 | 11.5 |    0 | 21.5 | 21.5 |
+| D | 21.5 | 21.5 | 21.5 |    0 |   14 |
+| E | 21.5 | 21.5 | 21.5 |   14 |    0 |
+** b.
+A cophenetic correltion coefficient is computed by taking the original pairwise
+distances and comparing them to the dendrogrammatic distances (shown in the
+matrix above) using the following formula:
+
++ x(i, j) = euclidean distance between point i and point j (\(\overline x\)) is
+  the average
++ t(i, j) = the dendrogrammtic distance between point and point j \(\overline
+  t\) is the average
++ \(c = \frac{\sum_{i<j}[x(i, j) - \overline x][t(i,j) - \overline t]}{\sqrt{\sum_{i<j}[x(i, j) - \overline x]^2\sum_{i<j}[t(i, j) - \overline t]^2}}\)
+
+
+** c.
+The complete link clustering does not preserve the pairwise distances as well in
+the dendrogram as the single link clustering. A higher cophenetic correlation
+coefficient implies that the preservation of the pairwise distances is better.

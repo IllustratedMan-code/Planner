@@ -1,0 +1,124 @@
+% Created 2023-04-04 Tue 13:47
+% Intended LaTeX compiler: lualatex
+\documentclass[11pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{syntax}
+\usepackage{pdfpages}
+\usepackage{tcolorbox}
+\usepackage{etoolbox}
+\usepackage{environ}
+\AtBeginEnvironment{quote}{\itshape}
+\usepackage[ruled]{algorithm2e}
+\let\oldtabular\tabular
+\let\oldendtabular\endtabular
+\NewEnviron{tabular2}[1]{\tcbox[left=0mm, right=0mm, top=0mm, bottom=0mm]{\oldtabular{#1}\BODY\oldendtabular}}
+\BeforeBeginEnvironment{minted}{\begin{tcolorbox}}%
+\AfterEndEnvironment{minted}{\end{tcolorbox}}
+\BeforeBeginEnvironment{verbatim}{\begin{tcolorbox}}%
+\AfterEndEnvironment{verbatim}{\end{tcolorbox}}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{physics}
+\author{David Lewis}
+\date{}
+\title{Lecture 23}
+\hypersetup{
+ pdfauthor={David Lewis},
+ pdftitle={Lecture 23},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 30.0.50 (Org mode 9.6.1)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\section*{1.}
+\label{sec:org31daf57}
+\subsection*{a.}
+\label{sec:org87e7ef5}
+\begin{itemize}
+\item PQR and XYZ are clustered
+\item distance is low for PQR and distance is high for XYZ and vice versa
+\end{itemize}
+\subsection*{b.}
+\label{sec:org4386e7a}
+They are all somewhat similar to each other, but the range of attribute one for PQR
+attributes 1 and 2 is \(\ge\) 15, but the range is <= 4 for attributes 3,4,5,6. So PQR
+is more similar for attributes 3,4,5,6 than for attributes 1,2
+
+For XYZ, the ranges are ordered by attributes smallest to greatest (most similar
+to least similar) \(a_3 < a_1 = a_6 = a_5 < a_4\)
+
+\subsection*{c.}
+\label{sec:org9084c28}
+PQRXYZ (no good sub clusters). There are no obvious clusterings.
+\subsection*{d.}
+\label{sec:orgd7d51d8}
+a\textsubscript{4}, and a\textsubscript{5}
+\subsection*{e.}
+\label{sec:orge78519c}
+b is the one we want to do subspace clustering on, because there are no good
+clusters in the current dimensionality
+\subsection*{f.}
+\label{sec:org2a30b65}
+\begin{itemize}
+\item PQR (defining attributes a\textsubscript{2} and a\textsubscript{3} )
+\item XYZ (defining attributes a\textsubscript{4} and a\textsubscript{5} )
+\end{itemize}
+\subsection*{g.}
+\label{sec:org46f0091}
+They are axis aligned, meaning that axis aligned algorithms are most effective
+(clique, random-projections)
+\subsection*{h.}
+\label{sec:org7f34e9c}
+Clique algorithm is vunerable to binning, meaning that some points will be mis-clustered
+\subsection*{i.}
+\label{sec:orgc6b1e89}
+\begin{itemize}
+\item Q and R are the randomly selected points
+\item PQR is the subspace cluster (a\textsubscript{2} and a\textsubscript{3} are defining attributes)
+\end{itemize}
+
+\section*{2.}
+\label{sec:org6e6317a}
+\subsection*{a.}
+\label{sec:org654f747}
+linear combinations of existing dimensions, but not axis aligned
+\subsection*{b.}
+\label{sec:orge17eb0a}
+The data is not axis aligned, meaning random projection cannot ``chunk'' data
+effectively.
+\subsection*{c.}
+\label{sec:org43ecbfd}
+Projective k-means, as it can handle linear cominations of existing dimensions
+\subsection*{d.}
+\label{sec:org48e6dba}
+\begin{itemize}
+\item choosing the number of clusters is hard
+\item PCA is expensive and must be applied many times
+\end{itemize}
+\section*{3.}
+\label{sec:org75e1fa2}
+\subsection*{a.}
+\label{sec:org6508239}
+There are usually > 5 points in each cell (as far as I can tell, the graph is
+hard to read)
+
+\subsection*{b.}
+\label{sec:org859cf11}
+\begin{itemize}
+\item estimate the number of cells that are filled change 0.1 increment dimension to
+0.2 increments
+\item 12 lines
+\item Each line is 5 cells long
+\item 60 cells would need to be evalutated
+\end{itemize}
+\end{document}

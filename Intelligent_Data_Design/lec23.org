@@ -1,0 +1,46 @@
+
+* Subspace clustering
++ good clusters may exist in a subspace
++ clustering methods may be ineffective for some datasets in the normal space
++ linear combination of dimension or a subset of current dimensions
++ In the case where data is not axis aliged, then use linear combination
+* Axis aligned clusters
++ subset of original d dimensions
++ O(2^d) choices
++ Build dimension enumeration tree (all possible combinations of dimensions)
++ project onto each new dimensionality and evaluate clustering
+** Clique method
++ grid over data
++ Every dimension is split into b bins/divisions
++ O(d^b)
++ Density = # of points (can have many definitions)
++ Keep track of dense cells in each dimension
++ tries to find axis aligned cells
++ Clique will join each cell that share a face
++ \(\frac{x_{range}}{x} \cdot \frac{y_{range}}{Y}\)
++ Bad in high dimensions
++ sensitive to bin boundaries
++ fast (can use itemset mining), but misses a lot of data points
+** Random projections
++ randomized to select "good" subspace
+#+begin_example
+For i=1 maxiters:
+   pick a random sead point xp
+   for j=1 to max sample
+      pick a sample of points
+        score is the size of the cluster * dimenisonality (higher dimensions is better)
+#+end_example
+** General subspaces
++ projective k-means
++ Generalization of PCA to subspaces
++ Projetedive kmeans/subspace PCA
++ Find direction of most variance/ find k subspace of varying dimensionalities
++ true clusters are orthogonal
+*** algorithm
++ initialization
++ iterative refinement (Expectation maximation)
+  + repeat until convergence
+  + for each partition D_i do a PCA(D_i ) and determine the dimenionality
+  + D_i <- dim(PCA(D_i ))
+  + map point onto subspace, determine distance between projection and point,
+    smallest distance wins

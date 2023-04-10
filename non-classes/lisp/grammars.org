@@ -1,0 +1,34 @@
+
+* The plan
+Implement a system in lisp that parses languages using a simple grammar syntax
+and compiles them down into lisp itself.
+
+We'll need a couple of separate ingredients
+
++ lexer
++ parser
+
+Our lexer and parser will be a little different than normal. The lexer will
+convert the string into a set of tokens based on a grammar, but will ignore
+everything that is not captured, anything that is not captured will be
+evaluated. Instead of evaulating the actaul result,  a list of lisp functions
+will be generated and either evaluated or compiled.
+
+say we have the grammar: =F -> ( 'name spc 'F ) | 'args= the symbols are "capture groups"
+that will either be converted into other symbols via production rules, or the
+contents will be fed into a lisp macro determined by the name of the production
+rule, in this case F. spc in this grammar represents a " ", notably, whitespace
+should normally be pruned.
+
+for this sample grammar, take this lisp function =(test (my args))=. It would be
+parsed using the following derivation =F -> ('name spc 'F)=. 'name and 'F get
+passed to the F function as arguments, 'F gets expanded again, using the
+production rules and the F function. The final output would look like (if we are
+parsing to lisp): =(F test (F my args))=. If we wanted python function syntax we
+would use the grammar =F -> 'name('F) | 'args= instead.
+
+So, we need to generate a lexer/parser from a grammar definition.
+
+#+begin_src lisp
+
+#+end_src

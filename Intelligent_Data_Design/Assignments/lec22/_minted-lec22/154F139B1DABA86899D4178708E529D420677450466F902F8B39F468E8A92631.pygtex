@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{scipy}
+\PYG{n}{A} \PYG{o}{=} \PYG{n}{affinity}
+\PYG{n}{k} \PYG{o}{=} \PYG{l+m+mi}{2}
+\PYG{c+c1}{\PYGZsh{} network x does weighted degrees for us!}
+\PYG{n}{D} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{diag}\PYG{p}{(}\PYG{n+nb}{list}\PYG{p}{(}\PYG{n+nb}{dict}\PYG{p}{(}\PYG{n}{G}\PYG{o}{.}\PYG{n}{degree}\PYG{p}{(}\PYG{n}{weight}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}weight\PYGZdq{}}\PYG{p}{))}\PYG{o}{.}\PYG{n}{values}\PYG{p}{()))}
+\PYG{n}{L} \PYG{o}{=} \PYG{n}{D}\PYG{o}{\PYGZhy{}}\PYG{n}{A}
+
+\PYG{n}{eigenvalues}\PYG{p}{,} \PYG{n}{eigenvectors} \PYG{o}{=} \PYG{n}{scipy}\PYG{o}{.}\PYG{n}{linalg}\PYG{o}{.}\PYG{n}{eigh}\PYG{p}{(}\PYG{n}{L}\PYG{p}{)}
+\PYG{n}{U} \PYG{o}{=} \PYG{n}{eigenvectors}\PYG{p}{[:,:}\PYG{l+m+mi}{2}\PYG{p}{]}
+\PYG{n}{row\PYGZus{}sums} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{square}\PYG{p}{(}\PYG{n}{U}\PYG{p}{)}\PYG{o}{.}\PYG{n}{sum}\PYG{p}{(}\PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{keepdims}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{))}
+
+\PYG{n}{Y} \PYG{o}{=} \PYG{n}{U} \PYG{o}{/} \PYG{n}{row\PYGZus{}sums}
+\PYG{n}{Centroids}\PYG{p}{,} \PYG{n}{euclidian\PYGZus{}mean} \PYG{o}{=} \PYG{n}{scipy}\PYG{o}{.}\PYG{n}{cluster}\PYG{o}{.}\PYG{n}{vq}\PYG{o}{.}\PYG{n}{kmeans}\PYG{p}{(}\PYG{n}{Y}\PYG{p}{,} \PYG{n}{k}\PYG{p}{)}
+\PYG{n}{Clusters}\PYG{p}{,} \PYG{n}{distances} \PYG{o}{=} \PYG{n}{scipy}\PYG{o}{.}\PYG{n}{cluster}\PYG{o}{.}\PYG{n}{vq}\PYG{o}{.}\PYG{n}{vq}\PYG{p}{(}\PYG{n}{Y}\PYG{p}{,} \PYG{n}{Centroids}\PYG{p}{)}
+\PYG{n+nb}{list}\PYG{p}{(}\PYG{n+nb}{zip}\PYG{p}{(}\PYG{n}{Y}\PYG{o}{.}\PYG{n}{tolist}\PYG{p}{(),}\PYG{n}{Clusters}\PYG{p}{))}
+\end{Verbatim}

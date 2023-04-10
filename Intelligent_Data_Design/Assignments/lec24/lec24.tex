@@ -1,0 +1,199 @@
+% Created 2023-04-07 Fri 20:38
+% Intended LaTeX compiler: lualatex
+\documentclass[11pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{syntax}
+\usepackage{pdfpages}
+\usepackage{tcolorbox}
+\usepackage{etoolbox}
+\usepackage{environ}
+\usepackage[ruled]{algorithm2e}
+\let\oldtabular\tabular
+\let\oldendtabular\endtabular
+\NewEnviron{tabular2}[1]{\tcbox[left=0mm, right=0mm, top=0mm, bottom=0mm]{\oldtabular{#1}\BODY\oldendtabular}}
+\BeforeBeginEnvironment{minted}{\begin{tcolorbox}}%
+\AfterEndEnvironment{minted}{\end{tcolorbox}}
+\BeforeBeginEnvironment{verbatim}{\begin{tcolorbox}}%
+\AfterEndEnvironment{verbatim}{\end{tcolorbox}}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{physics}
+\author{David Lewis}
+\date{}
+\title{lecture 24}
+\hypersetup{
+ pdfauthor={David Lewis},
+ pdftitle={lecture 24},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 30.0.50 (Org mode 9.6.1)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+
+\section*{1.}
+\label{sec:org84005b7}
+\subsection*{a.}
+\label{sec:orgaea172c}
+Both A and C have well defined clusters in their similarity matricies. A is the
+best suited to hierarchical clustering because there appears to be clusters
+within clusters. Even B has visible clusters, but not as
+well defined as the other cases.
+\subsection*{b.}
+\label{sec:org22c496e}
+C is the most well suited to kmeans clustering because kmeans is very sensitive
+to noise. C has almost none.
+\subsection*{c.}
+\label{sec:orgee3c0e4}
+Density based clustering is most well suited to remove noise, and it can also
+determine the number of clusters. B has a lot of noise, so it is well suited
+for density based clustering.
+\subsection*{d.}
+\label{sec:org06583a9}
+If the above matricies were not ordered, it would be impossible to tell where
+the clustering was, so I could not make the above judgments based on the matrix
+alone. However, if I had access to the data, I could make judgments based on similarity.
+\section*{2.}
+\label{sec:org6975973}
+\subsection*{a.}
+\label{sec:orga723966}
+\begin{center}
+\begin{tabular2}{l|rrrrr}
+ & A & B & C & D & E\\[0pt]
+\hline
+A & 1 & 1 & 1 & 0 & 0\\[0pt]
+B & 1 & 1 & 1 & 0 & 0\\[0pt]
+C & 1 & 1 & 1 & 0 & 0\\[0pt]
+D & 0 & 0 & 0 & 1 & 1\\[0pt]
+E & 0 & 0 & 0 & 1 & 1\\[0pt]
+\end{tabular2}
+\end{center}
+\subsection*{b.}
+\label{sec:org48a37f0}
+\begin{center}
+\begin{tabular2}{l|rrrrr}
+ & A & B & C & D & E\\[0pt]
+\hline
+A & 1 & 1 & 1 & 1 & 0\\[0pt]
+B & 1 & 1 & 1 & 1 & 0\\[0pt]
+C & 1 & 1 & 1 & 1 & 0\\[0pt]
+D & 1 & 1 & 1 & 1 & 0\\[0pt]
+E & 0 & 0 & 0 & 0 & 1\\[0pt]
+\end{tabular2}
+\end{center}
+\subsection*{c.}
+\label{sec:orge825275}
+\begin{itemize}
+\item f\textsubscript{00} means (not in C1 and not in C2)
+\item f\textsubscript{01} means (not in C1 and in C2)
+\item f\textsubscript{10} means (in C1 and not in C2)
+\item f\textsubscript{11} means (in C1 and in C2)
+\end{itemize}
+
+\begin{minted}[fontsize=\scriptsize]{python}
+from itertools import combinations
+# represent letters as indexes for conveniance
+D = (0, 1, 2, 3, 4)
+
+C1 = [[1, 1, 1, 0, 0],
+      [1, 1, 1, 0, 0],
+      [1, 1, 1, 0, 0],
+      [0, 0, 0, 1, 1],
+      [0, 0, 0, 1, 1]]
+C2 = [[1, 1, 1, 1, 0],
+      [1, 1, 1, 1, 0],
+      [1, 1, 1, 1, 0],
+      [1, 1, 1, 1, 0],
+      [0, 0, 0, 0, 1]]
+
+# get pairs of letters
+pairs = list(combinations(D, 2))
+f00 = 0
+f01 = 0
+f10 = 0
+f11 = 0
+
+for [p1, p2] in pairs:
+    if C1[p1][p2] and C2[p1][p2]:
+        f11 +=1
+    if C1[p1][p2] and not C2[p1][p2]:
+        f10 +=1
+    if not C1[p1][p2] and not C2[p1][p2]:
+        f00 +=1
+    if not C1[p1][p2] and  C2[p1][p2]:
+        f01 +=1
+return list(zip(["f00", "f01", "f10", "f11"], [f00, f01, f10, f11]))
+\end{minted}
+
+\begin{center}
+\begin{tabular2}{lr}
+f00 & 3\\[0pt]
+f01 & 3\\[0pt]
+f10 & 1\\[0pt]
+f11 & 3\\[0pt]
+\end{tabular2}
+\end{center}
+\subsection*{d.}
+\label{sec:orgb9f2817}
+\(R = \frac{f_{11} + f_{00}}{f_{01} + f_{10} + f_{00} + f_{11} }= \frac{3 + 3}{10
+}  = 0.6\)
+\subsection*{e.}
+\label{sec:org65d5e7c}
+\(J(A, B) = \frac{|A \cap B |}{|A \cup B|} = \frac{f_{11}}{f_{10} + f_{01} + f_{11}} =
+\frac{3}{7}\)
+\section*{3.}
+\label{sec:orgdde455b}
+\begin{itemize}
+\item C4 matches with M1 because it is the furthest away from the other clusters,
+making it have a high level of separation
+\item C5 goes to M3 because it has a smaller number of points than C2
+\item C2 goes to M2 because there are less points (height is different)
+\item C1 goes to M4 because it is closer to the other clusters
+\item C3 goes to M5 because it is the only one left and it is either C1 or C3
+because they are close together, and have few points.
+\end{itemize}
+\section*{4.}
+\label{sec:org16ba21b}
+\subsection*{a.}
+\label{sec:org0ebc31d}
+\begin{center}
+\begin{tabular2}{l|rrrrr}
+ & A & B & C & D & E\\[0pt]
+\hline
+A & 0 & 8.5 & 11.5 & 21.5 & 21.5\\[0pt]
+B & 8.5 & 0 & 11.5 & 21.5 & 21.5\\[0pt]
+C & 11.5 & 11.5 & 0 & 21.5 & 21.5\\[0pt]
+D & 21.5 & 21.5 & 21.5 & 0 & 14\\[0pt]
+E & 21.5 & 21.5 & 21.5 & 14 & 0\\[0pt]
+\end{tabular2}
+\end{center}
+\subsection*{b.}
+\label{sec:orgf33e61c}
+A cophenetic correltion coefficient is computed by taking the original pairwise
+distances and comparing them to the dendrogrammatic distances (shown in the
+matrix above) using the following formula:
+
+\begin{itemize}
+\item x(i, j) = euclidean distance between point i and point j (\(\overline x\)) is
+the average
+\item t(i, j) = the dendrogrammtic distance between point and point j \(\overline
+  t\) is the average
+\item \(c = \frac{\sum_{i<j}[x(i, j) - \overline x][t(i,j) - \overline t]}{\sqrt{\sum_{i<j}[x(i, j) - \overline x]^2\sum_{i<j}[t(i, j) - \overline t]^2}}\)
+\end{itemize}
+
+
+\subsection*{c.}
+\label{sec:orgbc32d2d}
+The complete link clustering does not preserve the pairwise distances as well in
+the dendrogram as the single link clustering. A higher cophenetic correlation
+coefficient implies that the preservation of the pairwise distances is better.
+\end{document}

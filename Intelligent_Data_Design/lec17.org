@@ -1,12 +1,33 @@
-
-* Theorems on worst case performance
-** No-free-lunch theorem
-There is no single  classifier that is general over the space of the possible problems
-** Ugly duckling theorem
-Over all the possible pfratuer sets, there is no real way to measure similarity
-of points
-* Classifier evaluation
-Break data into two chunks (training and test), hide the label for half the
-dataset.
-
-Accuracy of a classifier is the number of correct predictions/test cases
+* Clustering
++ Distance: Subjective criteria (dependent on application)
++ cluster: also dependent on application
++ Points within a cluster, distance should be small
++ distance between clusters should be large
++ clustering is a partition of the dataset into k clusters
++ Determining the number of clusters is hard
++ break dataset into k parts such that \[\cup D_i = D\] without overlaps
+** Distance
++ \[d(x, y) = \sqrt{\sum \left (x_i-y_i\right )^2}\] euclidean distance
++ Manhattan distance (diagonal is x + y) in triangle
+** Score for clustering
++ mean/centroid is the mean of all the points in a cluster
++ median/medioid is the point closest to the mean
++ np hard to find the optimal partition of clustering in k groups
+** naive algorithm for partitioning
++ enumeration problem
++ enumerate all k-partitions
++ \forall k partitions, compute score, keep best, output best
++ O(|D|) for each score
++ \(O(K^n * |D|)\) is the total complexity
+* k-means clustering
++ uses a heuristic, not optimal
++ finds locally optimal clusters
++ make a ruandom parition, choose k random points  as the k means
++ recompute the mean
++ iterate until convergence (small number of iterations) rarely more than 10.
++ O(tDKd) t can be treated as constant, linear time algorithm
+* Em algorithm
++ What is \(P(x_i|C_i)\)
++ assume some model for the parametric cluster
++ model that is normally assumed is the normal distribution
++ posterior probabliility = likelyhood * prior/normalization

@@ -1,0 +1,55 @@
+#+title: Lecture 23
+#+date:
+* 1.
+** a.
++ PQR and XYZ are clustered
++ distance is low for PQR and distance is high for XYZ and vice versa
+** b.
+They are all somewhat similar to each other, but the range of attribute one for PQR
+attributes 1 and 2 is \ge 15, but the range is <= 4 for attributes 3,4,5,6. So PQR
+is more similar for attributes 3,4,5,6 than for attributes 1,2
+
+For XYZ, the ranges are ordered by attributes smallest to greatest (most similar
+to least similar) \(a_3 < a_1 = a_6 = a_5 < a_4\)
+
+** c.
+PQRXYZ (no good sub clusters). There are no obvious clusterings.
+** d.
+a_4, and a_5
+** e.
+b is the one we want to do subspace clustering on, because there are no good
+clusters in the current dimensionality
+** f.
++ PQR (defining attributes a_2 and a_3 )
++ XYZ (defining attributes a_4 and a_5 )
+** g.
+They are axis aligned, meaning that axis aligned algorithms are most effective
+(clique, random-projections)
+** h.
+Clique algorithm is vunerable to binning, meaning that some points will be mis-clustered
+** i.
++ Q and R are the randomly selected points
++ PQR is the subspace cluster (a_2 and a_3 are defining attributes)
+
+* 2.
+** a.
+linear combinations of existing dimensions, but not axis aligned
+** b.
+The data is not axis aligned, meaning random projection cannot "chunk" data
+effectively.
+** c.
+Projective k-means, as it can handle linear cominations of existing dimensions
+** d.
++ choosing the number of clusters is hard
++ PCA is expensive and must be applied many times
+* 3.
+** a.
+There are usually > 5 points in each cell (as far as I can tell, the graph is
+hard to read)
+
+** b.
++ estimate the number of cells that are filled change 0.1 increment dimension to
+  0.2 increments
++ 12 lines
++ Each line is 5 cells long
++ 60 cells would need to be evalutated

@@ -48,4 +48,147 @@ The kernel function can be expressed as the dot product of the mapped input vect
 
 $K(x, y) = \phi(x)^T \phi(y)$
 
-This mapping function takes the input features and maps them to a higher-dimensional space, where the dot product of the mapped features is equivalent to the kernel function.
+This mapping function takes the input features and maps them to a
+higher-dimensional space, where the dot product of the mapped features is
+equivalent to the kernel function.
+* Gaussian kernel visualization
+#+begin_src jupyter-python :kernel python3 :session py
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# Define the Gaussian kernel function
+def gaussian_kernel(x, y, gamma):
+    return np.exp(-gamma * np.linalg.norm(x - y)**2)
+
+# Set the range of x and y values
+x_range = np.linspace(-5, 5, 100)
+y_range = np.linspace(-5, 5, 100)
+
+# Create a 2D grid of x and y values
+X, Y = np.meshgrid(x_range, y_range)
+
+# Set the hyperparameter gamma
+gamma = 1.0
+
+# Compute the kernel function for each pair of input vectors
+K = np.zeros((len(x_range), len(y_range)))
+for i, x in enumerate(x_range):
+    for j, y in enumerate(y_range):
+        K[i, j] = gaussian_kernel(np.array([x, y]), np.array([0, 0]), gamma)
+
+# Create a 3D plot of the kernel function
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(X, Y, K, cmap='coolwarm')
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_zlabel('kernel value')
+plt.show()
+
+#+end_src
+
+#+RESULTS:
+[[file:./.ob-jupyter/057a23f2fcbd3da476a493b0d4e325a99000e08e.png]]
+
+#+begin_src jupyter-python :kernel python3 :session py2
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import svm
+
+# Generate some random data for classification
+np.random.seed(0)
+X = np.random.randn(100, 2)
+y = np.logical_xor(X[:, 0] > 0, X[:, 1] > 0)
+
+# Fit an SVM with a Gaussian kernel to the data
+clf = svm.SVC(kernel='rbf', gamma=1/2)
+clf.fit(X, y)
+
+# Create a meshgrid of points to plot the decision boundary and margins
+xx, yy = np.meshgrid(np.linspace(-3, 3, 500),
+                     np.linspace(-3, 3, 500))
+Z = clf.decision_function(np.c_[xx.ravel(), yy.ravel()])
+Z = Z.reshape(xx.shape)
+
+# Plot the decision boundary and margins
+plt.contour(xx, yy, Z, levels=[-1, 0, 1], linestyles=['--', '-', '--'],
+            colors=("red", "blue", "green"))
+plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.Paired, edgecolors='k')
+plt.xlim(-3, 3)
+plt.ylim(-3, 3)
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.title('Gaussian kernel SVM')
+# Calculate and plot the support vectors and margin lines
+sv = clf.support_vectors_
+for i in range(len(clf.dual_coef_[0])):
+    if clf.dual_coef_[0][i] > 0:
+        plt.plot([sv[i][0], clf.intercept_[0] + 1/np.sqrt(clf.gamma)],
+                 [sv[i][1], clf.intercept_[0] + 1/np.sqrt(clf.gamma)], 'k--')
+        plt.plot([sv[i][0], clf.intercept_[0] - 1/np.sqrt(clf.gamma)],
+                 [sv[i][1], clf.intercept_[0] - 1/np.sqrt(clf.gamma)], 'k--')
+
+plt.show()
+
+#+end_src
+
+#+RESULTS:
+[[file:./.ob-jupyter/6984b51b7a5a6ff386d1efd299e38c2cdd598d0c.png]]
+
+#+begin_src jupyter-python :kernel python3 :session py2
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from sklearn import datasets, svm
+
+# Load iris dataset
+iris = datasets.load_iris()
+X = iris.data[:, :2]
+y = iris.target
+
+# Fit an SVM with a Gaussian kernel to the data
+clf = svm.SVC(kernel='rbf', gamma=1/10)
+clf.fit(X, y)
+
+# Create a meshgrid of points to plot the decision boundary and margins
+x_min, x_max = X[:, 0].min() - 0.1, X[:, 0].max() + 0.1
+y_min, y_max = X[:, 1].min() - 0.1, X[:, 1].max() + 0.1
+xx, yy = np.meshgrid(np.linspace(x_min, x_max, 500),
+                     np.linspace(y_min, y_max, 500))
+Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+Z = Z.reshape(xx.shape)
+
+# Plot the decision boundary and margins in 3D
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(xx, yy, Z, cmap=plt.cm.coolwarm)
+ax.scatter(X[:, 0], X[:, 1], clf.predict(X), c=y, cmap=plt.cm.coolwarm)
+ax.set_xlabel('Sepal length')
+ax.set_ylabel('Sepal width')
+ax.set_zlabel('Class')
+ax.set_title('Gaussian kernel SVM with gamma = 0.1')
+ax.view_init(60, 120)
+
+plt.show()
+
+#+end_src
+
+#+RESULTS:
+[[file:./.ob-jupyter/9feb69af189944992a131eab414e9af62a62f7fc.png]]
+
+* Naive bayes
+#+begin_src bash :results code :wrap export markdown
+chat "what can you tell me about the naive bayes algorithm for itemsets?"
+#+end_src
+
+#+RESULTS:
+#+begin_export markdown
+As an AI language model, I am not aware of a specific Naive Bayes algorithm for itemsets, however, I can describe what Naive Bayes algorithm is, and its general application in data science.
+
+Naive Bayes algorithm is a classification algorithm based on the Bayes theorem. It is a probabilistic algorithm that makes the assumption that all features in the dataset are independent from one another, thus the \"naive\" descriptor in Naive Bayes.
+
+The algorithm calculates the probability of each class, given a set or combination of features, which is referred to as the posterior probability. It updates the probability estimate as new features are added. This algorithm works well with large and sparse datasets, as it requires less training data compared to other classifiers.
+
+In the context of itemsets, the Naive Bayes algorithm can be used for market basket analysis, a technique used to identify which items are frequently purchased together by customers. Naive Bayes can be used to predict which items are likely to be purchased together, based on the past transactions that have been recorded. This can help businesses optimize their sales strategies, and understand which products should be displayed together, or marketed as a bundle.
+#+end_export

@@ -1,0 +1,16 @@
+
+* Density based clustering
++ kernel density estimation
++ DBSCAN
+* Kernel density estimation
+Probability density function:
+\(\frac{1}{\sqrt{2\pi}} e^\frac{-(x-m)^2}{2\sigma^2}\)
+** Estimate the cumulative function
++ F(x) = \(\sum \limits_{x<a} f(x)\)
+#+begin_equation
+\[\hat f(x) = \frac{F(x+h/2) - F(x-h/2)}{h}\]
+#+end_equation
++ \(B(m|n, P<b) = (n,m)^T P_{ab}^M(1-P_{ab})^{n-m}\)
+#+begin_equation
+\(P_{ab} = \frac{k}{n}\)
+#+end_equation

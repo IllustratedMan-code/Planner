@@ -1,0 +1,29 @@
+
+* Dndrogram
++ hierarchical cluster tree
+  + agglomerate (merge point)
+  + divisive (splitting): similarity minimum cut-based
+** Basic agglomerative clutering
++ put each point into a separate cluster
++ merge points until they are all in the same cluster
++ closest pair of clusters are merged
++ any distance O(n^2) in high dimensions O(n log n) in low dimensions (with kd tree)
++ min heap can be created in linear time, but O(n^2)
++ recompute the distance takes O(n log n) time
++ total complexity O(n^2) initilization
++ n(O(nlogn)) = O(n^2logn)
+** Defining the slosest pair of clusters
+
+*** Single link/min distance
++ minimum distance between any 2 points in the clusters
+*** comlete link/ max distance
++ maximum distance between two points in a pair of clusters
+*** group average/mean distance
+mean distance between all points in cluster (not robust)
+*** distane between the mean
+distance between the mean of all the points in the cluster
+** lance william formula for cluster distance
++ consolidates the above
+* Density based clustering
++ euclidian distance is not ideal for some clusterings
++ non-convex clusters/shape-based/density based

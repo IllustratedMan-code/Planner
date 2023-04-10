@@ -1,0 +1,80 @@
+#+begin_src jupyter-python :kernel python3 :session py
+import matplotlib.pyplot as plt
+plt.style.use('ggplot')
+import numpy as np
+D = [100,
+    99,
+    98,
+    98,
+    98,
+    96,
+    96,
+    96,
+    94,
+    94,
+    94,
+    94,
+    94,
+    92,
+    91,
+    90,
+    89,
+    89,
+    89,
+    88,
+    88,
+    87,
+    87,
+    86,
+    86,
+    85,
+    85,
+    85,
+    85,
+    85,
+    84,
+    84,
+    84,
+    84,
+    83,
+    82,
+    82,
+    81,
+    80,
+    79,
+    79,
+    78,
+    77,
+    76,
+    76,
+    74,
+    73,
+    72,
+    68,
+    64,
+    64,
+    64,
+    64,
+    63,
+    63,
+    61,
+    60,
+    58,
+    58,
+    56,
+    54,
+    53,
+    52,
+    46,
+    45,
+    30]
+fig, ax = plt.subplots()
+bins=np.arange(min(D), max(D)+2) - 0.5
+ax.hist(D, bins)
+ax.set_xlabel("Grade(percentage)")
+ax.set_ylabel("count")
+plt.show()
+#+end_src
+
+#+RESULTS:
+[[file:./.ob-jupyter/13496371af3400ecaa3f7c6139fbc9668debd9c3.png]]
