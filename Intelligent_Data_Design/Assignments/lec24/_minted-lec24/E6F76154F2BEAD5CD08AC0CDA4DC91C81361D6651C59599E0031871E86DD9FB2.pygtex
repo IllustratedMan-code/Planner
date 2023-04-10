@@ -1,0 +1,34 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{itertools} \PYG{k+kn}{import} \PYG{n}{combinations}
+\PYG{c+c1}{\PYGZsh{} represent letters as indexes for conveniance}
+\PYG{n}{D} \PYG{o}{=} \PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mi}{4}\PYG{p}{)}
+
+\PYG{n}{C1} \PYG{o}{=} \PYG{p}{[[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{],}
+      \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{],}
+      \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{],}
+      \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{],}
+      \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{]]}
+\PYG{n}{C2} \PYG{o}{=} \PYG{p}{[[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{],}
+      \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{],}
+      \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{],}
+      \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{],}
+      \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{]]}
+
+\PYG{c+c1}{\PYGZsh{} get pairs of letters}
+\PYG{n}{pairs} \PYG{o}{=} \PYG{n+nb}{list}\PYG{p}{(}\PYG{n}{combinations}\PYG{p}{(}\PYG{n}{D}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{))}
+\PYG{n}{f00} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{n}{f01} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{n}{f10} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{n}{f11} \PYG{o}{=} \PYG{l+m+mi}{0}
+
+\PYG{k}{for} \PYG{p}{[}\PYG{n}{p1}\PYG{p}{,} \PYG{n}{p2}\PYG{p}{]} \PYG{o+ow}{in} \PYG{n}{pairs}\PYG{p}{:}
+    \PYG{k}{if} \PYG{n}{C1}\PYG{p}{[}\PYG{n}{p1}\PYG{p}{][}\PYG{n}{p2}\PYG{p}{]} \PYG{o+ow}{and} \PYG{n}{C2}\PYG{p}{[}\PYG{n}{p1}\PYG{p}{][}\PYG{n}{p2}\PYG{p}{]:}
+        \PYG{n}{f11} \PYG{o}{+=}\PYG{l+m+mi}{1}
+    \PYG{k}{if} \PYG{n}{C1}\PYG{p}{[}\PYG{n}{p1}\PYG{p}{][}\PYG{n}{p2}\PYG{p}{]} \PYG{o+ow}{and} \PYG{o+ow}{not} \PYG{n}{C2}\PYG{p}{[}\PYG{n}{p1}\PYG{p}{][}\PYG{n}{p2}\PYG{p}{]:}
+        \PYG{n}{f10} \PYG{o}{+=}\PYG{l+m+mi}{1}
+    \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{C1}\PYG{p}{[}\PYG{n}{p1}\PYG{p}{][}\PYG{n}{p2}\PYG{p}{]} \PYG{o+ow}{and} \PYG{o+ow}{not} \PYG{n}{C2}\PYG{p}{[}\PYG{n}{p1}\PYG{p}{][}\PYG{n}{p2}\PYG{p}{]:}
+        \PYG{n}{f00} \PYG{o}{+=}\PYG{l+m+mi}{1}
+    \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{C1}\PYG{p}{[}\PYG{n}{p1}\PYG{p}{][}\PYG{n}{p2}\PYG{p}{]} \PYG{o+ow}{and}  \PYG{n}{C2}\PYG{p}{[}\PYG{n}{p1}\PYG{p}{][}\PYG{n}{p2}\PYG{p}{]:}
+        \PYG{n}{f01} \PYG{o}{+=}\PYG{l+m+mi}{1}
+\PYG{k}{return} \PYG{n+nb}{list}\PYG{p}{(}\PYG{n+nb}{zip}\PYG{p}{([}\PYG{l+s+s2}{\PYGZdq{}f00\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}f01\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}f10\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}f11\PYGZdq{}}\PYG{p}{],} \PYG{p}{[}\PYG{n}{f00}\PYG{p}{,} \PYG{n}{f01}\PYG{p}{,} \PYG{n}{f10}\PYG{p}{,} \PYG{n}{f11}\PYG{p}{]))}
+\end{Verbatim}

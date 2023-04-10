@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{D} \PYG{o}{=} \PYG{n+nb}{list}\PYG{p}{(}\PYG{n+nb}{zip}\PYG{p}{(}\PYG{n}{results}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{:],} \PYG{n}{results}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{:]))}
+\PYG{n}{posterior} \PYG{o}{=} \PYG{p}{[]}
+\PYG{k}{for} \PYG{n}{i1}\PYG{p}{,} \PYG{n}{i2} \PYG{o+ow}{in} \PYG{n}{D}\PYG{p}{:}
+    \PYG{n}{normalization} \PYG{o}{=} \PYG{n}{i1} \PYG{o}{+} \PYG{n}{i2}
+    \PYG{n}{posterior}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n}{i1}\PYG{o}{/}\PYG{p}{(}\PYG{n}{normalization}\PYG{p}{),} \PYG{n}{i2}\PYG{o}{/}\PYG{p}{(}\PYG{n}{normalization}\PYG{p}{)])}
+
+\PYG{n}{posterior}
+\end{Verbatim}

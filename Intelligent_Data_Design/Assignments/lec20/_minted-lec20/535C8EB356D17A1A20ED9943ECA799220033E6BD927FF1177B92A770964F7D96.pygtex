@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{fig}\PYG{p}{,} \PYG{n}{ax} \PYG{o}{=} \PYG{n}{plt}\PYG{o}{.}\PYG{n}{subplots}\PYG{p}{()}
+\PYG{n}{dend} \PYG{o}{=} \PYG{n}{shc}\PYG{o}{.}\PYG{n}{dendrogram}\PYG{p}{(}\PYG{n}{shc}\PYG{o}{.}\PYG{n}{linkage}\PYG{p}{(}\PYG{n}{D}\PYG{p}{[[}\PYG{l+s+s1}{\PYGZsq{}x\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}y\PYGZsq{}}\PYG{p}{]],} \PYG{n}{method}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}single\PYGZsq{}}\PYG{p}{),} \PYG{n}{labels}\PYG{o}{=}\PYG{n}{D}\PYG{o}{.}\PYG{n}{index}\PYG{p}{,} \PYG{n}{ax}\PYG{o}{=}\PYG{n}{ax}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+\end{Verbatim}

@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{B} \PYG{o}{=} \PYG{p}{[]}
+\PYG{k}{for} \PYG{n}{point}\PYG{p}{,} \PYG{n}{neighbors} \PYG{o+ow}{in} \PYG{n}{D}\PYG{p}{:}
+    \PYG{k}{if} \PYG{n}{point} \PYG{o+ow}{in} \PYG{n}{C}\PYG{p}{:}
+        \PYG{n}{B} \PYG{o}{+=} \PYG{p}{[}\PYG{n}{n} \PYG{k}{for} \PYG{n}{n} \PYG{o+ow}{in} \PYG{n}{neighbors} \PYG{k}{if} \PYG{n}{n} \PYG{o+ow}{not} \PYG{o+ow}{in} \PYG{n}{C}\PYG{p}{]}
+\PYG{n}{B} \PYG{o}{=} \PYG{n+nb}{set}\PYG{p}{(}\PYG{n}{B}\PYG{p}{)}
+\PYG{n}{B}
+\end{Verbatim}

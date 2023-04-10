@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{scipy.cluster.hierarchy} \PYG{k}{as} \PYG{n+nn}{shc}
+\PYG{k+kn}{from} \PYG{n+nn}{scipy.spatial.distance} \PYG{k+kn}{import} \PYG{n}{squareform}\PYG{p}{,} \PYG{n}{pdist}
+
+
+\PYG{n}{dist} \PYG{o}{=} \PYG{n}{pd}\PYG{o}{.}\PYG{n}{DataFrame}\PYG{p}{(}\PYG{n}{squareform}\PYG{p}{(}\PYG{n}{pdist}\PYG{p}{(}\PYG{n}{D}\PYG{p}{[[}\PYG{l+s+s1}{\PYGZsq{}x\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}y\PYGZsq{}}\PYG{p}{]]),} \PYG{l+s+s1}{\PYGZsq{}euclidean\PYGZsq{}}\PYG{p}{),}
+                    \PYG{n}{columns}\PYG{o}{=}\PYG{n}{D}\PYG{o}{.}\PYG{n}{index}\PYG{o}{.}\PYG{n}{values}\PYG{p}{,}
+                    \PYG{n}{index}\PYG{o}{=}\PYG{n}{D}\PYG{o}{.}\PYG{n}{index}\PYG{o}{.}\PYG{n}{values}\PYG{p}{)}
+\PYG{n}{dist}
+\end{Verbatim}

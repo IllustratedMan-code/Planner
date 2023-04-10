@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} * operator unpacks list}
+\PYG{p}{[}\PYG{n}{i} \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{list}\PYG{p}{(}\PYG{n+nb}{zip}\PYG{p}{(}\PYG{o}{*}\PYG{n}{D}\PYG{p}{))[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{k}{if} \PYG{n}{i} \PYG{o+ow}{not} \PYG{o+ow}{in} \PYG{n}{B} \PYG{o+ow}{and} \PYG{n}{i} \PYG{o+ow}{not} \PYG{o+ow}{in} \PYG{n}{C}\PYG{p}{]}
+\end{Verbatim}

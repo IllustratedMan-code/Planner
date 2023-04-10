@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{math} \PYG{k+kn}{import} \PYG{n}{sqrt}
+\PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k}{as} \PYG{n+nn}{np}
+
+\PYG{n}{D} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}A\PYGZdq{}}\PYG{p}{:[}\PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{),} \PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{),} \PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{p}{),} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{],}
+     \PYG{l+s+s2}{\PYGZdq{}B\PYGZdq{}}\PYG{p}{:[}\PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{),} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{p}{),} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{6}\PYG{p}{),} \PYG{l+m+mi}{0}\PYG{p}{],}
+     \PYG{l+s+s2}{\PYGZdq{}C\PYGZdq{}}\PYG{p}{:[}\PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{),} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{p}{),} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{6}\PYG{p}{),} \PYG{l+m+mi}{0}\PYG{p}{],}
+     \PYG{l+s+s2}{\PYGZdq{}D\PYGZdq{}}\PYG{p}{:[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{6}\PYG{p}{),} \PYG{l+m+mi}{2}\PYG{p}{],}
+     \PYG{l+s+s2}{\PYGZdq{}E\PYGZdq{}}\PYG{p}{:[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{]\PYGZcb{}}
+\PYG{n}{affinity} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{((}\PYG{l+m+mi}{5}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{))}
+\PYG{k}{for} \PYG{n}{xi} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{D}\PYG{p}{)):}
+    \PYG{k}{for} \PYG{n}{xj} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{D}\PYG{p}{)):}
+        \PYG{n}{xivec} \PYG{o}{=} \PYG{n}{D}\PYG{p}{[}\PYG{n+nb}{list}\PYG{p}{(}\PYG{n}{D}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{())[}\PYG{n}{xi}\PYG{p}{]]}
+        \PYG{n}{xjvec} \PYG{o}{=} \PYG{n}{D}\PYG{p}{[}\PYG{n+nb}{list}\PYG{p}{(}\PYG{n}{D}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{())[}\PYG{n}{xj}\PYG{p}{]]}
+        \PYG{n}{affinity}\PYG{p}{[}\PYG{n}{xi}\PYG{p}{,} \PYG{n}{xj}\PYG{p}{]} \PYG{o}{=} \PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{dot}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{n}{xivec}\PYG{p}{),} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{n}{xjvec}\PYG{p}{)))}
+\PYG{n}{affinity}\PYG{o}{.}\PYG{n}{tolist}\PYG{p}{()}
+\end{Verbatim}

@@ -1,0 +1,229 @@
+% Created 2023-03-21 Tue 17:31
+% Intended LaTeX compiler: lualatex
+\documentclass[11pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{syntax}
+\usepackage{pdfpages}
+\usepackage{tcolorbox}
+\usepackage{etoolbox}
+\usepackage{environ}
+\usepackage[ruled]{algorithm2e}
+\let\oldtabular\tabular
+\let\oldendtabular\endtabular
+\NewEnviron{tabular2}[1]{\tcbox[left=0mm, right=0mm, top=0mm, bottom=0mm]{\oldtabular{#1}\BODY\oldendtabular}}
+\BeforeBeginEnvironment{minted}{\begin{tcolorbox}}%
+\AfterEndEnvironment{minted}{\end{tcolorbox}}
+\BeforeBeginEnvironment{verbatim}{\begin{tcolorbox}}%
+\AfterEndEnvironment{verbatim}{\end{tcolorbox}}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{physics}
+\author{David Lewis}
+\date{\today}
+\title{lec19}
+\hypersetup{
+ pdfauthor={David Lewis},
+ pdftitle={lec19},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 30.0.50 (Org mode 9.6.1)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\section*{1.}
+\label{sec:orgb9f529e}
+\begin{enumerate}
+\item \(4^8 \cdot 3 = 96\)
+\item It takes exponential time, permutations increase exponenetially with number
+of data points
+\end{enumerate}
+\section*{2.}
+\label{sec:org3a460d3}
+\subsection*{a.}
+\label{sec:orge603e2a}
+\begin{minted}[fontsize=\scriptsize]{python}
+D = [2, 3, 4, 8, 9, 10, 15, 16, 17]
+M = [5, 14, 21]
+A = []
+for i in D:
+    L = [(i-m)**2 for m in M]
+    A.append(M[L.index(min(L))])
+A
+\end{minted}
+
+\begin{center}
+\begin{tabular2}{rrrrrrrrr}
+5 & 5 & 5 & 5 & 5 & 14 & 14 & 14 & 14\\[0pt]
+\end{tabular2}
+\end{center}
+\subsection*{b.}
+\label{sec:org235e1c9}
+\begin{minted}[fontsize=\scriptsize]{python}
+import random
+def update_centroids(M, A):
+    def reassign_empty(M, A):
+        for i in M:
+            if i not in A:
+                new = random.choice(D)
+                A[D.index(new)] = i
+                return reassign_empty(M, A)
+        return A
+    A = reassign_empty(M, A)
+    M_new = [0 for m in M]
+    S_len = [0 for m in M]
+    for d,a in zip(D, A):
+        for m in range(len(M)):
+            if a == M[m]:
+                S_len[m] += 1
+                M_new[m] += d
+    M = [x/s for (x, s) in zip(M_new, S_len)]
+    return M
+M = update_centroids(M, A)
+M
+\end{minted}
+
+\begin{center}
+\begin{tabular2}{rrr}
+4.5 & 14.5 & 8.0\\[0pt]
+\end{tabular2}
+\end{center}
+
+\subsection*{c.}
+\label{sec:org904bdba}
+\begin{minted}[fontsize=\scriptsize]{python}
+D = [2, 3, 4, 8, 9, 10, 15, 16, 17]
+A = []
+for i in D:
+    L = [(i-m)**2 for m in M]
+    A.append(M[L.index(min(L))])
+A
+\end{minted}
+
+\begin{center}
+\begin{tabular2}{rrrrrrrrr}
+4.5 & 4.5 & 4.5 & 8.0 & 8.0 & 8.0 & 14.5 & 14.5 & 14.5\\[0pt]
+\end{tabular2}
+\end{center}
+\subsection*{d.}
+\label{sec:org65f6d76}
+In my code above, I select a random member of D to be reassigned to the empty
+centroid. I made this function recursive in case the reasignment creates a new
+empty centroid. The function will run until each centroid has at least one assignment.
+\subsection*{e.}
+\label{sec:org1ba31bb}
+\begin{verbatim}
+Assignment: assign each observation to the closest cluster
+while assignments change:
+    while centroid has no assignments:
+        assign random observation to empty centroid
+    recalculate centroids:
+        m_i = (1/length(assignments to centroid)) * sum(each assignment to centroid)
+\end{verbatim}
+
+Time complexity: \(O(n^{dk+1}\log n)\)
+
+\section*{3.}
+\label{sec:org4865c95}
+\subsection*{a.}
+\label{sec:orgd745f99}
+\begin{minted}[fontsize=\scriptsize]{python}
+from scipy.stats import norm
+D = [1, 4, 6, 9]
+Mu = [1, 9]
+Sigma = [1, 1]
+results = []
+for mu, sigma in zip(Mu, Sigma):
+    results.append([f"mu={mu}, sigma={sigma}"]+ list(norm.pdf(D, mu, sigma)))
+results
+\end{minted}
+
+\begin{center}
+\begin{tabular2}{lrrrr}
+mu=1, sigma=1 & 0.3989422804014327 & 0.0044318484119380075 & 1.4867195147342979e-06 & 5.052271083536893e-15\\[0pt]
+mu=9, sigma=1 & 5.052271083536893e-15 & 1.4867195147342979e-06 & 0.0044318484119380075 & 0.3989422804014327\\[0pt]
+\end{tabular2}
+\end{center}
+
+\subsection*{b.}
+\label{sec:orgbceb426}
+\begin{minted}[fontsize=\scriptsize]{python}
+D = list(zip(results[0][1:], results[1][1:]))
+posterior = []
+for i1, i2 in D:
+    normalization = i1 + i2
+    posterior.append([i1/(normalization), i2/(normalization)])
+
+posterior
+\end{minted}
+
+\begin{center}
+\begin{tabular2}{rr}
+0.9999999999999873 & 1.2664165549094016e-14\\[0pt]
+0.9996646498695335 & 0.0003353501304664781\\[0pt]
+0.0003353501304664781 & 0.9996646498695335\\[0pt]
+1.2664165549094016e-14 & 0.9999999999999873\\[0pt]
+\end{tabular2}
+\end{center}
+\subsection*{c.}
+\label{sec:org94e46ac}
+\begin{minted}[fontsize=\scriptsize]{python}
+prior = [0, 0]
+for i in posterior:
+    prior[0] += i[0]
+    prior[1] += i[1]
+prior = [i/len(posterior) for i in prior]
+prior
+\end{minted}
+
+\begin{center}
+\begin{tabular2}{rr}
+0.5 & 0.5\\[0pt]
+\end{tabular2}
+\end{center}
+\subsection*{d.}
+\label{sec:org02df948}
+\begin{minted}[fontsize=\scriptsize]{python}
+mu = [0, 0]
+mu_d = [0, 0]
+for p, (d1, d2) in zip(posterior, D):
+    mu[0] += p[0] * d1
+    mu[1] += p[1] * d2
+    mu_d[0] += p[0]
+    mu_d[1] += p[1]
+mu[0] = mu[0] / mu_d[0]
+mu[1] = mu[1] / mu_d[1]
+mu
+sigma = [0, 0]
+sigma_d = [0, 0]
+for p, (d1, d2) in zip(posterior, D):
+    sigma[0] += p[0] * (d1 - mu[0])**2
+    sigma[1] += p[1] * (d2 - mu[1])**2
+    sigma_d[0] += p[0]
+    sigma_d[1] += p[1]
+sigma[0] = sigma[0] / sigma_d[0]
+sigma[1] = sigma[1] / sigma_d[1]
+sigma
+[["mu_1", "mu2"], mu, ["sigma2_1", "sigma2_2"], sigma]
+\end{minted}
+
+\begin{center}
+\begin{tabular2}{rr}
+mu\textsubscript{1} & mu2\\[0pt]
+0.20168632154549704 & 0.20168632154549704\\[0pt]
+sigma2\textsubscript{1} & sigma2\textsubscript{2}\\[0pt]
+0.03890991659421365 & 0.03890991659421365\\[0pt]
+\end{tabular2}
+\end{center}
+\subsection*{e}
+\label{sec:orgf8da31d}
+a and b are part of the E step, c and d are part of the m step
+\end{document}

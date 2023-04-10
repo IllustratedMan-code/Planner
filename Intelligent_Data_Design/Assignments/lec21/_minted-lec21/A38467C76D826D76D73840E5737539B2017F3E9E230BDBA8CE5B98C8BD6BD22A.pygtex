@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{D} \PYG{o}{=} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mi}{4}\PYG{p}{,} \PYG{l+m+mi}{6}\PYG{p}{,} \PYG{l+m+mi}{7}\PYG{p}{,} \PYG{l+m+mi}{8}\PYG{p}{,} \PYG{l+m+mi}{8}\PYG{p}{,} \PYG{l+m+mi}{8}\PYG{p}{,} \PYG{l+m+mi}{9}\PYG{p}{]}
+\PYG{n}{unique} \PYG{o}{=} \PYG{n+nb}{set}\PYG{p}{(}\PYG{n}{D}\PYG{p}{)}
+\PYG{n}{counts} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{unique}\PYG{p}{:}
+    \PYG{n}{count} \PYG{o}{=} \PYG{l+m+mi}{0}
+    \PYG{k}{for} \PYG{n}{k} \PYG{o+ow}{in} \PYG{n}{D}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n}{i} \PYG{o}{==} \PYG{n}{k}\PYG{p}{:}
+            \PYG{n}{count}\PYG{o}{+=}\PYG{l+m+mi}{1}
+    \PYG{n}{counts}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{count}
+
+\PYG{n}{rel\PYGZus{}freq} \PYG{o}{=} \PYG{p}{[]}
+\PYG{k}{for} \PYG{n}{key}\PYG{p}{,} \PYG{n}{value} \PYG{o+ow}{in} \PYG{n}{counts}\PYG{o}{.}\PYG{n}{items}\PYG{p}{():}
+    \PYG{n}{rel\PYGZus{}freq}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{value}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{D}\PYG{p}{))}
+\PYG{n}{total} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{n}{CDF} \PYG{o}{=} \PYG{p}{[]}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{rel\PYGZus{}freq}\PYG{p}{:}
+    \PYG{n}{CDF}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{i}\PYG{o}{+}\PYG{n}{total}\PYG{p}{)}
+    \PYG{n}{total}\PYG{o}{+=}\PYG{n}{i}
+\PYG{n}{CDF}
+\end{Verbatim}
