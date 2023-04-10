@@ -29,13 +29,13 @@ NIX_BINTOOLS='/nix/store/62fb427ncxaaksa2k59rhbilfg68v20x-binutils-wrapper-2.39'
 export NIX_BINTOOLS
 NIX_BINTOOLS_WRAPPER_TARGET_HOST_x86_64_unknown_linux_gnu='1'
 export NIX_BINTOOLS_WRAPPER_TARGET_HOST_x86_64_unknown_linux_gnu
-NIX_BUILD_CORES='12'
+NIX_BUILD_CORES='8'
 export NIX_BUILD_CORES
 NIX_CC='/nix/store/wn31i3dzwahz6ccws8bs1nwyqrpgsvj7-gcc-wrapper-11.3.0'
 export NIX_CC
 NIX_CC_WRAPPER_TARGET_HOST_x86_64_unknown_linux_gnu='1'
 export NIX_CC_WRAPPER_TARGET_HOST_x86_64_unknown_linux_gnu
-NIX_CFLAGS_COMPILE=' -frandom-seed=npgbs5ibdg'
+NIX_CFLAGS_COMPILE=' -frandom-seed=g7fm1av0nb'
 export NIX_CFLAGS_COMPILE
 NIX_ENFORCE_NO_NATIVE='1'
 export NIX_ENFORCE_NO_NATIVE
@@ -43,7 +43,7 @@ NIX_HARDENING_ENABLE='fortify stackprotector pic strictoverflow format relro bin
 export NIX_HARDENING_ENABLE
 NIX_INDENT_MAKE='1'
 export NIX_INDENT_MAKE
-NIX_LDFLAGS='-rpath /home/david/Documents/Planner/outputs/out/lib64 -rpath /home/david/Documents/Planner/outputs/out/lib '
+NIX_LDFLAGS='-rpath /home/david/Documents/School/Planner/outputs/out/lib64 -rpath /home/david/Documents/School/Planner/outputs/out/lib '
 export NIX_LDFLAGS
 NIX_LIB64_IN_SELF_RPATH='1'
 NIX_NO_SELF_RPATH='1'
@@ -125,15 +125,15 @@ declare -a envHostHostHooks=('ccWrapper_addCVars' 'bintoolsWrapper_addLDVars' )
 declare -a envHostTargetHooks=('ccWrapper_addCVars' 'bintoolsWrapper_addLDVars' )
 declare -a envTargetTargetHooks=()
 declare -a fixupOutputHooks=('if [ -z "${dontPatchELF-}" ]; then patchELF "$prefix"; fi' '_makeSymlinksRelative' 'if [ -z "${dontGzipMan-}" ]; then compressManPages "$prefix"; fi' '_doStrip' 'patchShebangsAuto' '_pruneLibtoolFiles' 'if [[ -z "${noAuditTmpdir-}" && -e "$prefix" ]]; then auditTmpdir "$prefix"; fi' '_moveSystemdUserUnits' '_moveSbin' '_moveLib64' )
-guess='12'
+guess='8'
 initialPath='/nix/store/h8gvq6r4hgpa71h44dmg9qfx03mj81sv-coreutils-9.1 /nix/store/zml88vnkpm8if114qkbbqd1q7n3ypqqy-findutils-4.9.0 /nix/store/49y3r0gr9m6k20d91kl6dgp4b9a6m72v-diffutils-3.8 /nix/store/5dv5cq1lwvsijr9p16p2kp79g1dbajk3-gnused-4.8 /nix/store/bcvccw6y9bfil6xrl5j7psza7hnd16ry-gnugrep-3.7 /nix/store/l1fp0hyca54xbb85vfhppd16bskzx8dg-gawk-5.1.1 /nix/store/89zbjdkb48ma61k76l2mzn3s0ra0wn2c-gnutar-1.34 /nix/store/qs8qb1swpivkfq7i9yd52n0mw6z4ij81-gzip-1.12 /nix/store/wwkyfg8b34xy16zzc9p6rkh59p4q37qx-bzip2-1.0.8-bin /nix/store/i0x4pzj96qwvkrm94317l6jbi53a2rdj-gnumake-4.4 /nix/store/4xw8n979xpivdc46a9ndcvyhwgif00hz-bash-5.1-p16 /nix/store/793iwfbjvg7wgpqq7r83a1qjl1yg02sf-patch-2.7.6 /nix/store/a3mwv26f99ycsv9w6hrx0jjjjywvcb1n-xz-5.2.9-bin /nix/store/camlh5laf1wsklghk0vcaw7gvx4rpzd1-file-5.43'
 mesonFlags=''
 export mesonFlags
-name='nix-shell'
+name='nix-shell-env'
 export name
 nativeBuildInputs=''
 export nativeBuildInputs
-out='/home/david/Documents/Planner/outputs/out'
+out='/home/david/Documents/School/Planner/outputs/out'
 export out
 outputBin='out'
 outputDev='out'
@@ -161,7 +161,7 @@ declare -a postFixupHooks=('_multioutPropagateDev' )
 declare -a postUnpackHooks=('_updateSourceDateEpochFromSourceRoot' )
 declare -a preConfigureHooks=('_multioutConfig' )
 declare -a preFixupHooks=('_moveToShare' '_multioutDocs' '_multioutDevs' )
-prefix='/home/david/Documents/Planner/outputs/out'
+prefix='/home/david/Documents/School/Planner/outputs/out'
 declare -a propagatedBuildDepFiles=('propagated-build-build-deps' 'propagated-native-build-inputs' 'propagated-build-target-deps' )
 propagatedBuildInputs=''
 export propagatedBuildInputs

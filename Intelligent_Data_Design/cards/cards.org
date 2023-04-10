@@ -1,0 +1,6 @@
+* You need to download Anki to access the cards
+Unfortunately this is the case. I hope that I can change this at some point but
+it is what it is.
+
+* Exam 2
++ [[file:exam2.colpkg][deck]]

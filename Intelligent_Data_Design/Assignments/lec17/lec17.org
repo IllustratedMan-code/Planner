@@ -159,8 +159,8 @@ plt.show()
 #+RESULTS:
 [[file:./.ob-jupyter/e4ef7cede22065a8a8d63ee0061849500d831c04.png]]
 
-NB1 is the better classifier because it continues to improve the true
-positive rate across the graph, while NB2 is initially good, but after 0.5
+NB2 is the better classifier because it continues to improve the true
+positive rate across the graph, while NB1 is initially good, but after 0.5
 true positive rate, it no longer improves.
 
 ** 3.

@@ -1,14 +1,36 @@
 
-* A Hyperplane can be expressed as:
+* A Hyperplane can be expressed as
+:PROPERTIES:
+:ANKI_DECK: IDA
+:ANKI_NOTE_TYPE: Basic
+:ANKI_NOTE_ID: 1678317430980
+:END:
+A Hyperplane can be expressed as:
 ** Answer
 $w^Tx+b$ where w is orthogonal to the hyperplane
-* For n points in \(\mathbb{R}^d\), the hyperplane lies in:
-
+* For n points in
+:PROPERTIES:
+:ANKI_DECK: IDA
+:ANKI_NOTE_TYPE: Basic
+:ANKI_NOTE_ID: 1678317431180
+:END:
+For n points in \(\mathbb{R}^d\), the hyperplane lies in:
 ** Answer
 d-1 dimensions
-* Support vectors are:
+* Support vectors are
+:PROPERTIES:
+:ANKI_DECK: IDA
+:ANKI_NOTE_TYPE: Basic
+:ANKI_NOTE_ID: 1678317431229
+:END:
+Support vectors are:
 ** Answer
 at  a distance of 1 from the hyperplane (on the margin)
-* Given a dataset D, the margin is:
+* Given a dataset D, the margin is
+:PROPERTIES:
+:ANKI_DECK: IDA
+:ANKI_NOTE_TYPE: Basic
+:ANKI_NOTE_ID: 1678317431279
+:END:
 ** Answer
  the minimum distance from every datapoint in D to the optimal hyperplane
