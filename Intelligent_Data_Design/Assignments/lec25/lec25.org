@@ -1,0 +1,87 @@
+#+title: Lecture 25
+#+date:
+
+* 1.
+** a.
+It looks as if The coefficient of A2 is around 2, while the coefficient of A1 is
+around 1, set up in the equation of the form \(1A_1 + 2A_2 = Y\)
+** b.
++ \((D^TD)^{-1}D^Ty\)
+#+begin_src python :session py
+import numpy as np
+D = [[1, 2, 1],
+     [2, 2, 1],
+     [3, 4, 1],
+     [1, 4, 1]]
+Y = [5.1, 6.3, 10.8, 8.8]
+DT = np.transpose(D)
+DI = np.linalg.inv(np.matmul(DT, D))
+W = np.matmul(np.matmul(DI, DT), Y)
+W1 = W
+w = W[:-1]
+b = W[-1]
+f"w={w}, b={b}"
+#+end_src
+
+#+RESULTS:
+: w=[1.04 1.79], b=0.5600000000000058
+
+#+begin_src python :session py
+def SSE(D):
+    yhat = np.sum(D * W, axis=1)
+    return sum((Y - yhat)**2)
+SSE(D)
+#+end_src
+
+#+RESULTS:
+: 0.016000000000000028
+
+** c
++ \(w = (X^TX + \alpha I)^{-1}X^Ty\)
+#+begin_src python :session py
+alpha = 1
+DT = np.transpose(D)
+DI = np.linalg.inv(np.matmul(DT, D) + alpha * np.identity(3))
+W = np.matmul(np.matmul(DI, DT), Y)
+W2 = W
+w = W[:-1]
+b = W[-1]
+f"w={w}, b={b}"
+#+end_src
+
+#+RESULTS:
+: w=[1.02345679 1.76049383], b=0.5419753086419743
+#+begin_src python :session py
+SSE(D)
+#+end_src
+
+#+RESULTS:
+: 0.09464563328761147
+** d.
+#+begin_src python :session py
+p = [2, 5, 1]
+[["b", np.dot(p, W1)], ["c", np.dot(p, W2)]]
+
+#+end_src
+
+#+RESULTS:
+| b | 11.590000000000016 |
+| c | 11.391358024691357 |
+** e.
+The SSE is smaller than the linear regression model, this indicates that the
+model has less error
+* 2.
+** a.
++ we'll rewrite y as \(y = w^Tx = Xw\)
++ X is matrix made of x rows
++ then we can say \(J(w) = \|y-\hat y\|^2 = (y-\hat y)^T(y - \hat y)\)
++ \(J(w) = (Xw-\hat y)^T(Xw - \hat y)\)
++ \(\frac{dJ}{dw} = 2X^TXw - 2X^Ty = 0\)
++ \(X^TXw = X^Ty\)
++ \(w = (X^TX)^{-1}X^Ty\)
+** b.
+logistic regression can classify a datset by determining the probablility of
+discrete values. If the discrete values are binary, then we can do binary
+classification this way. The logistic regression is ideal for this because the
+logistic function "clamps" to specific ends of the distribution (most points are
+given a plus or minus value).

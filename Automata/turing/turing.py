@@ -57,23 +57,20 @@ class turing_machine:
             t = self.transition()
             if t and self.current_state.final:
                 print("The string was accepted by the machine and resulted in the following output:")
-                print("'" + "".join(self.input_tape[self.pointer:]).rstrip() +"'")
-                break
+                output = "'" + "".join(self.input_tape[self.pointer:]).rstrip() +"'"
+                return output
             elif t:
-                print("The string was not accepted by the machine (state was not final)\n and resulted in the following output:")
-                print("'" + "".join(self.input_tape[self.pointer:]).rstrip() +"'")
+                print("The string was not accepted by the machine (state was not final) and resulted in the following output:")
+                output = "'" + "".join(self.input_tape[self.pointer:]).rstrip() +"'"
+                return output
                 break
             elif self.transition_count >= self.max_transitions and self.max_transitions != -1:
                 print("Maximum transition count was met, the implies the existance of an infinite loop")
                 print("To set an infinite maximum transition count, set turing_machine.max_transitions to -1")
                 break
 
-
-
-
-
-
 if __name__ == "__main__":
+    # define states like so
     states = {
         "S": state(
             transitions = [transition("1", "X", "right", "S" ),
@@ -83,5 +80,8 @@ if __name__ == "__main__":
             transitions = [],
             final = True)
         }
+    # create turing machine
     T = turing_machine(states, "111")
+    # test the turing machine (will output string starting at pointer)
     T.transition_until_stop()
+    # you can also use transition() for step by step

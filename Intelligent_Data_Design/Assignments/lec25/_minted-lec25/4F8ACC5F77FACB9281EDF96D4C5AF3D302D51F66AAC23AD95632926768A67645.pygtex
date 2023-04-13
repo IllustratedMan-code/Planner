@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{alpha} \PYG{o}{=} \PYG{l+m+mi}{1}
+\PYG{n}{DT} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{transpose}\PYG{p}{(}\PYG{n}{D}\PYG{p}{)}
+\PYG{n}{DI} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{linalg}\PYG{o}{.}\PYG{n}{inv}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}\PYG{n}{DT}\PYG{p}{,} \PYG{n}{D}\PYG{p}{)} \PYG{o}{+} \PYG{n}{alpha} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{identity}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{))}
+\PYG{n}{W} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}\PYG{n}{DI}\PYG{p}{,} \PYG{n}{DT}\PYG{p}{),} \PYG{n}{Y}\PYG{p}{)}
+\PYG{n}{W2} \PYG{o}{=} \PYG{n}{W}
+\PYG{n}{w} \PYG{o}{=} \PYG{n}{W}\PYG{p}{[:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{n}{b} \PYG{o}{=} \PYG{n}{W}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{l+s+sa}{f}\PYG{l+s+s2}{\PYGZdq{}w=}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{w}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s2}{, b=}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{b}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s2}{\PYGZdq{}}
+\end{Verbatim}
