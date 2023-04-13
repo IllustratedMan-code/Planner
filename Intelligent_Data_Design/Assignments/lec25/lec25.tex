@@ -1,0 +1,152 @@
+% Created 2023-04-11 Tue 13:54
+% Intended LaTeX compiler: lualatex
+\documentclass[11pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{syntax}
+\usepackage{pdfpages}
+\usepackage[most]{tcolorbox}
+\usepackage{etoolbox}
+\usepackage{environ}
+\AtBeginEnvironment{quote}{\itshape}
+\usepackage[ruled]{algorithm2e}
+\let\oldtabular\tabular
+\let\oldendtabular\endtabular
+\NewEnviron{tabular2}[1]{\tcbox[left=0mm, right=0mm, top=0mm, bottom=0mm]{\oldtabular{#1}\BODY\oldendtabular}}
+\BeforeBeginEnvironment{minted}{\begin{tcolorbox}[enhanced, breakable, skin first=enhanced, skin middle=enhanced, skin last=enhanced]}%
+\AfterEndEnvironment{minted}{\end{tcolorbox}}
+\BeforeBeginEnvironment{verbatim}{\begin{tcolorbox}}%
+\AfterEndEnvironment{verbatim}{\end{tcolorbox}}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[breaklines]{minted}
+\usepackage{physics}
+\author{David Lewis}
+\date{}
+\title{Lecture 25}
+\hypersetup{
+ pdfauthor={David Lewis},
+ pdftitle={Lecture 25},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 30.0.50 (Org mode 9.6.1)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+
+\section*{1.}
+\label{sec:org2a7b3b0}
+\subsection*{a.}
+\label{sec:org9487f7f}
+It looks as if The coefficient of A2 is around 2, while the coefficient of A1 is
+around 1, set up in the equation of the form \(1A_1 + 2A_2 = Y\)
+\subsection*{b.}
+\label{sec:org7913dc7}
+\begin{itemize}
+\item \((D^TD)^{-1}D^Ty\)
+\end{itemize}
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+import numpy as np
+D = [[1, 2, 1],
+     [2, 2, 1],
+     [3, 4, 1],
+     [1, 4, 1]]
+Y = [5.1, 6.3, 10.8, 8.8]
+DT = np.transpose(D)
+DI = np.linalg.inv(np.matmul(DT, D))
+W = np.matmul(np.matmul(DI, DT), Y)
+W1 = W
+w = W[:-1]
+b = W[-1]
+f"w={w}, b={b}"
+\end{minted}
+
+\begin{verbatim}
+w=[1.04 1.79], b=0.5600000000000058
+\end{verbatim}
+
+
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+def SSE(D):
+    yhat = np.sum(D * W, axis=1)
+    return sum((Y - yhat)**2)
+SSE(D)
+\end{minted}
+
+\begin{verbatim}
+0.016000000000000028
+\end{verbatim}
+
+\subsection*{c}
+\label{sec:orgf089031}
+\begin{itemize}
+\item \(w = (X^TX + \alpha I)^{-1}X^Ty\)
+\end{itemize}
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+alpha = 1
+DT = np.transpose(D)
+DI = np.linalg.inv(np.matmul(DT, D) + alpha * np.identity(3))
+W = np.matmul(np.matmul(DI, DT), Y)
+W2 = W
+w = W[:-1]
+b = W[-1]
+f"w={w}, b={b}"
+\end{minted}
+
+\begin{verbatim}
+w=[1.02345679 1.76049383], b=0.5419753086419743
+\end{verbatim}
+
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+SSE(D)
+\end{minted}
+
+\begin{verbatim}
+0.09464563328761147
+\end{verbatim}
+\subsection*{d.}
+\label{sec:orga985df5}
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+p = [2, 5, 1]
+[["b", np.dot(p, W1)], ["c", np.dot(p, W2)]]
+
+\end{minted}
+
+\begin{center}
+\begin{tabular2}{lr}
+b & 11.590000000000016\\[0pt]
+c & 11.391358024691357\\[0pt]
+\end{tabular2}
+\end{center}
+\subsection*{e.}
+\label{sec:orgb7ab1f7}
+The SSE is smaller than the linear regression model, this indicates that the
+model has less error
+\section*{2.}
+\label{sec:orgf818dc7}
+\subsection*{a.}
+\label{sec:org5c3d16d}
+\begin{itemize}
+\item we'll rewrite y as \(y = w^Tx = Xw\)
+\item X is matrix made of x rows
+\item then we can say \(J(w) = \|y-\hat y\|^2 = (y-\hat y)^T(y - \hat y)\)
+\item \(J(w) = (Xw-\hat y)^T(Xw - \hat y)\)
+\item \(\frac{dJ}{dw} = 2X^TXw - 2X^Ty = 0\)
+\item \(X^TXw = X^Ty\)
+\item \(w = (X^TX)^{-1}X^Ty\)
+\end{itemize}
+\subsection*{b.}
+\label{sec:org92a3147}
+logistic regression can classify a datset by determining the probablility of
+discrete values. If the discrete values are binary, then we can do binary
+classification this way. The logistic regression is ideal for this because the
+logistic function ``clamps'' to specific ends of the distribution (most points are
+given a plus or minus value).
+\end{document}
