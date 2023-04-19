@@ -1,0 +1,69 @@
+#+title: lecture 26
+#+date:
+* 1.
++ QR factorization
++ D = QR
++ \(Rw = Q^TY\)
++ normalize, then orthogonalize
++ \(u_1 = d_1, q_1 = \frac{u_1}{\|u_1\|}\)
++ \(u_2 = d_2 - (d_2 \cdot q_1)q_1, q_2 = \frac{u_2}{\|u_2\|} \)
++ etc
+* 2.
+#+begin_src python :session py
+import numpy as np
+import scipy as s
+D = np.array([[1, 2, 1],
+              [2, 2, 1],
+              [3, 4, 1],
+              [1, 4, 1]])
+Y = [5.1, 6.3, 10.8, 8.8]
+
+Q = []
+
+cols =  whnp.shape(D)[1]
+for i in range(cols):
+    d = D[:, i]
+    u = d
+    for i in range(i):
+        u = u - np.dot(d,Q[i]) * Q[i]
+    Q.append(u/np.linalg.norm(u))
+
+Q,R= np.linalg.qr(D)
+W = s.linalg.solve_triangular(R, np.matmul(Q.transpose(), Y))
+w = W[:-1]
+b = W[-1]
+f"w={w}, b={b}"
+#+end_src
+
+#+RESULTS:
+: w=[1.04 1.79], b=0.5600000000000035
+#+begin_src python :session py
+def SSE(D):
+    yhat = np.sum(D * W, axis=1)
+    return sum((Y - yhat)**2)
+SSE(D)
+#+end_src
+
+#+RESULTS:
+: 0.016000000000000028
+* 3.
++ \(h_\theta(x) = \frac{1}{1+ e^{-\hat \theta^Tx}}\)
++ \(\hat \theta\) is the vector of parameters
++ we update each element in \(\hat \theta\) with:
+  \(\theta_j \leftarrow \theta_j - \alpha\frac{1}{m} \sum\limits^m_{i=1}(h_{\theta}(x^i) - y^i)x_i \)
++ itereate until convergence
+* 4.
+steps to perform normalized cut spectral clustering:
+
++ compute affinity matrix
++ Compute Degree matrix
+  + diagonal matrix
+  + each entry is the sum of weights of all edges incident with node
++ Compute L
+  + L = D - W
+  + L^a = D^-1 L
+  + D^-.5 L D^-.5
++ compute k(number of clusters) smallest eigenvalues/eigenvectors of L
++ compute matrix Y from eigenvalue matrix U using \(y_i =
+  \frac{1}{\sqrt{\sum^k_{j=1}u^2_{n-j+1, i}}}(\vec{u_i}^T)\)
++ find clusters using k-means on Y
