@@ -51,7 +51,7 @@
   + each entry is the sum of weights of all edges incident with node
 + Compute L (differs with method)
   + Average weight: L = A
-  + Ratio Cut: L = D - W (used in normalized)
+  + Ratio Cut: L = D - A (used in normalized)
   + Normalized assymmetric cut: L^a = D^-1 L
   + Normalized symmetric cut: L^a = D^-.5 L D^-.5
 + compute k(number of clusters) smallest eigenvalues/eigenvectors of L
