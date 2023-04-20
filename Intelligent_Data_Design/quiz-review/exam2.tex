@@ -1,4 +1,4 @@
-% Created 2023-04-19 Wed 17:41
+% Created 2023-04-20 Thu 10:17
 % Intended LaTeX compiler: lualatex
 \documentclass[11pt]{article}
 \usepackage[margin=0.5in]{geometry}
@@ -40,7 +40,7 @@
 \begin{document}
 
 \section*{formulas and tidbits}
-\label{sec:orgc888eef}
+\label{sec:orgc592848}
 \begin{itemize}
 \item possible clusters (brute force) =  \(k^n\)
 \item Bayes: \(P(A|B) = \frac{P(A) \cdot P(B|A)}{P(B)}\)
@@ -57,9 +57,9 @@ kernel function
 quantify relationships between clusters or data points
 \end{itemize}
 \section*{Algorithms}
-\label{sec:org2bf41a0}
+\label{sec:org25bcb84}
 \subsection*{K-means}
-\label{sec:org5b3d057}
+\label{sec:org799a88e}
 \begin{itemize}
 \item given number of clusters
 \item randomly assign value to each centroid/cluster/mean
@@ -70,7 +70,7 @@ quantify relationships between clusters or data points
 \item Time complexity: (O(n\textsuperscript{dk+1})$\backslash$)
 \end{itemize}
 \subsection*{EM algorithm}
-\label{sec:orgef1120d}
+\label{sec:org73c94c3}
 \begin{itemize}
 \item split into two steps (expectation, maximization)
 \item optimize parameters that maximize the log likelyhood function
@@ -79,7 +79,7 @@ bayes, assuming c stuff going on
 \item Time complexity depends on likelyhood function
 \end{itemize}
 \subsection*{DBSCAN}
-\label{sec:org9cabdf9}
+\label{sec:org6204073}
 \begin{itemize}
 \item \(\epsilon\) is max distance a ``neighbor'' is allowed to be (reachable)
 \item core points have more than \texttt{min\_neighbors/points}
@@ -90,7 +90,7 @@ a border point as its neighbor
 everythings else out as noise
 \end{itemize}
 \subsection*{Single link/complete link}
-\label{sec:org600bebe}
+\label{sec:org28f32ff}
 \begin{itemize}
 \item single link = min distance between clusters
 \item complete link = max distance between clusters
@@ -98,14 +98,14 @@ everythings else out as noise
 \item visualized using dendrogram
 \end{itemize}
 \subsection*{DENCLUE}
-\label{sec:org567a27f}
+\label{sec:org3679943}
 \begin{itemize}
 \item Gradient function: \[\nabla f(x) = \frac{1}{nh^{d+2}}\sum \limits^n_{i=1}K\left(\frac{x-x_i}{h}\right)(x_i-x)\]
 \item Hill climbs to local min or max, then assigns points to clusters based on
 local min or max
 \end{itemize}
 \subsection*{Spectral clustering}
-\label{sec:org14b56c2}
+\label{sec:orgd7985be}
 \begin{itemize}
 \item compute affinity matrix A
 \item Compute Degree matrix
@@ -116,7 +116,7 @@ local min or max
 \item Compute L (differs with method)
 \begin{itemize}
 \item Average weight: L = A
-\item Ratio Cut: L = D - W (used in normalized)
+\item Ratio Cut: L = D - A (used in normalized)
 \item Normalized assymmetric cut: L\textsuperscript{a} = D\textsuperscript{-1} L
 \item Normalized symmetric cut: L\textsuperscript{a} = D\textsuperscript{-.5} L D\textsuperscript{-.5}
 \end{itemize}
@@ -126,7 +126,7 @@ local min or max
 \item find clusters using k-means on Y
 \end{itemize}
 \subsection*{CLIQUE}
-\label{sec:org5544234}
+\label{sec:orgc23d530}
 \begin{itemize}
 \item cuts data space into a grid of cells
 \item density threshold determines if cell is ``dense''
@@ -135,13 +135,13 @@ local min or max
 \item sensitive to bin boundaries
 \end{itemize}
 \subsection*{Projective k-means (PCA)}
-\label{sec:orgb0ffa65}
+\label{sec:org5699ed8}
 \begin{itemize}
 \item good for data that is not axis aligned
 \item PCA is hard
 \end{itemize}
 \subsection*{Random-projections}
-\label{sec:orgcdd7116}
+\label{sec:orgf9193c2}
 \begin{itemize}
 \item take a random sample of points
 \item test all dimensions for the following
@@ -151,7 +151,7 @@ the particular dimensional subspace
 \item good for data that is axis aligned
 \end{itemize}
 \subsection*{Regression}
-\label{sec:org7656828}
+\label{sec:org677f851}
 \begin{itemize}
 \item Linear regression \((D^TD)^{-1}D^Ty\)
 \item Ridge regression:  \(w = (X^TX + \alpha I)^{-1}X^Ty\)
