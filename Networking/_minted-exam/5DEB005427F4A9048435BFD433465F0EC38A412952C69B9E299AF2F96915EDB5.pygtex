@@ -1,0 +1,19 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} calculate checksum}
+\PYG{k}{def} \PYG{n+nf}{checksum}\PYG{p}{(}\PYG{n}{numbers}\PYG{p}{):}
+    \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{numbers}\PYG{p}{)} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{3}\PYG{p}{:}
+        \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}this doesn\PYGZsq{}t seem like udp\PYGZdq{}}\PYG{p}{)}
+    \PYG{n}{length} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{numbers}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+    \PYG{n}{wrap} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}1\PYGZdq{}} \PYG{o}{*} \PYG{n}{length}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{)}
+    \PYG{n}{result} \PYG{o}{=} \PYG{l+m+mi}{0}
+    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{numbers}\PYG{p}{:}
+        \PYG{n}{i} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{)}
+        \PYG{n}{result} \PYG{o}{+=} \PYG{n}{i}
+        \PYG{k}{if} \PYG{n}{result} \PYG{o}{\PYGZgt{}} \PYG{n}{wrap}\PYG{p}{:}
+            \PYG{n}{result} \PYG{o}{\PYGZhy{}=} \PYG{n}{wrap}
+    \PYG{n}{result} \PYG{o}{=} \PYG{n+nb}{bin}\PYG{p}{(}\PYG{n}{result} \PYG{o}{\PYGZca{}} \PYG{n}{wrap}\PYG{p}{)[}\PYG{l+m+mi}{2}\PYG{p}{:]}
+    \PYG{n}{result} \PYG{o}{=} \PYG{p}{(}\PYG{n}{length}\PYG{o}{\PYGZhy{}}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{result}\PYG{p}{))} \PYG{o}{*} \PYG{l+s+s2}{\PYGZdq{}0\PYGZdq{}} \PYG{o}{+} \PYG{n}{result}
+    \PYG{k}{return} \PYG{n}{result}
+\PYG{k}{if} \PYG{n+nv+vm}{\PYGZus{}\PYGZus{}name\PYGZus{}\PYGZus{}} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}\PYGZus{}\PYGZus{}main\PYGZus{}\PYGZus{}\PYGZdq{}}\PYG{p}{:}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{checksum}\PYG{p}{([}\PYG{l+s+s2}{\PYGZdq{}0110011001100000\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}0101010101010101\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}1000111100001100\PYGZdq{}}\PYG{p}{]))}
+\end{Verbatim}

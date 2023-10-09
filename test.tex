@@ -1,0 +1,65 @@
+% Created 2023-04-22 Sat 13:50
+% Intended LaTeX compiler: lualatex
+\documentclass[11pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{syntax}
+\usepackage{pdfpages}
+\usepackage[most]{tcolorbox}
+\usepackage{etoolbox}
+\usepackage{environ}
+\AtBeginEnvironment{quote}{\itshape}
+\usepackage[ruled]{algorithm2e}
+\let\oldtabular\tabular
+\let\oldendtabular\endtabular
+\NewEnviron{tabular2}[1]{\tcbox[left=0mm, right=0mm, top=0mm, bottom=0mm]{\oldtabular{#1}\BODY\oldendtabular}}
+\usepackage{fontspec}
+\setmonofont{JetBrainsMono Nerd Font Mono}[Renderer=Harfbuzz]
+\BeforeBeginEnvironment{minted}{\begin{tcolorbox}[enhanced, breakable, skin first=enhanced, skin middle=enhanced, skin last=enhanced]}%
+\AfterEndEnvironment{minted}{\end{tcolorbox}}
+\BeforeBeginEnvironment{verbatim}{\begin{tcolorbox}[enhanced, breakable, skin first=enhanced, skin middle=enhanced, skin last=enhanced]}%
+\AfterEndEnvironment{verbatim}{\end{tcolorbox}}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{physics}
+\author{David Lewis}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={David Lewis},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 30.0.50 (Org mode 9.6.1)}, 
+ pdflang={English}}
+\begin{document}
+
+\begin{center}
+\begin{tabular2}{rrrr|r}
+1 & 1 & 1 & 0 & 1\\[0pt]
+0 & 1 & 1 & 0 & 0\\[0pt]
+1 & 0 & 0 & 1 & 0\\[0pt]
+1 & 1 & 0 & 1 & 1\\[0pt]
+\hline
+1 & 1 & 0 & 0 & 0\\[0pt]
+\end{tabular2}
+\end{center}
+
+\begin{center}
+\begin{tabular2}{rrrr|r}
+1 & 0 & 0 & 0 & 1\\[0pt]
+0 & 1 & 1 & 0 & 0\\[0pt]
+1 & 0 & 0 & 1 & 0\\[0pt]
+1 & 1 & 0 & 1 & 1\\[0pt]
+\hline
+1 & 1 & 0 & 0 & 0\\[0pt]
+\end{tabular2}
+\end{center}
+\end{document}
