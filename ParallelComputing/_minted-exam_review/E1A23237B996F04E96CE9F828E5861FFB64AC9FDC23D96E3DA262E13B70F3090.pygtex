@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{f} \PYG{o}{=} \PYG{k}{lambda} \PYG{n}{x}\PYG{p}{:} \PYG{n}{x}\PYG{o}{+}\PYG{l+m+mi}{1}
+\PYG{n+nb}{map}\PYG{p}{(}\PYG{n}{f}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{3}\PYG{p}{])}
+\PYG{c+c1}{\PYGZsh{} Returns: [2,3,4]}
+\end{Verbatim}

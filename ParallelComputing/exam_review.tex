@@ -1,0 +1,381 @@
+% Created 2023-10-09 Mon 16:07
+% Intended LaTeX compiler: lualatex
+\documentclass{assignments}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{physics}
+\author{David Lewis}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={David Lewis},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 30.0.50 (Org mode 9.7)}, 
+ pdflang={English}}
+\begin{document}
+
+\section*{Key Terms}
+\label{sec:org9c0079b}
+\begin{itemize}
+\item Speedup = Time sequential(Ts)/Time parallel (Tp)
+\item Granularity = Ratio of amount of computation to the amount (cost) of communication
+\item Efficiency = Speedup/p = Ts/p * Tp (p = number of processors)
+\item Scalability = ability to keep speedup proportional to number of processors (p)
+\item step complexity
+\item work complexity
+\item map operation
+\item max scan operation
+\item broadcast/gather/scatter
+\item Hillis-Steele scan algorithm
+\item Blelloch Algorithm
+\item Atomics
+\item Kernels
+\item Compact Parallel operation
+\item Latency
+\item Bandwidth
+\item Occupancy (in cuda)
+\item PRAM
+\item CSR (compressed Sparse Row)
+\item blocks, threads (in cuda)
+\item Tiles (shared vs global memory)
+\item Race conditions
+\item Work = Flops (floating point operations per second)/mips (millions of
+operations per second)
+\item Execution time = Work/Compute time
+\item Many Core vs Multi Core
+\item Fork/Join Parallelism
+\item Kernel Data Parallelism
+\end{itemize}
+\section*{Chapter 1}
+\label{sec:orgb1584f0}
+\subsection*{Parallel Computing models}
+\label{sec:org78f256c}
+\subsubsection*{Shared memory model}
+\label{sec:orgd157b2a}
+\begin{itemize}
+\item Mutliple tasks share a single memory area in which memory is read and written
+asynchronously
+\item Locks/Semaphores (Easier)
+\item Harder to manage data locality
+\end{itemize}
+\subsubsection*{Message Passing Model}
+\label{sec:org93472a3}
+\begin{itemize}
+\item Each processor has its own memory
+\item Tasks can be distributed to interconnected processors
+\item Message Passing Interface (MPI)
+\end{itemize}
+\subsubsection*{Multithreaded Control Model}
+\label{sec:org7e916eb}
+\begin{itemize}
+\item Threads
+\item Program counter, a stack, registers, and identifier
+\item POSIX (software threads)
+\item Hyper threading (intel's hardware threads)
+\end{itemize}
+\subsubsection*{Data Parallel Model}
+\label{sec:org1900f3f}
+\begin{itemize}
+\item Tasks operate on the same data structure (Arrays)
+\item Cuda Kernels
+\end{itemize}
+\subsection*{Designing Parallel Programs}
+\label{sec:orga072162}
+\subsubsection*{Task decomposition}
+\label{sec:org4937877}
+\begin{itemize}
+\item Domain decomposition (data is decomposed into separate units)
+\item Functional Decomposition (task is split into subtasks)
+\end{itemize}
+\subsubsection*{Task Agglomeration}
+\label{sec:org986ff91}
+\begin{itemize}
+\item Combine smaller tasks with larger ones to increase granularity (better performance)
+\end{itemize}
+\subsubsection*{Task Assignment and Mapping}
+\label{sec:org9cd00b1}
+\begin{itemize}
+\item Assign tasks to processors, taking into account processor speed (heterogeneity)
+\item Load balancing (processors should not be idle for long)
+\item Optimal mapping is NP-complete (difficult)
+\end{itemize}
+\subsection*{Time Sharing}
+\label{sec:org1c304f6}
+\begin{itemize}
+\item Single core switches between different processes, giving the illusion of
+parallelism (concurrency)
+\end{itemize}
+\subsection*{Amdahl and Gustafson's laws}
+\label{sec:orgf2c7f77}
+\begin{itemize}
+\item Amdahl = pessimistic = Speedup < 1/(1-P), P is parallizable percentage of the program
+\item Gustafson = optimistic = Speedup(p) = p - a(p-1), a = non-parallelizable
+fraction of parallel process, p = number of processors
+\end{itemize}
+\subsection*{Structural Patterns}
+\label{sec:org179975d}
+\subsubsection*{Pipe and filter}
+\label{sec:orgc01a83f}
+\begin{itemize}
+\item Data flows through modular phases of a computation
+\item Filters = function
+\item pipe = communication channel
+\item Multi-core
+\end{itemize}
+\subsubsection*{Map-Reduce}
+\label{sec:org84135b1}
+\begin{itemize}
+\item Same function is applied independently across distributed data
+\item Map: function applied to data
+\item Shuffle: Reorganizes data after mapping
+\item reduction: data reduction, or summary computation
+\item Many-core
+\end{itemize}
+\subsubsection*{Agents and Repositories}
+\label{sec:orga07dab8}
+\begin{itemize}
+\item collection of data elements modified by flexible set of rules individually
+\item agent: ``intelligent'' process that can perform several operations sequentially
+\item Repository: Data center that the agents go to.
+\item Manager: directs the agents
+\item Ideal for multi-core rather than many-core
+\end{itemize}
+\subsubsection*{Iterative Refinement}
+\label{sec:org31b0309}
+\begin{itemize}
+\item Set of operations applied repeatedly until desired state is reached
+\item Fractals
+\item Many-core
+\end{itemize}
+\section*{Chapter 2}
+\label{sec:org71fb5e2}
+\begin{itemize}
+\item Python Tools
+\end{itemize}
+\subsection*{Numba}
+\label{sec:orgb216a34}
+\begin{itemize}
+\item Jit compiler (compiles once during runtime)
+\item Nopython mode is really fast
+\end{itemize}
+\subsection*{Multiprocessing vs threads}
+\label{sec:orgb697649}
+\begin{itemize}
+\item threads are constrained by the GIL (global interpreter lock), so they are slow
+\item multiprocessing is faster than threads (no GIL), but there is no shared data
+\end{itemize}
+\section*{Chapter 3}
+\label{sec:org0f61140}
+\subsection*{SIMD}
+\label{sec:org4e8d5a9}
+\begin{itemize}
+\item SIngle instruction, multiple data
+\item Theoretical model, every instruction is executed synchronously and
+simultaneously by all processors
+\item GPU model
+\end{itemize}
+\subsection*{PRAM complexity}
+\label{sec:orgada38b8}
+\begin{itemize}
+\item Theoretical model
+\item RAM model, but with unlimited processors and uniform communication
+\end{itemize}
+\subsection*{Work Complexity}
+\label{sec:orgbb1c080}
+\begin{itemize}
+\item Total number of operations executed by a computationas a function of input size
+\end{itemize}
+\subsection*{Step Complexity}
+\label{sec:orge345630}
+\begin{itemize}
+\item Longest chain of sequenctial dependencies in the operation
+\item How deep is it?
+\end{itemize}
+\subsection*{Map Operation}
+\label{sec:org8785a04}
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+f = lambda x: x+1
+map(f, [1,2,3])
+# Returns: [2,3,4]
+\end{minted}
+\begin{itemize}
+\item Work(n) = O(n) * Work(f-arg)
+\item Step(n) = O(1) * Step(f-arg) (depth of 1)
+\end{itemize}
+\subsection*{Collection communications}
+\label{sec:orgeb4dc7b}
+\begin{itemize}
+\item Imply synchronization point
+\end{itemize}
+\begin{center}
+\begin{tabular}{llll}
+Operation & Description & Work Complexity & Step Complexity\\[0pt]
+\hline
+Broadcast & Send same data to all processors & W(p) = O(p) & S(p) = O(log p)\\[0pt]
+Scatter & Send different chunks of large piece of data to other processors & W(p) = O(p) & S(p) = O(log p)\\[0pt]
+Gather & Receive data from all other processors & W(p) = O(p) & S(p) = O(log p)\\[0pt]
+\end{tabular}
+\end{center}
+\begin{itemize}
+\item Step complexity is log p in tree communication networks (log p is depth of tree)
+\end{itemize}
+\subsubsection*{Many to many}
+\label{sec:orgf699487}
+\begin{itemize}
+\item Broadcast from every processor
+\item Stencil (use array)
+\end{itemize}
+\subsubsection*{Summing an array}
+\label{sec:org7294189}
+\begin{itemize}
+\item W(n) = O(n)
+\item S(n) = O(log n) (log n height)
+\end{itemize}
+\subsubsection*{Recursive Reduction}
+\label{sec:orge5e5493}
+\begin{itemize}
+\item Generalized sum operation
+\item W(n) = O(n)
+\item S(n) = O(log n)
+\item Assuming f-arg has constant work and step complexity
+\end{itemize}
+\subsubsection*{Scan Operation}
+\label{sec:org3034df1}
+\begin{itemize}
+\item Generalized reduction
+\item Inclusive scan: all elements up to and including the jth
+\item Exclusive Scan: all element up to the jth
+\end{itemize}
+\subsubsection*{Hillis-Steele}
+\label{sec:org66ad2d2}
+\begin{itemize}
+\item Slow implmentation of prefix-scan
+\item W(n) = O(n log n)
+\item S(n) = O(log n)
+\end{itemize}
+\subsubsection*{Naive recursion}
+\label{sec:orgf9721fb}
+\begin{itemize}
+\item Slow implmentation of prefix-scan
+\item W(n) = O(n log n)
+\item S(n) = O(log\textsuperscript{2} n)
+\end{itemize}
+\subsubsection*{Blelloch}
+\label{sec:orga0595ac}
+\begin{itemize}
+\item Fast implmentation of prefix scan
+\item W(n) = O(n)
+\item S(n) = O(2log n)
+\end{itemize}
+\subsubsection*{Parallel Quicksort}
+\label{sec:org1a65a16}
+\begin{itemize}
+\item W(n) = O(n log n)
+\item S(n) = O(log n)
+\end{itemize}
+\subsubsection*{Parallel Histogram}
+\label{sec:orgea368e5}
+\begin{itemize}
+\item can be solved with locking or a final operation, such as a parallel reduction
+\end{itemize}
+\section*{Chapter 4}
+\label{sec:orgd202857}
+PRAM fails in lots of practical applications
+\subsection*{Latency vs bandwidth}
+\label{sec:org01d8a6c}
+\begin{itemize}
+\item Latency: time needed to complete a task from the time the instruction was issued
+\item Bandwidth is the rate of task throughput measured by the number of repeated
+tasks completed per unit time
+\end{itemize}
+\subsection*{Moore's law and Little's law}
+\label{sec:orgd836e38}
+\begin{itemize}
+\item Moore: Observation that number of transistors doubles every 2 years (bandwidth
+over latency
+\item Little's law = \(L i = \lambda W\)
+\item \(\lambda\): effective arrival rate
+\item \(W\): Average Completion time
+\end{itemize}
+\subsection*{Cuda and GPGPUS\hfill{}\textsc{ATTACH}}
+\label{sec:orgcd363a2}
+\begin{itemize}
+\item General computing GPUS
+\item Blocks of threads
+\item Hundreds of pipeline cores grouped to computation units (SM) symmetric
+multiprocessors
+\end{itemize}
+\section*{Chapter 5}
+\label{sec:orgbff40b6}
+\subsection*{Data tiling}
+\label{sec:orge2bd619}
+shared memory between threads in blocks allows for ``tiles'' of computation in
+cuda kernels
+
+\section*{Chapter 6}
+\label{sec:org467388d}
+\subsection*{Warps and Stalls}
+\label{sec:org992af16}
+\begin{itemize}
+\item Grid is composed of thread blocks which execute independantly
+\item Each block is composed of many threads
+\item groups of threads are divided into groups of 32 (warp)
+\item Warp is the unit of execution scheduling
+\end{itemize}
+\subsection*{Fast Context Switching}
+\label{sec:org03e60d7}
+\begin{itemize}
+\item Registers
+\item Shared memory
+\end{itemize}
+\subsection*{Granularity}
+\label{sec:org15b80bc}
+\begin{itemize}
+\item ratio of program computation vs communication time as measured on a per warp basis
+\item Increasing granularity usually results in increased performance time
+\end{itemize}
+\subsection*{Memory coalescing}
+\label{sec:org3f7673b}
+\begin{itemize}
+\item Coalesced memory access: mutiple memory accesses into a single transaction
+\item memory needs to be aligned to have least amount of transactions
+\end{itemize}
+\section*{Chapter 7}
+\label{sec:orgd0c7bd9}
+\subsection*{Sorting}
+\label{sec:org32b43c3}
+\begin{itemize}
+\item Comparison sort
+\begin{itemize}
+\item counting sort: W(n) = O(n\textsuperscript{2}), S(n) = O(log n)
+\item Counting sort is impractical
+\end{itemize}
+\item Other sorting
+\end{itemize}
+\subsection*{Sorting networks}
+\label{sec:org68d1c8c}
+\begin{itemize}
+\item constructed from collections of parallel compare-exchange operations
+\end{itemize}
+\subsection*{Knuth's 0-1 Sorting Principle}
+\label{sec:orgc48e5ae}
+\begin{itemize}
+\item if a sorting network works correctly for every input sequence of 0s and 1s
+then it also works correctly on any input taken from any linearly ordered set
+\end{itemize}
+\subsection*{Mesh based oblivious sorting}
+\label{sec:orgd71203c}
+\begin{itemize}
+\item Shear sort: kinda like bubble sort
+\end{itemize}
+\end{document}
