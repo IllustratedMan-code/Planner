@@ -1,0 +1,9 @@
+#+latex_header: \usepackage{pdfpages}
+#+latex_header: \usepackage{hyperref}
+#+latex_header: \hypersetup{colorlinks, linkcolor=blue}
+
+#+latex: \includepdf[pages={1-},pagecommand={}]{hw/annotated-hw1.pdf}
+#+latex: \includepdf[pages={1-},pagecommand={}]{hw/hw2.pdf}
+#+latex: \includepdf[pages={1-},pagecommand={}]{hw/hw3.pdf}
+#+latex: \includepdf[pages={1-},pagecommand={}]{hw/hw4.pdf}
+#+latex: \includepdf[pages={1-},pagecommand={}]{hw/hw5.pdf}

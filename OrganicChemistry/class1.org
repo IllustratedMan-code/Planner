@@ -1,0 +1,17 @@
+* Chapter 1
+** organic vs inorganic
++ oranic molecules Contain carbon, essential to life
++ It is possible to convert some inorganic molecules to organic molecules
++ Ammonium cyanate -> urea
++ not all inorganic molecules contain carbon, but all organic molecules contain carbon
+** Structure of an atom (carbon)
++ protons and neutrons are surrounded by electron field
++ "orbitals" is a simple way of defining energy levels of groups of electrons
++ P orbital has higher energy compared to S orbital
++ \(1s^22s^22p^2\)
++ carbon has 4 valence electrons with a maximum of 8
++ \(1s^22s^22p^2_x2p^2_y2p^2_z\) is the maximum configuration
++ Aufbau principle: an electron goes into the lowest energy orbital
++ pauli exclusion principle: 2 electrons per orbital maximum (spin up, spin down)
++ Hund's rule: 2 or more orbitals of the same energy(degenerate), electrons will go into
+  different orbitals

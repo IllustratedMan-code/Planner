@@ -1,0 +1,118 @@
+#+latex_header: \usepackage{pdfpages}
+#+latex_header: \usepackage{hyperref}
+#+latex_header: \hypersetup{colorlinks, linkcolor=blue}
+#+options: toc:2 num:t
+
+* Chapter 3
+
+** UDP
++ Checksum calculation
+
+Binary addition of the source port + dest. port + length
+[[file:checksum.png]]
+
+Carrying the one will wrap around to the beginning.
+
+A handy python script I came up with:
+#+begin_src python :tangle exam.py :exports code :session py
+# calculate checksum
+def checksum(numbers, hex=False):
+
+    if len(numbers) > 3:
+        print("this doesn't seem like udp")
+    length = len(numbers[0])
+    if hex:
+        wrap = int("f"*length, 16)
+    else:
+        wrap = int("1" * length, 2)
+    result = 0
+    for i in numbers:
+        if hex:
+            i = int(i, 16)
+        else:
+            i = int(i, 2)
+        result += i
+        if result > wrap:
+            result -= wrap
+    result = bin(result ^ wrap)[2:]
+    result = (length-len(result)) * "0" + result
+    return result
+if __name__ == "__main__":
+    print(checksum(["0110011001100000", "0101010101010101", "1000111100001100"]))
+#+end_src
+
+#+RESULTS:
+
+#+latex: \includepdf[pages=205-211, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}
+** TCP
++ =LastByteRcvd - LastByteRead <=RcvBuffer=
++ =rwnd = RcvBuffer - [LastByteRcvd - LastByteRead]=
+*** fast retransmit
++ If sender receives 3 duplicate acks, segment has been lost, segment is resent
+  before timer expires
+
+*** flow control
++ receive window is used to give the sender an idea of ho much free buffer
+  space is available.
++ UDP does not have flow control
+*** three way handshake
++ client sends an initial segment (no payload), server sends an initial segment
+  as a reply (no payload), client sends another segment back (maybe payload)
+
+#+latex: \includepdf[pages=238-266, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}
+** TCP congestion control
++ Slow start
+  :Initial sending rate is MSS/RTT (Max segment size/Round trip time), increases
+  congestion window by 1 MSS every acknowledged segment. Sending rate doubles
+  every RTT.
++ congestion avoidance: adds 1MSS each RTT
++ Fast recovery: Congestion window is increased by 1 MSS for every duplicate ACK
++ TCP Tahoe: Cut congestion window to 1 MSS and entered slow start
+  after either timout indicated or triple-duplicate ack loss event.
++ TCP Reno: incorporated fast recovery
++ AIMD (Additive increase Multiplicative-decrease): TCP congestion control, saw
+  tooth shape
++ TCP throughput: average throughput of a connection = \(\frac{0.75 \cdot W}{RTT}\)
+#+latex: \includepdf[pages=274-290, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}
+* Chapter 4
+** IP
++ Header checksum (split each 2 bytes in the header as a number and summing
+  them, then taking the 1s compliment)
++ IPv4:
+  [[file:datagram.png]]
++ addressing: 32 bits long
++ subnetting: a subnet mask splits the IP address into two halves, the left of
+  which is the subnet mask address.
++ DHCP: dynamic host configuration protocol
++ NAT: network address translation
++ IPv6: [[file:datagram2.png]]
+#+latex: \includepdf[pages=341-364, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}
+* Chapter 5
+** Routing Algorithms
++ link state (LS) routing - Dijkstra's algorithm
++ Distance-vector (DV) routing algorithm
+#+latex: \includepdf[pages=391-406, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}
+** Intra-AS routing in the internet: OSPF
++ open shortest path first
++ dijkstra's
++ intra-as
+#+latex: \includepdf[pages=406-410, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}
+** ROuting among the ISPs: BGP
++ inter AS protocol
++ iBGP between routers in AS
++ eBGP between routers in different AS
+#+latex: \includepdf[pages=410-422, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}
+** ICMP
++ Internet control message protocol
+#+latex: \includepdf[pages=434-436, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}
+* Chapter 6
+** Error-Detection and Correction techniques
++ parity bits
++ CRC
+#+latex: \includepdf[pages=465-472, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}
+** Switched Local Area Networks
++ MAC addressing
++ ARP
++ self-learning mechanism of switches
++ switches vs routers vs hubs
+#+latex: \includepdf[pages=488-512, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}

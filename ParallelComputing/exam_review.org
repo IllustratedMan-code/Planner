@@ -1,0 +1,26 @@
+* Key Terms
++ Speedup
++ Granularity
++ step complexity
++ work complexity
++ map operation
++ max scan operation
++ broadcast/gather/scatter
++ Hillis-Steele scan algorithm
++ Blelloch Algorithm
++ Atomics
++ Kernels
++ Compact Parallel operation
++ Latency
++ Bandwidth
++ Occupancy (in cuda)
++ PRAM
++ CSR (compressed Sparse Row)
++ blocks, threads (in cuda)
++ Tiles (shared vs global memory)
++ Race conditions
++ Flops/mips
++ Many Core vs Multi Core
++ Fork/Join Parallelism
++ Kernel Data Parallelism
+*

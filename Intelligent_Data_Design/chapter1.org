@@ -1,5 +1,11 @@
 *  Data matrix
 Data can be represented by an $n \times d$ matrix
+#+begin_src python :results output
+print('hi world')
+#+end_src
+
+
+
 * Attributes
 ** Numerica Attributes
 ** Categorical Attributes
