@@ -1,6 +1,8 @@
 * Key Terms
-+ Speedup
-+ Granularity
++ Speedup = Time sequential(Ts)/Time parallel (Tp)
++ Granularity = Ratio of amount of computation to the amount (cost) of communication
++ Efficiency = Speedup/p = Ts/p * Tp (p = number of processors)
++ Scalability = ability to keep speedup proportional to number of processors (p)
 + step complexity
 + work complexity
 + map operation
@@ -19,8 +21,190 @@
 + blocks, threads (in cuda)
 + Tiles (shared vs global memory)
 + Race conditions
-+ Flops/mips
++ Work = Flops (floating point operations per second)/mips (millions of
+  operations per second)
++ Execution time = Work/Compute time
 + Many Core vs Multi Core
 + Fork/Join Parallelism
 + Kernel Data Parallelism
-*
+* Chapter 1
+** Parallel Computing models
+*** Shared memory model
+- Mutliple tasks share a single memory area in which memory is read and written
+  asynchronously
+- Locks/Semaphores (Easier)
+- Harder to manage data locality
+*** Message Passing Model
+- Each processor has its own memory
+- Tasks can be distributed to interconnected processors
+- Message Passing Interface (MPI)
+*** Multithreaded Control Model
+- Threads
+- Program counter, a stack, registers, and identifier
+- POSIX (software threads)
+- Hyper threading (intel's hardware threads)
+*** Data Parallel Model
+- Tasks operate on the same data structure (Arrays)
+- Cuda Kernels
+** Designing Parallel Programs
+*** Task decomposition
+- Domain decomposition (data is decomposed into separate units)
+- Functional Decomposition (task is split into subtasks)
+*** Task Agglomeration
+- Combine smaller tasks with larger ones to increase granularity (better performance)
+*** Task Assignment and Mapping
+- Assign tasks to processors, taking into account processor speed (heterogeneity)
+- Load balancing (processors should not be idle for long)
+- Optimal mapping is NP-complete (difficult)
+** Time Sharing
+- Single core switches between different processes, giving the illusion of
+  parallelism (concurrency)
+** Amdahl and Gustafson's laws
+- Amdahl = pessimistic = Speedup < 1/(1-P), P is parallizable percentage of the program
+- Gustafson = optimistic = Speedup(p) = p - a(p-1), a = non-parallelizable
+  fraction of parallel process, p = number of processors
+** Structural Patterns
+*** Pipe and filter
+- Data flows through modular phases of a computation
+- Filters = function
+- pipe = communication channel
+- Multi-core
+*** Map-Reduce
+- Same function is applied independently across distributed data
+- Map: function applied to data
+- Shuffle: Reorganizes data after mapping
+- reduction: data reduction, or summary computation
+- Many-core
+*** Agents and Repositories
+- collection of data elements modified by flexible set of rules individually
+- agent: "intelligent" process that can perform several operations sequentially
+- Repository: Data center that the agents go to.
+- Manager: directs the agents
+- Ideal for multi-core rather than many-core
+*** Iterative Refinement
+- Set of operations applied repeatedly until desired state is reached
+- Fractals
+- Many-core
+* Chapter 2
+- Python Tools
+** Numba
+- Jit compiler (compiles once during runtime)
+- Nopython mode is really fast
+** Multiprocessing vs threads
+- threads are constrained by the GIL (global interpreter lock), so they are slow
+- multiprocessing is faster than threads (no GIL), but there is no shared data
+* Chapter 3
+** SIMD
+- SIngle instruction, multiple data
+- Theoretical model, every instruction is executed synchronously and
+  simultaneously by all processors
+- GPU model
+** PRAM complexity
+- Theoretical model
+- RAM model, but with unlimited processors and uniform communication
+** Work Complexity
+- Total number of operations executed by a computationas a function of input size
+** Step Complexity
+- Longest chain of sequenctial dependencies in the operation
+- How deep is it?
+** Map Operation
+#+begin_src python :noeval
+f = lambda x: x+1
+map(f, [1,2,3])
+# Returns: [2,3,4]
+#+end_src
+- Work(n) = O(n) * Work(f-arg)
+- Step(n) = O(1) * Step(f-arg) (depth of 1)
+** Collection communications
++ Imply synchronization point
+| Operation | Description                                                      | Work Complexity | Step Complexity |
+|-----------+------------------------------------------------------------------+-----------------+-----------------|
+| Broadcast | Send same data to all processors                                 | W(p) = O(p)     | S(p) = O(log p) |
+| Scatter   | Send different chunks of large piece of data to other processors | W(p) = O(p)     | S(p) = O(log p) |
+| Gather    | Receive data from all other processors                           | W(p) = O(p)     | S(p) = O(log p) |
+- Step complexity is log p in tree communication networks (log p is depth of tree)
+*** Many to many
+- Broadcast from every processor
+- Stencil (use array)
+*** Summing an array
+- W(n) = O(n)
+- S(n) = O(log n) (log n height)
+*** Recursive Reduction
+- Generalized sum operation
+- W(n) = O(n)
+- S(n) = O(log n)
+- Assuming f-arg has constant work and step complexity
+*** Scan Operation
+- Generalized reduction
+- Inclusive scan: all elements up to and including the jth
+- Exclusive Scan: all element up to the jth
+*** Hillis-Steele
+- Slow implmentation of prefix-scan
+- W(n) = O(n log n)
+- S(n) = O(log n)
+*** Naive recursion
+- Slow implmentation of prefix-scan
+- W(n) = O(n log n)
+- S(n) = O(log^2 n)
+*** Blelloch
+- Fast implmentation of prefix scan
+- W(n) = O(n)
+- S(n) = O(2log n)
+*** Parallel Quicksort
+- W(n) = O(n log n)
+- S(n) = O(log n)
+*** Parallel Histogram
+- can be solved with locking or a final operation, such as a parallel reduction
+* Chapter 4
+PRAM fails in lots of practical applications
+** Latency vs bandwidth
+- Latency: time needed to complete a task from the time the instruction was issued
+- Bandwidth is the rate of task throughput measured by the number of repeated
+  tasks completed per unit time
+** Moore's law and Little's law
+- Moore: Observation that number of transistors doubles every 2 years (bandwidth
+  over latency
+- Little's law = $L i = \lambda W$
+- \(\lambda\): effective arrival rate
+- \(W\): Average Completion time
+** Cuda and GPGPUS :ATTACH:
+:PROPERTIES:
+:ID:       a59c5243-3a04-4b63-a45d-7a681b232f15
+:END:
+- General computing GPUS
+- Blocks of threads
+- Hundreds of pipeline cores grouped to computation units (SM) symmetric
+  multiprocessors
+* Chapter 5
+** Data tiling
+shared memory between threads in blocks allows for "tiles" of computation in
+cuda kernels
+
+* Chapter 6
+** Warps and Stalls
+- Grid is composed of thread blocks which execute independantly
+- Each block is composed of many threads
+- groups of threads are divided into groups of 32 (warp)
+- Warp is the unit of execution scheduling
+** Fast Context Switching
+- Registers
+- Shared memory
+** Granularity
+- ratio of program computation vs communication time as measured on a per warp basis
+- Increasing granularity usually results in increased performance time
+** Memory coalescing
+- Coalesced memory access: mutiple memory accesses into a single transaction
+- memory needs to be aligned to have least amount of transactions
+* Chapter 7
+** Sorting
+- Comparison sort
+  - counting sort: W(n) = O(n^2), S(n) = O(log n)
+  - Counting sort is impractical
+- Other sorting
+** Sorting networks
+- constructed from collections of parallel compare-exchange operations
+** Knuth's 0-1 Sorting Principle
+- if a sorting network works correctly for every input sequence of 0s and 1s
+  then it also works correctly on any input taken from any linearly ordered set
+** Mesh based oblivious sorting
+- Shear sort: kinda like bubble sort
