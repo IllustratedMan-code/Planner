@@ -1,4 +1,4 @@
-% Created 2024-01-24 Wed 10:50
+% Created 2024-01-24 Wed 12:04
 % Intended LaTeX compiler: lualatex
 \documentclass{assignments}
 \usepackage{graphicx}
@@ -12,11 +12,10 @@
 \usepackage{hyperref}
 \usepackage{minted}
 \usepackage{physics}
-\author{David Lewis}
-\date{\today}
+\date{}
 \title{}
 \hypersetup{
- pdfauthor={David Lewis},
+ pdfauthor={},
  pdftitle={},
  pdfkeywords={},
  pdfsubject={},
@@ -25,38 +24,62 @@
 \begin{document}
 
 \section*{Assignments and Variables}
-\label{sec:org7ffd298}
-I you want to store information in a variable, you use the `=` operator.
+\label{sec:org52d922b}
+I you want to store information in a variable, you use the \texttt{=} operator.
 \begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
 # set X with 5
 X = 5
 print(X) # will print 5
 \end{minted}
-
-\begin{verbatim}
-None
-\end{verbatim}
-
+The variable will have the value of 5 until you set it again using the \texttt{=} operator.
 \section*{Addition, subtraction, multiplication, division, exponents}
-\label{sec:orge926527}
+\label{sec:orga992d6c}
 Math works, how cool! This follows classic order of operations as well.
 \begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
 print(5 + 5) # prints 10
 print(1.1 + 5) # prints 6.1 (probably)
 print(5 * 5) # prints 25
 print(6 / 3) # prints 2
+print(3/2) # prints 1.5
+print(3//2) # integer division (will print 1)
 print(5**2) # prints 5^2 (25)
+
+\end{minted}
+\section*{Lists, Dicts, tuples, sets}
+\label{sec:org81eaaac}
+If you want to store more than 1 point of data, the simplest way is to use a
+list.
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+X = [1, 2, 3] # a list
+X.append(4) # add data to list
+first = X[0] # the first item of the list (0 based indexing woooo!)
+last = X[-1] # the last item of the list
+reverse = X[::-1] # the list, but in reverse
+no_first = X[1:] # the list without the first member [2, 3]
+# The syntax works like this: start:end:by
+X[2:0:-1] # what do you think this does?
+# A tuple is just a list, but you can't change it
+X = (1, 2, 3)
+X.append(1) # this won't work
+# A set is a list with only unique members
+X = set([1, 2, 3, 3]) # here we convert a list to a set
+print(X) # will print {1, 2, 3}
+\end{minted}
+Dictionaries or \texttt{dicts} are their own beast. In other languages, they are usually
+known as hashmaps. It consists of a set of unique ``keys'' associated with some
+data (whatever you want)
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+D = {"a":"t", "t":"a","g":"c", "c":"g"}
+# some people define them this way, but they are equivalent
+D = dict(a="t", t="a", g="c", c="g")
+print(D["a"]) # would print t
 \end{minted}
 
-\begin{verbatim}
-None
-\end{verbatim}
-
 \section*{Logic}
-\label{sec:org4de3066}
-True and False! Boolean variables are true or false. The \texttt{and} keyword evaluates
-to True if both the left and right are True, the \texttt{or} keyword evaluates to true if
-either the left or right is True. The \texttt{!} and \texttt{not} mean the same thing, they invert
+\label{sec:org715d233}
+\texttt{True} and \texttt{False}! Boolean variables are true or false. The \texttt{and} keyword evaluates
+to \texttt{True} if both the left and right are \texttt{True}, the \texttt{or} keyword evaluates to \texttt{True} if
+either the left or right is \texttt{True}. The \texttt{not} keyword invert
 the output of the boolean (\texttt{not True} is the same as \texttt{False}).
 \begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
 X = True # X is a boolean in this case
@@ -65,23 +88,22 @@ print(5 == 3) # outputs False
 print(True and False) # outputs False
 print(True or False) # outputs True
 print (not True) # outputs False
-print (!True) # outputs False
 \end{minted}
-
 \section*{If}
-\label{sec:org6e2745e}
+\label{sec:org287827d}
 If this, then that. The \texttt{if} keyword tests a logic function and runs some code
 if it is true. \texttt{else} runs if the condition is false.
-\#+begin\textsubscript{src} python
-X = 5
-if X == 5: \# if x is equal to 5
 
-    print(``It's 5!'')
-else: \# otherwise
-    print(``It's not 5!'')
-\#+end\textsubscript{src5}
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+X = 5
+if X == 5: # if x is equal to 5
+    # then
+    print("It's 5!")
+else: # otherwise
+    print("It's not 5!")
+\end{minted}
 \section*{Functions}
-\label{sec:orgdbfb5da}
+\label{sec:org0c88b42}
 A function is a reusable bit of code. You can think of it as a subprogram, or a
 small program that you can run inside the big program. They can take arguments
 which can be used as variables inside the ``scope'' of the function.
@@ -93,12 +115,6 @@ def example_function(example_argument):
 # you cannot access "example_argument" out here
 example_function("Hi There") # What do you think this will do?
 \end{minted}
-
-\begin{verbatim}
-None
-\end{verbatim}
-
-
 Functions can also ``return'' values after processing them
 \begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
 def add(number1, number2):
@@ -106,18 +122,13 @@ def add(number1, number2):
 X = add(5, 6) # what do you think the value of X is?
 print(X)
 \end{minted}
-
-\begin{verbatim}
-None
-\end{verbatim}
-
 \section*{Loops}
-\label{sec:org8ba1ab0}
+\label{sec:org93d4890}
 Say you want to run the same code a bunch of times, but you don't want to write
 it out every time or you don't know beforehand how many times you want it to
 run. You need to use loops!
 \subsection*{For loop}
-\label{sec:orgcf54ae9}
+\label{sec:org5a58576}
 A for loop runs a specific number of times and in python specifically, uses an
 ``iterable'' object as a way of determining how many times it runs. This could be
 a range, list, dict, or set
@@ -130,13 +141,8 @@ l = [1, 5, 6] # I want to print every member of this list
 for member in l:
     print(member)
 \end{minted}
-
-\begin{verbatim}
-None
-\end{verbatim}
-
 \subsection*{While loop}
-\label{sec:org7438c1a}
+\label{sec:org8422d73}
 While loops use a condition or boolean to determine when to stop, similar to the
 way \texttt{if} works.
 \begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
@@ -150,13 +156,8 @@ while X: # what do you think this will do?
         X = False
 
 \end{minted}
-
-\begin{verbatim}
-None
-\end{verbatim}
-
 \section*{Objects}
-\label{sec:orgd43b6fa}
+\label{sec:orgaf00036}
 Almost everything in python is an ``object'', or an instance of a \texttt{class}. An easy
 way to think about this is that you are an instance of class ``human''. You can
 determine the class or type of an object using the \texttt{type} function.
@@ -168,12 +169,6 @@ print(type(X)) # prints <class int>
 X = 5.1
 print(type(X)) # prints <class float>
 \end{minted}
-
-\begin{verbatim}
-None
-\end{verbatim}
-
-
 Each class has a different set of ``methods'' or functions associated with that
 class. The \texttt{str} class has an \texttt{upper()} function which returns the string as all
 upper case letters. This would not make sense for an integer, so there is no
@@ -184,7 +179,6 @@ print(X.upper())
 X = 5 # integer
 print(X.upper()) # returns an error
 \end{minted}
-
 You can also make your own classes using the \texttt{class} keyword.
 \begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
 class Human:
@@ -201,13 +195,8 @@ human1.speak() # runs the speak function (will print "Mary")
 human2.speak() # runs the speak function (will print "Megan")
 print(type(human1)) # what will this print?
 \end{minted}
-
-\begin{verbatim}
-None
-\end{verbatim}
-
 \section*{Libraries}
-\label{sec:org2e2cce8}
+\label{sec:orge7ab5e3}
 Say you wrote some code in a different file but you want to use it in your
 current one. You can \texttt{import} other python files to achieve this goal. Python has
 included a bunch of helpful libraries already, but more can be installed or
@@ -220,9 +209,86 @@ print(math.sin(math.pi))
 import numpy as np # needs to be installed (included with anaconda)
 X = np.array([1, 2, 3]) # a vector has a magnitude and a direction
 print(np.dot(X, X)) # performs the dot product
+
+\end{minted}
+\section*{File IO}
+\label{sec:orgbdab583}
+IO stands for ``in out''. Our goal is to read (in) and write (out) files using python.
+\subsection*{Reading Files}
+\label{sec:org5eb3756}
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+# when reading files, open them with the "r" character (r for read)
+with open("myfile.txt", "r") as f: # opens the file for reading
+    # f is the file object now
+    for line in f:
+        print(line) # prints each line of the file
+
+# if you don't want to read the file line by line in a for loop,
+# you can use the readlines() function
+lines = [] # lines is a list
+with open("myfile.txt", "r") as f:
+    lines = f.readlines()
+
+# sometimes examples will not use the "with open" syntax,
+# but with open is superior so don't do it this way
+lines = []
+f = open("myfile.txt", "r")
+lines = f.readlines()
+f.close() # when you use with open, this line is not needed
+# forgetting to close a file can lead to unintended side effects
+\end{minted}
+\subsection*{Writing files}
+\label{sec:org2262b5b}
+There are two ways to write to a file, overwriting (w) or appending (a).
+appending will add the new contents to the end of the file, while overwriting
+will overwrite existing contents.
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+with open("myfile.txt", "w") as f:
+    f.write("hello world") # this will change the contents of the file to only be hello world
+with open("myfile.txt", "a") as f:
+    f.write("hello world") # this will add hello world to the end of myfile.txt
+
+\end{minted}
+\section*{Python wizardry}
+\label{sec:org58688cb}
+This section is about things that aren't really applicable to other languages.
+You don't actually need this stuff to program most of the time either.
+\subsection*{List comprehension}
+\label{sec:orge5ff53f}
+Say we want to do something to every element of a list, you could use a for
+loop, but they aren't that fun. Instead, you
+can use something called a ``list comprehension'' that applies a simple operation
+to every element of a list and returns it.
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+l = [1, 2, 3] # this is great, but I want to add 1 to every element!
+
+# for loop method
+new_l = []
+for i in l:
+    new_l.append(i + 1) # add one and add it to a new list
+l = new_l # set l to the new list [2, 3, 4]
+# This is totally fine, but it took 4 whole lines! Python is also kinda slow at doing this
+
+# list comprehension method
+l = [1, 2, 3]
+l = [i+1 for i in l] #whaaaaaaa
+# it only took 1 line! It is also much faster especially when the list is large
+
+\end{minted}
+\subsection*{Format strings, Raw strings}
+\label{sec:orga2fa712}
+Python has a few special ways to define strings that are not present in other
+languages.
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+# format strings are extremly useful when you want to include variables in your strings
+X = "David"
+f_string = f"Hi, my name is {X}." # The lowercase f before the quote makes it a format string
 \end{minted}
 
-\begin{verbatim}
-None
-\end{verbatim}
+There are some special characters sequences that strings normally recognize. One of these is \texttt{\textbackslash{}n}
+which means ``new line''.
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+print("Hi\nThere") # This will print two lines
+print(r"Hi\nThere") # this will print 1 line, the r before the quote makes python not recognize the \n
+\end{minted}
 \end{document}

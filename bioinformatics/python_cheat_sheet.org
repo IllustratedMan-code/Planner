@@ -1,49 +1,84 @@
+#+date:
+#+author:
 * Assignments and Variables
-I you want to store information in a variable, you use the `=` operator.
-#+begin_src python
+I you want to store information in a variable, you use the === operator.
+#+begin_src python :exports code
 # set X with 5
 X = 5
 print(X) # will print 5
 #+end_src
+The variable will have the value of 5 until you set it again using the === operator.
 * Addition, subtraction, multiplication, division, exponents
 Math works, how cool! This follows classic order of operations as well.
-#+begin_src python
+#+begin_src python :exports code
 print(5 + 5) # prints 10
 print(1.1 + 5) # prints 6.1 (probably)
 print(5 * 5) # prints 25
 print(6 / 3) # prints 2
+print(3/2) # prints 1.5
+print(3//2) # integer division (will print 1)
 print(5**2) # prints 5^2 (25)
+
 #+end_src
+* Lists, Dicts, tuples, sets
+If you want to store more than 1 point of data, the simplest way is to use a
+list.
+#+begin_src python :exports code
+X = [1, 2, 3] # a list
+X.append(4) # add data to list
+first = X[0] # the first item of the list (0 based indexing woooo!)
+last = X[-1] # the last item of the list
+reverse = X[::-1] # the list, but in reverse
+no_first = X[1:] # the list without the first member [2, 3]
+# The syntax works like this: start:end:by
+X[2:0:-1] # what do you think this does?
+# A tuple is just a list, but you can't change it
+X = (1, 2, 3)
+X.append(1) # this won't work
+# A set is a list with only unique members
+X = set([1, 2, 3, 3]) # here we convert a list to a set
+print(X) # will print {1, 2, 3}
+#+end_src
+Dictionaries or =dicts= are their own beast. In other languages, they are usually
+known as hashmaps. It consists of a set of unique "keys" associated with some
+data (whatever you want)
+#+begin_src python :exports code
+D = {"a":"t", "t":"a","g":"c", "c":"g"}
+# some people define them this way, but they are equivalent
+D = dict(a="t", t="a", g="c", c="g")
+print(D["a"]) # would print t
+#+end_src
+
 * Logic
-True and False! Boolean variables are true or false. The =and= keyword evaluates
-to True if both the left and right are True, the =or= keyword evaluates to true if
-either the left or right is True. The =!= and =not= mean the same thing, they invert
+=True= and =False=! Boolean variables are true or false. The =and= keyword evaluates
+to =True= if both the left and right are =True=, the =or= keyword evaluates to =True= if
+either the left or right is =True=. The =not= keyword invert
 the output of the boolean (=not True= is the same as =False=).
-#+begin_src python
+#+begin_src python :exports code
 X = True # X is a boolean in this case
 print(5 == 5) # outputs True
 print(5 == 3) # outputs False
 print(True and False) # outputs False
 print(True or False) # outputs True
 print (not True) # outputs False
-print (!True) # outputs False
 #+end_src
 * If
 If this, then that. The =if= keyword tests a logic function and runs some code
 if it is true. =else= runs if the condition is false.
-#+begin_src python
+
+#+begin_src python :exports code
 X = 5
 if X == 5: # if x is equal to 5
     # then
     print("It's 5!")
 else: # otherwise
     print("It's not 5!")
-#+end_src5
+#+end_src
 * Functions
 A function is a reusable bit of code. You can think of it as a subprogram, or a
 small program that you can run inside the big program. They can take arguments
 which can be used as variables inside the "scope" of the function.
-#+begin_src python
+#+begin_src python :exports code
 def example_function(example_argument):
     # in the scope of the function
     print(example_argument)
@@ -52,7 +87,7 @@ def example_function(example_argument):
 example_function("Hi There") # What do you think this will do?
 #+end_src
 Functions can also "return" values after processing them
-#+begin_src python
+#+begin_src python :exports code
 def add(number1, number2):
     return number1 + number2
 X = add(5, 6) # what do you think the value of X is?
@@ -66,7 +101,7 @@ run. You need to use loops!
 A for loop runs a specific number of times and in python specifically, uses an
 "iterable" object as a way of determining how many times it runs. This could be
 a range, list, dict, or set
-#+begin_src python
+#+begin_src python :exports code
 # I want to print "help" 10 times
 for i in range(10):
     print("help")
@@ -78,7 +113,7 @@ for member in l:
 ** While loop
 While loops use a condition or boolean to determine when to stop, similar to the
 way =if= works.
-#+begin_src python
+#+begin_src python :exports code
 X = True
 Y = 0
 while X: # what do you think this will do?
@@ -93,7 +128,7 @@ while X: # what do you think this will do?
 Almost everything in python is an "object", or an instance of a =class=. An easy
 way to think about this is that you are an instance of class "human". You can
 determine the class or type of an object using the =type= function.
-#+begin_src python
+#+begin_src python :exports code
 X = "hi there"
 print(type(X)) # prints <class str>
 X = 5
@@ -105,14 +140,14 @@ Each class has a different set of "methods" or functions associated with that
 class. The =str= class has an =upper()= function which returns the string as all
 upper case letters. This would not make sense for an integer, so there is no
 upper function for integers. Classes can also define their own variables.
-#+begin_src python
+#+begin_src python :exports code
 X = "hi There" # string
 print(X.upper())
 X = 5 # integer
 print(X.upper()) # returns an error
 #+end_src
 You can also make your own classes using the =class= keyword.
-#+begin_src python
+#+begin_src python :exports code
 class Human:
     def __init__(self, name): # special function that creates the class, self is used to access class instance variables and functions
         self.name = name # creating a class variable called name and setting it to the given name
@@ -132,7 +167,7 @@ Say you wrote some code in a different file but you want to use it in your
 current one. You can =import= other python files to achieve this goal. Python has
 included a bunch of helpful libraries already, but more can be installed or
 written yourself.
-#+begin_src python
+#+begin_src python :exports code
 import math # built in library
 # the math library has a lot of extra math stuff (straightforward right?)
 print(math.sin(math.pi))
@@ -140,4 +175,79 @@ print(math.sin(math.pi))
 import numpy as np # needs to be installed (included with anaconda)
 X = np.array([1, 2, 3]) # a vector has a magnitude and a direction
 print(np.dot(X, X)) # performs the dot product
+
+#+end_src
+* File IO
+IO stands for "in out". Our goal is to read (in) and write (out) files using python.
+** Reading Files
+#+begin_src python :exports code
+# when reading files, open them with the "r" character (r for read)
+with open("myfile.txt", "r") as f: # opens the file for reading
+    # f is the file object now
+    for line in f:
+        print(line) # prints each line of the file
+
+# if you don't want to read the file line by line in a for loop,
+# you can use the readlines() function
+lines = [] # lines is a list
+with open("myfile.txt", "r") as f:
+    lines = f.readlines()
+
+# sometimes examples will not use the "with open" syntax,
+# but with open is superior so don't do it this way
+lines = []
+f = open("myfile.txt", "r")
+lines = f.readlines()
+f.close() # when you use with open, this line is not needed
+# forgetting to close a file can lead to unintended side effects
+#+end_src
+** Writing files
+There are two ways to write to a file, overwriting (w) or appending (a).
+appending will add the new contents to the end of the file, while overwriting
+will overwrite existing contents.
+#+begin_src python :exports code
+with open("myfile.txt", "w") as f:
+    f.write("hello world") # this will change the contents of the file to only be hello world
+with open("myfile.txt", "a") as f:
+    f.write("hello world") # this will add hello world to the end of myfile.txt
+
+#+end_src
+* Python wizardry
+This section is about things that aren't really applicable to other languages.
+You don't actually need this stuff to program most of the time either.
+** List comprehension
+Say we want to do something to every element of a list, you could use a for
+loop, but they aren't that fun. Instead, you
+can use something called a "list comprehension" that applies a simple operation
+to every element of a list and returns it.
+#+begin_src python :exports code
+l = [1, 2, 3] # this is great, but I want to add 1 to every element!
+
+# for loop method
+new_l = []
+for i in l:
+    new_l.append(i + 1) # add one and add it to a new list
+l = new_l # set l to the new list [2, 3, 4]
+# This is totally fine, but it took 4 whole lines! Python is also kinda slow at doing this
+
+# list comprehension method
+l = [1, 2, 3]
+l = [i+1 for i in l] #whaaaaaaa
+# it only took 1 line! It is also much faster especially when the list is large
+
+#+end_src
+** Format strings, Raw strings
+Python has a few special ways to define strings that are not present in other
+languages.
+#+begin_src python :exports code
+# format strings are extremly useful when you want to include variables in your strings
+X = "David"
+f_string = f"Hi, my name is {X}." # The lowercase f before the quote makes it a format string
+#+end_src
+
+There are some special characters sequences that strings normally recognize. One of these is =\n=
+which means "new line".
+#+begin_src python :exports code
+print("Hi\nThere") # This will print two lines
+print(r"Hi\nThere") # this will print 1 line, the r before the quote makes python not recognize the \n
 #+end_src

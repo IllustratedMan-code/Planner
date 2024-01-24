@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{D} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}a\PYGZdq{}}\PYG{p}{:}\PYG{l+s+s2}{\PYGZdq{}t\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}t\PYGZdq{}}\PYG{p}{:}\PYG{l+s+s2}{\PYGZdq{}a\PYGZdq{}}\PYG{p}{,}\PYG{l+s+s2}{\PYGZdq{}g\PYGZdq{}}\PYG{p}{:}\PYG{l+s+s2}{\PYGZdq{}c\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}c\PYGZdq{}}\PYG{p}{:}\PYG{l+s+s2}{\PYGZdq{}g\PYGZdq{}}\PYG{p}{\PYGZcb{}}
+\PYG{c+c1}{\PYGZsh{} some people define them this way, but they are equivalent}
+\PYG{n}{D} \PYG{o}{=} \PYG{n+nb}{dict}\PYG{p}{(}\PYG{n}{a}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}t\PYGZdq{}}\PYG{p}{,} \PYG{n}{t}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}a\PYGZdq{}}\PYG{p}{,} \PYG{n}{g}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}c\PYGZdq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}g\PYGZdq{}}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{D}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}a\PYGZdq{}}\PYG{p}{])} \PYG{c+c1}{\PYGZsh{} would print t}
+\end{Verbatim}
