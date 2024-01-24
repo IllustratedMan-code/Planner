@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{add}\PYG{p}{(}\PYG{n}{number1}\PYG{p}{,} \PYG{n}{number2}\PYG{p}{):}
+    \PYG{k}{return} \PYG{n}{number1} \PYG{o}{+} \PYG{n}{number2}
+\PYG{n}{X} \PYG{o}{=} \PYG{n}{add}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{p}{,} \PYG{l+m+mi}{6}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} what do you think the value of X is?}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{X}\PYG{p}{)}
+\end{Verbatim}

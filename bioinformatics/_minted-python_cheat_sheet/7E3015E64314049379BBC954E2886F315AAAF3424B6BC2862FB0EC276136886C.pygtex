@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{X} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}hi There\PYGZdq{}} \PYG{c+c1}{\PYGZsh{} string}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{X}\PYG{o}{.}\PYG{n}{upper}\PYG{p}{())}
+\PYG{n}{X} \PYG{o}{=} \PYG{l+m+mi}{5} \PYG{c+c1}{\PYGZsh{} integer}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{X}\PYG{o}{.}\PYG{n}{upper}\PYG{p}{())} \PYG{c+c1}{\PYGZsh{} returns an error}
+\end{Verbatim}

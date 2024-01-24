@@ -1,0 +1,38 @@
+Genome alignment requires that "reads" - short dna sequences - are matched to
+regions of the target genome.
+
+* Big O notation
+Big O notation refers to the worst case time complexity, i.e. how long would a
+program take if everything went horribly wrong. O(n) for example would take 1
+operation for every member of the input. A sum operation takes O(n) time.
+* Naive Solution
++ O(nm) time, n=length of genome, m = length of read(s)
++ Compare first member of read to member of sequence, if no match, move to next
+  member of sequence. If match, compare second member of read to next member of
+  sequence, if no match, move to next member of sequence and start again.
+
+  #+begin_src python :session py
+sequence = "AGTCGATCATGGGCGAT"
+read = "GAT"
+
+def check_read(read, sequence):
+    for r in range(len(read)):
+        if read[r] != sequence[r]:
+            return False
+    return True
+def check_sequence(read, sequence):
+    matches = []
+    for s in range(len(sequence)):
+        if check_read(read, sequence[s::]):
+            matches.append(s)
+    return matches
+check_sequence(read, sequence)
+  #+end_src
+
+  #+RESULTS:
+  | 4 | 14 |
+* Suffix Tree
++ O(n + m) time
++ Build suffix tree of genome
++ a read must be a prefix of a suffix, creating a tree of suffixes that share a
+  prefix allows for quick matches if multiple occurrences of a read exist.

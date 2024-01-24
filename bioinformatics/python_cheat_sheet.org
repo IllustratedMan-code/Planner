@@ -1,0 +1,143 @@
+* Assignments and Variables
+I you want to store information in a variable, you use the `=` operator.
+#+begin_src python
+# set X with 5
+X = 5
+print(X) # will print 5
+#+end_src
+* Addition, subtraction, multiplication, division, exponents
+Math works, how cool! This follows classic order of operations as well.
+#+begin_src python
+print(5 + 5) # prints 10
+print(1.1 + 5) # prints 6.1 (probably)
+print(5 * 5) # prints 25
+print(6 / 3) # prints 2
+print(5**2) # prints 5^2 (25)
+#+end_src
+* Logic
+True and False! Boolean variables are true or false. The =and= keyword evaluates
+to True if both the left and right are True, the =or= keyword evaluates to true if
+either the left or right is True. The =!= and =not= mean the same thing, they invert
+the output of the boolean (=not True= is the same as =False=).
+#+begin_src python
+X = True # X is a boolean in this case
+print(5 == 5) # outputs True
+print(5 == 3) # outputs False
+print(True and False) # outputs False
+print(True or False) # outputs True
+print (not True) # outputs False
+print (!True) # outputs False
+#+end_src
+* If
+If this, then that. The =if= keyword tests a logic function and runs some code
+if it is true. =else= runs if the condition is false.
+#+begin_src python
+X = 5
+if X == 5: # if x is equal to 5
+    # then
+    print("It's 5!")
+else: # otherwise
+    print("It's not 5!")
+#+end_src5
+* Functions
+A function is a reusable bit of code. You can think of it as a subprogram, or a
+small program that you can run inside the big program. They can take arguments
+which can be used as variables inside the "scope" of the function.
+#+begin_src python
+def example_function(example_argument):
+    # in the scope of the function
+    print(example_argument)
+# out of the scope of the function
+# you cannot access "example_argument" out here
+example_function("Hi There") # What do you think this will do?
+#+end_src
+Functions can also "return" values after processing them
+#+begin_src python
+def add(number1, number2):
+    return number1 + number2
+X = add(5, 6) # what do you think the value of X is?
+print(X)
+#+end_src
+* Loops
+Say you want to run the same code a bunch of times, but you don't want to write
+it out every time or you don't know beforehand how many times you want it to
+run. You need to use loops!
+** For loop
+A for loop runs a specific number of times and in python specifically, uses an
+"iterable" object as a way of determining how many times it runs. This could be
+a range, list, dict, or set
+#+begin_src python
+# I want to print "help" 10 times
+for i in range(10):
+    print("help")
+    print(i) # i will print 0-9 (ranges are a bit odd)
+l = [1, 5, 6] # I want to print every member of this list
+for member in l:
+    print(member)
+#+end_src
+** While loop
+While loops use a condition or boolean to determine when to stop, similar to the
+way =if= works.
+#+begin_src python
+X = True
+Y = 0
+while X: # what do you think this will do?
+    if Y < 10: # if Y is less then 10
+        print(Y)
+        Y = Y + 1
+    else:
+        X = False
+
+#+end_src
+* Objects
+Almost everything in python is an "object", or an instance of a =class=. An easy
+way to think about this is that you are an instance of class "human". You can
+determine the class or type of an object using the =type= function.
+#+begin_src python
+X = "hi there"
+print(type(X)) # prints <class str>
+X = 5
+print(type(X)) # prints <class int>
+X = 5.1
+print(type(X)) # prints <class float>
+#+end_src
+Each class has a different set of "methods" or functions associated with that
+class. The =str= class has an =upper()= function which returns the string as all
+upper case letters. This would not make sense for an integer, so there is no
+upper function for integers. Classes can also define their own variables.
+#+begin_src python
+X = "hi There" # string
+print(X.upper())
+X = 5 # integer
+print(X.upper()) # returns an error
+#+end_src
+You can also make your own classes using the =class= keyword.
+#+begin_src python
+class Human:
+    def __init__(self, name): # special function that creates the class, self is used to access class instance variables and functions
+        self.name = name # creating a class variable called name and setting it to the given name
+
+    def speak(self):
+        print("My name is:", self.name) # You can access the name variable from a different function within the same class
+
+human1 = Human("Mary") # runs the __init__ function
+human2 = Human("Megan") # two instances of the same class human1 and human2
+
+human1.speak() # runs the speak function (will print "Mary")
+human2.speak() # runs the speak function (will print "Megan")
+print(type(human1)) # what will this print?
+#+end_src
+* Libraries
+Say you wrote some code in a different file but you want to use it in your
+current one. You can =import= other python files to achieve this goal. Python has
+included a bunch of helpful libraries already, but more can be installed or
+written yourself.
+#+begin_src python
+import math # built in library
+# the math library has a lot of extra math stuff (straightforward right?)
+print(math.sin(math.pi))
+
+import numpy as np # needs to be installed (included with anaconda)
+X = np.array([1, 2, 3]) # a vector has a magnitude and a direction
+print(np.dot(X, X)) # performs the dot product
+#+end_src

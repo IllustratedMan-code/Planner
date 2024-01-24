@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{X} \PYG{o}{=} \PYG{k+kc}{True}
+\PYG{n}{Y} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{k}{while} \PYG{n}{X}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} what do you think this will do?}
+    \PYG{k}{if} \PYG{n}{Y} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{10}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} if Y is less then 10}
+        \PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{Y}\PYG{p}{)}
+        \PYG{n}{Y} \PYG{o}{=} \PYG{n}{Y} \PYG{o}{+} \PYG{l+m+mi}{1}
+    \PYG{k}{else}\PYG{p}{:}
+        \PYG{n}{X} \PYG{o}{=} \PYG{k+kc}{False}
+
+\end{Verbatim}
