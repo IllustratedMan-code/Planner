@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{X} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}hi there\PYGZdq{}}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n+nb}{type}\PYG{p}{(}\PYG{n}{X}\PYG{p}{))} \PYG{c+c1}{\PYGZsh{} prints \PYGZlt{}class str\PYGZgt{}}
+\PYG{n}{X} \PYG{o}{=} \PYG{l+m+mi}{5}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n+nb}{type}\PYG{p}{(}\PYG{n}{X}\PYG{p}{))} \PYG{c+c1}{\PYGZsh{} prints \PYGZlt{}class int\PYGZgt{}}
+\PYG{n}{X} \PYG{o}{=} \PYG{l+m+mf}{5.1}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n+nb}{type}\PYG{p}{(}\PYG{n}{X}\PYG{p}{))} \PYG{c+c1}{\PYGZsh{} prints \PYGZlt{}class float\PYGZgt{}}
+\end{Verbatim}

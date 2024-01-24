@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{X} \PYG{o}{=} \PYG{k+kc}{True} \PYG{c+c1}{\PYGZsh{} X is a boolean in this case}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+m+mi}{5} \PYG{o}{==} \PYG{l+m+mi}{5}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} outputs True}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+m+mi}{5} \PYG{o}{==} \PYG{l+m+mi}{3}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} outputs False}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{k+kc}{True} \PYG{o+ow}{and} \PYG{k+kc}{False}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} outputs False}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{k+kc}{True} \PYG{o+ow}{or} \PYG{k+kc}{False}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} outputs True}
+\PYG{n+nb}{print} \PYG{p}{(}\PYG{o+ow}{not} \PYG{k+kc}{True}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} outputs False}
+\PYG{n+nb}{print} \PYG{p}{(}\PYG{err}{!}\PYG{k+kc}{True}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} outputs False}
+\end{Verbatim}

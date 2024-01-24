@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{example\PYGZus{}function}\PYG{p}{(}\PYG{n}{example\PYGZus{}argument}\PYG{p}{):}
+    \PYG{c+c1}{\PYGZsh{} in the scope of the function}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{example\PYGZus{}argument}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} out of the scope of the function}
+\PYG{c+c1}{\PYGZsh{} you cannot access \PYGZdq{}example\PYGZus{}argument\PYGZdq{} out here}
+\PYG{n}{example\PYGZus{}function}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Hi There\PYGZdq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} What do you think this will do?}
+\end{Verbatim}

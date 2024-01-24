@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{Human}\PYG{p}{:}
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{):} \PYG{c+c1}{\PYGZsh{} special function that creates the class, self is used to access class instance variables and functions}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name} \PYG{c+c1}{\PYGZsh{} creating a class variable called name and setting it to the given name}
+
+    \PYG{k}{def} \PYG{n+nf}{speak}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+        \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}My name is:\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} You can access the name variable from a different function within the same class}
+
+\PYG{n}{human1} \PYG{o}{=} \PYG{n}{Human}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Mary\PYGZdq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} runs the \PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{} function}
+\PYG{n}{human2} \PYG{o}{=} \PYG{n}{Human}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Megan\PYGZdq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} two instances of the same class human1 and human2}
+
+\PYG{n}{human1}\PYG{o}{.}\PYG{n}{speak}\PYG{p}{()} \PYG{c+c1}{\PYGZsh{} runs the speak function (will print \PYGZdq{}Mary\PYGZdq{})}
+\PYG{n}{human2}\PYG{o}{.}\PYG{n}{speak}\PYG{p}{()} \PYG{c+c1}{\PYGZsh{} runs the speak function (will print \PYGZdq{}Megan\PYGZdq{})}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n+nb}{type}\PYG{p}{(}\PYG{n}{human1}\PYG{p}{))} \PYG{c+c1}{\PYGZsh{} what will this print?}
+\end{Verbatim}

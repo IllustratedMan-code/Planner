@@ -1,0 +1,228 @@
+% Created 2024-01-24 Wed 10:50
+% Intended LaTeX compiler: lualatex
+\documentclass{assignments}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{physics}
+\author{David Lewis}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={David Lewis},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 30.0.50 (Org mode 9.7)}, 
+ pdflang={English}}
+\begin{document}
+
+\section*{Assignments and Variables}
+\label{sec:org7ffd298}
+I you want to store information in a variable, you use the `=` operator.
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+# set X with 5
+X = 5
+print(X) # will print 5
+\end{minted}
+
+\begin{verbatim}
+None
+\end{verbatim}
+
+\section*{Addition, subtraction, multiplication, division, exponents}
+\label{sec:orge926527}
+Math works, how cool! This follows classic order of operations as well.
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+print(5 + 5) # prints 10
+print(1.1 + 5) # prints 6.1 (probably)
+print(5 * 5) # prints 25
+print(6 / 3) # prints 2
+print(5**2) # prints 5^2 (25)
+\end{minted}
+
+\begin{verbatim}
+None
+\end{verbatim}
+
+\section*{Logic}
+\label{sec:org4de3066}
+True and False! Boolean variables are true or false. The \texttt{and} keyword evaluates
+to True if both the left and right are True, the \texttt{or} keyword evaluates to true if
+either the left or right is True. The \texttt{!} and \texttt{not} mean the same thing, they invert
+the output of the boolean (\texttt{not True} is the same as \texttt{False}).
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+X = True # X is a boolean in this case
+print(5 == 5) # outputs True
+print(5 == 3) # outputs False
+print(True and False) # outputs False
+print(True or False) # outputs True
+print (not True) # outputs False
+print (!True) # outputs False
+\end{minted}
+
+\section*{If}
+\label{sec:org6e2745e}
+If this, then that. The \texttt{if} keyword tests a logic function and runs some code
+if it is true. \texttt{else} runs if the condition is false.
+\#+begin\textsubscript{src} python
+X = 5
+if X == 5: \# if x is equal to 5
+
+    print(``It's 5!'')
+else: \# otherwise
+    print(``It's not 5!'')
+\#+end\textsubscript{src5}
+\section*{Functions}
+\label{sec:orgdbfb5da}
+A function is a reusable bit of code. You can think of it as a subprogram, or a
+small program that you can run inside the big program. They can take arguments
+which can be used as variables inside the ``scope'' of the function.
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+def example_function(example_argument):
+    # in the scope of the function
+    print(example_argument)
+# out of the scope of the function
+# you cannot access "example_argument" out here
+example_function("Hi There") # What do you think this will do?
+\end{minted}
+
+\begin{verbatim}
+None
+\end{verbatim}
+
+
+Functions can also ``return'' values after processing them
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+def add(number1, number2):
+    return number1 + number2
+X = add(5, 6) # what do you think the value of X is?
+print(X)
+\end{minted}
+
+\begin{verbatim}
+None
+\end{verbatim}
+
+\section*{Loops}
+\label{sec:org8ba1ab0}
+Say you want to run the same code a bunch of times, but you don't want to write
+it out every time or you don't know beforehand how many times you want it to
+run. You need to use loops!
+\subsection*{For loop}
+\label{sec:orgcf54ae9}
+A for loop runs a specific number of times and in python specifically, uses an
+``iterable'' object as a way of determining how many times it runs. This could be
+a range, list, dict, or set
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+# I want to print "help" 10 times
+for i in range(10):
+    print("help")
+    print(i) # i will print 0-9 (ranges are a bit odd)
+l = [1, 5, 6] # I want to print every member of this list
+for member in l:
+    print(member)
+\end{minted}
+
+\begin{verbatim}
+None
+\end{verbatim}
+
+\subsection*{While loop}
+\label{sec:org7438c1a}
+While loops use a condition or boolean to determine when to stop, similar to the
+way \texttt{if} works.
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+X = True
+Y = 0
+while X: # what do you think this will do?
+    if Y < 10: # if Y is less then 10
+        print(Y)
+        Y = Y + 1
+    else:
+        X = False
+
+\end{minted}
+
+\begin{verbatim}
+None
+\end{verbatim}
+
+\section*{Objects}
+\label{sec:orgd43b6fa}
+Almost everything in python is an ``object'', or an instance of a \texttt{class}. An easy
+way to think about this is that you are an instance of class ``human''. You can
+determine the class or type of an object using the \texttt{type} function.
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+X = "hi there"
+print(type(X)) # prints <class str>
+X = 5
+print(type(X)) # prints <class int>
+X = 5.1
+print(type(X)) # prints <class float>
+\end{minted}
+
+\begin{verbatim}
+None
+\end{verbatim}
+
+
+Each class has a different set of ``methods'' or functions associated with that
+class. The \texttt{str} class has an \texttt{upper()} function which returns the string as all
+upper case letters. This would not make sense for an integer, so there is no
+upper function for integers. Classes can also define their own variables.
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+X = "hi There" # string
+print(X.upper())
+X = 5 # integer
+print(X.upper()) # returns an error
+\end{minted}
+
+You can also make your own classes using the \texttt{class} keyword.
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+class Human:
+    def __init__(self, name): # special function that creates the class, self is used to access class instance variables and functions
+        self.name = name # creating a class variable called name and setting it to the given name
+
+    def speak(self):
+        print("My name is:", self.name) # You can access the name variable from a different function within the same class
+
+human1 = Human("Mary") # runs the __init__ function
+human2 = Human("Megan") # two instances of the same class human1 and human2
+
+human1.speak() # runs the speak function (will print "Mary")
+human2.speak() # runs the speak function (will print "Megan")
+print(type(human1)) # what will this print?
+\end{minted}
+
+\begin{verbatim}
+None
+\end{verbatim}
+
+\section*{Libraries}
+\label{sec:org2e2cce8}
+Say you wrote some code in a different file but you want to use it in your
+current one. You can \texttt{import} other python files to achieve this goal. Python has
+included a bunch of helpful libraries already, but more can be installed or
+written yourself.
+\begin{minted}[fontsize=\scriptsize,breaklines=true,breakanywhere=true]{python}
+import math # built in library
+# the math library has a lot of extra math stuff (straightforward right?)
+print(math.sin(math.pi))
+
+import numpy as np # needs to be installed (included with anaconda)
+X = np.array([1, 2, 3]) # a vector has a magnitude and a direction
+print(np.dot(X, X)) # performs the dot product
+\end{minted}
+
+\begin{verbatim}
+None
+\end{verbatim}
+\end{document}
