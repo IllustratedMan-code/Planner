@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{l} \PYG{o}{=} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{]} \PYG{c+c1}{\PYGZsh{} this is great, but I want to add 1 to every element!}
+
+\PYG{c+c1}{\PYGZsh{} for loop method}
+\PYG{n}{new\PYGZus{}l} \PYG{o}{=} \PYG{p}{[]}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{l}\PYG{p}{:}
+    \PYG{n}{new\PYGZus{}l}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} add one and add it to a new list}
+\PYG{n}{l} \PYG{o}{=} \PYG{n}{new\PYGZus{}l} \PYG{c+c1}{\PYGZsh{} set l to the new list [2, 3, 4]}
+\PYG{c+c1}{\PYGZsh{} This is totally fine, but it took 4 whole lines! Python is also kinda slow at doing this}
+
+\PYG{c+c1}{\PYGZsh{} list comprehension method}
+\PYG{n}{l} \PYG{o}{=} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{]}
+\PYG{n}{l} \PYG{o}{=} \PYG{p}{[}\PYG{n}{i}\PYG{o}{+}\PYG{l+m+mi}{1} \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{l}\PYG{p}{]} \PYG{c+c1}{\PYGZsh{}whaaaaaaa}
+\PYG{c+c1}{\PYGZsh{} it only took 1 line! It is also much faster especially when the list is large}
+
+\end{Verbatim}

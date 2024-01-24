@@ -51,7 +51,7 @@
 
 
   
-  <link href='tailwind.css?instanceId=92045381-174d-4cac-8cb5-d7a1165d48f8' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=93545dd5-34ac-41e9-8a16-897451fd0bc1' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -1071,50 +1071,78 @@
   <!-- What goes in this file will appear on top of note body-->
   <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Assignments and Variables</h1>
     <p class='mb-3'>
-      I you want to store information in a variable, you use the `=` operator.
+      I you want to store information in a variable, you use the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>=</code> operator.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'># set X with 5
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'># set X with 5
 X = 5
 print(X) # will print 5
-</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Addition, subtraction, multiplication, division, exponents</h1>
+</code></pre></div>
+    <p class='mb-3'>
+      The variable will have the value of 5 until you set it again using the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>=</code> operator.
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Addition, subtraction, multiplication, division, exponents</h1>
     <p class='mb-3'>
       Math works, how cool! This follows classic order of operations as well.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>print(5 + 5) # prints 10
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>print(5 + 5) # prints 10
 print(1.1 + 5) # prints 6.1 (probably)
 print(5 * 5) # prints 25
 print(6 / 3) # prints 2
+print(3/2) # prints 1.5
+print(3//2) # integer division (will print 1)
 print(5**2) # prints 5^2 (25)
+
+</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Lists, Dicts, tuples, sets</h1>
+    <p class='mb-3'>
+      If you want to store more than 1 point of data, the simplest way is to use a list.
+    </p>
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>X = [1, 2, 3] # a list
+X.append(4) # add data to list
+first = X[0] # the first item of the list (0 based indexing woooo!)
+last = X[-1] # the last item of the list
+reverse = X[::-1] # the list, but in reverse
+no_first = X[1:] # the list without the first member [2, 3]
+# The syntax works like this: start:end:by
+X[2:0:-1] # what do you think this does?
+# A tuple is just a list, but you can't change it
+X = (1, 2, 3)
+X.append(1) # this won't work
+# A set is a list with only unique members
+X = set([1, 2, 3, 3]) # here we convert a list to a set
+print(X) # will print {1, 2, 3}
+</code></pre></div>
+    <p class='mb-3'>
+      Dictionaries or <code class='verbatim py-0.5 px-0.5 bg-gray-100'>dicts</code> are their own beast. In other languages, they are usually known as hashmaps. It consists of a set of unique "keys" associated with some data (whatever you want)
+    </p>
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>D = {"a":"t", "t":"a","g":"c", "c":"g"}
+# some people define them this way, but they are equivalent
+D = dict(a="t", t="a", g="c", c="g")
+print(D["a"]) # would print t
 </code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Logic</h1>
     <p class='mb-3'>
-      True and False! Boolean variables are true or false. The <code class='verbatim py-0.5 px-0.5 bg-gray-100'>and</code> keyword evaluates to True if both the left and right are True, the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>or</code> keyword evaluates to true if either the left or right is True. The <code class='verbatim py-0.5 px-0.5 bg-gray-100'>!</code> and <code class='verbatim py-0.5 px-0.5 bg-gray-100'>not</code> mean the same thing, they invert the output of the boolean (<code class='verbatim py-0.5 px-0.5 bg-gray-100'>not True</code> is the same as <code class='verbatim py-0.5 px-0.5 bg-gray-100'>False</code>).
+      <code class='verbatim py-0.5 px-0.5 bg-gray-100'>True</code> and <code class='verbatim py-0.5 px-0.5 bg-gray-100'>False</code>! Boolean variables are true or false. The <code class='verbatim py-0.5 px-0.5 bg-gray-100'>and</code> keyword evaluates to <code class='verbatim py-0.5 px-0.5 bg-gray-100'>True</code> if both the left and right are <code class='verbatim py-0.5 px-0.5 bg-gray-100'>True</code>, the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>or</code> keyword evaluates to <code class='verbatim py-0.5 px-0.5 bg-gray-100'>True</code> if either the left or right is <code class='verbatim py-0.5 px-0.5 bg-gray-100'>True</code>. The <code class='verbatim py-0.5 px-0.5 bg-gray-100'>not</code> keyword invert the output of the boolean (<code class='verbatim py-0.5 px-0.5 bg-gray-100'>not True</code> is the same as <code class='verbatim py-0.5 px-0.5 bg-gray-100'>False</code>).
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>X = True # X is a boolean in this case
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>X = True # X is a boolean in this case
 print(5 == 5) # outputs True
 print(5 == 3) # outputs False
 print(True and False) # outputs False
 print(True or False) # outputs True
 print (not True) # outputs False
-print (!True) # outputs False
 </code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>If</h1>
     <p class='mb-3'>
       If this, then that. The <code class='verbatim py-0.5 px-0.5 bg-gray-100'>if</code> keyword tests a logic function and runs some code if it is true. <code class='verbatim py-0.5 px-0.5 bg-gray-100'>else</code> runs if the condition is false.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>X = 5
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>X = 5
 if X == 5: # if x is equal to 5
     # then
     print("It's 5!")
 else: # otherwise
     print("It's not 5!")
-</code></pre></div>
-    <p class='mb-3'>
-      5
-    </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Functions</h1>
+</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Functions</h1>
     <p class='mb-3'>
       A function is a reusable bit of code. You can think of it as a subprogram, or a small program that you can run inside the big program. They can take arguments which can be used as variables inside the "scope" of the function.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def example_function(example_argument):
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>def example_function(example_argument):
     # in the scope of the function
     print(example_argument)
 # out of the scope of the function
@@ -1124,7 +1152,7 @@ example_function("Hi There") # What do you think this will do?
     <p class='mb-3'>
       Functions can also "return" values after processing them
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def add(number1, number2):
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>def add(number1, number2):
     return number1 + number2
 X = add(5, 6) # what do you think the value of X is?
 print(X)
@@ -1136,7 +1164,7 @@ print(X)
     <p class='mb-3'>
       A for loop runs a specific number of times and in python specifically, uses an "iterable" object as a way of determining how many times it runs. This could be a range, list, dict, or set
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'># I want to print "help" 10 times
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'># I want to print "help" 10 times
 for i in range(10):
     print("help")
     print(i) # i will print 0-9 (ranges are a bit odd)
@@ -1147,7 +1175,7 @@ for member in l:
     <p class='mb-3'>
       While loops use a condition or boolean to determine when to stop, similar to the way <code class='verbatim py-0.5 px-0.5 bg-gray-100'>if</code> works.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>X = True
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>X = True
 Y = 0
 while X: # what do you think this will do?
     if Y &lt; 10: # if Y is less then 10
@@ -1160,7 +1188,7 @@ while X: # what do you think this will do?
     <p class='mb-3'>
       Almost everything in python is an "object", or an instance of a <code class='verbatim py-0.5 px-0.5 bg-gray-100'>class</code>. An easy way to think about this is that you are an instance of class "human". You can determine the class or type of an object using the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>type</code> function.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>X = "hi there"
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>X = "hi there"
 print(type(X)) # prints &lt;class str&gt;
 X = 5
 print(type(X)) # prints &lt;class int&gt;
@@ -1170,7 +1198,7 @@ print(type(X)) # prints &lt;class float&gt;
     <p class='mb-3'>
       Each class has a different set of "methods" or functions associated with that class. The <code class='verbatim py-0.5 px-0.5 bg-gray-100'>str</code> class has an <code class='verbatim py-0.5 px-0.5 bg-gray-100'>upper()</code> function which returns the string as all upper case letters. This would not make sense for an integer, so there is no upper function for integers. Classes can also define their own variables.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>X = "hi There" # string
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>X = "hi There" # string
 print(X.upper())
 X = 5 # integer
 print(X.upper()) # returns an error
@@ -1178,7 +1206,7 @@ print(X.upper()) # returns an error
     <p class='mb-3'>
       You can also make your own classes using the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>class</code> keyword.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>class Human:
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>class Human:
     def __init__(self, name): # special function that creates the class, self is used to access class instance variables and functions
         self.name = name # creating a class variable called name and setting it to the given name
 
@@ -1195,13 +1223,81 @@ print(type(human1)) # what will this print?
     <p class='mb-3'>
       Say you wrote some code in a different file but you want to use it in your current one. You can <code class='verbatim py-0.5 px-0.5 bg-gray-100'>import</code> other python files to achieve this goal. Python has included a bunch of helpful libraries already, but more can be installed or written yourself.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>import math # built in library
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>import math # built in library
 # the math library has a lot of extra math stuff (straightforward right?)
 print(math.sin(math.pi))
 
 import numpy as np # needs to be installed (included with anaconda)
 X = np.array([1, 2, 3]) # a vector has a magnitude and a direction
 print(np.dot(X, X)) # performs the dot product
+
+</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>File IO</h1>
+    <p class='mb-3'>
+      IO stands for "in out". Our goal is to read (in) and write (out) files using python.
+    </p>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Reading Files</h2><div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'># when reading files, open them with the "r" character (r for read)
+with open("myfile.txt", "r") as f: # opens the file for reading
+    # f is the file object now
+    for line in f:
+        print(line) # prints each line of the file
+
+# if you don't want to read the file line by line in a for loop,
+# you can use the readlines() function
+lines = [] # lines is a list
+with open("myfile.txt", "r") as f:
+    lines = f.readlines()
+
+# sometimes examples will not use the "with open" syntax,
+# but with open is superior so don't do it this way
+lines = []
+f = open("myfile.txt", "r")
+lines = f.readlines()
+f.close() # when you use with open, this line is not needed
+# forgetting to close a file can lead to unintended side effects
+</code></pre></div><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Writing files</h2>
+    <p class='mb-3'>
+      There are two ways to write to a file, overwriting (w) or appending (a). appending will add the new contents to the end of the file, while overwriting will overwrite existing contents.
+    </p>
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>with open("myfile.txt", "w") as f:
+    f.write("hello world") # this will change the contents of the file to only be hello world
+with open("myfile.txt", "a") as f:
+    f.write("hello world") # this will add hello world to the end of myfile.txt
+
+</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Python wizardry</h1>
+    <p class='mb-3'>
+      This section is about things that aren't really applicable to other languages. You don't actually need this stuff to program most of the time either.
+    </p>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>List comprehension</h2>
+    <p class='mb-3'>
+      Say we want to do something to every element of a list, you could use a for loop, but they aren't that fun. Instead, you can use something called a "list comprehension" that applies a simple operation to every element of a list and returns it.
+    </p>
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>l = [1, 2, 3] # this is great, but I want to add 1 to every element!
+
+# for loop method
+new_l = []
+for i in l:
+    new_l.append(i + 1) # add one and add it to a new list
+l = new_l # set l to the new list [2, 3, 4]
+# This is totally fine, but it took 4 whole lines! Python is also kinda slow at doing this
+
+# list comprehension method
+l = [1, 2, 3]
+l = [i+1 for i in l] #whaaaaaaa
+# it only took 1 line! It is also much faster especially when the list is large
+
+</code></pre></div><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Format strings, Raw strings</h2>
+    <p class='mb-3'>
+      Python has a few special ways to define strings that are not present in other languages.
+    </p>
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'># format strings are extremly useful when you want to include variables in your strings
+X = "David"
+f_string = f"Hi, my name is {X}." # The lowercase f before the quote makes it a format string
+</code></pre></div>
+    <p class='mb-3'>
+      There are some special characters sequences that strings normally recognize. One of these is <code class='verbatim py-0.5 px-0.5 bg-gray-100'>\n</code> which means "new line".
+    </p>
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>print("Hi\nThere") # This will print two lines
+print(r"Hi\nThere") # this will print 1 line, the r before the quote makes python not recognize the \n
 </code></pre></div>
 
   <div class='flex items-center justify-center mt-2'>

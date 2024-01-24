@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} format strings are extremly useful when you want to include variables in your strings}
+\PYG{n}{X} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}David\PYGZdq{}}
+\PYG{n}{f\PYGZus{}string} \PYG{o}{=} \PYG{l+s+sa}{f}\PYG{l+s+s2}{\PYGZdq{}Hi, my name is }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{X}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s2}{.\PYGZdq{}} \PYG{c+c1}{\PYGZsh{} The lowercase f before the quote makes it a format string}
+\end{Verbatim}

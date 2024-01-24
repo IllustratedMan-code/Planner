@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{X} \PYG{o}{=} \PYG{l+m+mi}{5}
+\PYG{k}{if} \PYG{n}{X} \PYG{o}{==} \PYG{l+m+mi}{5}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} if x is equal to 5}
+    \PYG{c+c1}{\PYGZsh{} then}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}It\PYGZsq{}s 5!\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{else}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} otherwise}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}It\PYGZsq{}s not 5!\PYGZdq{}}\PYG{p}{)}
+\end{Verbatim}
