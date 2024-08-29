@@ -1,0 +1,2160 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1' />
+  <title>
+    Discrete-Structures – Planner
+  </title>
+  
+    
+      <meta property='og:description' content />
+      <meta property='og:site_name' content='Planner' />
+      <meta property='og:image' content />
+      <meta property='og:type' content='website' />
+      <meta property='og:title' content='Discrete-Structures' />
+    
+    
+      <base href='/Planner/' />
+      <link href='favicon.svg' rel='icon' />
+    
+    <script>
+  window.MathJax = {
+    startup: {
+      ready: () => {
+        MathJax.startup.defaultReady();
+      }
+    }
+  };
+</script>
+<script async id='MathJax-script' src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>
+<!-- highlight.js -->
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/hybrid.min.css' />
+<script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js'></script>
+<!-- Include languages that Emanote itself uses -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/languages/haskell.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/languages/nix.min.js'></script>
+<script>hljs.highlightAll();</script>
+
+
+<script>
+  window.MathJax = {
+    startup: {
+      ready: () => {
+        MathJax.startup.defaultReady();
+      }
+    }
+  };
+</script>
+<script async id='MathJax-script' src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>
+
+
+  
+  <link href='tailwind.css?instanceId=212e9745-c88c-4b2e-9f2a-8fbcb6418529' rel='stylesheet' type='text/css' />
+
+  <style>
+    /* Heist error element */
+    strong.error {
+      color: lightcoral;
+      font-size: 90%;
+      font-family: monospace;
+    }
+
+    /* External link icon */
+    a[data-linkicon=""]::after {
+      content: ""
+    }
+
+    a[data-linkicon=none]::after {
+      content: ""
+    }
+
+    a[data-linkicon="external"]::after {
+      content: url('data:image/svg+xml,\
+      <svg xmlns="http://www.w3.org/2000/svg" height="0.7em" viewBox="0 0 20 20"> \
+        <g style="stroke:gray;stroke-width:1"> \
+          <line x1="5" y1="5" x2="5" y2="14" /> \
+          <line x1="14" y1="9" x2="14" y2="14" /> \
+          <line x1="5" y1="14" x2="14" y2="14" /> \
+          <line x1="5" y1="5" x2="9" y2="5"  /> \
+          <line x1="10" y1="2" x2="17" y2="2"  /> \
+          <line x1="17" y1="2" x2="17" y2="9" /> \
+          <line x1="10" y1="9" x2="17" y2="2" style="stroke-width:1.0" /> \
+        </g> \
+      </svg>');
+    }
+
+    a[data-linkicon="external"][href^="mailto:"]::after {
+      content: url('data:image/svg+xml,\
+        <svg \
+          xmlns="http://www.w3.org/2000/svg" \
+          height="0.7em" \
+          fill="none" \
+          viewBox="0 0 24 24" \
+          stroke="gray" \
+          stroke-width="2"> \
+          <path \
+            stroke-linecap="round" \
+            stroke-linejoin="round" \
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /> \
+        </svg>');
+    }
+  </style>
+  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
+
+<style>
+  @font-face {
+    font-family: 'WorkSans';
+    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
+    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
+    font-display: swap;
+  }
+
+  body {
+    font-family: 'WorkSans', sans-serif;
+    font-variation-settings: 'wght' 350;
+  }
+
+  a.mavenLinkBold {
+    font-variation-settings: 'wght' 400;
+  }
+
+  strong {
+    font-variation-settings: 'wght' 500;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  header,
+  .header-font {
+    font-family: 'WorkSans', sans-serif;
+  }
+
+  h1 {
+    font-variation-settings: 'wght' 500;
+  }
+
+  h2 {
+    font-variation-settings: 'wght' 400;
+  }
+
+  h3 {
+    font-variation-settings: 'wght' 300;
+  }
+</style>
+
+
+  
+  <link rel='stylesheet' href='_emanote-static/stork/flat.css' />
+<!-- Custom Stork-search styling for Emanote -->
+<style>
+  #stork-search-container {
+    z-index: 1000;
+    background-color: rgb(15 23 42/.8);
+  }
+
+  .stork-overflow-hidden-important {
+    overflow: hidden !important;
+  }
+</style>
+
+
+<script src='_emanote-static/stork/stork.js'></script>
+
+  
+    <script data-emanote-base-url='/Planner/'>
+      window.emanote = {};
+      window.emanote.stork = {
+        searchShown: false,
+        toggleSearch: function () {
+          document.getElementById('stork-search-container').classList.toggle('hidden');
+          window.emanote.stork.searchShown = document.body.classList.toggle('stork-overflow-hidden-important');
+          if (window.emanote.stork.searchShown) {
+            document.getElementById('stork-search-input').focus();
+          }
+        },
+        clearSearch: function () {
+          document.getElementById('stork-search-container').classList.add('hidden');
+          document.body.classList.remove('stork-overflow-hidden-important');
+          window.emanote.stork.searchShown = false;
+        },
+
+        init: function () {
+          const indexName = 'emanote-search'; // used to match input[data-stork] attribute value
+          const baseUrl = document.currentScript.getAttribute('data-emanote-base-url') || '/';
+          const indexUrl = baseUrl + '-/stork.st';
+          if (document.readyState !== 'complete') {
+            window.addEventListener('load', function () {
+              stork.initialize(baseUrl + '_emanote-static/stork/stork.wasm');
+              stork.register(indexName, indexUrl);
+            });
+
+            document.addEventListener('keydown', event => {
+              if (window.emanote.stork.searchShown && event.key === 'Escape') {
+                window.emanote.stork.clearSearch();
+                event.preventDefault();
+              } else if ((event.key == 'k' || event.key == 'K') && (event.ctrlKey || event.metaKey)) {
+                window.emanote.stork.toggleSearch();
+                event.preventDefault();
+              }
+            });
+          } else {
+            // Override existing on Ema's hot-reload
+            stork.register(indexName, indexUrl, { forceOverwrite: true });
+          }
+        }
+      };
+
+      window.emanote.stork.init();
+    </script>
+  
+
+</head>
+
+<!-- DoNotFormat -->
+
+
+
+<!-- DoNotFormat -->
+
+<body class='bg-gray-400 overflow-y-scroll'>
+  
+    <div class='container mx-auto'>
+
+      <nav id='breadcrumbs' class='w-full text-gray-700 md:hidden'>
+  <div class='flex justify-left'>
+    <div class='w-full px-2 py-2 bg-gray-50'>
+      <ul class='flex flex-wrap text-lg'>
+        <li class='inline-flex items-center'>
+          
+            
+              <img style='width: 1rem;' src='favicon.svg' />
+            
+          
+        </li>
+        
+          
+            <li class='inline-flex items-center'>
+              <a class='px-1 font-bold' href=''>
+                David’s Notes
+              </a>
+              <svg fill='currentColor' viewBox='0 0 20 20' class='w-auto h-5 text-gray-400'>
+                <path fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd'></path>
+              </svg>
+            </li>
+          
+            <li class='inline-flex items-center'>
+              <a class='px-1 font-bold' href='OldClasses.html'>
+                OldClasses
+              </a>
+              <svg fill='currentColor' viewBox='0 0 20 20' class='w-auto h-5 text-gray-400'>
+                <path fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd'></path>
+              </svg>
+            </li>
+          
+            <li class='inline-flex items-center'>
+              <a class='px-1 font-bold' href='OldClasses/Discrete-Structures.html'>
+                Discrete-Structures
+              </a>
+              <svg fill='currentColor' viewBox='0 0 20 20' class='w-auto h-5 text-gray-400'>
+                <path fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd'></path>
+              </svg>
+            </li>
+          
+        
+      </ul>
+    </div>
+    <button class='inline px-2 py-1 bg-gray-50 outline-none cursor-pointer focus:outline-none' title='Search (Ctrl+K)' type='button' onclick='window.emanote.stork.toggleSearch()'>
+      <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-green-700' f
+ fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
+  <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+</svg>
+    </button>
+    <button class='inline px-2 py-1 text-white bg-green-600 outline-none cursor-pointer focus:outline-none' title='Toggle sidebar' type='button' onclick="toggleHidden('sidebar')">
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6h16M4 12h16M4 18h16'></path>
+      </svg>
+    </button>
+    <script>
+      function toggleHidden(elemId) {
+        document.getElementById(elemId).classList.toggle("hidden");
+      }
+    </script>
+  </div>
+</nav>
+
+      <div id='container' class='flex flex-nowrap flex-col md:flex-row bg-gray-50 md:mt-8 md:shadow-2xl md:mb-8'>
+        <!-- Sidebar column -->
+        <nav id='sidebar' class='flex-shrink hidden leading-relaxed md:block md:sticky md:top-0 md:h-full md:w-48 xl:w-64'>
+          <div class='px-2 py-2 text-gray-800'>
+            <div id='indexing-links' class='flex flex-row float-right p-2 space-x-2 text-gray-500'>
+              <a href='-/tags.html' title='View tags'>
+                <svg style='width: 1rem;' class='hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
+                  </path>
+                </svg>
+              </a>
+              <a href='-/all.html' title='Expand full tree'>
+                <svg style='width: 1rem;' class='hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
+                  </path>
+                </svg>
+              </a>
+              <a title='Search (Ctrl+K)' class='cursor-pointer' onclick='window.emanote.stork.toggleSearch()'>
+                <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-green-700' f
+ fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
+  <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+</svg>
+              </a>
+            </div>
+
+            <div id='site-logo' class='pl-2'>
+              <div class='flex items-center my-2 space-x-2 justify-left'>
+                <a href='' title='Go to Home'>
+                  
+                    
+                      <!-- The style width attribute here is to prevent huge
+                      icon from displaying at those rare occasions when Tailwind
+                      hasn't kicked in immediately on page load
+                      -->
+                      <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
+                    
+                  
+                </a>
+                <a class='font-bold truncate' title='Go to Home' href=''>
+                  Home
+                </a>
+              </div>
+            </div>
+
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+      
+      
+    
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
+        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
+        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      </svg>
+      
+  
+    <a class='font-bold hover:underline truncate' title='OldClasses' href='OldClasses.html'>
+      OldClasses
+    </a>
+    
+      
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='AI' href='OldClasses/AI.html'>
+      AI
+    </a>
+    
+      
+        <span class='text-gray-300' title='4 children inside'>
+          4
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Automata' href='OldClasses/Automata.html'>
+      Automata
+    </a>
+    
+      
+        <span class='text-gray-300' title='6 children inside'>
+          6
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+      
+      
+    
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
+        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
+        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      </svg>
+      
+  
+    <a class='font-bold hover:underline truncate' title='Discrete-Structures' href='OldClasses/Discrete-Structures.html'>
+      Discrete-Structures
+    </a>
+    
+      
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+    
+      <!-- Variable bindings for this tree-->
+  
+  
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'>
+        </path>
+      </svg>
+      
+  
+    <a class='font-bold text-green-600 hover:underline truncate' title='Discrete-Structures' href='OldClasses/Discrete-Structures/Discrete-Structures.html'>
+      Discrete-Structures
+    </a>
+    
+      
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+    
+  
+</div>
+    
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Intelligent_Data_Design' href='OldClasses/Intelligent_Data_Design.html'>
+      Intelligent_Data_Design
+    </a>
+    
+      
+        <span class='text-gray-300' title='31 children inside'>
+          31
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Networking' href='OldClasses/Networking.html'>
+      Networking
+    </a>
+    
+      
+        <span class='text-gray-300' title='7 children inside'>
+          7
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Operating_Systems' href='OldClasses/Operating_Systems.html'>
+      Operating_Systems
+    </a>
+    
+      
+        <span class='text-gray-300' title='2 children inside'>
+          2
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='OrganicChemistry' href='OldClasses/OrganicChemistry.html'>
+      OrganicChemistry
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='ParallelComputing' href='OldClasses/ParallelComputing.html'>
+      ParallelComputing
+    </a>
+    
+      
+        <span class='text-gray-300' title='4 children inside'>
+          4
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Physics2001' href='OldClasses/Physics2001.html'>
+      Physics2001
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='bioinformatics' href='OldClasses/bioinformatics.html'>
+      bioinformatics
+    </a>
+    
+      
+        <span class='text-gray-300' title='2 children inside'>
+          2
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='comp-systems' href='OldClasses/comp-systems.html'>
+      comp-systems
+    </a>
+    
+      
+        <span class='text-gray-300' title='2 children inside'>
+          2
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='ecology' href='OldClasses/ecology.html'>
+      ecology
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='intro-to-bioinformatics' href='OldClasses/intro-to-bioinformatics.html'>
+      intro-to-bioinformatics
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='programming-languages' href='OldClasses/programming-languages.html'>
+      programming-languages
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
+        </path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='README' href='README.html'>
+      README
+    </a>
+    
+      
+        
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='non-classes' href='non-classes.html'>
+      non-classes
+    </a>
+    
+      
+        <span class='text-gray-300' title='2 children inside'>
+          2
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+
+          </div>
+        </nav>
+
+        <!-- Main body column -->
+        <div class='flex-1 w-full overflow-x-auto bg-white'>
+          <main class='px-4 py-4'>
+            <h1 class='flex items-end justify-center mb-4 p-3 bg-green-100 text-5xl font-extrabold text-black rounded'>
+  <a class='z-40 tracking-tighter '>
+    Discrete-Structures
+  </a>
+</h1>
+            <article class='overflow-auto'>
+  <!-- What goes in this file will appear on top of note body-->
+  <pre class='pandoc-raw-"org"'>#+hugo_base_dir: ../</pre><pre class='pandoc-raw-"org"'>#+STARTUP: show2levels</pre><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4' export_hugo_section='Discrete-Structures' export_file_name='_index'>Discrete Structures</h1>
+    <p class='mb-3'>
+      Discrete Structures as taught by Ken Berman
+    </p>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2' export_hugo_section**='Set Theory' export_file_name='_index'>Set Theory</h2><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Sets</h3>
+    <p class='mb-3'>
+      unordered collection (group) of zero or more distinct objects
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          set theory (operations about sets)
+        </li>
+      
+        <li>
+          S,T,U,A,B … for sets
+        </li>
+      
+        <li>
+          List elements in curly braces <code class='verbatim py-0.5 px-0.5 bg-gray-100'>{a, b, c}</code>
+        </li>
+      
+        <li>
+          Sets are equal if and only if they contain the same elements.
+        </li>
+      
+    </ul>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Set Builder
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(\{x:P(x)\}\)</span>, <span class='math inline'>\(\{x|P(x)\}\)</span>.
+        </li>
+      
+        <li>
+          The set of all x such that P(x)
+        </li>
+      
+        <li>
+          {x: x is an integer where x&gt;0 and x&lt;5}
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Set relations
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(\forall\)</span> for all
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\rightarrow\)</span> implies
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\leftrightarrow\)</span> if and only if
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\exists\)</span> exists
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\nexists\)</span> does not exist
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\wedge\)</span> and
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\vee\)</span> or
+        </li>
+      
+        <li>
+          <span class='math inline'>\(x\in S\)</span> x in S
+        </li>
+      
+        <li>
+          <span class='math inline'>\(x \notin S\)</span> x not in S
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Empty set
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(\varnothing = \{\}\)</span>
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Subset and superset
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(S\subseteq T\)</span> subset
+        </li>
+      
+        <li>
+          <span class='math inline'>\(S \supseteq T\)</span> superset
+        </li>
+      
+        <li>
+          <span class='math inline'>\(S\subset T\)</span> proper set
+        </li>
+      
+        <li>
+          <span class='math inline'>\(S \supset T\)</span> proper superset
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Cardinality
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(|S|\)</span> Cardinality of S or the number of elements in S
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Universal Set
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(U\)</span> is the set containing all other sets (in the problem)
+        </li>
+      
+        <li>
+          universe of discorse
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Union
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(\{a,b,c\} \cup \{c,e\} = \{a,b,c,e\}\)</span>
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Intersection
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(\{a,b,c\} \cap \{c,e\} = \{c\}\)</span>
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Disjointedness
+    </p>
+  
+    <p class='mb-3'>
+      <span class='math inline'>\(A \cap B = \varnothing\)</span>
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Set difference
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(A - B\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\{a,b,c\} - \{c,e\} = \{a, b\}\)</span>
+        </li>
+      
+        <li>
+          Set of all elements in A but not B
+        </li>
+      
+        <li>
+          Compliment with universal set
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Compliment
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(\bar A = U - A\)</span>
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Symmetric difference
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(A \bigoplus B = A \cup B - A \cap B\)</span>
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Cartesian product
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(A \times B = \{(a,b) | a \in A \text{\: and \:} b \in B\}\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(|A| \times |B| = |A \times B|\)</span>
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Generalized Union and Intersection
+    </p>
+  
+    <p class='mb-3'>
+      Union or intersection of many sets.
+    </p>
+  
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2' export_hugo_section**='Set Theory' export_file_name='_index'>Standard Proof techniques</h2><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Disproof by Counterexample</h3>
+    <p class='mb-3'>
+      Shows that a conjecture is not true by pointing out an example where the conjecture does not hold.
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          No nickels
+        </li>
+      
+        <li>
+          1 quarter + 5 pennies
+        </li>
+      
+        <li>
+          3 dimes
+        </li>
+      
+        <li>
+          Greedy method is not appropriate with limited change
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Proof by Contradiction</h3>
+    <p class='mb-3'>
+      Proof that the opposite cannot be true.
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Square root of 2 is irrational
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(\sqrt 2 = a/b\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(a/b\)</span> is simplified
+        </li>
+      
+        <li>
+          a or b or both must be odd (otherwise could be simplified)
+        </li>
+      
+        <li>
+          <span class='math inline'>\(2 = a^2/b^2\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(a^2 = 2 ** b^2\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(a^2\)</span> must be even (2 times any number is even)
+        </li>
+      
+        <li>
+          <span class='math inline'>\(a\)</span> is even as well (odd times odd is odd)
+        </li>
+      
+        <li>
+          <span class='math inline'>\(a = 2 ** k\)</span> where k is a / 2
+        </li>
+      
+        <li>
+          <span class='math inline'>\(2 = (2 ** k)^2/b^2 \rightarrow b^2 = 2k^2\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(b\)</span> is also odd by this method
+        </li>
+      
+        <li>
+          <span class='math inline'>\(a\)</span> and <span class='math inline'>\(b\)</span> cannot be odd
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\sqrt 2\)</span> cannot be rational
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2' export_hugo_section**='Trees' export_file_name='_index'>Trees</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          set of nodes
+        </li>
+      
+        <li>
+          first node is root
+        </li>
+      
+        <li>
+          every other node has a "parent" node
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Two Trees</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Every node that is not a leaf has 2 child nodes
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Binary Trees</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Every node has a maximum of 2 children
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2' export_hugo_section='Discrete-Structures/Logic' export_file_name='_index'>Logic</h2><h3 id='Logic' class='mt-6 mb-2 text-3xl font-bold border-b-2'>Boolean operators</h3><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Negation</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>NOT</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Unary</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(\neg\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Conjunction</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>AND</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Binary</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(\wedge\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Disjunction</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>OR</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Binary</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(\vee\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Exclusive OR</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>XOR</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Binary</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(\bigoplus\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Implication</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>IMPLIES</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Binary</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(\rightarrow\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Bi-conditional</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>IFF</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Binary</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(\leftrightarrow\)</span></td></tr></tbody></table><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Negation</h3><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>p</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(\neg p\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr></tbody></table><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Conjunction</h3><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>p</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>q</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(p \wedge q\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr></tbody></table><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Disjunction</h3><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>p</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>q</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(p \vee q\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr></tbody></table><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Exclusive Or</h3><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>p</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>q</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(p \bigoplus q\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr></tbody></table><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Implication</h3><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>p</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>q</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(p \rightarrow q\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr></tbody></table><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Bi-conditional</h3><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>p</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>q</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(p \leftrightarrow q\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr></tbody></table><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2' export_hugo_section**='Normal Forms' export_file_name='_index'>Normal forms</h2><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Disjunctive Normal Form (DNF)</h3><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>p</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>q</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>r</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(f\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Clause Conjunction</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(\neg p \wedge \neg q \vee \neg r\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(\neg p \wedge \neg q \wedge r\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(\neg p \wedge q \wedge r\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(p \wedge q \wedge \neg r\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(p \wedge q \wedge r\)</span></td></tr></tbody></table>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Take all of the true statements in the table and write a clause for them
+        </li>
+      
+        <li>
+          Concatenate all of the true clauses together with a disjunction statement <span class='math inline'>\(\vee\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\neg f \Leftrightarrow (\neg p \wedge \neg q \wedge \neg r) \vee (\neg p \wedge q \wedge \neg r) \vee ( \neg p \wedge q \wedge r) \vee (p \wedge q \wedge r) \vee (p \wedge q \wedge \neg r) \vee (p \wedge q \wedge r)\)</span>
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Conjunctive Normal Form (CNF)</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Negate the DNF form
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\neg (\neg f) \Leftrightarrow f\)</span>
+        </li>
+      
+        <li>
+          Use demorgans law to distribute
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Expression Trees</h3>
+    <p class='mb-3'>
+      A binary tree representation of the logical expression
+    </p>
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='latex language-latex' file='images/expressionTree.png'>\usetikzlibrary{graphs,graphdrawing, arrows.meta}
+\usegdlibrary{trees}
+\begin{tikzpicture}
+  \graph[binary tree layout, edges={black}]{
+    "$(p \wedge q) \vee r$" -- {"$p \wedge q$" -- {"$p$", "$q$"}, "$r$"}
+
+};
+
+\end{tikzpicture}
+</code></pre></div><pre class='pandoc-raw-"org"'>#+attr_html: :width 200px</pre><pre class='pandoc-raw-"org"'>#+attr_org: :width 100px</pre><span title='Link is broken'><s>![](images/expressionTree.png)</s>❌</span><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2' export_hugo_section**='Set Relations' export_file_name='_index'>Set relations</h2><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>reflexive</h3>
+    <p class='mb-3'>
+      reflexive if, for every element <span class='math inline'>\(a \in A\)</span> we have <span class='math inline'>\(aRa \Rightarrow (a, a) \in R\)</span>
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\( A = \{(a, a): a \in A\}\)</span>
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Symmetric</h3>
+    <p class='mb-3'>
+      symmetric iff <span class='math inline'>\((x,y) \in R \wedge (y,x) \in R\)</span>
+    </p>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Transitive</h3>
+    <p class='mb-3'>
+      Iff R relates <span class='math inline'>\(a\)</span> to <span class='math inline'>\(b\)</span> and <span class='math inline'>\(b\)</span> to <span class='math inline'>\( c\)</span> then <span class='math inline'>\(a \)</span> relates to <span class='math inline'>\(c\)</span>
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(a &lt; b &lt; c \rightarrow a &lt; c\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(a = b = c \rightarrow a = c\)</span>
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2' export_hugo_section**='Modular Arithmetic' export_file_name='_index'>Modular arithmetic</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(x \equiv y (\text{mod} \: n) \leftrightarrow (x-y) \: \text {mod} \: n = 0\)</span>
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Addition Tables</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Z mod 4
+    </p>
+  <table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>+</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\((0 + 0) \mod 4 = 0\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\((1 + 0) \mod 4 = 1\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\((2 + 0) \mod 4 = 1\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\((3 + 0) \mod 4 = 3\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td></tr></tbody></table>
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Multiplication tables</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Z mod 4
+    </p>
+  <table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>x</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\((0 \cdot 0) \mod 4 = 0\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\((1 \cdot 0) \mod 4 = 0\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\((2 \cdot 0) \mod 4 = 0\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\((3 \cdot 0) \mod 4 = 0\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td></tr></tbody></table>
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2' export_hugo_section='Discrete-Structures/Exam 1 Review' export_file_name='_index'>Exam 1 review</h2>
+    <p class='mb-3'>
+      <span title='Link is broken'><s>[All-Slides](pdfs/combine.pdf)</s>❌</span>
+    </p>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Set Theory</h3>
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Union
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(S = A \cup B\)</span>
+        </li>
+      
+    </ul>
+  <table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(A\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(B\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(A \cup B\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr></tbody></table>
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Intersection
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(S = A \cap B\)</span>
+        </li>
+      
+    </ul>
+  <table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(A\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(B\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(A \cup B\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr></tbody></table>
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Difference
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(S = A - B\)</span>
+        </li>
+      
+    </ul>
+  <table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(A\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(B\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(A \cup B\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr></tbody></table>
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Symmetric difference
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(S = A \bigoplus B\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\((a \in S \iff (a \in A \quad \text{and} \quad a \ni B)\)</span>
+        </li>
+      
+    </ul>
+  <table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(A\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(B\)</span></td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'><span class='math inline'>\(A \cup B\)</span></td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>T</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>F</td></tr></tbody></table>
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Demorgans law
+    </p>
+  
+    <p class='mb-3'>
+      <span class='math inline'>\(\neg (A \cup B) = \neg A \cap \neg B\)</span>
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Principle of Inclusion-Exclusion
+    </p>
+  
+    <p class='mb-3'>
+      <span class='math inline'>\(|A \cup B \cup C| = |A| + |B| + |C| - |A \cap B| - |A \cap C| - |B \cap C| + |A \cap B \cap C|\)</span>
+    </p>
+  
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Proof Techniques</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Counterexample
+        </li>
+      
+        <li>
+          Contradiction
+        </li>
+      
+        <li>
+          Induction
+        </li>
+      
+        <li>
+          Trees
+        </li>
+      
+    </ul>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Trees
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          n nodes
+        </li>
+      
+        <li>
+          n-1 edges
+        </li>
+      
+        <li>
+          leaf nodes = intermediate nodes + 1
+        </li>
+      
+        <li>
+          Total nodes = intermediate nodes + leaf nodes
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>power sets</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(A= \{a, b, c\}\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(P(A) = \varnothing , \{a\}, \{b\}, \{c\}, \{a, b\}, \{a, c\}, \{b, c\}, \{a, b, c\}\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(|P(A)| = 2^{|A|} = 2^3 = 8\)</span>
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Propositional logic</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          All F = contradiction
+        </li>
+      
+        <li>
+          All T = Tautology
+        </li>
+      
+        <li>
+          CNF conjunction of all disjunction clauses, unsatisfiable when all combinations of clauses are present
+        </li>
+      
+        <li>
+          DNF disjunction of all conjunction clauses
+        </li>
+      
+        <li>
+          <a href='https://illustratedman-code.github.io/GuideToCS/discrete-structures/logic/' class='text-green-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Logic</a>
+        </li>
+      
+    </ul>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      NP and NP-completeness
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          P = problem that can be solved in polynomial time
+        </li>
+      
+        <li>
+          NP = non-deterministic polynomial (unknown if it can be solved in polynomial time)
+        </li>
+      
+        <li>
+          NP-complete = any NP problem A can be reduced to problem B
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Functions and relations</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          One to one -&gt; (injective)
+        </li>
+      
+        <li>
+          Onto () -&gt; surjective
+        </li>
+      
+        <li>
+          One to one and Onto -&gt; Bijective
+        </li>
+      
+        <li>
+          Density
+        </li>
+      
+        <li>
+          Equivalence relations
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Reflexive, <span class='math inline'>\(a, a \in R \: \text{for every a in A}\)</span>
+        </li>
+      
+        <li>
+          Symmetric, <span class='math inline'>\((b, a \in R\: \text{ whenver} \:  a, b \in R\)</span>
+        </li>
+      
+        <li>
+          Transitive, <span class='math inline'>\((a, b) \in R \text{ and } (b, c) \in R \text{ then } (a, c) \in R \text{ where } a, b, c \in A \)</span>
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          Asymmetric, <span class='math inline'>\((a, b) \in R \text{ implies } (b, a) \not\in R\)</span>
+        </li>
+      
+        <li>
+          AntiSymmetric, assymetric except for the case <span class='math inline'>\((a, b) \in R \rightarrow (b, a) \in R\)</span> where <span class='math inline'>\(b\)</span> is equal to <span class='math inline'>\(a\)</span>
+        </li>
+      
+        <li>
+          Poset (partially ordered set)
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          reflexive
+        </li>
+      
+        <li>
+          Antisymmetric
+        </li>
+      
+        <li>
+          Transitive
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Mod Arithmetic</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\((x + y) \mod k = (x \mod k \quad + \quad y \mod k) \mod k \)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(b^{n-1} = 1 \mod n \)</span>
+        </li>
+      
+    </ul>
+  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2' export_hugo_section='Discrete-Structures/Exam 2 Review' export_file_name='_index'>Exam 2 review</h2>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span title='Link is broken'><s>[All-Slides](pdfs/combine2.pdf)</s>❌</span> after the first exam.
+        </li>
+      
+        <li>
+          <span title='Link is broken'><s>[All Topics](pdfs/Topic Coverage for Test 2 CS2071 Fall 2021-1.pdf)</s>❌</span> most formulas are in this one.
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>RSA Public Key Cryptosystem</h3>
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Extended GCD to compute private key
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span class='math inline'>\(\varphi(n) = (p-1)(q-1)\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(se + t\varphi(n) = g = 1 = gcd(e, \varphi(n))\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(se \equiv 1(\mod \varphi (n))\)</span>
+        </li>
+      
+        <li>
+          <span class='math inline'>\(s = e^{-1}(\mod \varphi(n))\)</span>
+        </li>
+      
+    </ul>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      R implementation of GCD
+    </p>
+  
+    <p class='mb-3'>
+      This is an implementation of Eculid's recursive GCD algorithm. Should be easy to convert to python.
+    </p>
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='r language-r' org-language='R'>euclid &lt;- function(a, b) {
+  print(c(a, b))
+  if (b == 0) {
+    return(a)
+  }
+  euclid(b, a %% b)
+}
+</code></pre></div>
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Intro to Graph Theory, Euler's Degree Formula</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          A Graph is a series of vertices (nodes) that are connected by edges
+        </li>
+      
+        <li>
+          Degree (in this class) is equal to the number of edges that a node is connected to
+        </li>
+      
+        <li>
+          Complete graph is a graph where every node is connected to every other node.
+        </li>
+      
+        <li>
+          A subgraph is a graph made from a subset of nodes in another graph
+        </li>
+      
+        <li>
+          An induced subgraph must have the same edges that the parent graph had.
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Graph Isomorphism, Path, Coloring</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Isomorphic graphs are identical except for node position, connections are the same
+        </li>
+      
+        <li>
+          nodes in colored Graphs are colored to be different than all of the adjacent nodes.
+        </li>
+      
+        <li>
+          A path is a sequence of vertices connected by edges within a graph. Vertices may be repeated. A path is the same as a trail.
+        </li>
+      
+        <li>
+          Simple paths are paths where vertices are not repeated.
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Planar Graphs and Euler's Polyhedron Formula</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <span title='Link is broken'><s>[Supplemental Notes For Planar Graph (Kuratowski)](pdfs/SupplementalNotesPlanarGraphs.pdf)</s>❌</span>
+        </li>
+      
+        <li>
+          Planar graphs are graphs that can be represented isomorphically without any overlapping edges.
+        </li>
+      
+        <li>
+          <span class='math inline'>\(\sum_{g \in F}\deg(g) = 2m\)</span> where g is a vertex in face F, and m is the number of edges
+        </li>
+      
+        <li>
+          5 regular polyhedra
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          Tetrahedron
+        </li>
+      
+        <li>
+          Cube
+        </li>
+      
+        <li>
+          Dodecahedron
+        </li>
+      
+        <li>
+          Icosahedron
+        </li>
+      
+        <li>
+          Octahedron
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Spanning Trees and Eulerian Circuits</h3>
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Eulerian path contains all edges in a graph exactly once
+        </li>
+      
+        <li>
+          Eulerian circuit is a circuit that contains all edges exactly once.
+        </li>
+      
+        <li>
+          Simple path that contains every vertex in the graph is a Hamiltonian Path
+        </li>
+      
+        <li>
+          Hamiltonian cycle is a cycle that contains every vertex in the path
+        </li>
+      
+    </ul>
+  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Hypercubes and hamiltonian Cycles</h3><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Implementation of Graphs and Digraphs</h3><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Digraphs</h3><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>The Web Digraph and PageRank</h3><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Intro to Combinatorics and Counting</h3><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Permutations and Combinations</h3><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Identities, Binomial Theorem, Pascals Triangle</h3><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Exam 3 review</h2>
+    <p class='mb-3'>
+      <span title='Link is broken'><s>[Link to all Slides](pdfs/combine3.pdf)</s>❌</span>
+    </p>
+  
+
+  <div class='flex items-center justify-center mt-2'>
+  
+    
+      <a class='text-gray-300 hover:text-green-600 text-sm' title='Edit this page on GitHub' href='https://github.com/IllustratedMan-code/Planner/blob/main/OldClasses/Discrete-Structures/Discrete-Structures.org'>
+        <svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'></path>
+        </svg>
+      </a>
+    
+  
+</div>
+</article>
+            <div class='flex flex-col lg:flex-row lg:space-x-2'>
+              
+              
+            </div>
+            
+  <section class='flex flex-wrap items-end justify-center my-4 space-x-2 space-y-2 font-mono text-sm'>
+    
+  </section>
+
+            <!-- What goes in this file will at the very end of the main div -->
+          </main>
+        </div>
+      </div>
+      <footer class='flex items-center justify-center mt-2 mb-8 space-x-4 text-center text-gray-800'>
+  
+  <div>
+    <a href='' title='Go to Home page'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'></path>
+      </svg>
+    </a>
+  </div>
+  <div>
+    <a href='-/all.html' title='View Index'>
+      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
+        </path>
+      </svg>
+    </a>
+  </div>
+  <div>
+    <a href='https://emanote.srid.ca' target='_blank' title='Generated by Emanote 1.0.1.6'>
+      <img class='w-6 h-6 hover:text-green-700' src='_emanote-static/emanote-logo.svg' />
+    </a>
+  </div>
+  <div>
+    <a href='-/tags.html' title='View tags'>
+      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
+        </path>
+      </svg>
+    </a>
+  </div>
+  <div>
+    <a href='-/tasks.html' title='View tasks'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+      </svg>
+    </a>
+  </div>
+</footer>
+    </div>
+  
+  <div id='stork-search-container' class='hidden fixed w-screen h-screen inset-0 backdrop-filter backdrop-blur-sm'>
+  <div class='fixed w-screen h-screen inset-0' onclick='window.emanote.stork.toggleSearch()'></div>
+
+  <div class='container mx-auto p-10 mt-10'>
+    <div class='stork-wrapper-flat container mx-auto'>
+      <input id='stork-search-input' data-stork='emanote-search' class='stork-input' placeholder='Search (Ctrl+K) ...' />
+      <div data-stork='emanote-search-output' class='stork-output'></div>
+    </div>
+  </div>
+</div>
+  
+    
+  
+</body>
+
+</html>

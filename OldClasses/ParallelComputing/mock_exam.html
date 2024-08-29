@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1' />
+  <title>
+    mock_exam – Planner
+  </title>
+  
+    
+      <meta property='og:description' content />
+      <meta property='og:site_name' content='Planner' />
+      <meta property='og:image' content />
+      <meta property='og:type' content='website' />
+      <meta property='og:title' content='mock_exam' />
+    
+    
+      <base href='/Planner/' />
+      <link href='favicon.svg' rel='icon' />
+    
+    <script>
+  window.MathJax = {
+    startup: {
+      ready: () => {
+        MathJax.startup.defaultReady();
+      }
+    }
+  };
+</script>
+<script async id='MathJax-script' src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>
+<!-- highlight.js -->
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/hybrid.min.css' />
+<script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js'></script>
+<!-- Include languages that Emanote itself uses -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/languages/haskell.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/languages/nix.min.js'></script>
+<script>hljs.highlightAll();</script>
+
+
+<script>
+  window.MathJax = {
+    startup: {
+      ready: () => {
+        MathJax.startup.defaultReady();
+      }
+    }
+  };
+</script>
+<script async id='MathJax-script' src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>
+
+
+  
+  <link href='tailwind.css?instanceId=212e9745-c88c-4b2e-9f2a-8fbcb6418529' rel='stylesheet' type='text/css' />
+
+  <style>
+    /* Heist error element */
+    strong.error {
+      color: lightcoral;
+      font-size: 90%;
+      font-family: monospace;
+    }
+
+    /* External link icon */
+    a[data-linkicon=""]::after {
+      content: ""
+    }
+
+    a[data-linkicon=none]::after {
+      content: ""
+    }
+
+    a[data-linkicon="external"]::after {
+      content: url('data:image/svg+xml,\
+      <svg xmlns="http://www.w3.org/2000/svg" height="0.7em" viewBox="0 0 20 20"> \
+        <g style="stroke:gray;stroke-width:1"> \
+          <line x1="5" y1="5" x2="5" y2="14" /> \
+          <line x1="14" y1="9" x2="14" y2="14" /> \
+          <line x1="5" y1="14" x2="14" y2="14" /> \
+          <line x1="5" y1="5" x2="9" y2="5"  /> \
+          <line x1="10" y1="2" x2="17" y2="2"  /> \
+          <line x1="17" y1="2" x2="17" y2="9" /> \
+          <line x1="10" y1="9" x2="17" y2="2" style="stroke-width:1.0" /> \
+        </g> \
+      </svg>');
+    }
+
+    a[data-linkicon="external"][href^="mailto:"]::after {
+      content: url('data:image/svg+xml,\
+        <svg \
+          xmlns="http://www.w3.org/2000/svg" \
+          height="0.7em" \
+          fill="none" \
+          viewBox="0 0 24 24" \
+          stroke="gray" \
+          stroke-width="2"> \
+          <path \
+            stroke-linecap="round" \
+            stroke-linejoin="round" \
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /> \
+        </svg>');
+    }
+  </style>
+  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
+
+<style>
+  @font-face {
+    font-family: 'WorkSans';
+    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
+    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
+    font-display: swap;
+  }
+
+  body {
+    font-family: 'WorkSans', sans-serif;
+    font-variation-settings: 'wght' 350;
+  }
+
+  a.mavenLinkBold {
+    font-variation-settings: 'wght' 400;
+  }
+
+  strong {
+    font-variation-settings: 'wght' 500;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  header,
+  .header-font {
+    font-family: 'WorkSans', sans-serif;
+  }
+
+  h1 {
+    font-variation-settings: 'wght' 500;
+  }
+
+  h2 {
+    font-variation-settings: 'wght' 400;
+  }
+
+  h3 {
+    font-variation-settings: 'wght' 300;
+  }
+</style>
+
+
+  
+  <link rel='stylesheet' href='_emanote-static/stork/flat.css' />
+<!-- Custom Stork-search styling for Emanote -->
+<style>
+  #stork-search-container {
+    z-index: 1000;
+    background-color: rgb(15 23 42/.8);
+  }
+
+  .stork-overflow-hidden-important {
+    overflow: hidden !important;
+  }
+</style>
+
+
+<script src='_emanote-static/stork/stork.js'></script>
+
+  
+    <script data-emanote-base-url='/Planner/'>
+      window.emanote = {};
+      window.emanote.stork = {
+        searchShown: false,
+        toggleSearch: function () {
+          document.getElementById('stork-search-container').classList.toggle('hidden');
+          window.emanote.stork.searchShown = document.body.classList.toggle('stork-overflow-hidden-important');
+          if (window.emanote.stork.searchShown) {
+            document.getElementById('stork-search-input').focus();
+          }
+        },
+        clearSearch: function () {
+          document.getElementById('stork-search-container').classList.add('hidden');
+          document.body.classList.remove('stork-overflow-hidden-important');
+          window.emanote.stork.searchShown = false;
+        },
+
+        init: function () {
+          const indexName = 'emanote-search'; // used to match input[data-stork] attribute value
+          const baseUrl = document.currentScript.getAttribute('data-emanote-base-url') || '/';
+          const indexUrl = baseUrl + '-/stork.st';
+          if (document.readyState !== 'complete') {
+            window.addEventListener('load', function () {
+              stork.initialize(baseUrl + '_emanote-static/stork/stork.wasm');
+              stork.register(indexName, indexUrl);
+            });
+
+            document.addEventListener('keydown', event => {
+              if (window.emanote.stork.searchShown && event.key === 'Escape') {
+                window.emanote.stork.clearSearch();
+                event.preventDefault();
+              } else if ((event.key == 'k' || event.key == 'K') && (event.ctrlKey || event.metaKey)) {
+                window.emanote.stork.toggleSearch();
+                event.preventDefault();
+              }
+            });
+          } else {
+            // Override existing on Ema's hot-reload
+            stork.register(indexName, indexUrl, { forceOverwrite: true });
+          }
+        }
+      };
+
+      window.emanote.stork.init();
+    </script>
+  
+
+</head>
+
+<!-- DoNotFormat -->
+
+
+
+<!-- DoNotFormat -->
+
+<body class='bg-gray-400 overflow-y-scroll'>
+  
+    <div class='container mx-auto'>
+
+      <nav id='breadcrumbs' class='w-full text-gray-700 md:hidden'>
+  <div class='flex justify-left'>
+    <div class='w-full px-2 py-2 bg-gray-50'>
+      <ul class='flex flex-wrap text-lg'>
+        <li class='inline-flex items-center'>
+          
+            
+              <img style='width: 1rem;' src='favicon.svg' />
+            
+          
+        </li>
+        
+          
+            <li class='inline-flex items-center'>
+              <a class='px-1 font-bold' href=''>
+                David’s Notes
+              </a>
+              <svg fill='currentColor' viewBox='0 0 20 20' class='w-auto h-5 text-gray-400'>
+                <path fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd'></path>
+              </svg>
+            </li>
+          
+            <li class='inline-flex items-center'>
+              <a class='px-1 font-bold' href='OldClasses.html'>
+                OldClasses
+              </a>
+              <svg fill='currentColor' viewBox='0 0 20 20' class='w-auto h-5 text-gray-400'>
+                <path fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd'></path>
+              </svg>
+            </li>
+          
+            <li class='inline-flex items-center'>
+              <a class='px-1 font-bold' href='OldClasses/ParallelComputing.html'>
+                ParallelComputing
+              </a>
+              <svg fill='currentColor' viewBox='0 0 20 20' class='w-auto h-5 text-gray-400'>
+                <path fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd'></path>
+              </svg>
+            </li>
+          
+        
+      </ul>
+    </div>
+    <button class='inline px-2 py-1 bg-gray-50 outline-none cursor-pointer focus:outline-none' title='Search (Ctrl+K)' type='button' onclick='window.emanote.stork.toggleSearch()'>
+      <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-green-700' f
+ fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
+  <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+</svg>
+    </button>
+    <button class='inline px-2 py-1 text-white bg-green-600 outline-none cursor-pointer focus:outline-none' title='Toggle sidebar' type='button' onclick="toggleHidden('sidebar')">
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6h16M4 12h16M4 18h16'></path>
+      </svg>
+    </button>
+    <script>
+      function toggleHidden(elemId) {
+        document.getElementById(elemId).classList.toggle("hidden");
+      }
+    </script>
+  </div>
+</nav>
+
+      <div id='container' class='flex flex-nowrap flex-col md:flex-row bg-gray-50 md:mt-8 md:shadow-2xl md:mb-8'>
+        <!-- Sidebar column -->
+        <nav id='sidebar' class='flex-shrink hidden leading-relaxed md:block md:sticky md:top-0 md:h-full md:w-48 xl:w-64'>
+          <div class='px-2 py-2 text-gray-800'>
+            <div id='indexing-links' class='flex flex-row float-right p-2 space-x-2 text-gray-500'>
+              <a href='-/tags.html' title='View tags'>
+                <svg style='width: 1rem;' class='hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
+                  </path>
+                </svg>
+              </a>
+              <a href='-/all.html' title='Expand full tree'>
+                <svg style='width: 1rem;' class='hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
+                  </path>
+                </svg>
+              </a>
+              <a title='Search (Ctrl+K)' class='cursor-pointer' onclick='window.emanote.stork.toggleSearch()'>
+                <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-green-700' f
+ fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
+  <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+</svg>
+              </a>
+            </div>
+
+            <div id='site-logo' class='pl-2'>
+              <div class='flex items-center my-2 space-x-2 justify-left'>
+                <a href='' title='Go to Home'>
+                  
+                    
+                      <!-- The style width attribute here is to prevent huge
+                      icon from displaying at those rare occasions when Tailwind
+                      hasn't kicked in immediately on page load
+                      -->
+                      <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
+                    
+                  
+                </a>
+                <a class='font-bold truncate' title='Go to Home' href=''>
+                  Home
+                </a>
+              </div>
+            </div>
+
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+      
+      
+    
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
+        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
+        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      </svg>
+      
+  
+    <a class='font-bold hover:underline truncate' title='OldClasses' href='OldClasses.html'>
+      OldClasses
+    </a>
+    
+      
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='AI' href='OldClasses/AI.html'>
+      AI
+    </a>
+    
+      
+        <span class='text-gray-300' title='4 children inside'>
+          4
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Automata' href='OldClasses/Automata.html'>
+      Automata
+    </a>
+    
+      
+        <span class='text-gray-300' title='6 children inside'>
+          6
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Discrete-Structures' href='OldClasses/Discrete-Structures.html'>
+      Discrete-Structures
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Intelligent_Data_Design' href='OldClasses/Intelligent_Data_Design.html'>
+      Intelligent_Data_Design
+    </a>
+    
+      
+        <span class='text-gray-300' title='31 children inside'>
+          31
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Networking' href='OldClasses/Networking.html'>
+      Networking
+    </a>
+    
+      
+        <span class='text-gray-300' title='7 children inside'>
+          7
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Operating_Systems' href='OldClasses/Operating_Systems.html'>
+      Operating_Systems
+    </a>
+    
+      
+        <span class='text-gray-300' title='2 children inside'>
+          2
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='OrganicChemistry' href='OldClasses/OrganicChemistry.html'>
+      OrganicChemistry
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+      
+      
+    
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
+        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
+        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      </svg>
+      
+  
+    <a class='font-bold hover:underline truncate' title='ParallelComputing' href='OldClasses/ParallelComputing.html'>
+      ParallelComputing
+    </a>
+    
+      
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
+        </path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='answers' href='OldClasses/ParallelComputing/answers.html'>
+      answers
+    </a>
+    
+      
+        
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
+        </path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='ch1' href='OldClasses/ParallelComputing/ch1.html'>
+      ch1
+    </a>
+    
+      
+        
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
+        </path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='exam_review' href='OldClasses/ParallelComputing/exam_review.html'>
+      exam_review
+    </a>
+    
+      
+        
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+  
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'>
+        </path>
+      </svg>
+      
+  
+    <a class='font-bold text-green-600 hover:underline truncate' title='mock_exam' href='OldClasses/ParallelComputing/mock_exam.html'>
+      mock_exam
+    </a>
+    
+      
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+    
+  
+</div>
+    
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='Physics2001' href='OldClasses/Physics2001.html'>
+      Physics2001
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='bioinformatics' href='OldClasses/bioinformatics.html'>
+      bioinformatics
+    </a>
+    
+      
+        <span class='text-gray-300' title='2 children inside'>
+          2
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='comp-systems' href='OldClasses/comp-systems.html'>
+      comp-systems
+    </a>
+    
+      
+        <span class='text-gray-300' title='2 children inside'>
+          2
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='ecology' href='OldClasses/ecology.html'>
+      ecology
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='intro-to-bioinformatics' href='OldClasses/intro-to-bioinformatics.html'>
+      intro-to-bioinformatics
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='programming-languages' href='OldClasses/programming-languages.html'>
+      programming-languages
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
+        </path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='README' href='README.html'>
+      README
+    </a>
+    
+      
+        
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+              <!-- Variable bindings for this tree-->
+  
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
+        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      </svg>
+    
+  
+    <a class='hover:underline truncate' title='non-classes' href='non-classes.html'>
+      non-classes
+    </a>
+    
+      
+        <span class='text-gray-300' title='2 children inside'>
+          2
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+            
+
+          </div>
+        </nav>
+
+        <!-- Main body column -->
+        <div class='flex-1 w-full overflow-x-auto bg-white'>
+          <main class='px-4 py-4'>
+            <h1 class='flex items-end justify-center mb-4 p-3 bg-green-100 text-5xl font-extrabold text-black rounded'>
+  <a class='z-40 tracking-tighter '>
+    mock_exam
+  </a>
+</h1>
+            <article class='overflow-auto'>
+  <!-- What goes in this file will appear on top of note body-->
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>1. Which of the following are ways that hardware designers make computers run faster?</h1>
+    <p class='mb-3'>
+      
+    <!-- FIXME: Fix list styling to use flexbox, so task lists don't botch them up -->
+    <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current fill-current' viewBox='0 0 28 28'><desc>☑</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect><path stroke='white' fill='none' stroke-linejoin='round' stroke-width='3.5' d='M7 14 l6 5L22 8'></path></svg>
+<span>
+  
+      faster clocks [ ] longer clock periods [x] more work per clock cycle [ ] a larger hard disk [x] adding more processors [ ] reducing the amount of memory
+    
+</span>
+  
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>2. What are the limits of computer architecture that motivate parallel processing?</h1>
+    <blockquote class='py-0.5 px-4 mb-3 italic border-l-4 bg-gray-50 text-gray-600 border-gray-400 quote'>
+      
+    <p class='mb-3'>
+      Processors can only do one thing at a time, but the users needs multiple things to happen simultaneously, ie have multiple things move on the screen at the same time. Time sharing, while useful, does not scale well with the number of processes, so parallel processing is useful. Additionally, It is easier (cheaper) to add more processors than to pack more transistors into a smaller space.
+    </p>
+  
+    </blockquote>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>3. For a class of GPUs, what is appropriate measure to compare power consumption of different devices?</h1>
+    <blockquote class='py-0.5 px-4 mb-3 italic border-l-4 bg-gray-50 text-gray-600 border-gray-400 quote'>
+      
+    <p class='mb-3'>
+      Flops per watt
+    </p>
+  
+    </blockquote>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>4.What techniques are computer designers today using to build more power-efficient devices? Please circle all that are true.</h1>
+    <p class='mb-3'>
+      
+    <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
+<span>
+  
+      having fewer, but more complex processors, [x] having more, but less complex processors, [ ] maximizing the speed of the processor clock [ ] increasing the complexity of the control hardware
+    
+</span>
+
+  
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>5. Name four common patterns of parallel computation?</h1>
+    <p class='mb-3'>
+      For each pattern, discuss whether the many-core or multi-core architecture model is more appropriate.
+    </p>
+  
+    <blockquote class='py-0.5 px-4 mb-3 italic border-l-4 bg-gray-50 text-gray-600 border-gray-400 quote'>
+      
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Agents and Repos: Multi-core, as each agent does a complex operation possibly unique to itself
+        </li>
+      
+        <li>
+          Iterative Refinement: Many-core as the operations are identical
+        </li>
+      
+        <li>
+          Pipe and Filter: Multi-core as each filter has a different operation to perform
+        </li>
+      
+        <li>
+          Map reduce: Many-core as the operations are identical
+        </li>
+      
+    </ul>
+  
+    </blockquote>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>6. What is concurrency control, and discuss what is the difference between pessimistic an optimistic concurrency control?</h1>
+    <blockquote class='py-0.5 px-4 mb-3 italic border-l-4 bg-gray-50 text-gray-600 border-gray-400 quote'>
+      
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          concurrency control is a method to prevent race conditions, ensuring correctness
+        </li>
+      
+        <li>
+          Pessimistic: Locks that block operations at specific times to prevent violation of the rules
+        </li>
+      
+        <li>
+          Optimistic: Abort transactions to prevent violations to the rules, then restart
+        </li>
+      
+    </ul>
+  
+    </blockquote>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>7. How does Fork/Join parallelism differ from Kernel data-parallelism?</h1>
+    <blockquote class='py-0.5 px-4 mb-3 italic border-l-4 bg-gray-50 text-gray-600 border-gray-400 quote'>
+      
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Fork/join uses independent child threads that may share memory
+        </li>
+      
+        <li>
+          Kernel is made up of an array of threads that perform simple operations
+        </li>
+      
+    </ul>
+  
+    </blockquote>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>8. Circle all the true statements.</h1>
+    <p class='mb-3'>
+      
+    <!-- FIXME: Fix list styling to use flexbox, so task lists don't botch them up -->
+    <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current fill-current' viewBox='0 0 28 28'><desc>☑</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect><path stroke='white' fill='none' stroke-linejoin='round' stroke-width='3.5' d='M7 14 l6 5L22 8'></path></svg>
+<span>
+  
+      A thread block contains many threads. [x] An SM might run more than one thread block. [ ] A thread block may run on more than one SM. [x] All the threads in a thread block might cooperate to solve a subproblem. [ ] All the threads that run on a given SM may cooperate to solve a subproblem.
+    
+</span>
+  
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>9. If we have a single kernel that is launched on many thread blocks, including block x and block y, the programmer can do which of the following: Circle all the true statements.</h1>
+    <p class='mb-3'>
+      
+    <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
+<span>
+  
+      specify that block x will run at the same time as block y [ ] specify that block x will run after block y. [ ] specify that block x will run on same SM as y [x] none of the above
+    
+</span>
+
+  
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>10. Circle all the statements that are true.</h1>
+    <p class='mb-3'>
+      
+    <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
+<span>
+  
+      All threads from a block can access the same variable in that block's shared memory. [ ] Threads from two different blocks can access the same variable in global memory [ ] Threads from different blocks have their own copy of local variables in local memory. [ ] Threads from the same block have their own copy of local variables in local memory.
+    
+</span>
+
+  
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>11. Does a _<sub>syncthreads</sub>() call apply to threads within a block or threads within a grid?</h1>
+    <blockquote class='py-0.5 px-4 mb-3 italic border-l-4 bg-gray-50 text-gray-600 border-gray-400 quote'>
+      
+    <p class='mb-3'>
+      block
+    </p>
+  
+    </blockquote>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>12. What is a parallel map operation? Circle all problems that can be solved using map.</h1>
+    <p class='mb-3'>
+      
+    <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
+<span>
+  
+      sort an array [x] add one to each element of an array [ ] summing all elements in array [ ] apply a predicate to each element in an array [x] move data in parallel based on array of scatter addresses
+    
+</span>
+
+  
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>13. Circle which operators are both binary and associative and therefore can be used in a reduction or scan.</h1>
+    <p class='mb-3'>
+      
+    <!-- FIXME: Fix list styling to use flexbox, so task lists don't botch them up -->
+    <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current fill-current' viewBox='0 0 28 28'><desc>☑</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect><path stroke='white' fill='none' stroke-linejoin='round' stroke-width='3.5' d='M7 14 l6 5L22 8'></path></svg>
+<span>
+  
+      multiply [x] minimum [ ] factorial [x] exclusive or [x] bitwise and [ ] exponentiation [ ] integer division
+    
+</span>
+  
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>14. Using 1D global indexing, how would you specify the parallel execution mapping the ith thread to the task of reading and then squaring the ith item from an large array X in global memory.</h1><div class='py-0.5 mb-3 text-sm'><pre><code class='cuda language-cuda' noeval='yes'>int i = blockIdx.x * blockDim.x + threadIdx.x;
+int x = X[i];
+x[i] = x * x
+
+</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>15.Circle all statements that are true. When running reduction code running on an input of size n?</h1>
+    <p class='mb-3'>
+      
+    <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
+<span>
+  
+      it takes at least n operations [ ] its work complexity is order of n [ ] its work complexity is order n*n [ ] its step-complexity is order of 1, independent of the size of the input.
+    
+</span>
+
+  
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>16. Circle the correct answer. The number of steps in a reduction of n elements as a function of n is:</h1>
+    <p class='mb-3'>
+      
+    <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
+<span>
+  
+      square root of n [ ] log base 2 of n [ ] n [ ] n times log base 2 of n
+    
+</span>
+
+  
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>17. Circle all that are true</h1>
+    <p class='mb-3'>
+      
+    <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
+<span>
+  
+      map operations have arguments that are functions with a single argument [ ] map operations can be applied to arrays of any number of dimensions [ ] map operations are generally very efficient on GPUs [ ] a compact operation requires a map operation to be performed.
+    
+</span>
+
+  
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>18. What is the impact of granularity on performance when considering the latency of global memory communication?</h1>
+    <p class='mb-3'>
+      Calculate the granularity of dot product of two vectors that reside in global memory?
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>19. What is the output of a max scan operation on the list of unsigned ints [5 4 7 3 1 8 2 6]?</h1>
+    <p class='mb-3'>
+      Provide a solution to both inclusive and exclusive scans.
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>20. Compute the max (inclusive) scan of this input sequence 2 1 4 3 showing all work when using</h1>
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          the Hillis-Steele algorithm
+        </li>
+      
+        <li>
+          the Blelloch algorithm
+        </li>
+      
+    </ul>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>21. Explain which scan algorithm (Hillis-Steele or Blelloch algorithm) is best suited and why?</h1>
+    <p class='mb-3'>
+      You are scanning a 512 element vector and a GPU that has 512 processors.
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>22. Explain which scan (Hillis-Steele or Blelloch algorithm) is best suited and why?</h1>
+    <p class='mb-3'>
+      You are scanning a 1 million element input vector in 512 processors machine.
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>23. Suppose you are computing a histogram with 10 bins. Discuss an efficient GPU solution.</h1>
+    <p class='mb-3'>
+      Suppose you are computing a histogram with 10000 bins. Discuss an efficient GPU solution. Indicate for each whether or not you are using atomics to manage access to bins of the histograms.
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>24. True or false - In a scatter operation a _<sub>syncthreads</sub>() command is needed to overcome write conflicts.</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>25. Is the compact parallel operation more useful in scenarios where we delete a (small number) or a (large number) of elements from an array?</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>26. Is the compact parallel operation more useful in scenarios where we need to run (cheap) or (expensive) function on filtered elements.</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>27. Suppose we are running compact operations on a list of numbers with range from 1 to 1 million. Compact operation A, filters elements that are divisible by 17, and thus is only going to keep a very few of the input items. Compact operation B filters elements not divisible by 31, and thus is going to keep most of the input items. For each of the three phases of compact: predicate map, scan, and scatter phases of the compact operation, will A run faster, B run faster or will they take the same amount of time?</h1>
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          Predicate map b. Scan c. Scatter
+        </li>
+      
+    </ul>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>28. What is the difference between latency and bandwidth? Which is more easily enhanced by advanced architectures?</h1>
+    <p class='mb-3'>
+      Say you are give a task of transporting many people 200 miles. You have two modes of transport: a single sports-car traveling 100mph with 2 passengers – and – a single van traveling 50mph with 10 passengers. For each case, what is the Bandwidth in people delivered per hour? For each case, what is the Latency of a person delivery (in hours)? For each case, what is the Occupancy of transport system?
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>29. How is Occupancy defined in Cuda, and why does it have an impact on performance?</h1>
+    <p class='mb-3'>
+      What is thread divergence in Cuda, and why does it have an impact on performance?
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>30. Show the contents of the CSR (Compressed Sparse Row) format for the following 5x5 matrix:</h1>
+    <p class='mb-3'>
+      02300 10050 00400 00020
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>31. Consider the sparse matrix dense vector product problem, and the two different parallel methods tpr(thread per row) or tpe (thread per element).</h1>
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          Which approach will launch more threads?
+        </li>
+      
+        <li>
+          Which approach will require more communication between threads?
+        </li>
+      
+        <li>
+          Which approach will do more work per thread?
+        </li>
+      
+        <li>
+          Which approach is more load balanced?32. What does it mean for a sorting algorithm to be oblivious?
+        </li>
+      
+    </ul>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>33. State the 0/1 sorting lemma for oblivious sorting algorithms.</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>34. Provide the logic of BitonicSort – pseudocode is sufficient here.</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>35. What is the step and the work complexity of BitonicSort?</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>36. In the BitonicSort figure presented in lecture identify each of the 'bitonic-comparison-and-swap' modules.</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>37. What is the work and step complexity of countingSort?</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>38. What is the expected work when hashing using chaining when the hash is to a chain of length k.</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>39. True or false: Bloom filters are a data structure that allows fast set membership operations, but with low probability of false negatives.</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>40. List the following in the order of their work complexity from least to most.</h1>
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          parallel compact b. parallel scan c. sieveEratosthenes d. dense n-body
+        </li>
+      
+        <li>
+          bitonicSort f. sequential mergeSort
+        </li>
+      
+    </ul>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>41. List the following in the order of their step complexity from least to most.</h1>
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          parallel compact b. parallel scan c. sieveEratosthenes d. dense n-body
+        </li>
+      
+        <li>
+          bitonicSort f. sequential mergeSort
+        </li>
+      
+    </ul>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>42. Write a CUDA kernel function that will effectively parallelize the following sequential function.</h1>
+    <p class='mb-3'>
+      void serial (int n, float a, float b, float * x, float * y) { for (int i = 0; i &lt; n; ++i) { y[i]= a * x[i] + b * y[i]; } }
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>43. What does the following kernel code do? Does it contain a race condition problem? If so, give a means to overcome it?</h1>
+    <p class='mb-3'>
+      <u><u>global</u></u> void naiveHisto(int *d<sub>bins</sub>, const int *d<sub>in</sub>, const int BIN<sub>COUNT</sub>) { int myId = threadIdx.x + blockDim.x * blockIdx.x; int myItem = d<sub>in</sub>[myId]; int myBin = myItem % BIN<sub>COUNT</sub>; d<sub>bins</sub>[myBin]++; }
+    </p>
+  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>44. Complete the CUDA kernel function that computes, per-block, the sum of a block-sized portion of the input using a block-wide reduction.</h1>
+    <p class='mb-3'>
+      You should assume 1-dimensional thread and block indexing. <u><u>global</u></u> void block<sub>sum</sub>(const float *input, float *per<sub>blockresults</sub>, const size<sub>t</sub> n) { <u><u>shared</u></u> float sdata[]; // TODO: load input into <u><u>shared</u></u> memory // TODO: use contiguous range pattern for reduction
+    </p>
+  
+    <p class='mb-3'>
+      // thread 0 writes the final result if(threadIdx.x == 0) { per<sub>blockresults</sub>[blockIdx.x] = sdata[0]; } }
+    </p>
+  
+
+  <div class='flex items-center justify-center mt-2'>
+  
+    
+      <a class='text-gray-300 hover:text-green-600 text-sm' title='Edit this page on GitHub' href='https://github.com/IllustratedMan-code/Planner/blob/main/OldClasses/ParallelComputing/mock_exam.org'>
+        <svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'></path>
+        </svg>
+      </a>
+    
+  
+</div>
+</article>
+            <div class='flex flex-col lg:flex-row lg:space-x-2'>
+              
+              
+            </div>
+            
+  <section class='flex flex-wrap items-end justify-center my-4 space-x-2 space-y-2 font-mono text-sm'>
+    
+  </section>
+
+            <!-- What goes in this file will at the very end of the main div -->
+          </main>
+        </div>
+      </div>
+      <footer class='flex items-center justify-center mt-2 mb-8 space-x-4 text-center text-gray-800'>
+  
+  <div>
+    <a href='' title='Go to Home page'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'></path>
+      </svg>
+    </a>
+  </div>
+  <div>
+    <a href='-/all.html' title='View Index'>
+      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
+        </path>
+      </svg>
+    </a>
+  </div>
+  <div>
+    <a href='https://emanote.srid.ca' target='_blank' title='Generated by Emanote 1.0.1.6'>
+      <img class='w-6 h-6 hover:text-green-700' src='_emanote-static/emanote-logo.svg' />
+    </a>
+  </div>
+  <div>
+    <a href='-/tags.html' title='View tags'>
+      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
+        </path>
+      </svg>
+    </a>
+  </div>
+  <div>
+    <a href='-/tasks.html' title='View tasks'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+      </svg>
+    </a>
+  </div>
+</footer>
+    </div>
+  
+  <div id='stork-search-container' class='hidden fixed w-screen h-screen inset-0 backdrop-filter backdrop-blur-sm'>
+  <div class='fixed w-screen h-screen inset-0' onclick='window.emanote.stork.toggleSearch()'></div>
+
+  <div class='container mx-auto p-10 mt-10'>
+    <div class='stork-wrapper-flat container mx-auto'>
+      <input id='stork-search-input' data-stork='emanote-search' class='stork-input' placeholder='Search (Ctrl+K) ...' />
+      <div data-stork='emanote-search-output' class='stork-output'></div>
+    </div>
+  </div>
+</div>
+  
+    
+  
+</body>
+
+</html>
