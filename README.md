@@ -1,7 +1,6 @@
-Its a planner! use the agile board:
 
-Stuff
+This is my personal wiki. 
 
-[[index]]
+
 
 
