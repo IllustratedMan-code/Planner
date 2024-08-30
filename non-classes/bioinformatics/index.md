@@ -1,0 +1,7 @@
+---
+title: Bioinformatics
+---
+
+```query
+path:./*
+```

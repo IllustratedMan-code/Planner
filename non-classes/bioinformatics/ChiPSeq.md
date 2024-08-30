@@ -1,3 +1,7 @@
+---
+title: ChIP-seq
+---
+
 # Useful Resources
 
 [Practical Guidelines for ChIP-seq analysis](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3828144/)
@@ -17,8 +21,8 @@ to identify likely regions where the protein is bound (peaks). These peaks are
 then annotated with relevant information, such as gene start sites, known
 promoter locations, etc.
 
-One of the goals of ChIP-seq analysis is to find a unique [[DNA motif]]
+One of the goals of ChIP-seq analysis is to find a unique [[DNA-motif]]
 associated with each protein binding site. It is assumed that a
-[[transcription factor]] binds to a semi-unique sequence on the genome. By
+[[transcription-factor]] binds to a semi-unique sequence on the genome. By
 identification of the unique motif, one can associate the bound transcription
 factor to the unique motif.

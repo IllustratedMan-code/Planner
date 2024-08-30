@@ -1,4 +1,6 @@
-# Peak Calling
+---
+title: Peak Calling
+---
 
 Identification of likely regions where a protein is bound given a set of mapped
 reads.
@@ -7,4 +9,5 @@ reads.
 of mapped reads at a particular location along the genome.
 
 Peak calling transforms the mapping data into signal data and identifies the
-peaks in the signal as a region on the genome.
+peaks in the signal as a region on the genome. These peaks are usually stored in
+a [[bed]].

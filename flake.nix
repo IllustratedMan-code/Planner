@@ -17,9 +17,8 @@
           # By default, the 'emanote' flake input is used.
           # package = inputs.emanote.packages.${system}.default;
           sites."default" = {
-            layers = [ ./. ];
-            layersString = [ "." ];
-            # port = 8080;
+            port = 8080;
+	    layers = [{ path = ./.; pathString = "."; }];	
             baseUrl = "/Planner/"; # Change to "/" (or remove it entirely) if using CNAME
             allowBrokenLinks = true;
             # prettyUrls = true;

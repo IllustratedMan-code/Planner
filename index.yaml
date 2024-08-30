@@ -19,16 +19,17 @@ page:
     <snippet var="js.mathjax" />
 
 template:
-  theme: green
-
+  theme: blue
+  toc:
+    enable: true
+  uptree:
+    enable: false
   # You can add your own variables here, like editBaseUrl.
   # See after-note.tpl to see where editBaseUrl gets used.
   editBaseUrl: https://github.com/IllustratedMan-code/Planner/blob/main
 
-  # Uncomment this to get neuron-style pages
-  #name: /templates/layouts/note
-
   sidebar:
+    enable: true
     collapsed: true
 
   # If you are hosting on GitLab Pages, you may want to remove this.
