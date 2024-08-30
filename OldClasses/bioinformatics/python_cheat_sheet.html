@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<!-- DoNotFormat -->
+<!-- DoNotFormat -->
+
+
+
+
+<!-- DoNotFormat -->
+<!-- DoNotFormat -->
+
 <html lang='en'>
 
 <head>
@@ -14,6 +23,9 @@
       <meta property='og:image' content />
       <meta property='og:type' content='website' />
       <meta property='og:title' content='python_cheat_sheet' />
+      
+        <meta name='twitter:card' content='summary_large_image' />
+      
     
     
       <base href='/Planner/' />
@@ -51,7 +63,8 @@
 
 
   
-  <link href='tailwind.css?instanceId=212e9745-c88c-4b2e-9f2a-8fbcb6418529' rel='stylesheet' type='text/css' />
+  
+  <link href='tailwind.css?instanceId=246d48dd-e69e-478e-94b7-314441ea29cb' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -59,6 +72,57 @@
       color: lightcoral;
       font-size: 90%;
       font-family: monospace;
+    }
+
+    /* Callouts */
+    div.callout {
+      background-color: #f5f5f5;
+      padding: 1em 1em 0.5em;
+      border-radius: 0.5em;
+      margin-bottom: 1em;
+    }
+
+    .callout[data-callout="note"] {
+      --callout-color: 8, 109, 221;
+    }
+
+    .callout[data-callout="info"] {
+      --callout-color: 8, 109, 221;
+    }
+
+    .callout[data-callout="tip"] {
+      --callout-color: 8, 191, 188;
+    }
+
+    .callout[data-callout="warning"] {
+      --callout-color: 236, 117, 0;
+    }
+
+    .callout[data-callout="failure"] {
+      --callout-color: 233, 49, 71;
+    }
+
+    div.callout {
+      background-color: rgba(var(--callout-color), 0.1);
+    }
+
+    .callout .callout-title {
+      color: rgb(var(--callout-color));
+    }
+
+    div.callout-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5em;
+      font-variation-settings: 'wght' 600;
+    }
+
+    div.callout-title div.callout-title-inner {
+      margin-left: 0.5em;
+    }
+
+    a.--ema-toc:not(.toc-item-active) {
+      background-color: #ffffff !important;
     }
 
     /* External link icon */
@@ -70,7 +134,12 @@
       content: ""
     }
 
+    a[data-linkicon="external"] {
+      padding-right: 24px;
+    }
+
     a[data-linkicon="external"]::after {
+      margin-right: -24px;
       content: url('data:image/svg+xml,\
       <svg xmlns="http://www.w3.org/2000/svg" height="0.7em" viewBox="0 0 20 20"> \
         <g style="stroke:gray;stroke-width:1"> \
@@ -150,6 +219,25 @@
 
 
   
+    <style>
+      /* For use in sidebar.tpl, as we cannot achieve this in tailwind itself! */
+      /* md:min-w-48  */
+      @media (min-width: 768px) {
+        #sidebar {
+          min-width: 12rem;
+        }
+      }
+
+      /* xl:min-w-64  */
+      @media (min-width: 1280px) {
+        #sidebar {
+          min-width: 16rem;
+        }
+      }
+    </style>
+
+    
+  
   <link rel='stylesheet' href='_emanote-static/stork/flat.css' />
 <!-- Custom Stork-search styling for Emanote -->
 <style>
@@ -167,11 +255,13 @@
 <script src='_emanote-static/stork/stork.js'></script>
 
   
-    <script data-emanote-base-url='/Planner/'>
+    <script id='emanote-stork' data-emanote-base-url='/Planner/'>
       window.emanote = {};
       window.emanote.stork = {
         searchShown: false,
+        indexIsStale: false,
         toggleSearch: function () {
+          window.emanote.stork.refreshIndex();
           document.getElementById('stork-search-container').classList.toggle('hidden');
           window.emanote.stork.searchShown = document.body.classList.toggle('stork-overflow-hidden-important');
           if (window.emanote.stork.searchShown) {
@@ -184,14 +274,25 @@
           window.emanote.stork.searchShown = false;
         },
 
-        init: function () {
+        getBaseUrl: function () {
+          const baseUrl = document.getElementById("emanote-stork").getAttribute('data-emanote-base-url') || '/';
+          return baseUrl;
+        },
+
+        registerIndex: function (options) {
           const indexName = 'emanote-search'; // used to match input[data-stork] attribute value
-          const baseUrl = document.currentScript.getAttribute('data-emanote-base-url') || '/';
-          const indexUrl = baseUrl + '-/stork.st';
+          const indexUrl = window.emanote.stork.getBaseUrl() + '-/stork.st';
+          stork.register(
+            indexName,
+            indexUrl,
+            options);
+        },
+
+        init: function () {
           if (document.readyState !== 'complete') {
             window.addEventListener('load', function () {
-              stork.initialize(baseUrl + '_emanote-static/stork/stork.wasm');
-              stork.register(indexName, indexUrl);
+              stork.initialize(window.emanote.stork.getBaseUrl() + '_emanote-static/stork/stork.wasm');
+              window.emanote.stork.registerIndex();
             });
 
             document.addEventListener('keydown', event => {
@@ -204,10 +305,32 @@
               }
             });
           } else {
-            // Override existing on Ema's hot-reload
-            stork.register(indexName, indexUrl, { forceOverwrite: true });
+            // This section is called during Ema's hot reload.
+            // 
+            // Mark the current index as stale, and refresh it *only when* the
+            // user actually invokes search.
+            // 
+            // We do not refresh the index *right away*, as that will cause
+            // memory leaks in the browser. See
+            // https://github.com/srid/emanote/issues/411#issuecomment-1402056235
+            console.log("stork: Marking index as stale");
+            window.emanote.stork.markIndexAsStale();
+          }
+        },
+
+        markIndexAsStale: function () {
+          window.emanote.stork.indexIsStale = true;
+        },
+
+        refreshIndex: function () {
+          if (window.emanote.stork.indexIsStale) {
+            console.log("stork: Reloading index");
+            window.emanote.stork.indexIsStale = false;
+            // NOTE: This will leak memory. See the comment above.
+            window.emanote.stork.registerIndex({ forceOverwrite: true });
           }
         }
+
       };
 
       window.emanote.stork.init();
@@ -224,9 +347,11 @@
 
 <body class='bg-gray-400 overflow-y-scroll'>
   
-    <div class='container mx-auto'>
+    <div class='container mx-auto md:mt-8 '>
+      
 
-      <nav id='breadcrumbs' class='w-full text-gray-700 md:hidden'>
+      
+        <nav id='breadcrumbs' class='w-full text-gray-700 md:hidden'>
   <div class='flex justify-left'>
     <div class='w-full px-2 py-2 bg-gray-50'>
       <ul class='flex flex-wrap text-lg'>
@@ -270,12 +395,12 @@
       </ul>
     </div>
     <button class='inline px-2 py-1 bg-gray-50 outline-none cursor-pointer focus:outline-none' title='Search (Ctrl+K)' type='button' onclick='window.emanote.stork.toggleSearch()'>
-      <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-green-700' f
+      <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-blue-700' f
  fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
   <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
 </svg>
     </button>
-    <button class='inline px-2 py-1 text-white bg-green-600 outline-none cursor-pointer focus:outline-none' title='Toggle sidebar' type='button' onclick="toggleHidden('sidebar')">
+    <button class='inline px-2 py-1 text-white bg-blue-600 outline-none cursor-pointer focus:outline-none' title='Toggle sidebar' type='button' onclick="toggleHidden('sidebar')">
       <svg xmlns='http://www.w3.org/2000/svg' class='w-4' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6h16M4 12h16M4 18h16'></path>
       </svg>
@@ -287,58 +412,61 @@
     </script>
   </div>
 </nav>
+      
 
-      <div id='container' class='flex flex-nowrap flex-col md:flex-row bg-gray-50 md:mt-8 md:shadow-2xl md:mb-8'>
-        <!-- Sidebar column -->
-        <nav id='sidebar' class='flex-shrink hidden leading-relaxed md:block md:sticky md:top-0 md:h-full md:w-48 xl:w-64'>
-          <div class='px-2 py-2 text-gray-800'>
-            <div id='indexing-links' class='flex flex-row float-right p-2 space-x-2 text-gray-500'>
-              <a href='-/tags.html' title='View tags'>
-                <svg style='width: 1rem;' class='hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
-                  </path>
-                </svg>
-              </a>
-              <a href='-/all.html' title='Expand full tree'>
-                <svg style='width: 1rem;' class='hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
-                  </path>
-                </svg>
-              </a>
-              <a title='Search (Ctrl+K)' class='cursor-pointer' onclick='window.emanote.stork.toggleSearch()'>
-                <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-green-700' f
+      
+        <div id='container' class='flex flex-nowrap flex-col md:flex-row bg-gray-50 md:shadow-2xl md:mb-8'>
+          <!-- Sidebar column -->
+          <nav id='sidebar' class='flex-shrink hidden leading-relaxed md:block md:sticky md:top-0 md:max-h-screen md:overflow-y-auto md:w-48 xl:w-64'>
+  <div class='px-2 py-2 text-gray-800'>
+    <div id='indexing-links' class='flex flex-row float-right p-2 space-x-2 text-gray-500'>
+      <a href='-/tags.html' title='View tags'>
+        <svg style='width: 1rem;' class='hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
+          </path>
+        </svg>
+      </a>
+      <a href='-/all.html' title='Expand full tree'>
+        <svg style='width: 1rem;' class='hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
+          </path>
+        </svg>
+      </a>
+      <a title='Search (Ctrl+K)' class='cursor-pointer' onclick='window.emanote.stork.toggleSearch()'>
+        <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-blue-700' f
  fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
   <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
 </svg>
-              </a>
-            </div>
+      </a>
+    </div>
 
-            <div id='site-logo' class='pl-2'>
-              <div class='flex items-center my-2 space-x-2 justify-left'>
-                <a href='' title='Go to Home'>
-                  
-                    
-                      <!-- The style width attribute here is to prevent huge
-                      icon from displaying at those rare occasions when Tailwind
-                      hasn't kicked in immediately on page load
-                      -->
-                      <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
-                    
-                  
-                </a>
-                <a class='font-bold truncate' title='Go to Home' href=''>
-                  Home
-                </a>
-              </div>
-            </div>
-
+    <div id='site-logo' class='pl-2'>
+      <div class='flex items-center my-2 space-x-2 justify-left'>
+        <a href='' title='Go to Home'>
+          
             
-              <!-- Variable bindings for this tree-->
+              <!-- The style width attribute here is to prevent huge
+                      icon from displaying at those rare occasions when Tailwind
+                      hasn't kicked in immediately on page load 
+                      -->
+              <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
+            
+          
+        </a>
+        <a class='font-bold truncate' title='Go to Home' href=''>
+          Home
+        </a>
+      </div>
+    </div>
+
+    
+      <!-- Variable bindings for this tree-->
+
   
     
       
-      
     
+  
 
 
 
@@ -349,15 +477,18 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
-        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
-        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='w-4 h-4 flex-shrink-0 inline text-gray-700' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z' clip-rule='evenodd'></path>
       </svg>
       
   
-    <a class='font-bold hover:underline truncate' title='OldClasses' href='OldClasses.html'>
+        
+    </span>
+    <a class='mavenLinkBold hover:bg-blue-200 rounded px-1.5 truncate' title='OldClasses' href='OldClasses.html'>
       OldClasses
     </a>
     
@@ -370,8 +501,7 @@
   
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -383,14 +513,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/AI.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='AI' href='OldClasses/AI.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='AI' href='OldClasses/AI.html'>
       AI
     </a>
     
@@ -409,8 +547,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -422,14 +559,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Automata.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Automata' href='OldClasses/Automata.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Automata' href='OldClasses/Automata.html'>
       Automata
     </a>
     
@@ -448,8 +593,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -461,14 +605,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Discrete-Structures.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Discrete-Structures' href='OldClasses/Discrete-Structures.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Discrete-Structures' href='OldClasses/Discrete-Structures.html'>
       Discrete-Structures
     </a>
     
@@ -487,8 +639,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -500,14 +651,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Intelligent_Data_Design.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Intelligent_Data_Design' href='OldClasses/Intelligent_Data_Design.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Intelligent_Data_Design' href='OldClasses/Intelligent_Data_Design.html'>
       Intelligent_Data_Design
     </a>
     
@@ -526,8 +685,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -539,14 +697,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Networking.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Networking' href='OldClasses/Networking.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Networking' href='OldClasses/Networking.html'>
       Networking
     </a>
     
@@ -565,8 +731,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -578,14 +743,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Operating_Systems.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Operating_Systems' href='OldClasses/Operating_Systems.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Operating_Systems' href='OldClasses/Operating_Systems.html'>
       Operating_Systems
     </a>
     
@@ -604,8 +777,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -617,14 +789,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/OrganicChemistry.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='OrganicChemistry' href='OldClasses/OrganicChemistry.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='OrganicChemistry' href='OldClasses/OrganicChemistry.html'>
       OrganicChemistry
     </a>
     
@@ -643,8 +823,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -656,14 +835,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/ParallelComputing.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='ParallelComputing' href='OldClasses/ParallelComputing.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='ParallelComputing' href='OldClasses/ParallelComputing.html'>
       ParallelComputing
     </a>
     
@@ -682,8 +869,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -695,14 +881,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Physics2001.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Physics2001' href='OldClasses/Physics2001.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Physics2001' href='OldClasses/Physics2001.html'>
       Physics2001
     </a>
     
@@ -721,11 +915,12 @@
 </div>
     
       <!-- Variable bindings for this tree-->
+
   
     
       
-      
     
+  
 
 
 
@@ -736,15 +931,18 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
-        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
-        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='w-4 h-4 flex-shrink-0 inline text-gray-700' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z' clip-rule='evenodd'></path>
       </svg>
       
   
-    <a class='font-bold hover:underline truncate' title='bioinformatics' href='OldClasses/bioinformatics.html'>
+        
+    </span>
+    <a class='mavenLinkBold hover:bg-blue-200 rounded px-1.5 truncate' title='bioinformatics' href='OldClasses/bioinformatics.html'>
       bioinformatics
     </a>
     
@@ -757,8 +955,7 @@
   
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -770,7 +967,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -778,7 +978,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='notes' href='OldClasses/bioinformatics/notes.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='notes' href='OldClasses/bioinformatics/notes.html'>
       notes
     </a>
     
@@ -794,6 +997,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
+
   
   
 
@@ -805,7 +1009,9 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'>
@@ -813,7 +1019,9 @@
       </svg>
       
   
-    <a class='font-bold text-green-600 hover:underline truncate' title='python_cheat_sheet' href='OldClasses/bioinformatics/python_cheat_sheet.html'>
+        
+    </span>
+    <a class='mavenLinkBold bg-blue-100 hover:bg-blue-200 rounded px-1.5 truncate' title='python_cheat_sheet' href='OldClasses/bioinformatics/python_cheat_sheet.html'>
       python_cheat_sheet
     </a>
     
@@ -832,8 +1040,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -845,14 +1052,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/comp-systems.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='comp-systems' href='OldClasses/comp-systems.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='comp-systems' href='OldClasses/comp-systems.html'>
       comp-systems
     </a>
     
@@ -871,8 +1086,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -884,14 +1098,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/ecology.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='ecology' href='OldClasses/ecology.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='ecology' href='OldClasses/ecology.html'>
       ecology
     </a>
     
@@ -910,8 +1132,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -923,14 +1144,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/intro-to-bioinformatics.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='intro-to-bioinformatics' href='OldClasses/intro-to-bioinformatics.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='intro-to-bioinformatics' href='OldClasses/intro-to-bioinformatics.html'>
       intro-to-bioinformatics
     </a>
     
@@ -949,8 +1178,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -962,14 +1190,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/programming-languages.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='programming-languages' href='OldClasses/programming-languages.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='programming-languages' href='OldClasses/programming-languages.html'>
       programming-languages
     </a>
     
@@ -989,10 +1225,9 @@
     
   
 </div>
-            
-              <!-- Variable bindings for this tree-->
-  
     
+      <!-- Variable bindings for this tree-->
+
   
 
 
@@ -1004,7 +1239,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1012,7 +1250,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='README' href='README.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='README' href='README.html'>
       README
     </a>
     
@@ -1026,10 +1267,9 @@
   -->
   
 </div>
-            
-              <!-- Variable bindings for this tree-->
-  
     
+      <!-- Variable bindings for this tree-->
+
   
 
 
@@ -1041,14 +1281,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='non-classes.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='non-classes' href='non-classes.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='non-classes' href='non-classes.html'>
       non-classes
     </a>
     
@@ -1065,22 +1313,44 @@
   -->
   
 </div>
-            
+    
 
-          </div>
-        </nav>
-
-        <!-- Main body column -->
-        <div class='flex-1 w-full overflow-x-auto bg-white'>
-          <main class='px-4 py-4'>
-            <h1 class='flex items-end justify-center mb-4 p-3 bg-green-100 text-5xl font-extrabold text-black rounded'>
+  </div>
+</nav>
+          <!-- Main body column -->
+          <div class='flex-1 w-full bg-white'>
+  <main class='px-4 py-4'>
+    <h1 class='flex items-end justify-center mb-4 p-3 bg-blue-100 text-5xl font-extrabold text-black rounded'>
   <a class='z-40 tracking-tighter '>
     python_cheat_sheet
   </a>
 </h1>
-            <article class='overflow-auto'>
+    
+      <div class='md:grid md:gap-4 md:grid-cols-8'>
+        <div class='md:col-span-6'>
+          <article class='overflow-auto'>
   <!-- What goes in this file will appear on top of note body-->
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Assignments and Variables</h1>
+  
+
+
+
+
+
+
+    <h1 id='assignments-and-variables' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Assignments and Variables
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#assignments-and-variables' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       I you want to store information in a variable, you use the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>=</code> operator.
     </p>
@@ -1091,7 +1361,21 @@ print(X) # will print 5
     <p class='mb-3'>
       The variable will have the value of 5 until you set it again using the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>=</code> operator.
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Addition, subtraction, multiplication, division, exponents</h1>
+  
+    <h1 id='addition-subtraction-multiplication-division-exponents' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Addition, subtraction, multiplication, division, exponents
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#addition-subtraction-multiplication-division-exponents' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       Math works, how cool! This follows classic order of operations as well.
     </p>
@@ -1103,7 +1387,21 @@ print(3/2) # prints 1.5
 print(3//2) # integer division (will print 1)
 print(5**2) # prints 5^2 (25)
 
-</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Lists, Dicts, tuples, sets</h1>
+</code></pre></div>
+    <h1 id='lists-dicts-tuples-sets' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Lists, Dicts, tuples, sets
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#lists-dicts-tuples-sets' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       If you want to store more than 1 point of data, the simplest way is to use a list.
     </p>
@@ -1129,7 +1427,21 @@ print(X) # will print {1, 2, 3}
 # some people define them this way, but they are equivalent
 D = dict(a="t", t="a", g="c", c="g")
 print(D["a"]) # would print t
-</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Logic</h1>
+</code></pre></div>
+    <h1 id='logic' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Logic
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#logic' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       <code class='verbatim py-0.5 px-0.5 bg-gray-100'>True</code> and <code class='verbatim py-0.5 px-0.5 bg-gray-100'>False</code>! Boolean variables are true or false. The <code class='verbatim py-0.5 px-0.5 bg-gray-100'>and</code> keyword evaluates to <code class='verbatim py-0.5 px-0.5 bg-gray-100'>True</code> if both the left and right are <code class='verbatim py-0.5 px-0.5 bg-gray-100'>True</code>, the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>or</code> keyword evaluates to <code class='verbatim py-0.5 px-0.5 bg-gray-100'>True</code> if either the left or right is <code class='verbatim py-0.5 px-0.5 bg-gray-100'>True</code>. The <code class='verbatim py-0.5 px-0.5 bg-gray-100'>not</code> keyword invert the output of the boolean (<code class='verbatim py-0.5 px-0.5 bg-gray-100'>not True</code> is the same as <code class='verbatim py-0.5 px-0.5 bg-gray-100'>False</code>).
     </p>
@@ -1139,7 +1451,21 @@ print(5 == 3) # outputs False
 print(True and False) # outputs False
 print(True or False) # outputs True
 print (not True) # outputs False
-</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>If</h1>
+</code></pre></div>
+    <h1 id='if' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  If
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#if' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       If this, then that. The <code class='verbatim py-0.5 px-0.5 bg-gray-100'>if</code> keyword tests a logic function and runs some code if it is true. <code class='verbatim py-0.5 px-0.5 bg-gray-100'>else</code> runs if the condition is false.
     </p>
@@ -1149,7 +1475,21 @@ if X == 5: # if x is equal to 5
     print("It's 5!")
 else: # otherwise
     print("It's not 5!")
-</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Functions</h1>
+</code></pre></div>
+    <h1 id='functions' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Functions
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#functions' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       A function is a reusable bit of code. You can think of it as a subprogram, or a small program that you can run inside the big program. They can take arguments which can be used as variables inside the "scope" of the function.
     </p>
@@ -1167,11 +1507,39 @@ example_function("Hi There") # What do you think this will do?
     return number1 + number2
 X = add(5, 6) # what do you think the value of X is?
 print(X)
-</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Loops</h1>
+</code></pre></div>
+    <h1 id='loops' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Loops
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#loops' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       Say you want to run the same code a bunch of times, but you don't want to write it out every time or you don't know beforehand how many times you want it to run. You need to use loops!
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>For loop</h2>
+  
+    <h2 id='for-loop' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  For loop
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#for-loop' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       A for loop runs a specific number of times and in python specifically, uses an "iterable" object as a way of determining how many times it runs. This could be a range, list, dict, or set
     </p>
@@ -1182,7 +1550,21 @@ for i in range(10):
 l = [1, 5, 6] # I want to print every member of this list
 for member in l:
     print(member)
-</code></pre></div><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>While loop</h2>
+</code></pre></div>
+    <h2 id='while-loop' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  While loop
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#while-loop' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       While loops use a condition or boolean to determine when to stop, similar to the way <code class='verbatim py-0.5 px-0.5 bg-gray-100'>if</code> works.
     </p>
@@ -1195,7 +1577,21 @@ while X: # what do you think this will do?
     else:
         X = False
 
-</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Objects</h1>
+</code></pre></div>
+    <h1 id='objects' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Objects
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#objects' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       Almost everything in python is an "object", or an instance of a <code class='verbatim py-0.5 px-0.5 bg-gray-100'>class</code>. An easy way to think about this is that you are an instance of class "human". You can determine the class or type of an object using the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>type</code> function.
     </p>
@@ -1230,7 +1626,21 @@ human2 = Human("Megan") # two instances of the same class human1 and human2
 human1.speak() # runs the speak function (will print "Mary")
 human2.speak() # runs the speak function (will print "Megan")
 print(type(human1)) # what will this print?
-</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Libraries</h1>
+</code></pre></div>
+    <h1 id='libraries' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Libraries
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#libraries' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       Say you wrote some code in a different file but you want to use it in your current one. You can <code class='verbatim py-0.5 px-0.5 bg-gray-100'>import</code> other python files to achieve this goal. Python has included a bunch of helpful libraries already, but more can be installed or written yourself.
     </p>
@@ -1242,11 +1652,39 @@ import numpy as np # needs to be installed (included with anaconda)
 X = np.array([1, 2, 3]) # a vector has a magnitude and a direction
 print(np.dot(X, X)) # performs the dot product
 
-</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>File IO</h1>
+</code></pre></div>
+    <h1 id='file-io' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  File IO
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#file-io' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       IO stands for "in out". Our goal is to read (in) and write (out) files using python.
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Reading Files</h2><div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'># when reading files, open them with the "r" character (r for read)
+  
+    <h2 id='reading-files' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Reading Files
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#reading-files' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'># when reading files, open them with the "r" character (r for read)
 with open("myfile.txt", "r") as f: # opens the file for reading
     # f is the file object now
     for line in f:
@@ -1265,7 +1703,21 @@ f = open("myfile.txt", "r")
 lines = f.readlines()
 f.close() # when you use with open, this line is not needed
 # forgetting to close a file can lead to unintended side effects
-</code></pre></div><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Writing files</h2>
+</code></pre></div>
+    <h2 id='writing-files' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Writing files
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#writing-files' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       There are two ways to write to a file, overwriting (w) or appending (a). appending will add the new contents to the end of the file, while overwriting will overwrite existing contents.
     </p>
@@ -1274,11 +1726,39 @@ f.close() # when you use with open, this line is not needed
 with open("myfile.txt", "a") as f:
     f.write("hello world") # this will add hello world to the end of myfile.txt
 
-</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>Python wizardry</h1>
+</code></pre></div>
+    <h1 id='python-wizardry' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Python wizardry
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#python-wizardry' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       This section is about things that aren't really applicable to other languages. You don't actually need this stuff to program most of the time either.
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>List comprehension</h2>
+  
+    <h2 id='list-comprehension' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  List comprehension
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#list-comprehension' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       Say we want to do something to every element of a list, you could use a for loop, but they aren't that fun. Instead, you can use something called a "list comprehension" that applies a simple operation to every element of a list and returns it.
     </p>
@@ -1296,7 +1776,21 @@ l = [1, 2, 3]
 l = [i+1 for i in l] #whaaaaaaa
 # it only took 1 line! It is also much faster especially when the list is large
 
-</code></pre></div><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Format strings, Raw strings</h2>
+</code></pre></div>
+    <h2 id='format-strings-raw-strings' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Format strings, Raw strings
+  
+  <a href='OldClasses/bioinformatics/python_cheat_sheet.html#format-strings-raw-strings' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       Python has a few special ways to define strings that are not present in other languages.
     </p>
@@ -1310,11 +1804,10 @@ f_string = f"Hi, my name is {X}." # The lowercase f before the quote makes it a 
   <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>print("Hi\nThere") # This will print two lines
 print(r"Hi\nThere") # this will print 1 line, the r before the quote makes python not recognize the \n
 </code></pre></div>
-
   <div class='flex items-center justify-center mt-2'>
   
     
-      <a class='text-gray-300 hover:text-green-600 text-sm' title='Edit this page on GitHub' href='https://github.com/IllustratedMan-code/Planner/blob/main/OldClasses/bioinformatics/python_cheat_sheet.org'>
+      <a class='text-gray-300 hover:text-blue-600 text-sm' title='Edit this page on GitHub' href='https://github.com/IllustratedMan-code/Planner/blob/main/OldClasses/bioinformatics/python_cheat_sheet.org'>
         <svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'></path>
         </svg>
@@ -1323,44 +1816,298 @@ print(r"Hi\nThere") # this will print 1 line, the r before the quote makes pytho
   
 </div>
 </article>
-            <div class='flex flex-col lg:flex-row lg:space-x-2'>
+        </div>
+        <div class='hidden md:block md:col-span-2 md:border-l'>
+          <nav id='toc' class='hidden leading-relaxed md:block md:sticky md:top-0 md:max-h-screen md:overflow-y-auto'>
+  <div class='text-gray-600 text-sm -mt-2'>
+    
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Assignments and Variables'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#assignments-and-variables' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Assignments and Variables
+              </a>
               
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Addition, subtraction, multiplication, division, exponents'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#addition-subtraction-multiplication-division-exponents' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Addition, subtraction, multiplication, division, exponents
+              </a>
               
-            </div>
-            
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Lists, Dicts, tuples, sets'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#lists-dicts-tuples-sets' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Lists, Dicts, tuples, sets
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Logic'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#logic' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Logic
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='If'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#if' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                If
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Functions'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#functions' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Functions
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Loops'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#loops' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Loops
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='For loop'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#for-loop' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                For loop
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='While loop'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#while-loop' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                While loop
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Objects'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#objects' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Objects
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Libraries'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#libraries' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Libraries
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='File IO'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#file-io' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                File IO
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Reading Files'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#reading-files' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Reading Files
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Writing files'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#writing-files' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Writing files
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Python wizardry'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#python-wizardry' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Python wizardry
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='List comprehension'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#list-comprehension' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                List comprehension
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Format strings, Raw strings'>
+              <a href='OldClasses/bioinformatics/python_cheat_sheet.html#format-strings-raw-strings' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Format strings, Raw strings
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+  </div>
+  <script>
+    // Highlight the TOC, based from https://stackoverflow.com/a/75346369
+    // TODO: We should get rid of JavaScript! See https://github.com/srid/emanote/issues/520
+    function highlightTOC() {
+      // Grab the toc links
+      const links = document.querySelectorAll("ul > li > a.--ema-toc");
+
+      // Find the matching anchors in the document body
+      const sections = [];
+      links.forEach((link) => {
+        let found = {};
+        for (section of document.querySelectorAll("a.--ema-anchor")) {
+          if (link.href == section.href) {
+            found = section;
+            break;
+          }
+        }
+        sections.push(found);
+      });
+
+      // Current toc link is marked with the following class
+      const mark = "toc-item-active";
+
+      // Set window scroll handler to update the toc mark.
+      window.onscroll = () => {
+        // Remove previous mark
+        links.forEach((link) => {
+          link.classList.remove(mark);
+        });
+
+        // Mark the link of the section that is in view, starting from the end
+        let marked = false;
+        for (var i = sections.length - 1; i >= 0; i--) {
+          if (window.scrollY > sections[i].offsetTop - 80) {
+            links[i].classList.add(mark);
+            marked = true;
+            break;
+          }
+        }
+
+        // Special case for the first and last section which might not reach the top
+        if (!marked && window.scrollY > 0) {
+          let i = 0;
+          if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight) {
+            // We are at the bottom
+            i = links.length - 1
+          }
+          links[i].classList.add(mark);
+        }
+      };
+    }
+    highlightTOC();
+  </script>
+</nav>
+        </div>
+      </div>
+      
+    <div class='flex flex-col lg:flex-row lg:space-x-2'>
+      
+      
+    </div>
+    
   <section class='flex flex-wrap items-end justify-center my-4 space-x-2 space-y-2 font-mono text-sm'>
     
   </section>
 
-            <!-- What goes in this file will at the very end of the main div -->
-          </main>
+    <!-- What goes in this file will at the very end of the main div -->
+  </main>
+</div>
         </div>
-      </div>
+        
       <footer class='flex items-center justify-center mt-2 mb-8 space-x-4 text-center text-gray-800'>
   
   <div>
     <a href='' title='Go to Home page'>
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'></path>
       </svg>
     </a>
   </div>
   <div>
     <a href='-/all.html' title='View Index'>
-      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
-        </path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'></path>
       </svg>
     </a>
   </div>
   <div>
-    <a href='https://emanote.srid.ca' target='_blank' title='Generated by Emanote 1.0.1.6'>
-      <img class='w-6 h-6 hover:text-green-700' src='_emanote-static/emanote-logo.svg' />
+    <a href='https://emanote.srid.ca' target='_blank' title='Generated by Emanote 1.3.17.1'>
+      <img class='w-6 h-6 hover:text-blue-700' src='_emanote-static/emanote-logo.svg' />
     </a>
   </div>
   <div>
     <a href='-/tags.html' title='View tags'>
-      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+      <svg class='w-6 h-6 hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
         </path>
       </svg>
@@ -1368,7 +2115,7 @@ print(r"Hi\nThere") # this will print 1 line, the r before the quote makes pytho
   </div>
   <div>
     <a href='-/tasks.html' title='View tasks'>
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
       </svg>
     </a>

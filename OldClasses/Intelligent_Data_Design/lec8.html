@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<!-- DoNotFormat -->
+<!-- DoNotFormat -->
+
+
+
+
+<!-- DoNotFormat -->
+<!-- DoNotFormat -->
+
 <html lang='en'>
 
 <head>
@@ -14,6 +23,9 @@
       <meta property='og:image' content />
       <meta property='og:type' content='website' />
       <meta property='og:title' content='lec8' />
+      
+        <meta name='twitter:card' content='summary_large_image' />
+      
     
     
       <base href='/Planner/' />
@@ -51,7 +63,8 @@
 
 
   
-  <link href='tailwind.css?instanceId=212e9745-c88c-4b2e-9f2a-8fbcb6418529' rel='stylesheet' type='text/css' />
+  
+  <link href='tailwind.css?instanceId=246d48dd-e69e-478e-94b7-314441ea29cb' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -59,6 +72,57 @@
       color: lightcoral;
       font-size: 90%;
       font-family: monospace;
+    }
+
+    /* Callouts */
+    div.callout {
+      background-color: #f5f5f5;
+      padding: 1em 1em 0.5em;
+      border-radius: 0.5em;
+      margin-bottom: 1em;
+    }
+
+    .callout[data-callout="note"] {
+      --callout-color: 8, 109, 221;
+    }
+
+    .callout[data-callout="info"] {
+      --callout-color: 8, 109, 221;
+    }
+
+    .callout[data-callout="tip"] {
+      --callout-color: 8, 191, 188;
+    }
+
+    .callout[data-callout="warning"] {
+      --callout-color: 236, 117, 0;
+    }
+
+    .callout[data-callout="failure"] {
+      --callout-color: 233, 49, 71;
+    }
+
+    div.callout {
+      background-color: rgba(var(--callout-color), 0.1);
+    }
+
+    .callout .callout-title {
+      color: rgb(var(--callout-color));
+    }
+
+    div.callout-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5em;
+      font-variation-settings: 'wght' 600;
+    }
+
+    div.callout-title div.callout-title-inner {
+      margin-left: 0.5em;
+    }
+
+    a.--ema-toc:not(.toc-item-active) {
+      background-color: #ffffff !important;
     }
 
     /* External link icon */
@@ -70,7 +134,12 @@
       content: ""
     }
 
+    a[data-linkicon="external"] {
+      padding-right: 24px;
+    }
+
     a[data-linkicon="external"]::after {
+      margin-right: -24px;
       content: url('data:image/svg+xml,\
       <svg xmlns="http://www.w3.org/2000/svg" height="0.7em" viewBox="0 0 20 20"> \
         <g style="stroke:gray;stroke-width:1"> \
@@ -150,6 +219,25 @@
 
 
   
+    <style>
+      /* For use in sidebar.tpl, as we cannot achieve this in tailwind itself! */
+      /* md:min-w-48  */
+      @media (min-width: 768px) {
+        #sidebar {
+          min-width: 12rem;
+        }
+      }
+
+      /* xl:min-w-64  */
+      @media (min-width: 1280px) {
+        #sidebar {
+          min-width: 16rem;
+        }
+      }
+    </style>
+
+    
+  
   <link rel='stylesheet' href='_emanote-static/stork/flat.css' />
 <!-- Custom Stork-search styling for Emanote -->
 <style>
@@ -167,11 +255,13 @@
 <script src='_emanote-static/stork/stork.js'></script>
 
   
-    <script data-emanote-base-url='/Planner/'>
+    <script id='emanote-stork' data-emanote-base-url='/Planner/'>
       window.emanote = {};
       window.emanote.stork = {
         searchShown: false,
+        indexIsStale: false,
         toggleSearch: function () {
+          window.emanote.stork.refreshIndex();
           document.getElementById('stork-search-container').classList.toggle('hidden');
           window.emanote.stork.searchShown = document.body.classList.toggle('stork-overflow-hidden-important');
           if (window.emanote.stork.searchShown) {
@@ -184,14 +274,25 @@
           window.emanote.stork.searchShown = false;
         },
 
-        init: function () {
+        getBaseUrl: function () {
+          const baseUrl = document.getElementById("emanote-stork").getAttribute('data-emanote-base-url') || '/';
+          return baseUrl;
+        },
+
+        registerIndex: function (options) {
           const indexName = 'emanote-search'; // used to match input[data-stork] attribute value
-          const baseUrl = document.currentScript.getAttribute('data-emanote-base-url') || '/';
-          const indexUrl = baseUrl + '-/stork.st';
+          const indexUrl = window.emanote.stork.getBaseUrl() + '-/stork.st';
+          stork.register(
+            indexName,
+            indexUrl,
+            options);
+        },
+
+        init: function () {
           if (document.readyState !== 'complete') {
             window.addEventListener('load', function () {
-              stork.initialize(baseUrl + '_emanote-static/stork/stork.wasm');
-              stork.register(indexName, indexUrl);
+              stork.initialize(window.emanote.stork.getBaseUrl() + '_emanote-static/stork/stork.wasm');
+              window.emanote.stork.registerIndex();
             });
 
             document.addEventListener('keydown', event => {
@@ -204,10 +305,32 @@
               }
             });
           } else {
-            // Override existing on Ema's hot-reload
-            stork.register(indexName, indexUrl, { forceOverwrite: true });
+            // This section is called during Ema's hot reload.
+            // 
+            // Mark the current index as stale, and refresh it *only when* the
+            // user actually invokes search.
+            // 
+            // We do not refresh the index *right away*, as that will cause
+            // memory leaks in the browser. See
+            // https://github.com/srid/emanote/issues/411#issuecomment-1402056235
+            console.log("stork: Marking index as stale");
+            window.emanote.stork.markIndexAsStale();
+          }
+        },
+
+        markIndexAsStale: function () {
+          window.emanote.stork.indexIsStale = true;
+        },
+
+        refreshIndex: function () {
+          if (window.emanote.stork.indexIsStale) {
+            console.log("stork: Reloading index");
+            window.emanote.stork.indexIsStale = false;
+            // NOTE: This will leak memory. See the comment above.
+            window.emanote.stork.registerIndex({ forceOverwrite: true });
           }
         }
+
       };
 
       window.emanote.stork.init();
@@ -224,9 +347,11 @@
 
 <body class='bg-gray-400 overflow-y-scroll'>
   
-    <div class='container mx-auto'>
+    <div class='container mx-auto md:mt-8 '>
+      
 
-      <nav id='breadcrumbs' class='w-full text-gray-700 md:hidden'>
+      
+        <nav id='breadcrumbs' class='w-full text-gray-700 md:hidden'>
   <div class='flex justify-left'>
     <div class='w-full px-2 py-2 bg-gray-50'>
       <ul class='flex flex-wrap text-lg'>
@@ -270,12 +395,12 @@
       </ul>
     </div>
     <button class='inline px-2 py-1 bg-gray-50 outline-none cursor-pointer focus:outline-none' title='Search (Ctrl+K)' type='button' onclick='window.emanote.stork.toggleSearch()'>
-      <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-green-700' f
+      <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-blue-700' f
  fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
   <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
 </svg>
     </button>
-    <button class='inline px-2 py-1 text-white bg-green-600 outline-none cursor-pointer focus:outline-none' title='Toggle sidebar' type='button' onclick="toggleHidden('sidebar')">
+    <button class='inline px-2 py-1 text-white bg-blue-600 outline-none cursor-pointer focus:outline-none' title='Toggle sidebar' type='button' onclick="toggleHidden('sidebar')">
       <svg xmlns='http://www.w3.org/2000/svg' class='w-4' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6h16M4 12h16M4 18h16'></path>
       </svg>
@@ -287,58 +412,61 @@
     </script>
   </div>
 </nav>
+      
 
-      <div id='container' class='flex flex-nowrap flex-col md:flex-row bg-gray-50 md:mt-8 md:shadow-2xl md:mb-8'>
-        <!-- Sidebar column -->
-        <nav id='sidebar' class='flex-shrink hidden leading-relaxed md:block md:sticky md:top-0 md:h-full md:w-48 xl:w-64'>
-          <div class='px-2 py-2 text-gray-800'>
-            <div id='indexing-links' class='flex flex-row float-right p-2 space-x-2 text-gray-500'>
-              <a href='-/tags.html' title='View tags'>
-                <svg style='width: 1rem;' class='hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
-                  </path>
-                </svg>
-              </a>
-              <a href='-/all.html' title='Expand full tree'>
-                <svg style='width: 1rem;' class='hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
-                  </path>
-                </svg>
-              </a>
-              <a title='Search (Ctrl+K)' class='cursor-pointer' onclick='window.emanote.stork.toggleSearch()'>
-                <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-green-700' f
+      
+        <div id='container' class='flex flex-nowrap flex-col md:flex-row bg-gray-50 md:shadow-2xl md:mb-8'>
+          <!-- Sidebar column -->
+          <nav id='sidebar' class='flex-shrink hidden leading-relaxed md:block md:sticky md:top-0 md:max-h-screen md:overflow-y-auto md:w-48 xl:w-64'>
+  <div class='px-2 py-2 text-gray-800'>
+    <div id='indexing-links' class='flex flex-row float-right p-2 space-x-2 text-gray-500'>
+      <a href='-/tags.html' title='View tags'>
+        <svg style='width: 1rem;' class='hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
+          </path>
+        </svg>
+      </a>
+      <a href='-/all.html' title='Expand full tree'>
+        <svg style='width: 1rem;' class='hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
+          </path>
+        </svg>
+      </a>
+      <a title='Search (Ctrl+K)' class='cursor-pointer' onclick='window.emanote.stork.toggleSearch()'>
+        <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-blue-700' f
  fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
   <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
 </svg>
-              </a>
-            </div>
+      </a>
+    </div>
 
-            <div id='site-logo' class='pl-2'>
-              <div class='flex items-center my-2 space-x-2 justify-left'>
-                <a href='' title='Go to Home'>
-                  
-                    
-                      <!-- The style width attribute here is to prevent huge
-                      icon from displaying at those rare occasions when Tailwind
-                      hasn't kicked in immediately on page load
-                      -->
-                      <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
-                    
-                  
-                </a>
-                <a class='font-bold truncate' title='Go to Home' href=''>
-                  Home
-                </a>
-              </div>
-            </div>
-
+    <div id='site-logo' class='pl-2'>
+      <div class='flex items-center my-2 space-x-2 justify-left'>
+        <a href='' title='Go to Home'>
+          
             
-              <!-- Variable bindings for this tree-->
+              <!-- The style width attribute here is to prevent huge
+                      icon from displaying at those rare occasions when Tailwind
+                      hasn't kicked in immediately on page load 
+                      -->
+              <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
+            
+          
+        </a>
+        <a class='font-bold truncate' title='Go to Home' href=''>
+          Home
+        </a>
+      </div>
+    </div>
+
+    
+      <!-- Variable bindings for this tree-->
+
   
     
       
-      
     
+  
 
 
 
@@ -349,15 +477,18 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
-        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
-        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='w-4 h-4 flex-shrink-0 inline text-gray-700' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z' clip-rule='evenodd'></path>
       </svg>
       
   
-    <a class='font-bold hover:underline truncate' title='OldClasses' href='OldClasses.html'>
+        
+    </span>
+    <a class='mavenLinkBold hover:bg-blue-200 rounded px-1.5 truncate' title='OldClasses' href='OldClasses.html'>
       OldClasses
     </a>
     
@@ -370,8 +501,7 @@
   
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -383,14 +513,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/AI.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='AI' href='OldClasses/AI.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='AI' href='OldClasses/AI.html'>
       AI
     </a>
     
@@ -409,8 +547,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -422,14 +559,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Automata.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Automata' href='OldClasses/Automata.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Automata' href='OldClasses/Automata.html'>
       Automata
     </a>
     
@@ -448,8 +593,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -461,14 +605,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Discrete-Structures.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Discrete-Structures' href='OldClasses/Discrete-Structures.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Discrete-Structures' href='OldClasses/Discrete-Structures.html'>
       Discrete-Structures
     </a>
     
@@ -487,11 +639,12 @@
 </div>
     
       <!-- Variable bindings for this tree-->
+
   
     
       
-      
     
+  
 
 
 
@@ -502,15 +655,18 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
-        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
-        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='w-4 h-4 flex-shrink-0 inline text-gray-700' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z' clip-rule='evenodd'></path>
       </svg>
       
   
-    <a class='font-bold hover:underline truncate' title='Intelligent_Data_Design' href='OldClasses/Intelligent_Data_Design.html'>
+        
+    </span>
+    <a class='mavenLinkBold hover:bg-blue-200 rounded px-1.5 truncate' title='Intelligent_Data_Design' href='OldClasses/Intelligent_Data_Design.html'>
       Intelligent_Data_Design
     </a>
     
@@ -523,8 +679,7 @@
   
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -536,14 +691,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Intelligent_Data_Design/Assignments.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Assignments' href='OldClasses/Intelligent_Data_Design/Assignments.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Assignments' href='OldClasses/Intelligent_Data_Design/Assignments.html'>
       Assignments
     </a>
     
@@ -562,8 +725,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -575,14 +737,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Intelligent_Data_Design/cards.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='cards' href='OldClasses/Intelligent_Data_Design/cards.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='cards' href='OldClasses/Intelligent_Data_Design/cards.html'>
       cards
     </a>
     
@@ -601,6 +771,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
+
   
   
 
@@ -612,15 +783,18 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
-        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
-        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='w-4 h-4 flex-shrink-0 inline text-gray-700' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z' clip-rule='evenodd'></path>
       </svg>
       
   
-    <a class='font-bold text-green-600 hover:underline truncate' title='lec8' href='OldClasses/Intelligent_Data_Design/lec8.html'>
+        
+    </span>
+    <a class='mavenLinkBold bg-blue-100 hover:bg-blue-200 rounded px-1.5 truncate' title='lec8' href='OldClasses/Intelligent_Data_Design/lec8.html'>
       lec8
     </a>
     
@@ -633,8 +807,7 @@
   
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -646,7 +819,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -654,7 +830,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='Lecture 8 notes' href='OldClasses/Intelligent_Data_Design/lec8/lec8.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Lecture 8 notes' href='OldClasses/Intelligent_Data_Design/lec8/lec8.html'>
       Lecture 8 notes
     </a>
     
@@ -673,8 +852,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -686,14 +864,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Intelligent_Data_Design/quiz-review.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='quiz-review' href='OldClasses/Intelligent_Data_Design/quiz-review.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='quiz-review' href='OldClasses/Intelligent_Data_Design/quiz-review.html'>
       quiz-review
     </a>
     
@@ -712,8 +898,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -725,7 +910,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -733,7 +921,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='Lec2' href='OldClasses/Intelligent_Data_Design/Lec2.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Lec2' href='OldClasses/Intelligent_Data_Design/Lec2.html'>
       Lec2
     </a>
     
@@ -749,8 +940,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -762,7 +952,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -770,7 +963,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='chapter1' href='OldClasses/Intelligent_Data_Design/chapter1.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='chapter1' href='OldClasses/Intelligent_Data_Design/chapter1.html'>
       chapter1
     </a>
     
@@ -786,8 +982,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -799,7 +994,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -807,7 +1005,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='chapter2' href='OldClasses/Intelligent_Data_Design/chapter2.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='chapter2' href='OldClasses/Intelligent_Data_Design/chapter2.html'>
       chapter2
     </a>
     
@@ -823,8 +1024,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -836,7 +1036,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -844,7 +1047,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='chapter20' href='OldClasses/Intelligent_Data_Design/chapter20.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='chapter20' href='OldClasses/Intelligent_Data_Design/chapter20.html'>
       chapter20
     </a>
     
@@ -860,8 +1066,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -873,7 +1078,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -881,7 +1089,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='Categorical Attributes' href='OldClasses/Intelligent_Data_Design/chapter3.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Categorical Attributes' href='OldClasses/Intelligent_Data_Design/chapter3.html'>
       Categorical Attributes
     </a>
     
@@ -897,8 +1108,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -910,7 +1120,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -918,7 +1131,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='chapter4' href='OldClasses/Intelligent_Data_Design/chapter4.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='chapter4' href='OldClasses/Intelligent_Data_Design/chapter4.html'>
       chapter4
     </a>
     
@@ -934,8 +1150,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -947,7 +1162,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -955,7 +1173,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='chapter7' href='OldClasses/Intelligent_Data_Design/chapter7.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='chapter7' href='OldClasses/Intelligent_Data_Design/chapter7.html'>
       chapter7
     </a>
     
@@ -971,8 +1192,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -984,7 +1204,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -992,7 +1215,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='chapter8' href='OldClasses/Intelligent_Data_Design/chapter8.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='chapter8' href='OldClasses/Intelligent_Data_Design/chapter8.html'>
       chapter8
     </a>
     
@@ -1008,8 +1234,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1021,7 +1246,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1029,7 +1257,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='conversation_about_svms' href='OldClasses/Intelligent_Data_Design/conversation_about_svms.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='conversation_about_svms' href='OldClasses/Intelligent_Data_Design/conversation_about_svms.html'>
       conversation_about_svms
     </a>
     
@@ -1045,8 +1276,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1058,7 +1288,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1066,7 +1299,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='important_notes' href='OldClasses/Intelligent_Data_Design/important_notes.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='important_notes' href='OldClasses/Intelligent_Data_Design/important_notes.html'>
       important_notes
     </a>
     
@@ -1082,8 +1318,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1095,7 +1330,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1103,7 +1341,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec1' href='OldClasses/Intelligent_Data_Design/lec1.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec1' href='OldClasses/Intelligent_Data_Design/lec1.html'>
       lec1
     </a>
     
@@ -1119,8 +1360,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1132,7 +1372,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1140,7 +1383,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec10' href='OldClasses/Intelligent_Data_Design/lec10.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec10' href='OldClasses/Intelligent_Data_Design/lec10.html'>
       lec10
     </a>
     
@@ -1156,8 +1402,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1169,7 +1414,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1177,7 +1425,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec12' href='OldClasses/Intelligent_Data_Design/lec12.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec12' href='OldClasses/Intelligent_Data_Design/lec12.html'>
       lec12
     </a>
     
@@ -1193,8 +1444,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1206,7 +1456,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1214,7 +1467,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec13' href='OldClasses/Intelligent_Data_Design/lec13.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec13' href='OldClasses/Intelligent_Data_Design/lec13.html'>
       lec13
     </a>
     
@@ -1230,8 +1486,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1243,7 +1498,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1251,7 +1509,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec14' href='OldClasses/Intelligent_Data_Design/lec14.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec14' href='OldClasses/Intelligent_Data_Design/lec14.html'>
       lec14
     </a>
     
@@ -1267,8 +1528,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1280,7 +1540,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1288,7 +1551,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec15' href='OldClasses/Intelligent_Data_Design/lec15.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec15' href='OldClasses/Intelligent_Data_Design/lec15.html'>
       lec15
     </a>
     
@@ -1304,8 +1570,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1317,7 +1582,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1325,7 +1593,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec16' href='OldClasses/Intelligent_Data_Design/lec16.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec16' href='OldClasses/Intelligent_Data_Design/lec16.html'>
       lec16
     </a>
     
@@ -1341,8 +1612,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1354,7 +1624,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1362,7 +1635,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec17' href='OldClasses/Intelligent_Data_Design/lec17.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec17' href='OldClasses/Intelligent_Data_Design/lec17.html'>
       lec17
     </a>
     
@@ -1378,8 +1654,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1391,7 +1666,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1399,7 +1677,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec20' href='OldClasses/Intelligent_Data_Design/lec20.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec20' href='OldClasses/Intelligent_Data_Design/lec20.html'>
       lec20
     </a>
     
@@ -1415,8 +1696,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1428,7 +1708,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1436,7 +1719,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec21' href='OldClasses/Intelligent_Data_Design/lec21.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec21' href='OldClasses/Intelligent_Data_Design/lec21.html'>
       lec21
     </a>
     
@@ -1452,8 +1738,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1465,7 +1750,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1473,7 +1761,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec23' href='OldClasses/Intelligent_Data_Design/lec23.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec23' href='OldClasses/Intelligent_Data_Design/lec23.html'>
       lec23
     </a>
     
@@ -1489,8 +1780,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1502,7 +1792,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1510,7 +1803,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec3' href='OldClasses/Intelligent_Data_Design/lec3.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec3' href='OldClasses/Intelligent_Data_Design/lec3.html'>
       lec3
     </a>
     
@@ -1526,8 +1822,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1539,7 +1834,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1547,7 +1845,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec4' href='OldClasses/Intelligent_Data_Design/lec4.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec4' href='OldClasses/Intelligent_Data_Design/lec4.html'>
       lec4
     </a>
     
@@ -1563,8 +1864,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1576,7 +1876,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1584,7 +1887,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec5' href='OldClasses/Intelligent_Data_Design/lec5.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec5' href='OldClasses/Intelligent_Data_Design/lec5.html'>
       lec5
     </a>
     
@@ -1600,8 +1906,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1613,7 +1918,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1621,7 +1929,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec6' href='OldClasses/Intelligent_Data_Design/lec6.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec6' href='OldClasses/Intelligent_Data_Design/lec6.html'>
       lec6
     </a>
     
@@ -1637,8 +1948,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1650,7 +1960,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1658,7 +1971,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec7' href='OldClasses/Intelligent_Data_Design/lec7.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec7' href='OldClasses/Intelligent_Data_Design/lec7.html'>
       lec7
     </a>
     
@@ -1674,8 +1990,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1687,7 +2002,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1695,7 +2013,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='lec9' href='OldClasses/Intelligent_Data_Design/lec9.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='lec9' href='OldClasses/Intelligent_Data_Design/lec9.html'>
       lec9
     </a>
     
@@ -1714,8 +2035,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1727,14 +2047,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Networking.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Networking' href='OldClasses/Networking.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Networking' href='OldClasses/Networking.html'>
       Networking
     </a>
     
@@ -1753,8 +2081,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1766,14 +2093,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Operating_Systems.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Operating_Systems' href='OldClasses/Operating_Systems.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Operating_Systems' href='OldClasses/Operating_Systems.html'>
       Operating_Systems
     </a>
     
@@ -1792,8 +2127,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1805,14 +2139,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/OrganicChemistry.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='OrganicChemistry' href='OldClasses/OrganicChemistry.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='OrganicChemistry' href='OldClasses/OrganicChemistry.html'>
       OrganicChemistry
     </a>
     
@@ -1831,8 +2173,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1844,14 +2185,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/ParallelComputing.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='ParallelComputing' href='OldClasses/ParallelComputing.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='ParallelComputing' href='OldClasses/ParallelComputing.html'>
       ParallelComputing
     </a>
     
@@ -1870,8 +2219,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1883,14 +2231,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Physics2001.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Physics2001' href='OldClasses/Physics2001.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Physics2001' href='OldClasses/Physics2001.html'>
       Physics2001
     </a>
     
@@ -1909,8 +2265,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1922,14 +2277,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/bioinformatics.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='bioinformatics' href='OldClasses/bioinformatics.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='bioinformatics' href='OldClasses/bioinformatics.html'>
       bioinformatics
     </a>
     
@@ -1948,8 +2311,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1961,14 +2323,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/comp-systems.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='comp-systems' href='OldClasses/comp-systems.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='comp-systems' href='OldClasses/comp-systems.html'>
       comp-systems
     </a>
     
@@ -1987,8 +2357,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -2000,14 +2369,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/ecology.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='ecology' href='OldClasses/ecology.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='ecology' href='OldClasses/ecology.html'>
       ecology
     </a>
     
@@ -2026,8 +2403,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -2039,14 +2415,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/intro-to-bioinformatics.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='intro-to-bioinformatics' href='OldClasses/intro-to-bioinformatics.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='intro-to-bioinformatics' href='OldClasses/intro-to-bioinformatics.html'>
       intro-to-bioinformatics
     </a>
     
@@ -2065,8 +2449,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -2078,14 +2461,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/programming-languages.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='programming-languages' href='OldClasses/programming-languages.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='programming-languages' href='OldClasses/programming-languages.html'>
       programming-languages
     </a>
     
@@ -2105,10 +2496,9 @@
     
   
 </div>
-            
-              <!-- Variable bindings for this tree-->
-  
     
+      <!-- Variable bindings for this tree-->
+
   
 
 
@@ -2120,7 +2510,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -2128,7 +2521,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='README' href='README.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='README' href='README.html'>
       README
     </a>
     
@@ -2142,10 +2538,9 @@
   -->
   
 </div>
-            
-              <!-- Variable bindings for this tree-->
-  
     
+      <!-- Variable bindings for this tree-->
+
   
 
 
@@ -2157,14 +2552,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='non-classes.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='non-classes' href='non-classes.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='non-classes' href='non-classes.html'>
       non-classes
     </a>
     
@@ -2181,22 +2584,28 @@
   -->
   
 </div>
-            
+    
 
-          </div>
-        </nav>
-
-        <!-- Main body column -->
-        <div class='flex-1 w-full overflow-x-auto bg-white'>
-          <main class='px-4 py-4'>
-            <h1 class='flex items-end justify-center mb-4 p-3 bg-green-100 text-5xl font-extrabold text-black rounded'>
+  </div>
+</nav>
+          <!-- Main body column -->
+          <div class='flex-1 w-full bg-white'>
+  <main class='px-4 py-4'>
+    <h1 class='flex items-end justify-center mb-4 p-3 bg-blue-100 text-5xl font-extrabold text-black rounded'>
   <a class='z-40 tracking-tighter '>
     lec8
   </a>
 </h1>
-            <article class='overflow-auto'>
+    
+      <article class='overflow-auto'>
   <!-- What goes in this file will appear on top of note body-->
-  <nav>
+  
+
+
+
+
+
+<nav>
   <div class='mb-8'>
     <header data-nosnippet class='pb-2 mb-2 font-semibold text-gray-600'>
       Pages matching path './*'
@@ -2209,7 +2618,7 @@
               <span data-nosnippet class='mr-2 text-right text-gray-600'>
               </span>
             
-            <a class='flex-1 text-green-600 mavenLinkBold border-l-2 pl-2 hover:underline' href='OldClasses/Intelligent_Data_Design/lec8/lec8.html'>
+            <a class='flex-1 text-blue-600 mavenLinkBold border-l-2 pl-2 hover:underline' href='OldClasses/Intelligent_Data_Design/lec8/lec8.html'>
               Lecture 8 notes
             </a>
           </div>
@@ -2222,11 +2631,10 @@
       Note: To override the auto-generated content here, create a file named one of: <span class='font-mono text-sm'>OldClasses/Intelligent_Data_Design/lec8.md, OldClasses/Intelligent_Data_Design/lec8.org</span>
     </p>
   </div>
-
   <div class='flex items-center justify-center mt-2'>
   
     
-      <a class='text-gray-300 hover:text-green-600 text-sm' title='Edit this page on GitHub' href='https://github.com/IllustratedMan-code/Planner/blob/main/OldClasses/Intelligent_Data_Design/lec8.md'>
+      <a class='text-gray-300 hover:text-blue-600 text-sm' title='Edit this page on GitHub' href='https://github.com/IllustratedMan-code/Planner/blob/main/OldClasses/Intelligent_Data_Design/lec8.md'>
         <svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'></path>
         </svg>
@@ -2235,44 +2643,45 @@
   
 </div>
 </article>
-            <div class='flex flex-col lg:flex-row lg:space-x-2'>
-              
-              
-            </div>
-            
+    
+    <div class='flex flex-col lg:flex-row lg:space-x-2'>
+      
+      
+    </div>
+    
   <section class='flex flex-wrap items-end justify-center my-4 space-x-2 space-y-2 font-mono text-sm'>
     
   </section>
 
-            <!-- What goes in this file will at the very end of the main div -->
-          </main>
+    <!-- What goes in this file will at the very end of the main div -->
+  </main>
+</div>
         </div>
-      </div>
+        
       <footer class='flex items-center justify-center mt-2 mb-8 space-x-4 text-center text-gray-800'>
   
   <div>
     <a href='' title='Go to Home page'>
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'></path>
       </svg>
     </a>
   </div>
   <div>
     <a href='-/all.html' title='View Index'>
-      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
-        </path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'></path>
       </svg>
     </a>
   </div>
   <div>
-    <a href='https://emanote.srid.ca' target='_blank' title='Generated by Emanote 1.0.1.6'>
-      <img class='w-6 h-6 hover:text-green-700' src='_emanote-static/emanote-logo.svg' />
+    <a href='https://emanote.srid.ca' target='_blank' title='Generated by Emanote 1.3.17.1'>
+      <img class='w-6 h-6 hover:text-blue-700' src='_emanote-static/emanote-logo.svg' />
     </a>
   </div>
   <div>
     <a href='-/tags.html' title='View tags'>
-      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+      <svg class='w-6 h-6 hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
         </path>
       </svg>
@@ -2280,7 +2689,7 @@
   </div>
   <div>
     <a href='-/tasks.html' title='View tasks'>
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
       </svg>
     </a>

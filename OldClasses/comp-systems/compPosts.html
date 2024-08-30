@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<!-- DoNotFormat -->
+<!-- DoNotFormat -->
+
+
+
+
+<!-- DoNotFormat -->
+<!-- DoNotFormat -->
+
 <html lang='en'>
 
 <head>
@@ -14,6 +23,9 @@
       <meta property='og:image' content />
       <meta property='og:type' content='website' />
       <meta property='og:title' content='compPosts' />
+      
+        <meta name='twitter:card' content='summary_large_image' />
+      
     
     
       <base href='/Planner/' />
@@ -51,7 +63,8 @@
 
 
   
-  <link href='tailwind.css?instanceId=212e9745-c88c-4b2e-9f2a-8fbcb6418529' rel='stylesheet' type='text/css' />
+  
+  <link href='tailwind.css?instanceId=246d48dd-e69e-478e-94b7-314441ea29cb' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -59,6 +72,57 @@
       color: lightcoral;
       font-size: 90%;
       font-family: monospace;
+    }
+
+    /* Callouts */
+    div.callout {
+      background-color: #f5f5f5;
+      padding: 1em 1em 0.5em;
+      border-radius: 0.5em;
+      margin-bottom: 1em;
+    }
+
+    .callout[data-callout="note"] {
+      --callout-color: 8, 109, 221;
+    }
+
+    .callout[data-callout="info"] {
+      --callout-color: 8, 109, 221;
+    }
+
+    .callout[data-callout="tip"] {
+      --callout-color: 8, 191, 188;
+    }
+
+    .callout[data-callout="warning"] {
+      --callout-color: 236, 117, 0;
+    }
+
+    .callout[data-callout="failure"] {
+      --callout-color: 233, 49, 71;
+    }
+
+    div.callout {
+      background-color: rgba(var(--callout-color), 0.1);
+    }
+
+    .callout .callout-title {
+      color: rgb(var(--callout-color));
+    }
+
+    div.callout-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5em;
+      font-variation-settings: 'wght' 600;
+    }
+
+    div.callout-title div.callout-title-inner {
+      margin-left: 0.5em;
+    }
+
+    a.--ema-toc:not(.toc-item-active) {
+      background-color: #ffffff !important;
     }
 
     /* External link icon */
@@ -70,7 +134,12 @@
       content: ""
     }
 
+    a[data-linkicon="external"] {
+      padding-right: 24px;
+    }
+
     a[data-linkicon="external"]::after {
+      margin-right: -24px;
       content: url('data:image/svg+xml,\
       <svg xmlns="http://www.w3.org/2000/svg" height="0.7em" viewBox="0 0 20 20"> \
         <g style="stroke:gray;stroke-width:1"> \
@@ -150,6 +219,25 @@
 
 
   
+    <style>
+      /* For use in sidebar.tpl, as we cannot achieve this in tailwind itself! */
+      /* md:min-w-48  */
+      @media (min-width: 768px) {
+        #sidebar {
+          min-width: 12rem;
+        }
+      }
+
+      /* xl:min-w-64  */
+      @media (min-width: 1280px) {
+        #sidebar {
+          min-width: 16rem;
+        }
+      }
+    </style>
+
+    
+  
   <link rel='stylesheet' href='_emanote-static/stork/flat.css' />
 <!-- Custom Stork-search styling for Emanote -->
 <style>
@@ -167,11 +255,13 @@
 <script src='_emanote-static/stork/stork.js'></script>
 
   
-    <script data-emanote-base-url='/Planner/'>
+    <script id='emanote-stork' data-emanote-base-url='/Planner/'>
       window.emanote = {};
       window.emanote.stork = {
         searchShown: false,
+        indexIsStale: false,
         toggleSearch: function () {
+          window.emanote.stork.refreshIndex();
           document.getElementById('stork-search-container').classList.toggle('hidden');
           window.emanote.stork.searchShown = document.body.classList.toggle('stork-overflow-hidden-important');
           if (window.emanote.stork.searchShown) {
@@ -184,14 +274,25 @@
           window.emanote.stork.searchShown = false;
         },
 
-        init: function () {
+        getBaseUrl: function () {
+          const baseUrl = document.getElementById("emanote-stork").getAttribute('data-emanote-base-url') || '/';
+          return baseUrl;
+        },
+
+        registerIndex: function (options) {
           const indexName = 'emanote-search'; // used to match input[data-stork] attribute value
-          const baseUrl = document.currentScript.getAttribute('data-emanote-base-url') || '/';
-          const indexUrl = baseUrl + '-/stork.st';
+          const indexUrl = window.emanote.stork.getBaseUrl() + '-/stork.st';
+          stork.register(
+            indexName,
+            indexUrl,
+            options);
+        },
+
+        init: function () {
           if (document.readyState !== 'complete') {
             window.addEventListener('load', function () {
-              stork.initialize(baseUrl + '_emanote-static/stork/stork.wasm');
-              stork.register(indexName, indexUrl);
+              stork.initialize(window.emanote.stork.getBaseUrl() + '_emanote-static/stork/stork.wasm');
+              window.emanote.stork.registerIndex();
             });
 
             document.addEventListener('keydown', event => {
@@ -204,10 +305,32 @@
               }
             });
           } else {
-            // Override existing on Ema's hot-reload
-            stork.register(indexName, indexUrl, { forceOverwrite: true });
+            // This section is called during Ema's hot reload.
+            // 
+            // Mark the current index as stale, and refresh it *only when* the
+            // user actually invokes search.
+            // 
+            // We do not refresh the index *right away*, as that will cause
+            // memory leaks in the browser. See
+            // https://github.com/srid/emanote/issues/411#issuecomment-1402056235
+            console.log("stork: Marking index as stale");
+            window.emanote.stork.markIndexAsStale();
+          }
+        },
+
+        markIndexAsStale: function () {
+          window.emanote.stork.indexIsStale = true;
+        },
+
+        refreshIndex: function () {
+          if (window.emanote.stork.indexIsStale) {
+            console.log("stork: Reloading index");
+            window.emanote.stork.indexIsStale = false;
+            // NOTE: This will leak memory. See the comment above.
+            window.emanote.stork.registerIndex({ forceOverwrite: true });
           }
         }
+
       };
 
       window.emanote.stork.init();
@@ -224,9 +347,11 @@
 
 <body class='bg-gray-400 overflow-y-scroll'>
   
-    <div class='container mx-auto'>
+    <div class='container mx-auto md:mt-8 '>
+      
 
-      <nav id='breadcrumbs' class='w-full text-gray-700 md:hidden'>
+      
+        <nav id='breadcrumbs' class='w-full text-gray-700 md:hidden'>
   <div class='flex justify-left'>
     <div class='w-full px-2 py-2 bg-gray-50'>
       <ul class='flex flex-wrap text-lg'>
@@ -270,12 +395,12 @@
       </ul>
     </div>
     <button class='inline px-2 py-1 bg-gray-50 outline-none cursor-pointer focus:outline-none' title='Search (Ctrl+K)' type='button' onclick='window.emanote.stork.toggleSearch()'>
-      <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-green-700' f
+      <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-blue-700' f
  fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
   <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
 </svg>
     </button>
-    <button class='inline px-2 py-1 text-white bg-green-600 outline-none cursor-pointer focus:outline-none' title='Toggle sidebar' type='button' onclick="toggleHidden('sidebar')">
+    <button class='inline px-2 py-1 text-white bg-blue-600 outline-none cursor-pointer focus:outline-none' title='Toggle sidebar' type='button' onclick="toggleHidden('sidebar')">
       <svg xmlns='http://www.w3.org/2000/svg' class='w-4' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6h16M4 12h16M4 18h16'></path>
       </svg>
@@ -287,58 +412,61 @@
     </script>
   </div>
 </nav>
+      
 
-      <div id='container' class='flex flex-nowrap flex-col md:flex-row bg-gray-50 md:mt-8 md:shadow-2xl md:mb-8'>
-        <!-- Sidebar column -->
-        <nav id='sidebar' class='flex-shrink hidden leading-relaxed md:block md:sticky md:top-0 md:h-full md:w-48 xl:w-64'>
-          <div class='px-2 py-2 text-gray-800'>
-            <div id='indexing-links' class='flex flex-row float-right p-2 space-x-2 text-gray-500'>
-              <a href='-/tags.html' title='View tags'>
-                <svg style='width: 1rem;' class='hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
-                  </path>
-                </svg>
-              </a>
-              <a href='-/all.html' title='Expand full tree'>
-                <svg style='width: 1rem;' class='hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
-                  </path>
-                </svg>
-              </a>
-              <a title='Search (Ctrl+K)' class='cursor-pointer' onclick='window.emanote.stork.toggleSearch()'>
-                <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-green-700' f
+      
+        <div id='container' class='flex flex-nowrap flex-col md:flex-row bg-gray-50 md:shadow-2xl md:mb-8'>
+          <!-- Sidebar column -->
+          <nav id='sidebar' class='flex-shrink hidden leading-relaxed md:block md:sticky md:top-0 md:max-h-screen md:overflow-y-auto md:w-48 xl:w-64'>
+  <div class='px-2 py-2 text-gray-800'>
+    <div id='indexing-links' class='flex flex-row float-right p-2 space-x-2 text-gray-500'>
+      <a href='-/tags.html' title='View tags'>
+        <svg style='width: 1rem;' class='hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
+          </path>
+        </svg>
+      </a>
+      <a href='-/all.html' title='Expand full tree'>
+        <svg style='width: 1rem;' class='hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
+          </path>
+        </svg>
+      </a>
+      <a title='Search (Ctrl+K)' class='cursor-pointer' onclick='window.emanote.stork.toggleSearch()'>
+        <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-blue-700' f
  fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
   <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
 </svg>
-              </a>
-            </div>
+      </a>
+    </div>
 
-            <div id='site-logo' class='pl-2'>
-              <div class='flex items-center my-2 space-x-2 justify-left'>
-                <a href='' title='Go to Home'>
-                  
-                    
-                      <!-- The style width attribute here is to prevent huge
-                      icon from displaying at those rare occasions when Tailwind
-                      hasn't kicked in immediately on page load
-                      -->
-                      <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
-                    
-                  
-                </a>
-                <a class='font-bold truncate' title='Go to Home' href=''>
-                  Home
-                </a>
-              </div>
-            </div>
-
+    <div id='site-logo' class='pl-2'>
+      <div class='flex items-center my-2 space-x-2 justify-left'>
+        <a href='' title='Go to Home'>
+          
             
-              <!-- Variable bindings for this tree-->
+              <!-- The style width attribute here is to prevent huge
+                      icon from displaying at those rare occasions when Tailwind
+                      hasn't kicked in immediately on page load 
+                      -->
+              <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
+            
+          
+        </a>
+        <a class='font-bold truncate' title='Go to Home' href=''>
+          Home
+        </a>
+      </div>
+    </div>
+
+    
+      <!-- Variable bindings for this tree-->
+
   
     
       
-      
     
+  
 
 
 
@@ -349,15 +477,18 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
-        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
-        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='w-4 h-4 flex-shrink-0 inline text-gray-700' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z' clip-rule='evenodd'></path>
       </svg>
       
   
-    <a class='font-bold hover:underline truncate' title='OldClasses' href='OldClasses.html'>
+        
+    </span>
+    <a class='mavenLinkBold hover:bg-blue-200 rounded px-1.5 truncate' title='OldClasses' href='OldClasses.html'>
       OldClasses
     </a>
     
@@ -370,8 +501,7 @@
   
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -383,14 +513,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/AI.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='AI' href='OldClasses/AI.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='AI' href='OldClasses/AI.html'>
       AI
     </a>
     
@@ -409,8 +547,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -422,14 +559,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Automata.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Automata' href='OldClasses/Automata.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Automata' href='OldClasses/Automata.html'>
       Automata
     </a>
     
@@ -448,8 +593,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -461,14 +605,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Discrete-Structures.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Discrete-Structures' href='OldClasses/Discrete-Structures.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Discrete-Structures' href='OldClasses/Discrete-Structures.html'>
       Discrete-Structures
     </a>
     
@@ -487,8 +639,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -500,14 +651,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Intelligent_Data_Design.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Intelligent_Data_Design' href='OldClasses/Intelligent_Data_Design.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Intelligent_Data_Design' href='OldClasses/Intelligent_Data_Design.html'>
       Intelligent_Data_Design
     </a>
     
@@ -526,8 +685,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -539,14 +697,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Networking.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Networking' href='OldClasses/Networking.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Networking' href='OldClasses/Networking.html'>
       Networking
     </a>
     
@@ -565,8 +731,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -578,14 +743,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Operating_Systems.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Operating_Systems' href='OldClasses/Operating_Systems.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Operating_Systems' href='OldClasses/Operating_Systems.html'>
       Operating_Systems
     </a>
     
@@ -604,8 +777,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -617,14 +789,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/OrganicChemistry.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='OrganicChemistry' href='OldClasses/OrganicChemistry.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='OrganicChemistry' href='OldClasses/OrganicChemistry.html'>
       OrganicChemistry
     </a>
     
@@ -643,8 +823,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -656,14 +835,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/ParallelComputing.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='ParallelComputing' href='OldClasses/ParallelComputing.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='ParallelComputing' href='OldClasses/ParallelComputing.html'>
       ParallelComputing
     </a>
     
@@ -682,8 +869,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -695,14 +881,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Physics2001.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Physics2001' href='OldClasses/Physics2001.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Physics2001' href='OldClasses/Physics2001.html'>
       Physics2001
     </a>
     
@@ -721,8 +915,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -734,14 +927,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/bioinformatics.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='bioinformatics' href='OldClasses/bioinformatics.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='bioinformatics' href='OldClasses/bioinformatics.html'>
       bioinformatics
     </a>
     
@@ -760,11 +961,12 @@
 </div>
     
       <!-- Variable bindings for this tree-->
+
   
     
       
-      
     
+  
 
 
 
@@ -775,15 +977,18 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
-        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
-        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='w-4 h-4 flex-shrink-0 inline text-gray-700' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z' clip-rule='evenodd'></path>
       </svg>
       
   
-    <a class='font-bold hover:underline truncate' title='comp-systems' href='OldClasses/comp-systems.html'>
+        
+    </span>
+    <a class='mavenLinkBold hover:bg-blue-200 rounded px-1.5 truncate' title='comp-systems' href='OldClasses/comp-systems.html'>
       comp-systems
     </a>
     
@@ -796,6 +1001,7 @@
   
     
       <!-- Variable bindings for this tree-->
+
   
   
 
@@ -807,7 +1013,9 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'>
@@ -815,7 +1023,9 @@
       </svg>
       
   
-    <a class='font-bold text-green-600 hover:underline truncate' title='compPosts' href='OldClasses/comp-systems/compPosts.html'>
+        
+    </span>
+    <a class='mavenLinkBold bg-blue-100 hover:bg-blue-200 rounded px-1.5 truncate' title='compPosts' href='OldClasses/comp-systems/compPosts.html'>
       compPosts
     </a>
     
@@ -831,8 +1041,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -844,7 +1053,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -852,7 +1064,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='HardWiredVsMicroProgrammed;' href='OldClasses/comp-systems/hardvmicro.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='HardWiredVsMicroProgrammed;' href='OldClasses/comp-systems/hardvmicro.html'>
       HardWiredVsMicroProgrammed;
     </a>
     
@@ -871,8 +1086,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -884,14 +1098,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/ecology.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='ecology' href='OldClasses/ecology.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='ecology' href='OldClasses/ecology.html'>
       ecology
     </a>
     
@@ -910,8 +1132,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -923,14 +1144,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/intro-to-bioinformatics.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='intro-to-bioinformatics' href='OldClasses/intro-to-bioinformatics.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='intro-to-bioinformatics' href='OldClasses/intro-to-bioinformatics.html'>
       intro-to-bioinformatics
     </a>
     
@@ -949,8 +1178,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -962,14 +1190,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/programming-languages.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='programming-languages' href='OldClasses/programming-languages.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='programming-languages' href='OldClasses/programming-languages.html'>
       programming-languages
     </a>
     
@@ -989,10 +1225,9 @@
     
   
 </div>
-            
-              <!-- Variable bindings for this tree-->
-  
     
+      <!-- Variable bindings for this tree-->
+
   
 
 
@@ -1004,7 +1239,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1012,7 +1250,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='README' href='README.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='README' href='README.html'>
       README
     </a>
     
@@ -1026,10 +1267,9 @@
   -->
   
 </div>
-            
-              <!-- Variable bindings for this tree-->
-  
     
+      <!-- Variable bindings for this tree-->
+
   
 
 
@@ -1041,14 +1281,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='non-classes.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='non-classes' href='non-classes.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='non-classes' href='non-classes.html'>
       non-classes
     </a>
     
@@ -1065,42 +1313,134 @@
   -->
   
 </div>
-            
+    
 
-          </div>
-        </nav>
-
-        <!-- Main body column -->
-        <div class='flex-1 w-full overflow-x-auto bg-white'>
-          <main class='px-4 py-4'>
-            <h1 class='flex items-end justify-center mb-4 p-3 bg-green-100 text-5xl font-extrabold text-black rounded'>
+  </div>
+</nav>
+          <!-- Main body column -->
+          <div class='flex-1 w-full bg-white'>
+  <main class='px-4 py-4'>
+    <h1 class='flex items-end justify-center mb-4 p-3 bg-blue-100 text-5xl font-extrabold text-black rounded'>
   <a class='z-40 tracking-tighter '>
     compPosts
   </a>
 </h1>
-            <article class='overflow-auto'>
+    
+      <div class='md:grid md:gap-4 md:grid-cols-8'>
+        <div class='md:col-span-6'>
+          <article class='overflow-auto'>
   <!-- What goes in this file will appear on top of note body-->
-  <pre class='pandoc-raw-"org"'>#+hugo_base_dir: ../</pre><pre class='pandoc-raw-"org"'>#+hugo_section: Intro-to-Comp-Systems</pre><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4' export_hugo_section*='How To Write a micro-instruction' export_file_name='_index'>How to write a micro-instruction</h1>
+  
+
+
+
+
+
+<pre class='pandoc-raw-"org"'>#+hugo_base_dir: ../</pre><pre class='pandoc-raw-"org"'>#+hugo_section: Intro-to-Comp-Systems</pre>
+    <h1 id='how-to-write-a-micro-instruction' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  How to write a micro-instruction
+  
+  <a href='OldClasses/comp-systems/compPosts.html#how-to-write-a-micro-instruction' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       A micro-instruction is just a binary (often converted to hex) number that represents a list of control signals, and points to the next micro-instruction. Micro-instructions can be changed by changing the A set of micro-instructions forms a micro-routine (otherwise known as an instruction).
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Control signals</h2>
+  
+    <h2 id='control-signals' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Control signals
+  
+  <a href='OldClasses/comp-systems/compPosts.html#control-signals' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       To understand the micro-instruction, you must understand what the control signals do. I will be referencing the Hard vs Micro paper. It has LA (load accumulator), and EA (enable accumulator) signals. They are essentially just wires connected to the control unit (referenced by the 16 coming out of CONTROL) Each register also generally has a clock signal (CLK), but that is connected directly to the clock circuit and is not required for the micro-instructions. The naming system for the signals is somewhat arbitrary but usually follows the pattern (L, E) (register). This is subverted somewhat by the ALU, but that will most likely be directly defined. The other main difference is the inclusion of I, which just means increment.
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Load (L)</h3>
+  
+    <h3 id='load-l' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Load (L)
+  
+  <a href='OldClasses/comp-systems/compPosts.html#load-l' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <p class='mb-3'>
       A load signal allows the contents of a register to be changed by the state of the bus (a collection of wires). This signal must be paired with an E signal to do anything.
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Enable (E)</h3>
+  
+    <h3 id='enable-e' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Enable (E)
+  
+  <a href='OldClasses/comp-systems/compPosts.html#enable-e' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <p class='mb-3'>
       An enable signal changes the state of the bus to match the contents of the register. Say a register contains the value 1111, when the enable signal is used for that register, the contents of the bus will now be 1111. This signal must be paired with a L signal to do anything.
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Micro-instructions</h2>
+  
+    <h2 id='micro-instructions' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Micro-instructions
+  
+  <a href='OldClasses/comp-systems/compPosts.html#micro-instructions' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       A micro-instruction is a binary number composed of several <code class='verbatim py-0.5 px-0.5 bg-gray-100'>fields</code> stored at a specific address in the ROM (read only memory) of the control unit.
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Control field</h3>
+  
+    <h3 id='control-field' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Control field
+  
+  <a href='OldClasses/comp-systems/compPosts.html#control-field' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <p class='mb-3'>
       This is just a binary representation of the signals. In the hard vs micro document, the letters are signals are abbreviated into the following order:
     </p>
@@ -1116,7 +1456,21 @@
     <p class='mb-3'>
       A micro instruction will generally contain a pair of signals (L E) that transfers the contents of one register into another. The contents of the enabled register moves into the loaded register through the bus. A 1 means that the signal is on while a 0 means the signal is off.
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Next Address field</h3>
+  
+    <h3 id='next-address-field' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Next Address field
+  
+  <a href='OldClasses/comp-systems/compPosts.html#next-address-field' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <p class='mb-3'>
       This field has 4 different sub fields. it is used to determine the next micro instruction.
     </p>
@@ -1160,7 +1514,21 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>LDA micro-routine</h2>
+  
+    <h2 id='lda-micro-routine' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  LDA micro-routine
+  
+  <a href='OldClasses/comp-systems/compPosts.html#lda-micro-routine' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       here is a step by step on how to write this instruction with micro-instructions.
     </p>
@@ -1272,11 +1640,39 @@
         </li>
       
     </ul>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4' export_hugo_section*='Mock Exam Questions' export_file_name='_index'>Mock Exam Questions</h1>
+  
+    <h1 id='mock-exam-questions' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Mock Exam Questions
+  
+  <a href='OldClasses/comp-systems/compPosts.html#mock-exam-questions' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       Question 1 and 2 seem to reference this article: <span title='Link is broken'><s>[8086-8088](pdfs/8086.pdf)</s>❌</span>
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q1</h2>
+  
+    <h2 id='q1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Q1
+  
+  <a href='OldClasses/comp-systems/compPosts.html#q1' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       If a physical branch target address is 5A230 when CS = 5200, what will it be if the CS = 7800 ?
     </p>
@@ -1308,7 +1704,21 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q2</h2>
+  
+    <h2 id='q2' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Q2
+  
+  <a href='OldClasses/comp-systems/compPosts.html#q2' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       Given that the EA of a data is 2359 and DS = 490B, what is the PA of data?
     </p>
@@ -1340,7 +1750,21 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q3</h2>
+  
+    <h2 id='q3' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Q3
+  
+  <a href='OldClasses/comp-systems/compPosts.html#q3' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       Assuming, W, X, Y and Z as memory addresses. Write a program using any machine sequence that will carry out the following: Z ← W + (Z-X).
     </p>
@@ -1369,9 +1793,23 @@ X: .word 10 #arbitrary value
 W: .word 5 #arbitrary value
 </code></pre></div>
     <p class='mb-3'>
-      <a href='OldClasses/comp-systems/code-examples/Q3.asm' class='text-green-600 mavenLinkBold hover:underline'>Downloadable solution</a> prints 7
+      <a href='OldClasses/comp-systems/code-examples/Q3.asm' class='text-blue-600 mavenLinkBold hover:underline'>Downloadable solution</a> prints 7
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q4</h2>
+  
+    <h2 id='q4' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Q4
+  
+  <a href='OldClasses/comp-systems/compPosts.html#q4' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       Assume that the code below is run on a machine with a 2 GHz clock that requires the following number of cycles for each instruction: add, addi, sll, sra take 4cc each, lw takes 5cc, bne, beq take 3cc each. How many seconds will it take to execute this code. The values of registers are $4=0x20, $5= 0x20, $6= 0x30, $7= 0x10.
     </p>
@@ -1391,7 +1829,21 @@ L1: add $11, $5, $9 #marks L1, $11 = 0x20 + $9, $9 is iterator
     bne $9, $7, L1 # goes to L1 if $9 != $7  0x0 + 0x4 * 0x10 = 0x40 = $9 loop executes 0x10 times
     addi $8, $8, 4 # $8 = $8 + 4
     beq $8, $6, L2 # goes to L2 if $8 == $6 exits before  $8 can equal $6
-</code></pre></div><h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Instruction definitions</h3>
+</code></pre></div>
+    <h3 id='instruction-definitions' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Instruction definitions
+  
+  <a href='OldClasses/comp-systems/compPosts.html#instruction-definitions' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1411,7 +1863,21 @@ L1: add $11, $5, $9 #marks L1, $11 = 0x20 + $9, $9 is iterator
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Calculate number of clock cycles</h3>
+  
+    <h3 id='calculate-number-of-clock-cycles' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Calculate number of clock cycles
+  
+  <a href='OldClasses/comp-systems/compPosts.html#calculate-number-of-clock-cycles' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
       
         <li>
@@ -1527,11 +1993,39 @@ L1: add $11, $5, $9 #marks L1, $11 = 0x20 + $9, $9 is iterator
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Calculate time</h3>
+  
+    <h3 id='calculate-time' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Calculate time
+  
+  <a href='OldClasses/comp-systems/compPosts.html#calculate-time' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <p class='mb-3'>
       288cc/(2*10<sup>9cc</sup>/s) = 1.44 * 10<sup>-7</sup> seconds
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q5</h2>
+  
+    <h2 id='q5' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Q5
+  
+  <a href='OldClasses/comp-systems/compPosts.html#q5' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       <code class='verbatim py-0.5 px-0.5 bg-gray-100'>X[i] = A[B[i]] + C[i+4]</code>
     </p>
@@ -1561,7 +2055,7 @@ L1: add $11, $5, $9 #marks L1, $11 = 0x20 + $9, $9 is iterator
     </ul>
   
     <p class='mb-3'>
-      <a href='OldClasses/comp-systems/code-examples/Q5.asm' class='text-green-600 mavenLinkBold hover:underline'>Q5 Solution download</a>
+      <a href='OldClasses/comp-systems/code-examples/Q5.asm' class='text-blue-600 mavenLinkBold hover:underline'>Q5 Solution download</a>
     </p>
   <div class='py-0.5 mb-3 text-sm'><pre><code class='mips language-mips' tangle='code-examples/Q5.asm'>.globl main
 .text
@@ -1583,11 +2077,39 @@ main:
     add     $t1, $s1, $s2       # adds A[B[i]] + C[i+4]
     add     $s3, $4, $s4        # offsets address of X by i
     sw      $t1, ($s3)          # stores $t1 to address of ($s3)
-</code></pre></div><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q6</h2>
+</code></pre></div>
+    <h2 id='q6' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Q6
+  
+  <a href='OldClasses/comp-systems/compPosts.html#q6' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       The memory units that follow are specified by the number of words times the number of bits per word. How many address lines and input/output data lines are needed in each case? (a) 8K X 16 (b) 2G X 8 (c) 16M X 32 (d) 256K X 64
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Part A</h3>
+  
+    <h3 id='part-a' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Part A
+  
+  <a href='OldClasses/comp-systems/compPosts.html#part-a' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1615,7 +2137,21 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Part B</h3>
+  
+    <h3 id='part-b' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Part B
+  
+  <a href='OldClasses/comp-systems/compPosts.html#part-b' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1635,7 +2171,21 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Part C</h3>
+  
+    <h3 id='part-c' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Part C
+  
+  <a href='OldClasses/comp-systems/compPosts.html#part-c' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1655,7 +2205,21 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Part D</h3>
+  
+    <h3 id='part-d' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Part D
+  
+  <a href='OldClasses/comp-systems/compPosts.html#part-d' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1675,11 +2239,39 @@ main:
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q7</h2>
+  
+    <h2 id='q7' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Q7
+  
+  <a href='OldClasses/comp-systems/compPosts.html#q7' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       Find the number of bytes that can be stored in the memories: (a) 8K X 16 (b) 2G X 8 (c) 16M X 32 (d) 256K X 64
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Part A</h3>
+  
+    <h3 id='part-a-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Part A
+  
+  <a href='OldClasses/comp-systems/compPosts.html#part-a-1' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1703,7 +2295,21 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Part B</h3>
+  
+    <h3 id='part-b-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Part B
+  
+  <a href='OldClasses/comp-systems/compPosts.html#part-b-1' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1715,7 +2321,21 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Part C</h3>
+  
+    <h3 id='part-c-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Part C
+  
+  <a href='OldClasses/comp-systems/compPosts.html#part-c-1' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1723,7 +2343,21 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Part D</h3>
+  
+    <h3 id='part-d-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Part D
+  
+  <a href='OldClasses/comp-systems/compPosts.html#part-d-1' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1731,7 +2365,21 @@ main:
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'><span class='todo TODO'>TODO</span> Q8</h2>
+  
+    <h2 id='q8' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  <span class='todo TODO'>TODO</span> Q8
+  
+  <a href='OldClasses/comp-systems/compPosts.html#q8' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       How many 128 x 8 memory chips are needed to provide a memory capacity of 4096 x 16?
     </p>
@@ -1743,9 +2391,23 @@ main:
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q9</h2>
+  
+    <h2 id='q9' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Q9
+  
+  <a href='OldClasses/comp-systems/compPosts.html#q9' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
-      Given a 32 x 8 ROM chip with an enable input, show the external connections necessary to construct a 128 x 8 ROM with four chips and a decoder. <a href='https://www.youtube.com/watch?v=y3vIqPplSdQ' class='text-green-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Useful Video</a>
+      Given a 32 x 8 ROM chip with an enable input, show the external connections necessary to construct a 128 x 8 ROM with four chips and a decoder. <a href='https://www.youtube.com/watch?v=y3vIqPplSdQ' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Useful Video</a>
     </p>
   
     <ul class='my-3 ml-6 space-y-1 list-disc'>
@@ -1779,7 +2441,21 @@ main:
         </li>
       
     </ul>
-  <img class='inline mb-3' src='OldClasses/comp-systems/images/Q9.png' alt style='width: inherit;' /><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Q10</h2>
+  <img class='inline mb-3' src='OldClasses/comp-systems/images/Q9.png' alt style='width: inherit;' />
+    <h2 id='q10' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Q10
+  
+  <a href='OldClasses/comp-systems/compPosts.html#q10' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       Assume we have 8GB of word addressable memory with a word size of 64 bits and each refill line of memory stores 16 words. We have a direct-mapped cache with 1024 refill lines. Answer the following questions. <span title='Link is broken'><s>[More examples](pdfs/Q10.pdf)</s>❌</span>
     </p>
@@ -1799,7 +2475,21 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Solution</h3>
+  
+    <h3 id='solution' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Solution
+  
+  <a href='OldClasses/comp-systems/compPosts.html#solution' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
       
         <li>
@@ -1927,7 +2617,21 @@ main:
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Hard Drive Sample question</h2>
+  
+    <h2 id='hard-drive-sample-question' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Hard Drive Sample question
+  
+  <a href='OldClasses/comp-systems/compPosts.html#hard-drive-sample-question' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       This is a writeup of question 1 from <span title='Link is broken'><s>[here](pdfs/MagneticDisk.pdf)</s>❌</span>.
     </p>
@@ -1935,7 +2639,21 @@ main:
     <p class='mb-3'>
       Consider a disk pack with the following specifications 16 surfaces, 128 tracks per surface, 256 sectors per track, 512 bytes per sector
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Capacity of Disk Space</h3>
+  
+    <h3 id='capacity-of-disk-space' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Capacity of Disk Space
+  
+  <a href='OldClasses/comp-systems/compPosts.html#capacity-of-disk-space' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1951,7 +2669,21 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Bit Required to address sector</h3>
+  
+    <h3 id='bit-required-to-address-sector' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Bit Required to address sector
+  
+  <a href='OldClasses/comp-systems/compPosts.html#bit-required-to-address-sector' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1971,7 +2703,21 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Formatted Disk Space (32 bytes per sector format overhead)</h3>
+  
+    <h3 id='formatted-disk-space-32-bytes-per-sector-format-overhead' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Formatted Disk Space (32 bytes per sector format overhead)
+  
+  <a href='OldClasses/comp-systems/compPosts.html#formatted-disk-space-32-bytes-per-sector-format-overhead' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -2003,11 +2749,53 @@ main:
         </li>
       
     </ul>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4' export_hugo_section*='Formulas and References' export_file_name='_index'>Useful formulas and references</h1><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Hard Drives</h2>
+  
+    <h1 id='useful-formulas-and-references' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Useful formulas and references
+  
+  <a href='OldClasses/comp-systems/compPosts.html#useful-formulas-and-references' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h2 id='hard-drives' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Hard Drives
+  
+  <a href='OldClasses/comp-systems/compPosts.html#hard-drives' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
-      <a href='https://www.gatevidyalay.com/magnetic-disk-secondary-memory-coa/' class='text-green-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Hard Drive Website</a> <span title='Link is broken'><s>[Hard Drive Document from nitin](pdfs/MagneticDisk.pdf)</s>❌</span>
+      <a href='https://www.gatevidyalay.com/magnetic-disk-secondary-memory-coa/' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Hard Drive Website</a> <span title='Link is broken'><s>[Hard Drive Document from nitin](pdfs/MagneticDisk.pdf)</s>❌</span>
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Formulas</h3>
+  
+    <h3 id='formulas' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Formulas
+  
+  <a href='OldClasses/comp-systems/compPosts.html#formulas' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -2071,7 +2859,21 @@ main:
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Circuit reference</h2>
+  
+    <h2 id='circuit-reference' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Circuit reference
+  
+  <a href='OldClasses/comp-systems/compPosts.html#circuit-reference' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -2083,15 +2885,43 @@ main:
         </li>
       
     </ul>
-  <img class='inline mb-3' src='OldClasses/comp-systems/images/fullAdder.png' alt style='width: inherit;' /><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Computer Arithmetic</h2>
+  <img class='inline mb-3' src='OldClasses/comp-systems/images/fullAdder.png' alt style='width: inherit;' />
+    <h2 id='computer-arithmetic' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Computer Arithmetic
+  
+  <a href='OldClasses/comp-systems/compPosts.html#computer-arithmetic' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       <span title='Link is broken'><s>[Computer arithemetic document from nitin](pdfs/Computer Arithemtic.pdf)</s>❌</span>
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Memory + Cache</h2>
+  
+    <h2 id='memory-cache' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Memory + Cache
+  
+  <a href='OldClasses/comp-systems/compPosts.html#memory-cache' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          <a href='https://upscfever.com/upsc-fever/en/gatecse/en-gatecse-chp166.html#:~:text=Memory%20Connection%20to%20CPU,through%20its%20chip%20select%20inputs.&text=When%2001%2C%20the%20second%20RAM,is%20selected%2C%20and%20so%20on' class='text-green-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Main Memory and Organization</a> : credit to Robbie Schad
+          <a href='https://upscfever.com/upsc-fever/en/gatecse/en-gatecse-chp166.html#:~:text=Memory%20Connection%20to%20CPU,through%20its%20chip%20select%20inputs.&amp;text=When%2001%2C%20the%20second%20RAM,is%20selected%2C%20and%20so%20on' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Main Memory and Organization</a> : credit to Robbie Schad
         </li>
       
         <li>
@@ -2111,7 +2941,21 @@ main:
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Formulas</h3>
+  
+    <h3 id='formulas-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Formulas
+  
+  <a href='OldClasses/comp-systems/compPosts.html#formulas-1' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
       
         <li>
@@ -2183,11 +3027,39 @@ main:
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Pipelining</h2>
+  
+    <h2 id='pipelining' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Pipelining
+  
+  <a href='OldClasses/comp-systems/compPosts.html#pipelining' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       <span title='Link is broken'><s>[pipelining document from nitin](pdfs/Pipelining in Computer Architecture.pdf)</s>❌</span>
     </p>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Formulas</h3>
+  
+    <h3 id='formulas-2' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Formulas
+  
+  <a href='OldClasses/comp-systems/compPosts.html#formulas-2' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -2279,7 +3151,21 @@ main:
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>MIPS</h2>
+  
+    <h2 id='mips' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  MIPS
+  
+  <a href='OldClasses/comp-systems/compPosts.html#mips' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -2287,28 +3173,27 @@ main:
         </li>
       
         <li>
-          <a href='https://inst.eecs.berkeley.edu/~cs61c/resources/MIPS_help.html' class='text-green-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Mips Reference from Berkeley</a>
+          <a href='https://inst.eecs.berkeley.edu/~cs61c/resources/MIPS_help.html' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Mips Reference from Berkeley</a>
         </li>
       
         <li>
-          <a href='http://www.cburch.com/cs/330/reading/mips-ref.pdf' class='text-green-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Mips Reference from Cburch</a>
+          <a href='http://www.cburch.com/cs/330/reading/mips-ref.pdf' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Mips Reference from Cburch</a>
         </li>
       
         <li>
-          <a href='OldClasses/comp-systems/images/mips-datapath.png' class='text-green-600 mavenLinkBold hover:underline'>MIPS DATAPATH</a>
+          <a href='OldClasses/comp-systems/images/mips-datapath.png' class='text-blue-600 mavenLinkBold hover:underline'>MIPS DATAPATH</a>
         </li>
       
         <li>
-          <a href='OldClasses/comp-systems/images/mips-datapath-pipelined.png' class='text-green-600 mavenLinkBold hover:underline'>MIPS PIPELINED DATAPATH</a>
+          <a href='OldClasses/comp-systems/images/mips-datapath-pipelined.png' class='text-blue-600 mavenLinkBold hover:underline'>MIPS PIPELINED DATAPATH</a>
         </li>
       
     </ul>
   
-
   <div class='flex items-center justify-center mt-2'>
   
     
-      <a class='text-gray-300 hover:text-green-600 text-sm' title='Edit this page on GitHub' href='https://github.com/IllustratedMan-code/Planner/blob/main/OldClasses/comp-systems/compPosts.org'>
+      <a class='text-gray-300 hover:text-blue-600 text-sm' title='Edit this page on GitHub' href='https://github.com/IllustratedMan-code/Planner/blob/main/OldClasses/comp-systems/compPosts.org'>
         <svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'></path>
         </svg>
@@ -2317,44 +3202,606 @@ main:
   
 </div>
 </article>
-            <div class='flex flex-col lg:flex-row lg:space-x-2'>
+        </div>
+        <div class='hidden md:block md:col-span-2 md:border-l'>
+          <nav id='toc' class='hidden leading-relaxed md:block md:sticky md:top-0 md:max-h-screen md:overflow-y-auto'>
+  <div class='text-gray-600 text-sm -mt-2'>
+    
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='How to write a micro-instruction'>
+              <a href='OldClasses/comp-systems/compPosts.html#how-to-write-a-micro-instruction' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                How to write a micro-instruction
+              </a>
               
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Control signals'>
+              <a href='OldClasses/comp-systems/compPosts.html#control-signals' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Control signals
+              </a>
               
-            </div>
-            
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Load (L)'>
+              <a href='OldClasses/comp-systems/compPosts.html#load-l' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Load (L)
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Enable (E)'>
+              <a href='OldClasses/comp-systems/compPosts.html#enable-e' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Enable (E)
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Micro-instructions'>
+              <a href='OldClasses/comp-systems/compPosts.html#micro-instructions' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Micro-instructions
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Control field'>
+              <a href='OldClasses/comp-systems/compPosts.html#control-field' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Control field
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Next Address field'>
+              <a href='OldClasses/comp-systems/compPosts.html#next-address-field' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Next Address field
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='LDA micro-routine'>
+              <a href='OldClasses/comp-systems/compPosts.html#lda-micro-routine' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                LDA micro-routine
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Mock Exam Questions'>
+              <a href='OldClasses/comp-systems/compPosts.html#mock-exam-questions' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Mock Exam Questions
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Q1'>
+              <a href='OldClasses/comp-systems/compPosts.html#q1' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Q1
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Q2'>
+              <a href='OldClasses/comp-systems/compPosts.html#q2' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Q2
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Q3'>
+              <a href='OldClasses/comp-systems/compPosts.html#q3' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Q3
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Q4'>
+              <a href='OldClasses/comp-systems/compPosts.html#q4' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Q4
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Instruction definitions'>
+              <a href='OldClasses/comp-systems/compPosts.html#instruction-definitions' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Instruction definitions
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Calculate number of clock cycles'>
+              <a href='OldClasses/comp-systems/compPosts.html#calculate-number-of-clock-cycles' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Calculate number of clock cycles
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Calculate time'>
+              <a href='OldClasses/comp-systems/compPosts.html#calculate-time' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Calculate time
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Q5'>
+              <a href='OldClasses/comp-systems/compPosts.html#q5' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Q5
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Q6'>
+              <a href='OldClasses/comp-systems/compPosts.html#q6' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Q6
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Part A'>
+              <a href='OldClasses/comp-systems/compPosts.html#part-a' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Part A
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Part B'>
+              <a href='OldClasses/comp-systems/compPosts.html#part-b' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Part B
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Part C'>
+              <a href='OldClasses/comp-systems/compPosts.html#part-c' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Part C
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Part D'>
+              <a href='OldClasses/comp-systems/compPosts.html#part-d' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Part D
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Q7'>
+              <a href='OldClasses/comp-systems/compPosts.html#q7' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Q7
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Part A'>
+              <a href='OldClasses/comp-systems/compPosts.html#part-a-1' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Part A
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Part B'>
+              <a href='OldClasses/comp-systems/compPosts.html#part-b-1' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Part B
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Part C'>
+              <a href='OldClasses/comp-systems/compPosts.html#part-c-1' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Part C
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Part D'>
+              <a href='OldClasses/comp-systems/compPosts.html#part-d-1' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Part D
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='TODO Q8TODO'>
+              <a href='OldClasses/comp-systems/compPosts.html#q8' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                TODO Q8TODO
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Q9'>
+              <a href='OldClasses/comp-systems/compPosts.html#q9' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Q9
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Q10'>
+              <a href='OldClasses/comp-systems/compPosts.html#q10' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Q10
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Solution'>
+              <a href='OldClasses/comp-systems/compPosts.html#solution' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Solution
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Hard Drive Sample question'>
+              <a href='OldClasses/comp-systems/compPosts.html#hard-drive-sample-question' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Hard Drive Sample question
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Capacity of Disk Space'>
+              <a href='OldClasses/comp-systems/compPosts.html#capacity-of-disk-space' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Capacity of Disk Space
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Bit Required to address sector'>
+              <a href='OldClasses/comp-systems/compPosts.html#bit-required-to-address-sector' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Bit Required to address sector
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Formatted Disk Space (32 bytes per sector format overhead)'>
+              <a href='OldClasses/comp-systems/compPosts.html#formatted-disk-space-32-bytes-per-sector-format-overhead' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Formatted Disk Space (32 bytes per sector format overhead)
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Useful formulas and references'>
+              <a href='OldClasses/comp-systems/compPosts.html#useful-formulas-and-references' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Useful formulas and references
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Hard Drives'>
+              <a href='OldClasses/comp-systems/compPosts.html#hard-drives' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Hard Drives
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Formulas'>
+              <a href='OldClasses/comp-systems/compPosts.html#formulas' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Formulas
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Circuit reference'>
+              <a href='OldClasses/comp-systems/compPosts.html#circuit-reference' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Circuit reference
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Computer Arithmetic'>
+              <a href='OldClasses/comp-systems/compPosts.html#computer-arithmetic' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Computer Arithmetic
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Memory + Cache'>
+              <a href='OldClasses/comp-systems/compPosts.html#memory-cache' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Memory + Cache
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Formulas'>
+              <a href='OldClasses/comp-systems/compPosts.html#formulas-1' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Formulas
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Pipelining'>
+              <a href='OldClasses/comp-systems/compPosts.html#pipelining' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Pipelining
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Formulas'>
+              <a href='OldClasses/comp-systems/compPosts.html#formulas-2' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Formulas
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='MIPS'>
+              <a href='OldClasses/comp-systems/compPosts.html#mips' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                MIPS
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+  </div>
+  <script>
+    // Highlight the TOC, based from https://stackoverflow.com/a/75346369
+    // TODO: We should get rid of JavaScript! See https://github.com/srid/emanote/issues/520
+    function highlightTOC() {
+      // Grab the toc links
+      const links = document.querySelectorAll("ul > li > a.--ema-toc");
+
+      // Find the matching anchors in the document body
+      const sections = [];
+      links.forEach((link) => {
+        let found = {};
+        for (section of document.querySelectorAll("a.--ema-anchor")) {
+          if (link.href == section.href) {
+            found = section;
+            break;
+          }
+        }
+        sections.push(found);
+      });
+
+      // Current toc link is marked with the following class
+      const mark = "toc-item-active";
+
+      // Set window scroll handler to update the toc mark.
+      window.onscroll = () => {
+        // Remove previous mark
+        links.forEach((link) => {
+          link.classList.remove(mark);
+        });
+
+        // Mark the link of the section that is in view, starting from the end
+        let marked = false;
+        for (var i = sections.length - 1; i >= 0; i--) {
+          if (window.scrollY > sections[i].offsetTop - 80) {
+            links[i].classList.add(mark);
+            marked = true;
+            break;
+          }
+        }
+
+        // Special case for the first and last section which might not reach the top
+        if (!marked && window.scrollY > 0) {
+          let i = 0;
+          if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight) {
+            // We are at the bottom
+            i = links.length - 1
+          }
+          links[i].classList.add(mark);
+        }
+      };
+    }
+    highlightTOC();
+  </script>
+</nav>
+        </div>
+      </div>
+      
+    <div class='flex flex-col lg:flex-row lg:space-x-2'>
+      
+      
+    </div>
+    
   <section class='flex flex-wrap items-end justify-center my-4 space-x-2 space-y-2 font-mono text-sm'>
     
   </section>
 
-            <!-- What goes in this file will at the very end of the main div -->
-          </main>
+    <!-- What goes in this file will at the very end of the main div -->
+  </main>
+</div>
         </div>
-      </div>
+        
       <footer class='flex items-center justify-center mt-2 mb-8 space-x-4 text-center text-gray-800'>
   
   <div>
     <a href='' title='Go to Home page'>
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'></path>
       </svg>
     </a>
   </div>
   <div>
     <a href='-/all.html' title='View Index'>
-      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
-        </path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'></path>
       </svg>
     </a>
   </div>
   <div>
-    <a href='https://emanote.srid.ca' target='_blank' title='Generated by Emanote 1.0.1.6'>
-      <img class='w-6 h-6 hover:text-green-700' src='_emanote-static/emanote-logo.svg' />
+    <a href='https://emanote.srid.ca' target='_blank' title='Generated by Emanote 1.3.17.1'>
+      <img class='w-6 h-6 hover:text-blue-700' src='_emanote-static/emanote-logo.svg' />
     </a>
   </div>
   <div>
     <a href='-/tags.html' title='View tags'>
-      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+      <svg class='w-6 h-6 hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
         </path>
       </svg>
@@ -2362,7 +3809,7 @@ main:
   </div>
   <div>
     <a href='-/tasks.html' title='View tasks'>
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
       </svg>
     </a>

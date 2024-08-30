@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<!-- DoNotFormat -->
+<!-- DoNotFormat -->
+
+
+
+
+<!-- DoNotFormat -->
+<!-- DoNotFormat -->
+
 <html lang='en'>
 
 <head>
@@ -14,6 +23,9 @@
       <meta property='og:image' content />
       <meta property='og:type' content='website' />
       <meta property='og:title' content='midterm_review' />
+      
+        <meta name='twitter:card' content='summary_large_image' />
+      
     
     
       <base href='/Planner/' />
@@ -51,7 +63,8 @@
 
 
   
-  <link href='tailwind.css?instanceId=212e9745-c88c-4b2e-9f2a-8fbcb6418529' rel='stylesheet' type='text/css' />
+  
+  <link href='tailwind.css?instanceId=246d48dd-e69e-478e-94b7-314441ea29cb' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -59,6 +72,57 @@
       color: lightcoral;
       font-size: 90%;
       font-family: monospace;
+    }
+
+    /* Callouts */
+    div.callout {
+      background-color: #f5f5f5;
+      padding: 1em 1em 0.5em;
+      border-radius: 0.5em;
+      margin-bottom: 1em;
+    }
+
+    .callout[data-callout="note"] {
+      --callout-color: 8, 109, 221;
+    }
+
+    .callout[data-callout="info"] {
+      --callout-color: 8, 109, 221;
+    }
+
+    .callout[data-callout="tip"] {
+      --callout-color: 8, 191, 188;
+    }
+
+    .callout[data-callout="warning"] {
+      --callout-color: 236, 117, 0;
+    }
+
+    .callout[data-callout="failure"] {
+      --callout-color: 233, 49, 71;
+    }
+
+    div.callout {
+      background-color: rgba(var(--callout-color), 0.1);
+    }
+
+    .callout .callout-title {
+      color: rgb(var(--callout-color));
+    }
+
+    div.callout-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5em;
+      font-variation-settings: 'wght' 600;
+    }
+
+    div.callout-title div.callout-title-inner {
+      margin-left: 0.5em;
+    }
+
+    a.--ema-toc:not(.toc-item-active) {
+      background-color: #ffffff !important;
     }
 
     /* External link icon */
@@ -70,7 +134,12 @@
       content: ""
     }
 
+    a[data-linkicon="external"] {
+      padding-right: 24px;
+    }
+
     a[data-linkicon="external"]::after {
+      margin-right: -24px;
       content: url('data:image/svg+xml,\
       <svg xmlns="http://www.w3.org/2000/svg" height="0.7em" viewBox="0 0 20 20"> \
         <g style="stroke:gray;stroke-width:1"> \
@@ -150,6 +219,25 @@
 
 
   
+    <style>
+      /* For use in sidebar.tpl, as we cannot achieve this in tailwind itself! */
+      /* md:min-w-48  */
+      @media (min-width: 768px) {
+        #sidebar {
+          min-width: 12rem;
+        }
+      }
+
+      /* xl:min-w-64  */
+      @media (min-width: 1280px) {
+        #sidebar {
+          min-width: 16rem;
+        }
+      }
+    </style>
+
+    
+  
   <link rel='stylesheet' href='_emanote-static/stork/flat.css' />
 <!-- Custom Stork-search styling for Emanote -->
 <style>
@@ -167,11 +255,13 @@
 <script src='_emanote-static/stork/stork.js'></script>
 
   
-    <script data-emanote-base-url='/Planner/'>
+    <script id='emanote-stork' data-emanote-base-url='/Planner/'>
       window.emanote = {};
       window.emanote.stork = {
         searchShown: false,
+        indexIsStale: false,
         toggleSearch: function () {
+          window.emanote.stork.refreshIndex();
           document.getElementById('stork-search-container').classList.toggle('hidden');
           window.emanote.stork.searchShown = document.body.classList.toggle('stork-overflow-hidden-important');
           if (window.emanote.stork.searchShown) {
@@ -184,14 +274,25 @@
           window.emanote.stork.searchShown = false;
         },
 
-        init: function () {
+        getBaseUrl: function () {
+          const baseUrl = document.getElementById("emanote-stork").getAttribute('data-emanote-base-url') || '/';
+          return baseUrl;
+        },
+
+        registerIndex: function (options) {
           const indexName = 'emanote-search'; // used to match input[data-stork] attribute value
-          const baseUrl = document.currentScript.getAttribute('data-emanote-base-url') || '/';
-          const indexUrl = baseUrl + '-/stork.st';
+          const indexUrl = window.emanote.stork.getBaseUrl() + '-/stork.st';
+          stork.register(
+            indexName,
+            indexUrl,
+            options);
+        },
+
+        init: function () {
           if (document.readyState !== 'complete') {
             window.addEventListener('load', function () {
-              stork.initialize(baseUrl + '_emanote-static/stork/stork.wasm');
-              stork.register(indexName, indexUrl);
+              stork.initialize(window.emanote.stork.getBaseUrl() + '_emanote-static/stork/stork.wasm');
+              window.emanote.stork.registerIndex();
             });
 
             document.addEventListener('keydown', event => {
@@ -204,10 +305,32 @@
               }
             });
           } else {
-            // Override existing on Ema's hot-reload
-            stork.register(indexName, indexUrl, { forceOverwrite: true });
+            // This section is called during Ema's hot reload.
+            // 
+            // Mark the current index as stale, and refresh it *only when* the
+            // user actually invokes search.
+            // 
+            // We do not refresh the index *right away*, as that will cause
+            // memory leaks in the browser. See
+            // https://github.com/srid/emanote/issues/411#issuecomment-1402056235
+            console.log("stork: Marking index as stale");
+            window.emanote.stork.markIndexAsStale();
+          }
+        },
+
+        markIndexAsStale: function () {
+          window.emanote.stork.indexIsStale = true;
+        },
+
+        refreshIndex: function () {
+          if (window.emanote.stork.indexIsStale) {
+            console.log("stork: Reloading index");
+            window.emanote.stork.indexIsStale = false;
+            // NOTE: This will leak memory. See the comment above.
+            window.emanote.stork.registerIndex({ forceOverwrite: true });
           }
         }
+
       };
 
       window.emanote.stork.init();
@@ -224,9 +347,11 @@
 
 <body class='bg-gray-400 overflow-y-scroll'>
   
-    <div class='container mx-auto'>
+    <div class='container mx-auto md:mt-8 '>
+      
 
-      <nav id='breadcrumbs' class='w-full text-gray-700 md:hidden'>
+      
+        <nav id='breadcrumbs' class='w-full text-gray-700 md:hidden'>
   <div class='flex justify-left'>
     <div class='w-full px-2 py-2 bg-gray-50'>
       <ul class='flex flex-wrap text-lg'>
@@ -279,12 +404,12 @@
       </ul>
     </div>
     <button class='inline px-2 py-1 bg-gray-50 outline-none cursor-pointer focus:outline-none' title='Search (Ctrl+K)' type='button' onclick='window.emanote.stork.toggleSearch()'>
-      <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-green-700' f
+      <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-blue-700' f
  fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
   <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
 </svg>
     </button>
-    <button class='inline px-2 py-1 text-white bg-green-600 outline-none cursor-pointer focus:outline-none' title='Toggle sidebar' type='button' onclick="toggleHidden('sidebar')">
+    <button class='inline px-2 py-1 text-white bg-blue-600 outline-none cursor-pointer focus:outline-none' title='Toggle sidebar' type='button' onclick="toggleHidden('sidebar')">
       <svg xmlns='http://www.w3.org/2000/svg' class='w-4' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6h16M4 12h16M4 18h16'></path>
       </svg>
@@ -296,58 +421,61 @@
     </script>
   </div>
 </nav>
+      
 
-      <div id='container' class='flex flex-nowrap flex-col md:flex-row bg-gray-50 md:mt-8 md:shadow-2xl md:mb-8'>
-        <!-- Sidebar column -->
-        <nav id='sidebar' class='flex-shrink hidden leading-relaxed md:block md:sticky md:top-0 md:h-full md:w-48 xl:w-64'>
-          <div class='px-2 py-2 text-gray-800'>
-            <div id='indexing-links' class='flex flex-row float-right p-2 space-x-2 text-gray-500'>
-              <a href='-/tags.html' title='View tags'>
-                <svg style='width: 1rem;' class='hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
-                  </path>
-                </svg>
-              </a>
-              <a href='-/all.html' title='Expand full tree'>
-                <svg style='width: 1rem;' class='hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
-                  </path>
-                </svg>
-              </a>
-              <a title='Search (Ctrl+K)' class='cursor-pointer' onclick='window.emanote.stork.toggleSearch()'>
-                <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-green-700' f
+      
+        <div id='container' class='flex flex-nowrap flex-col md:flex-row bg-gray-50 md:shadow-2xl md:mb-8'>
+          <!-- Sidebar column -->
+          <nav id='sidebar' class='flex-shrink hidden leading-relaxed md:block md:sticky md:top-0 md:max-h-screen md:overflow-y-auto md:w-48 xl:w-64'>
+  <div class='px-2 py-2 text-gray-800'>
+    <div id='indexing-links' class='flex flex-row float-right p-2 space-x-2 text-gray-500'>
+      <a href='-/tags.html' title='View tags'>
+        <svg style='width: 1rem;' class='hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
+          </path>
+        </svg>
+      </a>
+      <a href='-/all.html' title='Expand full tree'>
+        <svg style='width: 1rem;' class='hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
+          </path>
+        </svg>
+      </a>
+      <a title='Search (Ctrl+K)' class='cursor-pointer' onclick='window.emanote.stork.toggleSearch()'>
+        <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-blue-700' f
  fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
   <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
 </svg>
-              </a>
-            </div>
+      </a>
+    </div>
 
-            <div id='site-logo' class='pl-2'>
-              <div class='flex items-center my-2 space-x-2 justify-left'>
-                <a href='' title='Go to Home'>
-                  
-                    
-                      <!-- The style width attribute here is to prevent huge
-                      icon from displaying at those rare occasions when Tailwind
-                      hasn't kicked in immediately on page load
-                      -->
-                      <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
-                    
-                  
-                </a>
-                <a class='font-bold truncate' title='Go to Home' href=''>
-                  Home
-                </a>
-              </div>
-            </div>
-
+    <div id='site-logo' class='pl-2'>
+      <div class='flex items-center my-2 space-x-2 justify-left'>
+        <a href='' title='Go to Home'>
+          
             
-              <!-- Variable bindings for this tree-->
+              <!-- The style width attribute here is to prevent huge
+                      icon from displaying at those rare occasions when Tailwind
+                      hasn't kicked in immediately on page load 
+                      -->
+              <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
+            
+          
+        </a>
+        <a class='font-bold truncate' title='Go to Home' href=''>
+          Home
+        </a>
+      </div>
+    </div>
+
+    
+      <!-- Variable bindings for this tree-->
+
   
     
       
-      
     
+  
 
 
 
@@ -358,15 +486,18 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
-        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
-        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='w-4 h-4 flex-shrink-0 inline text-gray-700' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z' clip-rule='evenodd'></path>
       </svg>
       
   
-    <a class='font-bold hover:underline truncate' title='OldClasses' href='OldClasses.html'>
+        
+    </span>
+    <a class='mavenLinkBold hover:bg-blue-200 rounded px-1.5 truncate' title='OldClasses' href='OldClasses.html'>
       OldClasses
     </a>
     
@@ -379,11 +510,12 @@
   
     
       <!-- Variable bindings for this tree-->
+
   
     
       
-      
     
+  
 
 
 
@@ -394,15 +526,18 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
-        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
-        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='w-4 h-4 flex-shrink-0 inline text-gray-700' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z' clip-rule='evenodd'></path>
       </svg>
       
   
-    <a class='font-bold hover:underline truncate' title='AI' href='OldClasses/AI.html'>
+        
+    </span>
+    <a class='mavenLinkBold hover:bg-blue-200 rounded px-1.5 truncate' title='AI' href='OldClasses/AI.html'>
       AI
     </a>
     
@@ -415,8 +550,7 @@
   
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -428,14 +562,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/AI/Quiz1.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Quiz1' href='OldClasses/AI/Quiz1.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Quiz1' href='OldClasses/AI/Quiz1.html'>
       Quiz1
     </a>
     
@@ -454,11 +596,12 @@
 </div>
     
       <!-- Variable bindings for this tree-->
+
   
     
       
-      
     
+  
 
 
 
@@ -469,15 +612,18 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
-        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
-        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='w-4 h-4 flex-shrink-0 inline text-gray-700' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z' clip-rule='evenodd'></path>
       </svg>
       
   
-    <a class='font-bold hover:underline truncate' title='midterm' href='OldClasses/AI/midterm.html'>
+        
+    </span>
+    <a class='mavenLinkBold hover:bg-blue-200 rounded px-1.5 truncate' title='midterm' href='OldClasses/AI/midterm.html'>
       midterm
     </a>
     
@@ -490,8 +636,7 @@
   
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -503,7 +648,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -511,7 +659,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='hist' href='OldClasses/AI/midterm/hist.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='hist' href='OldClasses/AI/midterm/hist.html'>
       hist
     </a>
     
@@ -527,6 +678,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
+
   
   
 
@@ -538,7 +690,9 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'>
@@ -546,7 +700,9 @@
       </svg>
       
   
-    <a class='font-bold text-green-600 hover:underline truncate' title='midterm_review' href='OldClasses/AI/midterm/midterm_review.html'>
+        
+    </span>
+    <a class='mavenLinkBold bg-blue-100 hover:bg-blue-200 rounded px-1.5 truncate' title='midterm_review' href='OldClasses/AI/midterm/midterm_review.html'>
       midterm_review
     </a>
     
@@ -565,8 +721,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -578,7 +733,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -586,7 +744,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='notes' href='OldClasses/AI/notes.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='notes' href='OldClasses/AI/notes.html'>
       notes
     </a>
     
@@ -602,8 +763,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -615,7 +775,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -623,7 +786,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='search' href='OldClasses/AI/search.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='search' href='OldClasses/AI/search.html'>
       search
     </a>
     
@@ -642,8 +808,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -655,14 +820,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Automata.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Automata' href='OldClasses/Automata.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Automata' href='OldClasses/Automata.html'>
       Automata
     </a>
     
@@ -681,8 +854,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -694,14 +866,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Discrete-Structures.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Discrete-Structures' href='OldClasses/Discrete-Structures.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Discrete-Structures' href='OldClasses/Discrete-Structures.html'>
       Discrete-Structures
     </a>
     
@@ -720,8 +900,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -733,14 +912,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Intelligent_Data_Design.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Intelligent_Data_Design' href='OldClasses/Intelligent_Data_Design.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Intelligent_Data_Design' href='OldClasses/Intelligent_Data_Design.html'>
       Intelligent_Data_Design
     </a>
     
@@ -759,8 +946,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -772,14 +958,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Networking.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Networking' href='OldClasses/Networking.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Networking' href='OldClasses/Networking.html'>
       Networking
     </a>
     
@@ -798,8 +992,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -811,14 +1004,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Operating_Systems.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Operating_Systems' href='OldClasses/Operating_Systems.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Operating_Systems' href='OldClasses/Operating_Systems.html'>
       Operating_Systems
     </a>
     
@@ -837,8 +1038,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -850,14 +1050,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/OrganicChemistry.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='OrganicChemistry' href='OldClasses/OrganicChemistry.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='OrganicChemistry' href='OldClasses/OrganicChemistry.html'>
       OrganicChemistry
     </a>
     
@@ -876,8 +1084,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -889,14 +1096,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/ParallelComputing.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='ParallelComputing' href='OldClasses/ParallelComputing.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='ParallelComputing' href='OldClasses/ParallelComputing.html'>
       ParallelComputing
     </a>
     
@@ -915,8 +1130,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -928,14 +1142,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Physics2001.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Physics2001' href='OldClasses/Physics2001.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Physics2001' href='OldClasses/Physics2001.html'>
       Physics2001
     </a>
     
@@ -954,8 +1176,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -967,14 +1188,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/bioinformatics.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='bioinformatics' href='OldClasses/bioinformatics.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='bioinformatics' href='OldClasses/bioinformatics.html'>
       bioinformatics
     </a>
     
@@ -993,8 +1222,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1006,14 +1234,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/comp-systems.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='comp-systems' href='OldClasses/comp-systems.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='comp-systems' href='OldClasses/comp-systems.html'>
       comp-systems
     </a>
     
@@ -1032,8 +1268,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1045,14 +1280,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/ecology.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='ecology' href='OldClasses/ecology.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='ecology' href='OldClasses/ecology.html'>
       ecology
     </a>
     
@@ -1071,8 +1314,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1084,14 +1326,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/intro-to-bioinformatics.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='intro-to-bioinformatics' href='OldClasses/intro-to-bioinformatics.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='intro-to-bioinformatics' href='OldClasses/intro-to-bioinformatics.html'>
       intro-to-bioinformatics
     </a>
     
@@ -1110,8 +1360,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1123,14 +1372,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/programming-languages.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='programming-languages' href='OldClasses/programming-languages.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='programming-languages' href='OldClasses/programming-languages.html'>
       programming-languages
     </a>
     
@@ -1150,10 +1407,9 @@
     
   
 </div>
-            
-              <!-- Variable bindings for this tree-->
-  
     
+      <!-- Variable bindings for this tree-->
+
   
 
 
@@ -1165,7 +1421,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1173,7 +1432,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='README' href='README.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='README' href='README.html'>
       README
     </a>
     
@@ -1187,10 +1449,9 @@
   -->
   
 </div>
-            
-              <!-- Variable bindings for this tree-->
-  
     
+      <!-- Variable bindings for this tree-->
+
   
 
 
@@ -1202,14 +1463,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='non-classes.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='non-classes' href='non-classes.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='non-classes' href='non-classes.html'>
       non-classes
     </a>
     
@@ -1226,22 +1495,44 @@
   -->
   
 </div>
-            
+    
 
-          </div>
-        </nav>
-
-        <!-- Main body column -->
-        <div class='flex-1 w-full overflow-x-auto bg-white'>
-          <main class='px-4 py-4'>
-            <h1 class='flex items-end justify-center mb-4 p-3 bg-green-100 text-5xl font-extrabold text-black rounded'>
+  </div>
+</nav>
+          <!-- Main body column -->
+          <div class='flex-1 w-full bg-white'>
+  <main class='px-4 py-4'>
+    <h1 class='flex items-end justify-center mb-4 p-3 bg-blue-100 text-5xl font-extrabold text-black rounded'>
   <a class='z-40 tracking-tighter '>
     midterm_review
   </a>
 </h1>
-            <article class='overflow-auto'>
+    
+      <div class='md:grid md:gap-4 md:grid-cols-8'>
+        <div class='md:col-span-6'>
+          <article class='overflow-auto'>
   <!-- What goes in this file will appear on top of note body-->
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>In the context of uniformed state-space search</h1>
+  
+
+
+
+
+
+
+    <h1 id='in-the-context-of-uniformed-state-space-search' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  In the context of uniformed state-space search
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#in-the-context-of-uniformed-state-space-search' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       They try to examine all the possibilities. They are bad and inefficient for finding the smallest path.
     </p>
@@ -1273,23 +1564,93 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>What is a state space</h2>
+  
+    <h2 id='what-is-a-state-space' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  What is a state space
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#what-is-a-state-space' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       All the possible states that can exist for a given problem, ie all possible positions of a set of queens on a chessboard.
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>What are the successor states of a state</h2>
+  
+    <h2 id='what-are-the-successor-states-of-a-state' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  What are the successor states of a state
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#what-are-the-successor-states-of-a-state' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       All the possible states that can follow the current state, ie all the possible <strong>moves</strong> that a set of queens can make on a chessboard.
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Which states are present on the Open List?</h2>
+  
+    <h2 id='which-states-are-present-on-the-open-list' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Which states are present on the Open List?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#which-states-are-present-on-the-open-list' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       All the states that have not been searched and are neighboring the current state.
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Which states are present on the Closed List?</h2>
+  
+    <h2 id='which-states-are-present-on-the-closed-list' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Which states are present on the Closed List?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#which-states-are-present-on-the-closed-list' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       All the states that have been searched.
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>We want to solve the 4-queens problem as an uninformed search problem.</h2>
+  
+    <h2 id='we-want-to-solve-the-4-queens-problem-as-an-uninformed-search-problem.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  We want to solve the 4-queens problem as an uninformed search problem.
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#we-want-to-solve-the-4-queens-problem-as-an-uninformed-search-problem.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1317,7 +1678,21 @@
         </li>
       
     </ul>
-  <h3 class='mt-6 mb-2 text-3xl font-bold border-b-2'>Answer</h3>
+  
+    <h3 id='answer' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Answer
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#answer' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1337,7 +1712,21 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>What is the problem caused by repeated states during the search process? What are the advantages and disadvantages of letting the repeated states get added to the Open List?</h2>
+  
+    <h2 id='what-is-the-problem-caused-by-repeated-states-during-the-search-process-what-are-the-advantages-and-disadvantages-of-letting-the-repeated-states-get-added-to-the-open-list' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  What is the problem caused by repeated states during the search process? What are the advantages and disadvantages of letting the repeated states get added to the Open List?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#what-is-the-problem-caused-by-repeated-states-during-the-search-process-what-are-the-advantages-and-disadvantages-of-letting-the-repeated-states-get-added-to-the-open-list' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       The issue is that the search can get into an endless loop of repeated states. This is therefore bad as long as it is possible to repeat states.
     </p>
@@ -1345,7 +1734,21 @@
     <p class='mb-3'>
       There is a cost associated with preventing repeats. It can be prohibitively expensive (computationally and or storage-wise) to prevent repeats.
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Briefly outline how breadth-first search is used for finding a path from the start state to a goal state?</h2>
+  
+    <h2 id='briefly-outline-how-breadth-first-search-is-used-for-finding-a-path-from-the-start-state-to-a-goal-state' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Briefly outline how breadth-first search is used for finding a path from the start state to a goal state?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#briefly-outline-how-breadth-first-search-is-used-for-finding-a-path-from-the-start-state-to-a-goal-state' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1357,7 +1760,21 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Briefly outline how uniform-cost search is used for finding a path from the start state to a goal state?</h2>
+  
+    <h2 id='briefly-outline-how-uniform-cost-search-is-used-for-finding-a-path-from-the-start-state-to-a-goal-state' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Briefly outline how uniform-cost search is used for finding a path from the start state to a goal state?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#briefly-outline-how-uniform-cost-search-is-used-for-finding-a-path-from-the-start-state-to-a-goal-state' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1369,11 +1786,39 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>What are some advantages/disadvantages of using the depth-first search as opposed to the breadth-first search?</h2>
+  
+    <h2 id='what-are-some-advantagesdisadvantages-of-using-the-depth-first-search-as-opposed-to-the-breadth-first-search' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  What are some advantages/disadvantages of using the depth-first search as opposed to the breadth-first search?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#what-are-some-advantagesdisadvantages-of-using-the-depth-first-search-as-opposed-to-the-breadth-first-search' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       Depth first search does not have to keep each level of the tree in memory, but is not complete without backtracking, making it very vulnerable to loops.
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>How does the iterative deepening depth-first search work?</h2>
+  
+    <h2 id='how-does-the-iterative-deepening-depth-first-search-work' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  How does the iterative deepening depth-first search work?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#how-does-the-iterative-deepening-depth-first-search-work' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1389,7 +1834,21 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>When is a search algorithm said to be complete?</h2>
+  
+    <h2 id='when-is-a-search-algorithm-said-to-be-complete' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  When is a search algorithm said to be complete?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#when-is-a-search-algorithm-said-to-be-complete' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1397,7 +1856,21 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>When is a search algorithm said to be optimal?</h2>
+  
+    <h2 id='when-is-a-search-algorithm-said-to-be-optimal' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  When is a search algorithm said to be optimal?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#when-is-a-search-algorithm-said-to-be-optimal' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1405,19 +1878,89 @@
         </li>
       
     </ul>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>In the context of informed state-space search</h1><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>What is a hueristic function</h2>
+  
+    <h1 id='in-the-context-of-informed-state-space-search' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  In the context of informed state-space search
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#in-the-context-of-informed-state-space-search' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h2 id='what-is-a-hueristic-function' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  What is a hueristic function
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#what-is-a-hueristic-function' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       It is a function h(n) that estimates the cost of a path between the current state and the final state.
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>What value is used to order the nodes on the open list?</h2>
+  
+    <h2 id='what-value-is-used-to-order-the-nodes-on-the-open-list' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  What value is used to order the nodes on the open list?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#what-value-is-used-to-order-the-nodes-on-the-open-list' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       The value of the f(n) + h(n) + current cost or g(n) is used to order the nodes.
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>At what stage do you know that you have found the shortest path to the goal state?</h2>
+  
+    <h2 id='at-what-stage-do-you-know-that-you-have-found-the-shortest-path-to-the-goal-state' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  At what stage do you know that you have found the shortest path to the goal state?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#at-what-stage-do-you-know-that-you-have-found-the-shortest-path-to-the-goal-state' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       When the goal state is reached, the current path is the shortest, but this is not necessarily accurate depending on the heuristic.
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Admissible? consequences?</h2>
+  
+    <h2 id='admissible-consequences' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Admissible? consequences?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#admissible-consequences' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1429,7 +1972,21 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>consistent? consequences?</h2>
+  
+    <h2 id='consistent-consequences' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  consistent? consequences?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#consistent-consequences' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1441,15 +1998,71 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>A* algorithm optimal?</h2>
+  
+    <h2 id='a-algorithm-optimal' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  A* algorithm optimal?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#a-algorithm-optimal' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       If nodes have finite branching factor, the heuristic is admissible and consistent, then A* is optimal
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>What happens when a heuristic dominates another heuristic?</h2>
+  
+    <h2 id='what-happens-when-a-heuristic-dominates-another-heuristic' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  What happens when a heuristic dominates another heuristic?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#what-happens-when-a-heuristic-dominates-another-heuristic' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       <span class='math inline'>\(h_2 \ge h_1\)</span> and both are admissible, h2 is better
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>In the context of hill climbing search</h1><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>What is the main idea underlying the hill climbing search</h2>
+  
+    <h1 id='in-the-context-of-hill-climbing-search' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  In the context of hill climbing search
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#in-the-context-of-hill-climbing-search' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h2 id='what-is-the-main-idea-underlying-the-hill-climbing-search' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  What is the main idea underlying the hill climbing search
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#what-is-the-main-idea-underlying-the-hill-climbing-search' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1457,11 +2070,53 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>What are the local and global maxima and minimal</h2><img class='inline mb-3' src='OldClasses/AI/midterm/min-max.png' alt style='width: inherit;' /><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Select a random state for a 4 queens problem and show all neighboring states</h2>
+  
+    <h2 id='what-are-the-local-and-global-maxima-and-minimal' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  What are the local and global maxima and minimal
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#what-are-the-local-and-global-maxima-and-minimal' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  <img class='inline mb-3' src='OldClasses/AI/midterm/min-max.png' alt style='width: inherit;' />
+    <h2 id='select-a-random-state-for-a-4-queens-problem-and-show-all-neighboring-states' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Select a random state for a 4 queens problem and show all neighboring states
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#select-a-random-state-for-a-4-queens-problem-and-show-all-neighboring-states' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       <span class='math inline'>\(\mathbb{NO}\)</span>
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>How can we avoid local minima</h2>
+  
+    <h2 id='how-can-we-avoid-local-minima' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  How can we avoid local minima
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#how-can-we-avoid-local-minima' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1473,7 +2128,21 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>When is hill climbing better</h2>
+  
+    <h2 id='when-is-hill-climbing-better' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  When is hill climbing better
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#when-is-hill-climbing-better' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1481,19 +2150,89 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Map coloring with hill climbing?</h2>
+  
+    <h2 id='map-coloring-with-hill-climbing' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Map coloring with hill climbing?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#map-coloring-with-hill-climbing' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       Use some hueristic to score the different regions of the map ajoining the current region. <img src='OldClasses/AI/midterm/map_color.png' alt='map_color.png' />
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>In the context of adversarial search</h1><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>How does minmax algorithm work?</h2>
+  
+    <h1 id='in-the-context-of-adversarial-search' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  In the context of adversarial search
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#in-the-context-of-adversarial-search' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h2 id='how-does-minmax-algorithm-work' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  How does minmax algorithm work?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#how-does-minmax-algorithm-work' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       2 players (min and max) that want the opposite thing. At each level of tree, the min or the max is found, depending on the player. <img src='OldClasses/AI/midterm/min_max.png' alt='min_max.png' />
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>What guarantee does each player have</h2>
+  
+    <h2 id='what-guarantee-does-each-player-have' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  What guarantee does each player have
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#what-guarantee-does-each-player-have' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       The move will be the best based on the best moves the other player makes
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>What is the advantaged gained by alpha beta pruning</h2>
+  
+    <h2 id='what-is-the-advantaged-gained-by-alpha-beta-pruning' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  What is the advantaged gained by alpha beta pruning
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#what-is-the-advantaged-gained-by-alpha-beta-pruning' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -1501,40 +2240,165 @@
         </li>
       
     </ul>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Is pruning expected to be different right to left and left to right?</h2>
+  
+    <h2 id='is-pruning-expected-to-be-different-right-to-left-and-left-to-right' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Is pruning expected to be different right to left and left to right?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#is-pruning-expected-to-be-different-right-to-left-and-left-to-right' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       yes, consider the above example, no pruning would occur right to left, but 4 nodes can be pruned left to right.
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Move ordering, is it good?</h2>
+  
+    <h2 id='move-ordering-is-it-good' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Move ordering, is it good?
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#move-ordering-is-it-good' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       Move ordering can be used to maximize the amount of pruning that occurs. Again consider the above example. It has ideal ordering for left to right pruning.
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>In the context of constrain satisfaction problems</h1><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Unary, binary, and global constraints</h2>
+  
+    <h1 id='in-the-context-of-constrain-satisfaction-problems' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  In the context of constrain satisfaction problems
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#in-the-context-of-constrain-satisfaction-problems' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h2 id='unary-binary-and-global-constraints' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Unary, binary, and global constraints
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#unary-binary-and-global-constraints' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       <img src='OldClasses/AI/midterm/contraints.png' alt='contraints.png' /> <img src='OldClasses/AI/midterm/global_constraints.png' alt='global_constraints.png' />
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>What is the meaning of arc-consistency</h2><img class='inline mb-3' src='OldClasses/AI/midterm/arc.png' alt style='width: inherit;' /><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>X</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Y</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>4</td></tr></tbody></table>
+  
+    <h2 id='what-is-the-meaning-of-arc-consistency' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  What is the meaning of arc-consistency
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#what-is-the-meaning-of-arc-consistency' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  <img class='inline mb-3' src='OldClasses/AI/midterm/arc.png' alt style='width: inherit;' /><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>X</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>Y</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>4</td></tr></tbody></table>
     <p class='mb-3'>
       The arc Y = X+1 is consistent
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>backtracking in CSPs</h2>
+  
+    <h2 id='backtracking-in-csps' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  backtracking in CSPs
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#backtracking-in-csps' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       <img src='OldClasses/AI/midterm/backtracking.png' alt='backtracking.png' /> <img src='OldClasses/AI/midterm/backtracking_algo.png' alt='backtracking_algo.png' />
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Variable and value ordering</h2>
+  
+    <h2 id='variable-and-value-ordering' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Variable and value ordering
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#variable-and-value-ordering' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
-      <a href='https://ktiml.mff.cuni.cz/~bartak/constraints/ordering.html' class='text-green-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>some nice stuff here</a>
+      <a href='https://ktiml.mff.cuni.cz/~bartak/constraints/ordering.html' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>some nice stuff here</a>
     </p>
-  <h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>Least constraining value</h2><img class='inline mb-3' src='OldClasses/AI/midterm/least.png' alt style='width: inherit;' /><h2 class='inline-block mt-6 mb-4 text-3xl font-bold border-b-2'>AC-3</h2>
+  
+    <h2 id='least-constraining-value' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Least constraining value
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#least-constraining-value' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  <img class='inline mb-3' src='OldClasses/AI/midterm/least.png' alt style='width: inherit;' />
+    <h2 id='ac-3' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  AC-3
+  
+  <a href='OldClasses/AI/midterm/midterm_review.html#ac-3' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
     <p class='mb-3'>
       Iterate through each condition (arc), adding the reverse to the open list, until consistency is reached (the lists stop changing).
     </p>
   
-
   <div class='flex items-center justify-center mt-2'>
   
     
-      <a class='text-gray-300 hover:text-green-600 text-sm' title='Edit this page on GitHub' href='https://github.com/IllustratedMan-code/Planner/blob/main/OldClasses/AI/midterm/midterm_review.org'>
+      <a class='text-gray-300 hover:text-blue-600 text-sm' title='Edit this page on GitHub' href='https://github.com/IllustratedMan-code/Planner/blob/main/OldClasses/AI/midterm/midterm_review.org'>
         <svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'></path>
         </svg>
@@ -1543,44 +2407,573 @@
   
 </div>
 </article>
-            <div class='flex flex-col lg:flex-row lg:space-x-2'>
+        </div>
+        <div class='hidden md:block md:col-span-2 md:border-l'>
+          <nav id='toc' class='hidden leading-relaxed md:block md:sticky md:top-0 md:max-h-screen md:overflow-y-auto'>
+  <div class='text-gray-600 text-sm -mt-2'>
+    
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='In the context of uniformed state-space search'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#in-the-context-of-uniformed-state-space-search' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                In the context of uniformed state-space search
+              </a>
               
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='What is a state space'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#what-is-a-state-space' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                What is a state space
+              </a>
               
-            </div>
-            
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='What are the successor states of a state'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#what-are-the-successor-states-of-a-state' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                What are the successor states of a state
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Which states are present on the Open List?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#which-states-are-present-on-the-open-list' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Which states are present on the Open List?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Which states are present on the Closed List?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#which-states-are-present-on-the-closed-list' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Which states are present on the Closed List?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='We want to solve the 4-queens problem as an uninformed search problem.'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#we-want-to-solve-the-4-queens-problem-as-an-uninformed-search-problem.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                We want to solve the 4-queens problem as an uninformed search problem.
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Answer'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#answer' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Answer
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='What is the problem caused by repeated states during the search process? What are the advantages and disadvantages of letting the repeated states get added to the Open List?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#what-is-the-problem-caused-by-repeated-states-during-the-search-process-what-are-the-advantages-and-disadvantages-of-letting-the-repeated-states-get-added-to-the-open-list' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                What is the problem caused by repeated states during the search process? What are the advantages and disadvantages of letting the repeated states get added to the Open List?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Briefly outline how breadth-first search is used for finding a path from the start state to a goal state?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#briefly-outline-how-breadth-first-search-is-used-for-finding-a-path-from-the-start-state-to-a-goal-state' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Briefly outline how breadth-first search is used for finding a path from the start state to a goal state?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Briefly outline how uniform-cost search is used for finding a path from the start state to a goal state?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#briefly-outline-how-uniform-cost-search-is-used-for-finding-a-path-from-the-start-state-to-a-goal-state' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Briefly outline how uniform-cost search is used for finding a path from the start state to a goal state?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='What are some advantages/disadvantages of using the depth-first search as opposed to the breadth-first search?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#what-are-some-advantagesdisadvantages-of-using-the-depth-first-search-as-opposed-to-the-breadth-first-search' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                What are some advantages/disadvantages of using the depth-first search as opposed to the breadth-first search?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='How does the iterative deepening depth-first search work?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#how-does-the-iterative-deepening-depth-first-search-work' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                How does the iterative deepening depth-first search work?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='When is a search algorithm said to be complete?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#when-is-a-search-algorithm-said-to-be-complete' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                When is a search algorithm said to be complete?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='When is a search algorithm said to be optimal?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#when-is-a-search-algorithm-said-to-be-optimal' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                When is a search algorithm said to be optimal?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='In the context of informed state-space search'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#in-the-context-of-informed-state-space-search' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                In the context of informed state-space search
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='What is a hueristic function'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#what-is-a-hueristic-function' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                What is a hueristic function
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='What value is used to order the nodes on the open list?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#what-value-is-used-to-order-the-nodes-on-the-open-list' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                What value is used to order the nodes on the open list?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='At what stage do you know that you have found the shortest path to the goal state?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#at-what-stage-do-you-know-that-you-have-found-the-shortest-path-to-the-goal-state' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                At what stage do you know that you have found the shortest path to the goal state?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Admissible? consequences?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#admissible-consequences' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Admissible? consequences?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='consistent? consequences?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#consistent-consequences' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                consistent? consequences?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='A* algorithm optimal?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#a-algorithm-optimal' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                A* algorithm optimal?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='What happens when a heuristic dominates another heuristic?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#what-happens-when-a-heuristic-dominates-another-heuristic' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                What happens when a heuristic dominates another heuristic?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='In the context of hill climbing search'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#in-the-context-of-hill-climbing-search' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                In the context of hill climbing search
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='What is the main idea underlying the hill climbing search'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#what-is-the-main-idea-underlying-the-hill-climbing-search' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                What is the main idea underlying the hill climbing search
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='What are the local and global maxima and minimal'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#what-are-the-local-and-global-maxima-and-minimal' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                What are the local and global maxima and minimal
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Select a random state for a 4 queens problem and show all neighboring states'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#select-a-random-state-for-a-4-queens-problem-and-show-all-neighboring-states' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Select a random state for a 4 queens problem and show all neighboring states
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='How can we avoid local minima'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#how-can-we-avoid-local-minima' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                How can we avoid local minima
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='When is hill climbing better'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#when-is-hill-climbing-better' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                When is hill climbing better
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Map coloring with hill climbing?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#map-coloring-with-hill-climbing' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Map coloring with hill climbing?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='In the context of adversarial search'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#in-the-context-of-adversarial-search' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                In the context of adversarial search
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='How does minmax algorithm work?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#how-does-minmax-algorithm-work' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                How does minmax algorithm work?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='What guarantee does each player have'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#what-guarantee-does-each-player-have' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                What guarantee does each player have
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='What is the advantaged gained by alpha beta pruning'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#what-is-the-advantaged-gained-by-alpha-beta-pruning' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                What is the advantaged gained by alpha beta pruning
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Is pruning expected to be different right to left and left to right?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#is-pruning-expected-to-be-different-right-to-left-and-left-to-right' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Is pruning expected to be different right to left and left to right?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Move ordering, is it good?'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#move-ordering-is-it-good' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Move ordering, is it good?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='In the context of constrain satisfaction problems'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#in-the-context-of-constrain-satisfaction-problems' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                In the context of constrain satisfaction problems
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Unary, binary, and global constraints'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#unary-binary-and-global-constraints' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Unary, binary, and global constraints
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='What is the meaning of arc-consistency'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#what-is-the-meaning-of-arc-consistency' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                What is the meaning of arc-consistency
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='backtracking in CSPs'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#backtracking-in-csps' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                backtracking in CSPs
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Variable and value ordering'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#variable-and-value-ordering' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Variable and value ordering
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Least constraining value'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#least-constraining-value' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Least constraining value
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='AC-3'>
+              <a href='OldClasses/AI/midterm/midterm_review.html#ac-3' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                AC-3
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+  </div>
+  <script>
+    // Highlight the TOC, based from https://stackoverflow.com/a/75346369
+    // TODO: We should get rid of JavaScript! See https://github.com/srid/emanote/issues/520
+    function highlightTOC() {
+      // Grab the toc links
+      const links = document.querySelectorAll("ul > li > a.--ema-toc");
+
+      // Find the matching anchors in the document body
+      const sections = [];
+      links.forEach((link) => {
+        let found = {};
+        for (section of document.querySelectorAll("a.--ema-anchor")) {
+          if (link.href == section.href) {
+            found = section;
+            break;
+          }
+        }
+        sections.push(found);
+      });
+
+      // Current toc link is marked with the following class
+      const mark = "toc-item-active";
+
+      // Set window scroll handler to update the toc mark.
+      window.onscroll = () => {
+        // Remove previous mark
+        links.forEach((link) => {
+          link.classList.remove(mark);
+        });
+
+        // Mark the link of the section that is in view, starting from the end
+        let marked = false;
+        for (var i = sections.length - 1; i >= 0; i--) {
+          if (window.scrollY > sections[i].offsetTop - 80) {
+            links[i].classList.add(mark);
+            marked = true;
+            break;
+          }
+        }
+
+        // Special case for the first and last section which might not reach the top
+        if (!marked && window.scrollY > 0) {
+          let i = 0;
+          if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight) {
+            // We are at the bottom
+            i = links.length - 1
+          }
+          links[i].classList.add(mark);
+        }
+      };
+    }
+    highlightTOC();
+  </script>
+</nav>
+        </div>
+      </div>
+      
+    <div class='flex flex-col lg:flex-row lg:space-x-2'>
+      
+      
+    </div>
+    
   <section class='flex flex-wrap items-end justify-center my-4 space-x-2 space-y-2 font-mono text-sm'>
     
   </section>
 
-            <!-- What goes in this file will at the very end of the main div -->
-          </main>
+    <!-- What goes in this file will at the very end of the main div -->
+  </main>
+</div>
         </div>
-      </div>
+        
       <footer class='flex items-center justify-center mt-2 mb-8 space-x-4 text-center text-gray-800'>
   
   <div>
     <a href='' title='Go to Home page'>
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'></path>
       </svg>
     </a>
   </div>
   <div>
     <a href='-/all.html' title='View Index'>
-      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
-        </path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'></path>
       </svg>
     </a>
   </div>
   <div>
-    <a href='https://emanote.srid.ca' target='_blank' title='Generated by Emanote 1.0.1.6'>
-      <img class='w-6 h-6 hover:text-green-700' src='_emanote-static/emanote-logo.svg' />
+    <a href='https://emanote.srid.ca' target='_blank' title='Generated by Emanote 1.3.17.1'>
+      <img class='w-6 h-6 hover:text-blue-700' src='_emanote-static/emanote-logo.svg' />
     </a>
   </div>
   <div>
     <a href='-/tags.html' title='View tags'>
-      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+      <svg class='w-6 h-6 hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
         </path>
       </svg>
@@ -1588,7 +2981,7 @@
   </div>
   <div>
     <a href='-/tasks.html' title='View tasks'>
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
       </svg>
     </a>

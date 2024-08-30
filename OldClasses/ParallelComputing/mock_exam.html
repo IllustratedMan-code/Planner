@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<!-- DoNotFormat -->
+<!-- DoNotFormat -->
+
+
+
+
+<!-- DoNotFormat -->
+<!-- DoNotFormat -->
+
 <html lang='en'>
 
 <head>
@@ -14,6 +23,9 @@
       <meta property='og:image' content />
       <meta property='og:type' content='website' />
       <meta property='og:title' content='mock_exam' />
+      
+        <meta name='twitter:card' content='summary_large_image' />
+      
     
     
       <base href='/Planner/' />
@@ -51,7 +63,8 @@
 
 
   
-  <link href='tailwind.css?instanceId=212e9745-c88c-4b2e-9f2a-8fbcb6418529' rel='stylesheet' type='text/css' />
+  
+  <link href='tailwind.css?instanceId=246d48dd-e69e-478e-94b7-314441ea29cb' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -59,6 +72,57 @@
       color: lightcoral;
       font-size: 90%;
       font-family: monospace;
+    }
+
+    /* Callouts */
+    div.callout {
+      background-color: #f5f5f5;
+      padding: 1em 1em 0.5em;
+      border-radius: 0.5em;
+      margin-bottom: 1em;
+    }
+
+    .callout[data-callout="note"] {
+      --callout-color: 8, 109, 221;
+    }
+
+    .callout[data-callout="info"] {
+      --callout-color: 8, 109, 221;
+    }
+
+    .callout[data-callout="tip"] {
+      --callout-color: 8, 191, 188;
+    }
+
+    .callout[data-callout="warning"] {
+      --callout-color: 236, 117, 0;
+    }
+
+    .callout[data-callout="failure"] {
+      --callout-color: 233, 49, 71;
+    }
+
+    div.callout {
+      background-color: rgba(var(--callout-color), 0.1);
+    }
+
+    .callout .callout-title {
+      color: rgb(var(--callout-color));
+    }
+
+    div.callout-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5em;
+      font-variation-settings: 'wght' 600;
+    }
+
+    div.callout-title div.callout-title-inner {
+      margin-left: 0.5em;
+    }
+
+    a.--ema-toc:not(.toc-item-active) {
+      background-color: #ffffff !important;
     }
 
     /* External link icon */
@@ -70,7 +134,12 @@
       content: ""
     }
 
+    a[data-linkicon="external"] {
+      padding-right: 24px;
+    }
+
     a[data-linkicon="external"]::after {
+      margin-right: -24px;
       content: url('data:image/svg+xml,\
       <svg xmlns="http://www.w3.org/2000/svg" height="0.7em" viewBox="0 0 20 20"> \
         <g style="stroke:gray;stroke-width:1"> \
@@ -150,6 +219,25 @@
 
 
   
+    <style>
+      /* For use in sidebar.tpl, as we cannot achieve this in tailwind itself! */
+      /* md:min-w-48  */
+      @media (min-width: 768px) {
+        #sidebar {
+          min-width: 12rem;
+        }
+      }
+
+      /* xl:min-w-64  */
+      @media (min-width: 1280px) {
+        #sidebar {
+          min-width: 16rem;
+        }
+      }
+    </style>
+
+    
+  
   <link rel='stylesheet' href='_emanote-static/stork/flat.css' />
 <!-- Custom Stork-search styling for Emanote -->
 <style>
@@ -167,11 +255,13 @@
 <script src='_emanote-static/stork/stork.js'></script>
 
   
-    <script data-emanote-base-url='/Planner/'>
+    <script id='emanote-stork' data-emanote-base-url='/Planner/'>
       window.emanote = {};
       window.emanote.stork = {
         searchShown: false,
+        indexIsStale: false,
         toggleSearch: function () {
+          window.emanote.stork.refreshIndex();
           document.getElementById('stork-search-container').classList.toggle('hidden');
           window.emanote.stork.searchShown = document.body.classList.toggle('stork-overflow-hidden-important');
           if (window.emanote.stork.searchShown) {
@@ -184,14 +274,25 @@
           window.emanote.stork.searchShown = false;
         },
 
-        init: function () {
+        getBaseUrl: function () {
+          const baseUrl = document.getElementById("emanote-stork").getAttribute('data-emanote-base-url') || '/';
+          return baseUrl;
+        },
+
+        registerIndex: function (options) {
           const indexName = 'emanote-search'; // used to match input[data-stork] attribute value
-          const baseUrl = document.currentScript.getAttribute('data-emanote-base-url') || '/';
-          const indexUrl = baseUrl + '-/stork.st';
+          const indexUrl = window.emanote.stork.getBaseUrl() + '-/stork.st';
+          stork.register(
+            indexName,
+            indexUrl,
+            options);
+        },
+
+        init: function () {
           if (document.readyState !== 'complete') {
             window.addEventListener('load', function () {
-              stork.initialize(baseUrl + '_emanote-static/stork/stork.wasm');
-              stork.register(indexName, indexUrl);
+              stork.initialize(window.emanote.stork.getBaseUrl() + '_emanote-static/stork/stork.wasm');
+              window.emanote.stork.registerIndex();
             });
 
             document.addEventListener('keydown', event => {
@@ -204,10 +305,32 @@
               }
             });
           } else {
-            // Override existing on Ema's hot-reload
-            stork.register(indexName, indexUrl, { forceOverwrite: true });
+            // This section is called during Ema's hot reload.
+            // 
+            // Mark the current index as stale, and refresh it *only when* the
+            // user actually invokes search.
+            // 
+            // We do not refresh the index *right away*, as that will cause
+            // memory leaks in the browser. See
+            // https://github.com/srid/emanote/issues/411#issuecomment-1402056235
+            console.log("stork: Marking index as stale");
+            window.emanote.stork.markIndexAsStale();
+          }
+        },
+
+        markIndexAsStale: function () {
+          window.emanote.stork.indexIsStale = true;
+        },
+
+        refreshIndex: function () {
+          if (window.emanote.stork.indexIsStale) {
+            console.log("stork: Reloading index");
+            window.emanote.stork.indexIsStale = false;
+            // NOTE: This will leak memory. See the comment above.
+            window.emanote.stork.registerIndex({ forceOverwrite: true });
           }
         }
+
       };
 
       window.emanote.stork.init();
@@ -224,9 +347,11 @@
 
 <body class='bg-gray-400 overflow-y-scroll'>
   
-    <div class='container mx-auto'>
+    <div class='container mx-auto md:mt-8 '>
+      
 
-      <nav id='breadcrumbs' class='w-full text-gray-700 md:hidden'>
+      
+        <nav id='breadcrumbs' class='w-full text-gray-700 md:hidden'>
   <div class='flex justify-left'>
     <div class='w-full px-2 py-2 bg-gray-50'>
       <ul class='flex flex-wrap text-lg'>
@@ -270,12 +395,12 @@
       </ul>
     </div>
     <button class='inline px-2 py-1 bg-gray-50 outline-none cursor-pointer focus:outline-none' title='Search (Ctrl+K)' type='button' onclick='window.emanote.stork.toggleSearch()'>
-      <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-green-700' f
+      <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-blue-700' f
  fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
   <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
 </svg>
     </button>
-    <button class='inline px-2 py-1 text-white bg-green-600 outline-none cursor-pointer focus:outline-none' title='Toggle sidebar' type='button' onclick="toggleHidden('sidebar')">
+    <button class='inline px-2 py-1 text-white bg-blue-600 outline-none cursor-pointer focus:outline-none' title='Toggle sidebar' type='button' onclick="toggleHidden('sidebar')">
       <svg xmlns='http://www.w3.org/2000/svg' class='w-4' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6h16M4 12h16M4 18h16'></path>
       </svg>
@@ -287,58 +412,61 @@
     </script>
   </div>
 </nav>
+      
 
-      <div id='container' class='flex flex-nowrap flex-col md:flex-row bg-gray-50 md:mt-8 md:shadow-2xl md:mb-8'>
-        <!-- Sidebar column -->
-        <nav id='sidebar' class='flex-shrink hidden leading-relaxed md:block md:sticky md:top-0 md:h-full md:w-48 xl:w-64'>
-          <div class='px-2 py-2 text-gray-800'>
-            <div id='indexing-links' class='flex flex-row float-right p-2 space-x-2 text-gray-500'>
-              <a href='-/tags.html' title='View tags'>
-                <svg style='width: 1rem;' class='hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
-                  </path>
-                </svg>
-              </a>
-              <a href='-/all.html' title='Expand full tree'>
-                <svg style='width: 1rem;' class='hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
-                  </path>
-                </svg>
-              </a>
-              <a title='Search (Ctrl+K)' class='cursor-pointer' onclick='window.emanote.stork.toggleSearch()'>
-                <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-green-700' f
+      
+        <div id='container' class='flex flex-nowrap flex-col md:flex-row bg-gray-50 md:shadow-2xl md:mb-8'>
+          <!-- Sidebar column -->
+          <nav id='sidebar' class='flex-shrink hidden leading-relaxed md:block md:sticky md:top-0 md:max-h-screen md:overflow-y-auto md:w-48 xl:w-64'>
+  <div class='px-2 py-2 text-gray-800'>
+    <div id='indexing-links' class='flex flex-row float-right p-2 space-x-2 text-gray-500'>
+      <a href='-/tags.html' title='View tags'>
+        <svg style='width: 1rem;' class='hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
+          </path>
+        </svg>
+      </a>
+      <a href='-/all.html' title='Expand full tree'>
+        <svg style='width: 1rem;' class='hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
+          </path>
+        </svg>
+      </a>
+      <a title='Search (Ctrl+K)' class='cursor-pointer' onclick='window.emanote.stork.toggleSearch()'>
+        <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-blue-700' f
  fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
   <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
 </svg>
-              </a>
-            </div>
+      </a>
+    </div>
 
-            <div id='site-logo' class='pl-2'>
-              <div class='flex items-center my-2 space-x-2 justify-left'>
-                <a href='' title='Go to Home'>
-                  
-                    
-                      <!-- The style width attribute here is to prevent huge
-                      icon from displaying at those rare occasions when Tailwind
-                      hasn't kicked in immediately on page load
-                      -->
-                      <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
-                    
-                  
-                </a>
-                <a class='font-bold truncate' title='Go to Home' href=''>
-                  Home
-                </a>
-              </div>
-            </div>
-
+    <div id='site-logo' class='pl-2'>
+      <div class='flex items-center my-2 space-x-2 justify-left'>
+        <a href='' title='Go to Home'>
+          
             
-              <!-- Variable bindings for this tree-->
+              <!-- The style width attribute here is to prevent huge
+                      icon from displaying at those rare occasions when Tailwind
+                      hasn't kicked in immediately on page load 
+                      -->
+              <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
+            
+          
+        </a>
+        <a class='font-bold truncate' title='Go to Home' href=''>
+          Home
+        </a>
+      </div>
+    </div>
+
+    
+      <!-- Variable bindings for this tree-->
+
   
     
       
-      
     
+  
 
 
 
@@ -349,15 +477,18 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
-        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
-        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='w-4 h-4 flex-shrink-0 inline text-gray-700' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z' clip-rule='evenodd'></path>
       </svg>
       
   
-    <a class='font-bold hover:underline truncate' title='OldClasses' href='OldClasses.html'>
+        
+    </span>
+    <a class='mavenLinkBold hover:bg-blue-200 rounded px-1.5 truncate' title='OldClasses' href='OldClasses.html'>
       OldClasses
     </a>
     
@@ -370,8 +501,7 @@
   
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -383,14 +513,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/AI.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='AI' href='OldClasses/AI.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='AI' href='OldClasses/AI.html'>
       AI
     </a>
     
@@ -409,8 +547,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -422,14 +559,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Automata.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Automata' href='OldClasses/Automata.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Automata' href='OldClasses/Automata.html'>
       Automata
     </a>
     
@@ -448,8 +593,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -461,14 +605,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Discrete-Structures.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Discrete-Structures' href='OldClasses/Discrete-Structures.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Discrete-Structures' href='OldClasses/Discrete-Structures.html'>
       Discrete-Structures
     </a>
     
@@ -487,8 +639,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -500,14 +651,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Intelligent_Data_Design.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Intelligent_Data_Design' href='OldClasses/Intelligent_Data_Design.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Intelligent_Data_Design' href='OldClasses/Intelligent_Data_Design.html'>
       Intelligent_Data_Design
     </a>
     
@@ -526,8 +685,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -539,14 +697,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Networking.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Networking' href='OldClasses/Networking.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Networking' href='OldClasses/Networking.html'>
       Networking
     </a>
     
@@ -565,8 +731,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -578,14 +743,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Operating_Systems.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Operating_Systems' href='OldClasses/Operating_Systems.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Operating_Systems' href='OldClasses/Operating_Systems.html'>
       Operating_Systems
     </a>
     
@@ -604,8 +777,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -617,14 +789,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/OrganicChemistry.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='OrganicChemistry' href='OldClasses/OrganicChemistry.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='OrganicChemistry' href='OldClasses/OrganicChemistry.html'>
       OrganicChemistry
     </a>
     
@@ -643,11 +823,12 @@
 </div>
     
       <!-- Variable bindings for this tree-->
+
   
     
       
-      
     
+  
 
 
 
@@ -658,15 +839,18 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-700' viewBox='0 0 20 20' fill='currentColor'>
-        <path fill-rule='evenodd' d='M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z' clip-rule='evenodd'></path>
-        <path d='M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='w-4 h-4 flex-shrink-0 inline text-gray-700' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z' clip-rule='evenodd'></path>
       </svg>
       
   
-    <a class='font-bold hover:underline truncate' title='ParallelComputing' href='OldClasses/ParallelComputing.html'>
+        
+    </span>
+    <a class='mavenLinkBold hover:bg-blue-200 rounded px-1.5 truncate' title='ParallelComputing' href='OldClasses/ParallelComputing.html'>
       ParallelComputing
     </a>
     
@@ -679,8 +863,7 @@
   
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -692,7 +875,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -700,7 +886,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='answers' href='OldClasses/ParallelComputing/answers.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='answers' href='OldClasses/ParallelComputing/answers.html'>
       answers
     </a>
     
@@ -716,8 +905,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -729,7 +917,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -737,7 +928,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='ch1' href='OldClasses/ParallelComputing/ch1.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='ch1' href='OldClasses/ParallelComputing/ch1.html'>
       ch1
     </a>
     
@@ -753,8 +947,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -766,7 +959,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -774,7 +970,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='exam_review' href='OldClasses/ParallelComputing/exam_review.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='exam_review' href='OldClasses/ParallelComputing/exam_review.html'>
       exam_review
     </a>
     
@@ -790,6 +989,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
+
   
   
 
@@ -801,7 +1001,9 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'>
@@ -809,7 +1011,9 @@
       </svg>
       
   
-    <a class='font-bold text-green-600 hover:underline truncate' title='mock_exam' href='OldClasses/ParallelComputing/mock_exam.html'>
+        
+    </span>
+    <a class='mavenLinkBold bg-blue-100 hover:bg-blue-200 rounded px-1.5 truncate' title='mock_exam' href='OldClasses/ParallelComputing/mock_exam.html'>
       mock_exam
     </a>
     
@@ -828,8 +1032,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -841,14 +1044,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/Physics2001.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='Physics2001' href='OldClasses/Physics2001.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Physics2001' href='OldClasses/Physics2001.html'>
       Physics2001
     </a>
     
@@ -867,8 +1078,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -880,14 +1090,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/bioinformatics.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='bioinformatics' href='OldClasses/bioinformatics.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='bioinformatics' href='OldClasses/bioinformatics.html'>
       bioinformatics
     </a>
     
@@ -906,8 +1124,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -919,14 +1136,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/comp-systems.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='comp-systems' href='OldClasses/comp-systems.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='comp-systems' href='OldClasses/comp-systems.html'>
       comp-systems
     </a>
     
@@ -945,8 +1170,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -958,14 +1182,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/ecology.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='ecology' href='OldClasses/ecology.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='ecology' href='OldClasses/ecology.html'>
       ecology
     </a>
     
@@ -984,8 +1216,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -997,14 +1228,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/intro-to-bioinformatics.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='intro-to-bioinformatics' href='OldClasses/intro-to-bioinformatics.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='intro-to-bioinformatics' href='OldClasses/intro-to-bioinformatics.html'>
       intro-to-bioinformatics
     </a>
     
@@ -1023,8 +1262,7 @@
 </div>
     
       <!-- Variable bindings for this tree-->
-  
-    
+
   
 
 
@@ -1036,14 +1274,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='OldClasses/programming-languages.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='programming-languages' href='OldClasses/programming-languages.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='programming-languages' href='OldClasses/programming-languages.html'>
       programming-languages
     </a>
     
@@ -1063,10 +1309,9 @@
     
   
 </div>
-            
-              <!-- Variable bindings for this tree-->
-  
     
+      <!-- Variable bindings for this tree-->
+
   
 
 
@@ -1078,7 +1323,10 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
-    
+    <span>
+      
+        
+          
     
       <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
@@ -1086,7 +1334,10 @@
       </svg>
     
   
-    <a class='hover:underline truncate' title='README' href='README.html'>
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='README' href='README.html'>
       README
     </a>
     
@@ -1100,10 +1351,9 @@
   -->
   
 </div>
-            
-              <!-- Variable bindings for this tree-->
-  
     
+      <!-- Variable bindings for this tree-->
+
   
 
 
@@ -1115,14 +1365,22 @@
 <div class='pl-2'>
   <!-- Node's rootLabel-->
   <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='non-classes.html' title='View folgezettel children'>
+            
     
-    
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 20 20' fill='currentColor'>
-        <path d='M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'></path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
       </svg>
     
   
-    <a class='hover:underline truncate' title='non-classes' href='non-classes.html'>
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='non-classes' href='non-classes.html'>
       non-classes
     </a>
     
@@ -1139,22 +1397,44 @@
   -->
   
 </div>
-            
+    
 
-          </div>
-        </nav>
-
-        <!-- Main body column -->
-        <div class='flex-1 w-full overflow-x-auto bg-white'>
-          <main class='px-4 py-4'>
-            <h1 class='flex items-end justify-center mb-4 p-3 bg-green-100 text-5xl font-extrabold text-black rounded'>
+  </div>
+</nav>
+          <!-- Main body column -->
+          <div class='flex-1 w-full bg-white'>
+  <main class='px-4 py-4'>
+    <h1 class='flex items-end justify-center mb-4 p-3 bg-blue-100 text-5xl font-extrabold text-black rounded'>
   <a class='z-40 tracking-tighter '>
     mock_exam
   </a>
 </h1>
-            <article class='overflow-auto'>
+    
+      <div class='md:grid md:gap-4 md:grid-cols-8'>
+        <div class='md:col-span-6'>
+          <article class='overflow-auto'>
   <!-- What goes in this file will appear on top of note body-->
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>1. Which of the following are ways that hardware designers make computers run faster?</h1>
+  
+
+
+
+
+
+
+    <h1 id='which-of-the-following-are-ways-that-hardware-designers-make-computers-run-faster' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  1. Which of the following are ways that hardware designers make computers run faster?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#which-of-the-following-are-ways-that-hardware-designers-make-computers-run-faster' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       
     <!-- FIXME: Fix list styling to use flexbox, so task lists don't botch them up -->
@@ -1166,7 +1446,21 @@
 </span>
   
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>2. What are the limits of computer architecture that motivate parallel processing?</h1>
+  
+    <h1 id='what-are-the-limits-of-computer-architecture-that-motivate-parallel-processing' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  2. What are the limits of computer architecture that motivate parallel processing?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#what-are-the-limits-of-computer-architecture-that-motivate-parallel-processing' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <blockquote class='py-0.5 px-4 mb-3 italic border-l-4 bg-gray-50 text-gray-600 border-gray-400 quote'>
       
     <p class='mb-3'>
@@ -1174,7 +1468,21 @@
     </p>
   
     </blockquote>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>3. For a class of GPUs, what is appropriate measure to compare power consumption of different devices?</h1>
+  
+    <h1 id='for-a-class-of-gpus-what-is-appropriate-measure-to-compare-power-consumption-of-different-devices' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  3. For a class of GPUs, what is appropriate measure to compare power consumption of different devices?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#for-a-class-of-gpus-what-is-appropriate-measure-to-compare-power-consumption-of-different-devices' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <blockquote class='py-0.5 px-4 mb-3 italic border-l-4 bg-gray-50 text-gray-600 border-gray-400 quote'>
       
     <p class='mb-3'>
@@ -1182,7 +1490,21 @@
     </p>
   
     </blockquote>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>4.What techniques are computer designers today using to build more power-efficient devices? Please circle all that are true.</h1>
+  
+    <h1 id='what-techniques-are-computer-designers-today-using-to-build-more-power-efficient-devices-please-circle-all-that-are-true.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  4.What techniques are computer designers today using to build more power-efficient devices? Please circle all that are true.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#what-techniques-are-computer-designers-today-using-to-build-more-power-efficient-devices-please-circle-all-that-are-true.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       
     <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
@@ -1194,7 +1516,21 @@
 
   
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>5. Name four common patterns of parallel computation?</h1>
+  
+    <h1 id='name-four-common-patterns-of-parallel-computation' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  5. Name four common patterns of parallel computation?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#name-four-common-patterns-of-parallel-computation' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       For each pattern, discuss whether the many-core or multi-core architecture model is more appropriate.
     </p>
@@ -1222,7 +1558,21 @@
     </ul>
   
     </blockquote>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>6. What is concurrency control, and discuss what is the difference between pessimistic an optimistic concurrency control?</h1>
+  
+    <h1 id='what-is-concurrency-control-and-discuss-what-is-the-difference-between-pessimistic-an-optimistic-concurrency-control' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  6. What is concurrency control, and discuss what is the difference between pessimistic an optimistic concurrency control?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#what-is-concurrency-control-and-discuss-what-is-the-difference-between-pessimistic-an-optimistic-concurrency-control' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <blockquote class='py-0.5 px-4 mb-3 italic border-l-4 bg-gray-50 text-gray-600 border-gray-400 quote'>
       
     <ul class='my-3 ml-6 space-y-1 list-disc'>
@@ -1242,7 +1592,21 @@
     </ul>
   
     </blockquote>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>7. How does Fork/Join parallelism differ from Kernel data-parallelism?</h1>
+  
+    <h1 id='how-does-forkjoin-parallelism-differ-from-kernel-data-parallelism' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  7. How does Fork/Join parallelism differ from Kernel data-parallelism?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#how-does-forkjoin-parallelism-differ-from-kernel-data-parallelism' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <blockquote class='py-0.5 px-4 mb-3 italic border-l-4 bg-gray-50 text-gray-600 border-gray-400 quote'>
       
     <ul class='my-3 ml-6 space-y-1 list-disc'>
@@ -1258,7 +1622,21 @@
     </ul>
   
     </blockquote>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>8. Circle all the true statements.</h1>
+  
+    <h1 id='circle-all-the-true-statements.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  8. Circle all the true statements.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#circle-all-the-true-statements.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       
     <!-- FIXME: Fix list styling to use flexbox, so task lists don't botch them up -->
@@ -1270,7 +1648,21 @@
 </span>
   
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>9. If we have a single kernel that is launched on many thread blocks, including block x and block y, the programmer can do which of the following: Circle all the true statements.</h1>
+  
+    <h1 id='if-we-have-a-single-kernel-that-is-launched-on-many-thread-blocks-including-block-x-and-block-y-the-programmer-can-do-which-of-the-following-circle-all-the-true-statements.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  9. If we have a single kernel that is launched on many thread blocks, including block x and block y, the programmer can do which of the following: Circle all the true statements.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#if-we-have-a-single-kernel-that-is-launched-on-many-thread-blocks-including-block-x-and-block-y-the-programmer-can-do-which-of-the-following-circle-all-the-true-statements.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       
     <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
@@ -1282,7 +1674,21 @@
 
   
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>10. Circle all the statements that are true.</h1>
+  
+    <h1 id='circle-all-the-statements-that-are-true.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  10. Circle all the statements that are true.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#circle-all-the-statements-that-are-true.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       
     <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
@@ -1294,7 +1700,21 @@
 
   
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>11. Does a _<sub>syncthreads</sub>() call apply to threads within a block or threads within a grid?</h1>
+  
+    <h1 id='does-a-_syncthreads-call-apply-to-threads-within-a-block-or-threads-within-a-grid' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  11. Does a _<sub>syncthreads</sub>() call apply to threads within a block or threads within a grid?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#does-a-_syncthreads-call-apply-to-threads-within-a-block-or-threads-within-a-grid' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <blockquote class='py-0.5 px-4 mb-3 italic border-l-4 bg-gray-50 text-gray-600 border-gray-400 quote'>
       
     <p class='mb-3'>
@@ -1302,7 +1722,21 @@
     </p>
   
     </blockquote>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>12. What is a parallel map operation? Circle all problems that can be solved using map.</h1>
+  
+    <h1 id='what-is-a-parallel-map-operation-circle-all-problems-that-can-be-solved-using-map.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  12. What is a parallel map operation? Circle all problems that can be solved using map.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#what-is-a-parallel-map-operation-circle-all-problems-that-can-be-solved-using-map.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       
     <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
@@ -1314,7 +1748,21 @@
 
   
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>13. Circle which operators are both binary and associative and therefore can be used in a reduction or scan.</h1>
+  
+    <h1 id='circle-which-operators-are-both-binary-and-associative-and-therefore-can-be-used-in-a-reduction-or-scan.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  13. Circle which operators are both binary and associative and therefore can be used in a reduction or scan.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#circle-which-operators-are-both-binary-and-associative-and-therefore-can-be-used-in-a-reduction-or-scan.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       
     <!-- FIXME: Fix list styling to use flexbox, so task lists don't botch them up -->
@@ -1326,11 +1774,39 @@
 </span>
   
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>14. Using 1D global indexing, how would you specify the parallel execution mapping the ith thread to the task of reading and then squaring the ith item from an large array X in global memory.</h1><div class='py-0.5 mb-3 text-sm'><pre><code class='cuda language-cuda' noeval='yes'>int i = blockIdx.x * blockDim.x + threadIdx.x;
+  
+    <h1 id='using-1d-global-indexing-how-would-you-specify-the-parallel-execution-mapping-the-ith-thread-to-the-task-of-reading-and-then-squaring-the-ith-item-from-an-large-array-x-in-global-memory.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  14. Using 1D global indexing, how would you specify the parallel execution mapping the ith thread to the task of reading and then squaring the ith item from an large array X in global memory.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#using-1d-global-indexing-how-would-you-specify-the-parallel-execution-mapping-the-ith-thread-to-the-task-of-reading-and-then-squaring-the-ith-item-from-an-large-array-x-in-global-memory.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  <div class='py-0.5 mb-3 text-sm'><pre><code class='cuda language-cuda' noeval='yes'>int i = blockIdx.x * blockDim.x + threadIdx.x;
 int x = X[i];
 x[i] = x * x
 
-</code></pre></div><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>15.Circle all statements that are true. When running reduction code running on an input of size n?</h1>
+</code></pre></div>
+    <h1 id='circle-all-statements-that-are-true.-when-running-reduction-code-running-on-an-input-of-size-n' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  15.Circle all statements that are true. When running reduction code running on an input of size n?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#circle-all-statements-that-are-true.-when-running-reduction-code-running-on-an-input-of-size-n' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       
     <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
@@ -1342,7 +1818,21 @@ x[i] = x * x
 
   
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>16. Circle the correct answer. The number of steps in a reduction of n elements as a function of n is:</h1>
+  
+    <h1 id='circle-the-correct-answer.-the-number-of-steps-in-a-reduction-of-n-elements-as-a-function-of-n-is' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  16. Circle the correct answer. The number of steps in a reduction of n elements as a function of n is:
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#circle-the-correct-answer.-the-number-of-steps-in-a-reduction-of-n-elements-as-a-function-of-n-is' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       
     <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
@@ -1354,7 +1844,21 @@ x[i] = x * x
 
   
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>17. Circle all that are true</h1>
+  
+    <h1 id='circle-all-that-are-true' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  17. Circle all that are true
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#circle-all-that-are-true' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       
     <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
@@ -1366,111 +1870,431 @@ x[i] = x * x
 
   
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>18. What is the impact of granularity on performance when considering the latency of global memory communication?</h1>
+  
+    <h1 id='what-is-the-impact-of-granularity-on-performance-when-considering-the-latency-of-global-memory-communication' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  18. What is the impact of granularity on performance when considering the latency of global memory communication?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#what-is-the-impact-of-granularity-on-performance-when-considering-the-latency-of-global-memory-communication' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       Calculate the granularity of dot product of two vectors that reside in global memory?
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>19. What is the output of a max scan operation on the list of unsigned ints [5 4 7 3 1 8 2 6]?</h1>
+  
+    <h1 id='what-is-the-output-of-a-max-scan-operation-on-the-list-of-unsigned-ints-5-4-7-3-1-8-2-6' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  19. What is the output of a max scan operation on the list of unsigned ints [5 4 7 3 1 8 2 6]?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#what-is-the-output-of-a-max-scan-operation-on-the-list-of-unsigned-ints-5-4-7-3-1-8-2-6' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       Provide a solution to both inclusive and exclusive scans.
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>20. Compute the max (inclusive) scan of this input sequence 2 1 4 3 showing all work when using</h1>
-    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+  
+    <h1 id='compute-the-max-inclusive-scan-of-this-input-sequence-2-1-4-3-showing-all-work-when-using' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
       
-        <li>
-          the Hillis-Steele algorithm
-        </li>
+  20. Compute the max (inclusive) scan of this input sequence 2 1 4 3 showing all work when using
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#compute-the-max-inclusive-scan-of-this-input-sequence-2-1-4-3-showing-all-work-when-using' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <p class='mb-3'>
+      a) the Hillis-Steele algorithm b) the Blelloch algorithm
+    </p>
+  
+    <h1 id='explain-which-scan-algorithm-hillis-steele-or-blelloch-algorithm-is-best-suited-and-why' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
       
-        <li>
-          the Blelloch algorithm
-        </li>
-      
-    </ul>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>21. Explain which scan algorithm (Hillis-Steele or Blelloch algorithm) is best suited and why?</h1>
+  21. Explain which scan algorithm (Hillis-Steele or Blelloch algorithm) is best suited and why?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#explain-which-scan-algorithm-hillis-steele-or-blelloch-algorithm-is-best-suited-and-why' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       You are scanning a 512 element vector and a GPU that has 512 processors.
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>22. Explain which scan (Hillis-Steele or Blelloch algorithm) is best suited and why?</h1>
+  
+    <h1 id='explain-which-scan-hillis-steele-or-blelloch-algorithm-is-best-suited-and-why' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  22. Explain which scan (Hillis-Steele or Blelloch algorithm) is best suited and why?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#explain-which-scan-hillis-steele-or-blelloch-algorithm-is-best-suited-and-why' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       You are scanning a 1 million element input vector in 512 processors machine.
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>23. Suppose you are computing a histogram with 10 bins. Discuss an efficient GPU solution.</h1>
+  
+    <h1 id='suppose-you-are-computing-a-histogram-with-10-bins.-discuss-an-efficient-gpu-solution.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  23. Suppose you are computing a histogram with 10 bins. Discuss an efficient GPU solution.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#suppose-you-are-computing-a-histogram-with-10-bins.-discuss-an-efficient-gpu-solution.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       Suppose you are computing a histogram with 10000 bins. Discuss an efficient GPU solution. Indicate for each whether or not you are using atomics to manage access to bins of the histograms.
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>24. True or false - In a scatter operation a _<sub>syncthreads</sub>() command is needed to overcome write conflicts.</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>25. Is the compact parallel operation more useful in scenarios where we delete a (small number) or a (large number) of elements from an array?</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>26. Is the compact parallel operation more useful in scenarios where we need to run (cheap) or (expensive) function on filtered elements.</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>27. Suppose we are running compact operations on a list of numbers with range from 1 to 1 million. Compact operation A, filters elements that are divisible by 17, and thus is only going to keep a very few of the input items. Compact operation B filters elements not divisible by 31, and thus is going to keep most of the input items. For each of the three phases of compact: predicate map, scan, and scatter phases of the compact operation, will A run faster, B run faster or will they take the same amount of time?</h1>
-    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+  
+    <h1 id='true-or-false---in-a-scatter-operation-a-_syncthreads-command-is-needed-to-overcome-write-conflicts.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
       
-        <li>
-          Predicate map b. Scan c. Scatter
-        </li>
+  24. True or false - In a scatter operation a _<sub>syncthreads</sub>() command is needed to overcome write conflicts.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#true-or-false---in-a-scatter-operation-a-_syncthreads-command-is-needed-to-overcome-write-conflicts.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h1 id='is-the-compact-parallel-operation-more-useful-in-scenarios-where-we-delete-a-small-number-or-a-large-number-of-elements-from-an-array' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
       
-    </ul>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>28. What is the difference between latency and bandwidth? Which is more easily enhanced by advanced architectures?</h1>
+  25. Is the compact parallel operation more useful in scenarios where we delete a (small number) or a (large number) of elements from an array?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#is-the-compact-parallel-operation-more-useful-in-scenarios-where-we-delete-a-small-number-or-a-large-number-of-elements-from-an-array' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h1 id='is-the-compact-parallel-operation-more-useful-in-scenarios-where-we-need-to-run-cheap-or-expensive-function-on-filtered-elements.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  26. Is the compact parallel operation more useful in scenarios where we need to run (cheap) or (expensive) function on filtered elements.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#is-the-compact-parallel-operation-more-useful-in-scenarios-where-we-need-to-run-cheap-or-expensive-function-on-filtered-elements.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h1 id='suppose-we-are-running-compact-operations-on-a-list-of-numbers-with-range-from-1-to-1-million.-compact-operation-a-filters-elements-that-are-divisible-by-17-and-thus-is-only-going-to-keep-a-very-few-of-the-input-items.-compact-operation-b-filters-elements-not-divisible-by-31-and-thus-is-going-to-keep-most-of-the-input-items.-for-each-of-the-three-phases-of-compact-predicate-map-scan-and-scatter-phases-of-the-compact-operation-will-a-run-faster-b-run-faster-or-will-they-take-the-same-amount-of-time' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  27. Suppose we are running compact operations on a list of numbers with range from 1 to 1 million. Compact operation A, filters elements that are divisible by 17, and thus is only going to keep a very few of the input items. Compact operation B filters elements not divisible by 31, and thus is going to keep most of the input items. For each of the three phases of compact: predicate map, scan, and scatter phases of the compact operation, will A run faster, B run faster or will they take the same amount of time?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#suppose-we-are-running-compact-operations-on-a-list-of-numbers-with-range-from-1-to-1-million.-compact-operation-a-filters-elements-that-are-divisible-by-17-and-thus-is-only-going-to-keep-a-very-few-of-the-input-items.-compact-operation-b-filters-elements-not-divisible-by-31-and-thus-is-going-to-keep-most-of-the-input-items.-for-each-of-the-three-phases-of-compact-predicate-map-scan-and-scatter-phases-of-the-compact-operation-will-a-run-faster-b-run-faster-or-will-they-take-the-same-amount-of-time' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <p class='mb-3'>
+      a. Predicate map b. Scan c. Scatter
+    </p>
+  
+    <h1 id='what-is-the-difference-between-latency-and-bandwidth-which-is-more-easily-enhanced-by-advanced-architectures' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  28. What is the difference between latency and bandwidth? Which is more easily enhanced by advanced architectures?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#what-is-the-difference-between-latency-and-bandwidth-which-is-more-easily-enhanced-by-advanced-architectures' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       Say you are give a task of transporting many people 200 miles. You have two modes of transport: a single sports-car traveling 100mph with 2 passengers – and – a single van traveling 50mph with 10 passengers. For each case, what is the Bandwidth in people delivered per hour? For each case, what is the Latency of a person delivery (in hours)? For each case, what is the Occupancy of transport system?
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>29. How is Occupancy defined in Cuda, and why does it have an impact on performance?</h1>
+  
+    <h1 id='how-is-occupancy-defined-in-cuda-and-why-does-it-have-an-impact-on-performance' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  29. How is Occupancy defined in Cuda, and why does it have an impact on performance?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#how-is-occupancy-defined-in-cuda-and-why-does-it-have-an-impact-on-performance' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       What is thread divergence in Cuda, and why does it have an impact on performance?
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>30. Show the contents of the CSR (Compressed Sparse Row) format for the following 5x5 matrix:</h1>
+  
+    <h1 id='show-the-contents-of-the-csr-compressed-sparse-row-format-for-the-following-5x5-matrix' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  30. Show the contents of the CSR (Compressed Sparse Row) format for the following 5x5 matrix:
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#show-the-contents-of-the-csr-compressed-sparse-row-format-for-the-following-5x5-matrix' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       02300 10050 00400 00020
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>31. Consider the sparse matrix dense vector product problem, and the two different parallel methods tpr(thread per row) or tpe (thread per element).</h1>
-    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+  
+    <h1 id='consider-the-sparse-matrix-dense-vector-product-problem-and-the-two-different-parallel-methods-tprthread-per-row-or-tpe-thread-per-element.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
       
-        <li>
-          Which approach will launch more threads?
-        </li>
+  31. Consider the sparse matrix dense vector product problem, and the two different parallel methods tpr(thread per row) or tpe (thread per element).
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#consider-the-sparse-matrix-dense-vector-product-problem-and-the-two-different-parallel-methods-tprthread-per-row-or-tpe-thread-per-element.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <p class='mb-3'>
+      a. Which approach will launch more threads? b. Which approach will require more communication between threads? c. Which approach will do more work per thread? d. Which approach is more load balanced?32. What does it mean for a sorting algorithm to be oblivious?
+    </p>
+  
+    <h1 id='state-the-01-sorting-lemma-for-oblivious-sorting-algorithms.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
       
-        <li>
-          Which approach will require more communication between threads?
-        </li>
+  33. State the 0/1 sorting lemma for oblivious sorting algorithms.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#state-the-01-sorting-lemma-for-oblivious-sorting-algorithms.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h1 id='provide-the-logic-of-bitonicsort-pseudocode-is-sufficient-here.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
       
-        <li>
-          Which approach will do more work per thread?
-        </li>
+  34. Provide the logic of BitonicSort – pseudocode is sufficient here.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#provide-the-logic-of-bitonicsort-pseudocode-is-sufficient-here.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h1 id='what-is-the-step-and-the-work-complexity-of-bitonicsort' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
       
-        <li>
-          Which approach is more load balanced?32. What does it mean for a sorting algorithm to be oblivious?
-        </li>
+  35. What is the step and the work complexity of BitonicSort?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#what-is-the-step-and-the-work-complexity-of-bitonicsort' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h1 id='in-the-bitonicsort-figure-presented-in-lecture-identify-each-of-the-bitonic-comparison-and-swap-modules.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
       
-    </ul>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>33. State the 0/1 sorting lemma for oblivious sorting algorithms.</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>34. Provide the logic of BitonicSort – pseudocode is sufficient here.</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>35. What is the step and the work complexity of BitonicSort?</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>36. In the BitonicSort figure presented in lecture identify each of the 'bitonic-comparison-and-swap' modules.</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>37. What is the work and step complexity of countingSort?</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>38. What is the expected work when hashing using chaining when the hash is to a chain of length k.</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>39. True or false: Bloom filters are a data structure that allows fast set membership operations, but with low probability of false negatives.</h1><h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>40. List the following in the order of their work complexity from least to most.</h1>
-    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+  36. In the BitonicSort figure presented in lecture identify each of the 'bitonic-comparison-and-swap' modules.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#in-the-bitonicsort-figure-presented-in-lecture-identify-each-of-the-bitonic-comparison-and-swap-modules.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h1 id='what-is-the-work-and-step-complexity-of-countingsort' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
       
-        <li>
-          parallel compact b. parallel scan c. sieveEratosthenes d. dense n-body
-        </li>
+  37. What is the work and step complexity of countingSort?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#what-is-the-work-and-step-complexity-of-countingsort' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h1 id='what-is-the-expected-work-when-hashing-using-chaining-when-the-hash-is-to-a-chain-of-length-k.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
       
-        <li>
-          bitonicSort f. sequential mergeSort
-        </li>
+  38. What is the expected work when hashing using chaining when the hash is to a chain of length k.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#what-is-the-expected-work-when-hashing-using-chaining-when-the-hash-is-to-a-chain-of-length-k.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h1 id='true-or-false-bloom-filters-are-a-data-structure-that-allows-fast-set-membership-operations-but-with-low-probability-of-false-negatives.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
       
-    </ul>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>41. List the following in the order of their step complexity from least to most.</h1>
-    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+  39. True or false: Bloom filters are a data structure that allows fast set membership operations, but with low probability of false negatives.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#true-or-false-bloom-filters-are-a-data-structure-that-allows-fast-set-membership-operations-but-with-low-probability-of-false-negatives.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h1 id='list-the-following-in-the-order-of-their-work-complexity-from-least-to-most.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
       
-        <li>
-          parallel compact b. parallel scan c. sieveEratosthenes d. dense n-body
-        </li>
+  40. List the following in the order of their work complexity from least to most.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#list-the-following-in-the-order-of-their-work-complexity-from-least-to-most.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <p class='mb-3'>
+      a. parallel compact b. parallel scan c. sieveEratosthenes d. dense n-body e. bitonicSort f. sequential mergeSort
+    </p>
+  
+    <h1 id='list-the-following-in-the-order-of-their-step-complexity-from-least-to-most.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
       
-        <li>
-          bitonicSort f. sequential mergeSort
-        </li>
+  41. List the following in the order of their step complexity from least to most.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#list-the-following-in-the-order-of-their-step-complexity-from-least-to-most.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <p class='mb-3'>
+      a. parallel compact b. parallel scan c. sieveEratosthenes d. dense n-body e. bitonicSort f. sequential mergeSort
+    </p>
+  
+    <h1 id='write-a-cuda-kernel-function-that-will-effectively-parallelize-the-following-sequential-function.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
       
-    </ul>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>42. Write a CUDA kernel function that will effectively parallelize the following sequential function.</h1>
+  42. Write a CUDA kernel function that will effectively parallelize the following sequential function.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#write-a-cuda-kernel-function-that-will-effectively-parallelize-the-following-sequential-function.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       void serial (int n, float a, float b, float * x, float * y) { for (int i = 0; i &lt; n; ++i) { y[i]= a * x[i] + b * y[i]; } }
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>43. What does the following kernel code do? Does it contain a race condition problem? If so, give a means to overcome it?</h1>
+  
+    <h1 id='what-does-the-following-kernel-code-do-does-it-contain-a-race-condition-problem-if-so-give-a-means-to-overcome-it' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  43. What does the following kernel code do? Does it contain a race condition problem? If so, give a means to overcome it?
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#what-does-the-following-kernel-code-do-does-it-contain-a-race-condition-problem-if-so-give-a-means-to-overcome-it' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       <u><u>global</u></u> void naiveHisto(int *d<sub>bins</sub>, const int *d<sub>in</sub>, const int BIN<sub>COUNT</sub>) { int myId = threadIdx.x + blockDim.x * blockIdx.x; int myItem = d<sub>in</sub>[myId]; int myBin = myItem % BIN<sub>COUNT</sub>; d<sub>bins</sub>[myBin]++; }
     </p>
-  <h1 class='block mt-6 mb-4 text-4xl font-bold border-b-4'>44. Complete the CUDA kernel function that computes, per-block, the sum of a block-sized portion of the input using a block-wide reduction.</h1>
+  
+    <h1 id='complete-the-cuda-kernel-function-that-computes-per-block-the-sum-of-a-block-sized-portion-of-the-input-using-a-block-wide-reduction.' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  44. Complete the CUDA kernel function that computes, per-block, the sum of a block-sized portion of the input using a block-wide reduction.
+  
+  <a href='OldClasses/ParallelComputing/mock_exam.html#complete-the-cuda-kernel-function-that-computes-per-block-the-sum-of-a-block-sized-portion-of-the-input-using-a-block-wide-reduction.' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
     <p class='mb-3'>
       You should assume 1-dimensional thread and block indexing. <u><u>global</u></u> void block<sub>sum</sub>(const float *input, float *per<sub>blockresults</sub>, const size<sub>t</sub> n) { <u><u>shared</u></u> float sdata[]; // TODO: load input into <u><u>shared</u></u> memory // TODO: use contiguous range pattern for reduction
     </p>
@@ -1479,11 +2303,10 @@ x[i] = x * x
       // thread 0 writes the final result if(threadIdx.x == 0) { per<sub>blockresults</sub>[blockIdx.x] = sdata[0]; } }
     </p>
   
-
   <div class='flex items-center justify-center mt-2'>
   
     
-      <a class='text-gray-300 hover:text-green-600 text-sm' title='Edit this page on GitHub' href='https://github.com/IllustratedMan-code/Planner/blob/main/OldClasses/ParallelComputing/mock_exam.org'>
+      <a class='text-gray-300 hover:text-blue-600 text-sm' title='Edit this page on GitHub' href='https://github.com/IllustratedMan-code/Planner/blob/main/OldClasses/ParallelComputing/mock_exam.org'>
         <svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'></path>
         </svg>
@@ -1492,44 +2315,584 @@ x[i] = x * x
   
 </div>
 </article>
-            <div class='flex flex-col lg:flex-row lg:space-x-2'>
+        </div>
+        <div class='hidden md:block md:col-span-2 md:border-l'>
+          <nav id='toc' class='hidden leading-relaxed md:block md:sticky md:top-0 md:max-h-screen md:overflow-y-auto'>
+  <div class='text-gray-600 text-sm -mt-2'>
+    
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='1. Which of the following are ways that hardware designers make computers run faster?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#which-of-the-following-are-ways-that-hardware-designers-make-computers-run-faster' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                1. Which of the following are ways that hardware designers make computers run faster?
+              </a>
               
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='2. What are the limits of computer architecture that motivate parallel processing?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#what-are-the-limits-of-computer-architecture-that-motivate-parallel-processing' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                2. What are the limits of computer architecture that motivate parallel processing?
+              </a>
               
-            </div>
-            
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='3. For a class of GPUs, what is appropriate measure to compare power consumption of different devices?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#for-a-class-of-gpus-what-is-appropriate-measure-to-compare-power-consumption-of-different-devices' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                3. For a class of GPUs, what is appropriate measure to compare power consumption of different devices?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='4.What techniques are computer designers today using to build more power-efficient devices? Please circle all that are true.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#what-techniques-are-computer-designers-today-using-to-build-more-power-efficient-devices-please-circle-all-that-are-true.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                4.What techniques are computer designers today using to build more power-efficient devices? Please circle all that are true.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='5. Name four common patterns of parallel computation?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#name-four-common-patterns-of-parallel-computation' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                5. Name four common patterns of parallel computation?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='6. What is concurrency control, and discuss what is the difference between pessimistic an optimistic concurrency control?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#what-is-concurrency-control-and-discuss-what-is-the-difference-between-pessimistic-an-optimistic-concurrency-control' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                6. What is concurrency control, and discuss what is the difference between pessimistic an optimistic concurrency control?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='7. How does Fork/Join parallelism differ from Kernel data-parallelism?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#how-does-forkjoin-parallelism-differ-from-kernel-data-parallelism' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                7. How does Fork/Join parallelism differ from Kernel data-parallelism?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='8. Circle all the true statements.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#circle-all-the-true-statements.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                8. Circle all the true statements.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='9. If we have a single kernel that is launched on many thread blocks, including block x and block y, the programmer can do which of the following: Circle all the true statements.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#if-we-have-a-single-kernel-that-is-launched-on-many-thread-blocks-including-block-x-and-block-y-the-programmer-can-do-which-of-the-following-circle-all-the-true-statements.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                9. If we have a single kernel that is launched on many thread blocks, including block x and block y, the programmer can do which of the following: Circle all the true statements.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='10. Circle all the statements that are true.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#circle-all-the-statements-that-are-true.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                10. Circle all the statements that are true.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='11. Does a _syncthreads() call apply to threads within a block or threads within a grid?syncthreads'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#does-a-_syncthreads-call-apply-to-threads-within-a-block-or-threads-within-a-grid' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                11. Does a _syncthreads() call apply to threads within a block or threads within a grid?syncthreads
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='12. What is a parallel map operation? Circle all problems that can be solved using map.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#what-is-a-parallel-map-operation-circle-all-problems-that-can-be-solved-using-map.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                12. What is a parallel map operation? Circle all problems that can be solved using map.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='13. Circle which operators are both binary and associative and therefore can be used in a reduction or scan.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#circle-which-operators-are-both-binary-and-associative-and-therefore-can-be-used-in-a-reduction-or-scan.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                13. Circle which operators are both binary and associative and therefore can be used in a reduction or scan.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='14. Using 1D global indexing, how would you specify the parallel execution mapping the ith thread to the task of reading and then squaring the ith item from an large array X in global memory.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#using-1d-global-indexing-how-would-you-specify-the-parallel-execution-mapping-the-ith-thread-to-the-task-of-reading-and-then-squaring-the-ith-item-from-an-large-array-x-in-global-memory.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                14. Using 1D global indexing, how would you specify the parallel execution mapping the ith thread to the task of reading and then squaring the ith item from an large array X in global memory.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='15.Circle all statements that are true. When running reduction code running on an input of size n?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#circle-all-statements-that-are-true.-when-running-reduction-code-running-on-an-input-of-size-n' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                15.Circle all statements that are true. When running reduction code running on an input of size n?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='16. Circle the correct answer. The number of steps in a reduction of n elements as a function of n is:'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#circle-the-correct-answer.-the-number-of-steps-in-a-reduction-of-n-elements-as-a-function-of-n-is' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                16. Circle the correct answer. The number of steps in a reduction of n elements as a function of n is:
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='17. Circle all that are true'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#circle-all-that-are-true' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                17. Circle all that are true
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='18. What is the impact of granularity on performance when considering the latency of global memory communication?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#what-is-the-impact-of-granularity-on-performance-when-considering-the-latency-of-global-memory-communication' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                18. What is the impact of granularity on performance when considering the latency of global memory communication?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='19. What is the output of a max scan operation on the list of unsigned ints [5 4 7 3 1 8 2 6]?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#what-is-the-output-of-a-max-scan-operation-on-the-list-of-unsigned-ints-5-4-7-3-1-8-2-6' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                19. What is the output of a max scan operation on the list of unsigned ints [5 4 7 3 1 8 2 6]?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='20. Compute the max (inclusive) scan of this input sequence 2 1 4 3 showing all work when using'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#compute-the-max-inclusive-scan-of-this-input-sequence-2-1-4-3-showing-all-work-when-using' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                20. Compute the max (inclusive) scan of this input sequence 2 1 4 3 showing all work when using
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='21. Explain which scan algorithm (Hillis-Steele or Blelloch algorithm) is best suited and why?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#explain-which-scan-algorithm-hillis-steele-or-blelloch-algorithm-is-best-suited-and-why' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                21. Explain which scan algorithm (Hillis-Steele or Blelloch algorithm) is best suited and why?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='22. Explain which scan (Hillis-Steele or Blelloch algorithm) is best suited and why?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#explain-which-scan-hillis-steele-or-blelloch-algorithm-is-best-suited-and-why' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                22. Explain which scan (Hillis-Steele or Blelloch algorithm) is best suited and why?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='23. Suppose you are computing a histogram with 10 bins. Discuss an efficient GPU solution.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#suppose-you-are-computing-a-histogram-with-10-bins.-discuss-an-efficient-gpu-solution.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                23. Suppose you are computing a histogram with 10 bins. Discuss an efficient GPU solution.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='24. True or false - In a scatter operation a _syncthreads() command is needed to overcome write conflicts.syncthreads'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#true-or-false---in-a-scatter-operation-a-_syncthreads-command-is-needed-to-overcome-write-conflicts.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                24. True or false - In a scatter operation a _syncthreads() command is needed to overcome write conflicts.syncthreads
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='25. Is the compact parallel operation more useful in scenarios where we delete a (small number) or a (large number) of elements from an array?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#is-the-compact-parallel-operation-more-useful-in-scenarios-where-we-delete-a-small-number-or-a-large-number-of-elements-from-an-array' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                25. Is the compact parallel operation more useful in scenarios where we delete a (small number) or a (large number) of elements from an array?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='26. Is the compact parallel operation more useful in scenarios where we need to run (cheap) or (expensive) function on filtered elements.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#is-the-compact-parallel-operation-more-useful-in-scenarios-where-we-need-to-run-cheap-or-expensive-function-on-filtered-elements.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                26. Is the compact parallel operation more useful in scenarios where we need to run (cheap) or (expensive) function on filtered elements.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='27. Suppose we are running compact operations on a list of numbers with range from 1 to 1 million. Compact operation A, filters elements that are divisible by 17, and thus is only going to keep a very few of the input items. Compact operation B filters elements not divisible by 31, and thus is going to keep most of the input items. For each of the three phases of compact: predicate map, scan, and scatter phases of the compact operation, will A run faster, B run faster or will they take the same amount of time?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#suppose-we-are-running-compact-operations-on-a-list-of-numbers-with-range-from-1-to-1-million.-compact-operation-a-filters-elements-that-are-divisible-by-17-and-thus-is-only-going-to-keep-a-very-few-of-the-input-items.-compact-operation-b-filters-elements-not-divisible-by-31-and-thus-is-going-to-keep-most-of-the-input-items.-for-each-of-the-three-phases-of-compact-predicate-map-scan-and-scatter-phases-of-the-compact-operation-will-a-run-faster-b-run-faster-or-will-they-take-the-same-amount-of-time' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                27. Suppose we are running compact operations on a list of numbers with range from 1 to 1 million. Compact operation A, filters elements that are divisible by 17, and thus is only going to keep a very few of the input items. Compact operation B filters elements not divisible by 31, and thus is going to keep most of the input items. For each of the three phases of compact: predicate map, scan, and scatter phases of the compact operation, will A run faster, B run faster or will they take the same amount of time?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='28. What is the difference between latency and bandwidth? Which is more easily enhanced by advanced architectures?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#what-is-the-difference-between-latency-and-bandwidth-which-is-more-easily-enhanced-by-advanced-architectures' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                28. What is the difference between latency and bandwidth? Which is more easily enhanced by advanced architectures?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='29. How is Occupancy defined in Cuda, and why does it have an impact on performance?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#how-is-occupancy-defined-in-cuda-and-why-does-it-have-an-impact-on-performance' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                29. How is Occupancy defined in Cuda, and why does it have an impact on performance?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='30. Show the contents of the CSR (Compressed Sparse Row) format for the following 5x5 matrix:'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#show-the-contents-of-the-csr-compressed-sparse-row-format-for-the-following-5x5-matrix' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                30. Show the contents of the CSR (Compressed Sparse Row) format for the following 5x5 matrix:
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='31. Consider the sparse matrix dense vector product problem, and the two different parallel methods tpr(thread per row) or tpe (thread per element).'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#consider-the-sparse-matrix-dense-vector-product-problem-and-the-two-different-parallel-methods-tprthread-per-row-or-tpe-thread-per-element.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                31. Consider the sparse matrix dense vector product problem, and the two different parallel methods tpr(thread per row) or tpe (thread per element).
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='33. State the 0/1 sorting lemma for oblivious sorting algorithms.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#state-the-01-sorting-lemma-for-oblivious-sorting-algorithms.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                33. State the 0/1 sorting lemma for oblivious sorting algorithms.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='34. Provide the logic of BitonicSort – pseudocode is sufficient here.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#provide-the-logic-of-bitonicsort-pseudocode-is-sufficient-here.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                34. Provide the logic of BitonicSort – pseudocode is sufficient here.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='35. What is the step and the work complexity of BitonicSort?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#what-is-the-step-and-the-work-complexity-of-bitonicsort' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                35. What is the step and the work complexity of BitonicSort?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title="36. In the BitonicSort figure presented in lecture identify each of the 'bitonic-comparison-and-swap' modules.">
+              <a href='OldClasses/ParallelComputing/mock_exam.html#in-the-bitonicsort-figure-presented-in-lecture-identify-each-of-the-bitonic-comparison-and-swap-modules.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                36. In the BitonicSort figure presented in lecture identify each of the 'bitonic-comparison-and-swap' modules.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='37. What is the work and step complexity of countingSort?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#what-is-the-work-and-step-complexity-of-countingsort' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                37. What is the work and step complexity of countingSort?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='38. What is the expected work when hashing using chaining when the hash is to a chain of length k.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#what-is-the-expected-work-when-hashing-using-chaining-when-the-hash-is-to-a-chain-of-length-k.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                38. What is the expected work when hashing using chaining when the hash is to a chain of length k.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='39. True or false: Bloom filters are a data structure that allows fast set membership operations, but with low probability of false negatives.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#true-or-false-bloom-filters-are-a-data-structure-that-allows-fast-set-membership-operations-but-with-low-probability-of-false-negatives.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                39. True or false: Bloom filters are a data structure that allows fast set membership operations, but with low probability of false negatives.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='40. List the following in the order of their work complexity from least to most.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#list-the-following-in-the-order-of-their-work-complexity-from-least-to-most.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                40. List the following in the order of their work complexity from least to most.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='41. List the following in the order of their step complexity from least to most.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#list-the-following-in-the-order-of-their-step-complexity-from-least-to-most.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                41. List the following in the order of their step complexity from least to most.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='42. Write a CUDA kernel function that will effectively parallelize the following sequential function.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#write-a-cuda-kernel-function-that-will-effectively-parallelize-the-following-sequential-function.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                42. Write a CUDA kernel function that will effectively parallelize the following sequential function.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='43. What does the following kernel code do? Does it contain a race condition problem? If so, give a means to overcome it?'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#what-does-the-following-kernel-code-do-does-it-contain-a-race-condition-problem-if-so-give-a-means-to-overcome-it' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                43. What does the following kernel code do? Does it contain a race condition problem? If so, give a means to overcome it?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='44. Complete the CUDA kernel function that computes, per-block, the sum of a block-sized portion of the input using a block-wide reduction.'>
+              <a href='OldClasses/ParallelComputing/mock_exam.html#complete-the-cuda-kernel-function-that-computes-per-block-the-sum-of-a-block-sized-portion-of-the-input-using-a-block-wide-reduction.' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                44. Complete the CUDA kernel function that computes, per-block, the sum of a block-sized portion of the input using a block-wide reduction.
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+  </div>
+  <script>
+    // Highlight the TOC, based from https://stackoverflow.com/a/75346369
+    // TODO: We should get rid of JavaScript! See https://github.com/srid/emanote/issues/520
+    function highlightTOC() {
+      // Grab the toc links
+      const links = document.querySelectorAll("ul > li > a.--ema-toc");
+
+      // Find the matching anchors in the document body
+      const sections = [];
+      links.forEach((link) => {
+        let found = {};
+        for (section of document.querySelectorAll("a.--ema-anchor")) {
+          if (link.href == section.href) {
+            found = section;
+            break;
+          }
+        }
+        sections.push(found);
+      });
+
+      // Current toc link is marked with the following class
+      const mark = "toc-item-active";
+
+      // Set window scroll handler to update the toc mark.
+      window.onscroll = () => {
+        // Remove previous mark
+        links.forEach((link) => {
+          link.classList.remove(mark);
+        });
+
+        // Mark the link of the section that is in view, starting from the end
+        let marked = false;
+        for (var i = sections.length - 1; i >= 0; i--) {
+          if (window.scrollY > sections[i].offsetTop - 80) {
+            links[i].classList.add(mark);
+            marked = true;
+            break;
+          }
+        }
+
+        // Special case for the first and last section which might not reach the top
+        if (!marked && window.scrollY > 0) {
+          let i = 0;
+          if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight) {
+            // We are at the bottom
+            i = links.length - 1
+          }
+          links[i].classList.add(mark);
+        }
+      };
+    }
+    highlightTOC();
+  </script>
+</nav>
+        </div>
+      </div>
+      
+    <div class='flex flex-col lg:flex-row lg:space-x-2'>
+      
+      
+    </div>
+    
   <section class='flex flex-wrap items-end justify-center my-4 space-x-2 space-y-2 font-mono text-sm'>
     
   </section>
 
-            <!-- What goes in this file will at the very end of the main div -->
-          </main>
+    <!-- What goes in this file will at the very end of the main div -->
+  </main>
+</div>
         </div>
-      </div>
+        
       <footer class='flex items-center justify-center mt-2 mb-8 space-x-4 text-center text-gray-800'>
   
   <div>
     <a href='' title='Go to Home page'>
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'></path>
       </svg>
     </a>
   </div>
   <div>
     <a href='-/all.html' title='View Index'>
-      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
-        </path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'></path>
       </svg>
     </a>
   </div>
   <div>
-    <a href='https://emanote.srid.ca' target='_blank' title='Generated by Emanote 1.0.1.6'>
-      <img class='w-6 h-6 hover:text-green-700' src='_emanote-static/emanote-logo.svg' />
+    <a href='https://emanote.srid.ca' target='_blank' title='Generated by Emanote 1.3.17.1'>
+      <img class='w-6 h-6 hover:text-blue-700' src='_emanote-static/emanote-logo.svg' />
     </a>
   </div>
   <div>
     <a href='-/tags.html' title='View tags'>
-      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+      <svg class='w-6 h-6 hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
         </path>
       </svg>
@@ -1537,7 +2900,7 @@ x[i] = x * x
   </div>
   <div>
     <a href='-/tasks.html' title='View tasks'>
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
       </svg>
     </a>

@@ -1,3 +1,6 @@
+<!-- DoNotFormat -->
+<!-- DoNotFormat -->
+
 <html lang='en'>
 
 <head>
@@ -8,11 +11,14 @@
   </title>
   
     
-      <meta property='og:description' content='Here you are, sitting in my notes. Better get cracking.' />
+      <meta property='og:description' content='This is my personal wiki. It is a bit disorganized at the moment, but I’m hoping to take advantage of the more obsidian like features (back and forward links). In essence, I want this wiki to be more web based then folder based, though I will still take advantage of the folder structure for basic organization.' />
       <meta property='og:site_name' content='Planner' />
       <meta property='og:image' content />
       <meta property='og:type' content='website' />
       <meta property='og:title' content='Task Index' />
+      
+        <meta name='twitter:card' content='summary_large_image' />
+      
     
     
       <base href='/Planner/' />
@@ -50,7 +56,8 @@
 
 
   
-  <link href='tailwind.css?instanceId=212e9745-c88c-4b2e-9f2a-8fbcb6418529' rel='stylesheet' type='text/css' />
+  <emaNoteFeedUrl></emaNoteFeedUrl>
+  <link href='tailwind.css?instanceId=246d48dd-e69e-478e-94b7-314441ea29cb' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -58,6 +65,57 @@
       color: lightcoral;
       font-size: 90%;
       font-family: monospace;
+    }
+
+    /* Callouts */
+    div.callout {
+      background-color: #f5f5f5;
+      padding: 1em 1em 0.5em;
+      border-radius: 0.5em;
+      margin-bottom: 1em;
+    }
+
+    .callout[data-callout="note"] {
+      --callout-color: 8, 109, 221;
+    }
+
+    .callout[data-callout="info"] {
+      --callout-color: 8, 109, 221;
+    }
+
+    .callout[data-callout="tip"] {
+      --callout-color: 8, 191, 188;
+    }
+
+    .callout[data-callout="warning"] {
+      --callout-color: 236, 117, 0;
+    }
+
+    .callout[data-callout="failure"] {
+      --callout-color: 233, 49, 71;
+    }
+
+    div.callout {
+      background-color: rgba(var(--callout-color), 0.1);
+    }
+
+    .callout .callout-title {
+      color: rgb(var(--callout-color));
+    }
+
+    div.callout-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5em;
+      font-variation-settings: 'wght' 600;
+    }
+
+    div.callout-title div.callout-title-inner {
+      margin-left: 0.5em;
+    }
+
+    a.--ema-toc:not(.toc-item-active) {
+      background-color: #ffffff !important;
     }
 
     /* External link icon */
@@ -69,7 +127,12 @@
       content: ""
     }
 
+    a[data-linkicon="external"] {
+      padding-right: 24px;
+    }
+
     a[data-linkicon="external"]::after {
+      margin-right: -24px;
       content: url('data:image/svg+xml,\
       <svg xmlns="http://www.w3.org/2000/svg" height="0.7em" viewBox="0 0 20 20"> \
         <g style="stroke:gray;stroke-width:1"> \
@@ -166,11 +229,13 @@
 <script src='_emanote-static/stork/stork.js'></script>
 
   
-    <script data-emanote-base-url='/Planner/'>
+    <script id='emanote-stork' data-emanote-base-url='/Planner/'>
       window.emanote = {};
       window.emanote.stork = {
         searchShown: false,
+        indexIsStale: false,
         toggleSearch: function () {
+          window.emanote.stork.refreshIndex();
           document.getElementById('stork-search-container').classList.toggle('hidden');
           window.emanote.stork.searchShown = document.body.classList.toggle('stork-overflow-hidden-important');
           if (window.emanote.stork.searchShown) {
@@ -183,14 +248,25 @@
           window.emanote.stork.searchShown = false;
         },
 
-        init: function () {
+        getBaseUrl: function () {
+          const baseUrl = document.getElementById("emanote-stork").getAttribute('data-emanote-base-url') || '/';
+          return baseUrl;
+        },
+
+        registerIndex: function (options) {
           const indexName = 'emanote-search'; // used to match input[data-stork] attribute value
-          const baseUrl = document.currentScript.getAttribute('data-emanote-base-url') || '/';
-          const indexUrl = baseUrl + '-/stork.st';
+          const indexUrl = window.emanote.stork.getBaseUrl() + '-/stork.st';
+          stork.register(
+            indexName,
+            indexUrl,
+            options);
+        },
+
+        init: function () {
           if (document.readyState !== 'complete') {
             window.addEventListener('load', function () {
-              stork.initialize(baseUrl + '_emanote-static/stork/stork.wasm');
-              stork.register(indexName, indexUrl);
+              stork.initialize(window.emanote.stork.getBaseUrl() + '_emanote-static/stork/stork.wasm');
+              window.emanote.stork.registerIndex();
             });
 
             document.addEventListener('keydown', event => {
@@ -203,10 +279,32 @@
               }
             });
           } else {
-            // Override existing on Ema's hot-reload
-            stork.register(indexName, indexUrl, { forceOverwrite: true });
+            // This section is called during Ema's hot reload.
+            // 
+            // Mark the current index as stale, and refresh it *only when* the
+            // user actually invokes search.
+            // 
+            // We do not refresh the index *right away*, as that will cause
+            // memory leaks in the browser. See
+            // https://github.com/srid/emanote/issues/411#issuecomment-1402056235
+            console.log("stork: Marking index as stale");
+            window.emanote.stork.markIndexAsStale();
+          }
+        },
+
+        markIndexAsStale: function () {
+          window.emanote.stork.indexIsStale = true;
+        },
+
+        refreshIndex: function () {
+          if (window.emanote.stork.indexIsStale) {
+            console.log("stork: Reloading index");
+            window.emanote.stork.indexIsStale = false;
+            // NOTE: This will leak memory. See the comment above.
+            window.emanote.stork.registerIndex({ forceOverwrite: true });
           }
         }
+
       };
 
       window.emanote.stork.init();
@@ -269,7 +367,7 @@
                 
 
                 <div class='flex-1'>
-                  <a class='font-bold text-green-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz13.html'>
+                  <a class='font-bold text-blue-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz13.html'>
                     Quiz13
                   </a>
                 </div>
@@ -277,7 +375,7 @@
               <div class>
                 
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -287,7 +385,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -297,7 +395,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -307,7 +405,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -317,7 +415,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -327,7 +425,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -337,7 +435,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -347,7 +445,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -357,7 +455,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -367,7 +465,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -377,7 +475,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -426,7 +524,7 @@
                 
 
                 <div class='flex-1'>
-                  <a class='font-bold text-green-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz15.html'>
+                  <a class='font-bold text-blue-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz15.html'>
                     Quiz15
                   </a>
                 </div>
@@ -434,7 +532,7 @@
               <div class>
                 
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -444,7 +542,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -454,7 +552,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -464,7 +562,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -474,7 +572,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -484,7 +582,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -533,7 +631,7 @@
                 
 
                 <div class='flex-1'>
-                  <a class='font-bold text-green-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz16.html'>
+                  <a class='font-bold text-blue-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz16.html'>
                     Quiz16
                   </a>
                 </div>
@@ -541,7 +639,7 @@
               <div class>
                 
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -551,7 +649,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -561,7 +659,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -571,7 +669,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -581,7 +679,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -591,7 +689,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -601,7 +699,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -611,7 +709,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -621,7 +719,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -631,7 +729,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -641,7 +739,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -690,7 +788,7 @@
                 
 
                 <div class='flex-1'>
-                  <a class='font-bold text-green-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz2.html'>
+                  <a class='font-bold text-blue-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz2.html'>
                     Quiz2
                   </a>
                 </div>
@@ -698,7 +796,7 @@
               <div class>
                 
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -708,7 +806,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -718,7 +816,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -728,7 +826,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -738,7 +836,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -748,7 +846,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -758,7 +856,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -768,7 +866,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -778,7 +876,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -788,7 +886,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -798,7 +896,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -808,7 +906,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -818,7 +916,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -828,7 +926,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -838,7 +936,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -887,7 +985,7 @@
                 
 
                 <div class='flex-1'>
-                  <a class='font-bold text-green-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz3.html'>
+                  <a class='font-bold text-blue-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz3.html'>
                     Quiz3
                   </a>
                 </div>
@@ -895,7 +993,7 @@
               <div class>
                 
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -905,7 +1003,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -915,7 +1013,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -925,7 +1023,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -935,7 +1033,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -945,7 +1043,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -955,7 +1053,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -965,7 +1063,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -975,7 +1073,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -985,7 +1083,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -995,7 +1093,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1005,7 +1103,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1015,7 +1113,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1025,7 +1123,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1035,7 +1133,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1084,7 +1182,7 @@
                 
 
                 <div class='flex-1'>
-                  <a class='font-bold text-green-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz4.html'>
+                  <a class='font-bold text-blue-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz4.html'>
                     Quiz4
                   </a>
                 </div>
@@ -1092,7 +1190,7 @@
               <div class>
                 
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1102,7 +1200,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1112,7 +1210,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1122,7 +1220,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1132,7 +1230,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1142,7 +1240,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1152,7 +1250,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1162,7 +1260,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1172,7 +1270,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1182,7 +1280,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1192,7 +1290,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1202,7 +1300,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1212,7 +1310,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1222,7 +1320,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1232,7 +1330,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1242,7 +1340,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1291,7 +1389,7 @@
                 
 
                 <div class='flex-1'>
-                  <a class='font-bold text-green-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz5.html'>
+                  <a class='font-bold text-blue-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz5.html'>
                     Quiz5
                   </a>
                 </div>
@@ -1299,7 +1397,7 @@
               <div class>
                 
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1309,7 +1407,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1319,7 +1417,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1329,7 +1427,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1339,7 +1437,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1349,7 +1447,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1359,7 +1457,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1369,7 +1467,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1379,7 +1477,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1389,7 +1487,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1399,7 +1497,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1409,7 +1507,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1419,7 +1517,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1429,7 +1527,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1439,7 +1537,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1488,7 +1586,7 @@
                 
 
                 <div class='flex-1'>
-                  <a class='font-bold text-green-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz6.html'>
+                  <a class='font-bold text-blue-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz6.html'>
                     Quiz6
                   </a>
                 </div>
@@ -1496,7 +1594,7 @@
               <div class>
                 
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1506,7 +1604,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1516,7 +1614,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1526,7 +1624,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1536,7 +1634,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1546,7 +1644,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1556,7 +1654,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1566,7 +1664,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1576,7 +1674,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1586,7 +1684,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1596,7 +1694,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1606,7 +1704,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1616,7 +1714,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1626,7 +1724,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1636,7 +1734,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1685,7 +1783,7 @@
                 
 
                 <div class='flex-1'>
-                  <a class='font-bold text-green-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz7.html'>
+                  <a class='font-bold text-blue-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/Quiz7.html'>
                     Quiz7
                   </a>
                 </div>
@@ -1693,7 +1791,7 @@
               <div class>
                 
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1703,7 +1801,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1713,7 +1811,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1723,7 +1821,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1733,7 +1831,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1743,7 +1841,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1753,7 +1851,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1763,7 +1861,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1773,7 +1871,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1783,7 +1881,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1793,7 +1891,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1803,7 +1901,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1813,7 +1911,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1823,7 +1921,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1833,7 +1931,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1882,7 +1980,7 @@
                 
 
                 <div class='flex-1'>
-                  <a class='font-bold text-green-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/all_quizzes.html'>
+                  <a class='font-bold text-blue-700  hover:underline' href='OldClasses/Intelligent_Data_Design/quiz-review/all_quizzes.html'>
                     all_quizzes
                   </a>
                 </div>
@@ -1890,7 +1988,7 @@
               <div class>
                 
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1900,7 +1998,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1910,7 +2008,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1920,7 +2018,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1930,7 +2028,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1940,7 +2038,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1950,7 +2048,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1960,7 +2058,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1970,7 +2068,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1980,7 +2078,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -1990,7 +2088,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2000,7 +2098,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2010,7 +2108,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2020,7 +2118,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2030,7 +2128,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2040,7 +2138,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2050,7 +2148,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2060,7 +2158,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2070,7 +2168,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2080,7 +2178,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2090,7 +2188,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2100,7 +2198,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2110,7 +2208,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2120,7 +2218,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2130,7 +2228,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2140,7 +2238,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2150,7 +2248,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2160,7 +2258,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2170,7 +2268,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2180,7 +2278,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2190,7 +2288,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2200,7 +2298,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2210,7 +2308,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2220,7 +2318,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2230,7 +2328,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2240,7 +2338,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2250,7 +2348,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2260,7 +2358,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2270,7 +2368,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2280,7 +2378,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2290,7 +2388,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2300,7 +2398,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2310,7 +2408,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2320,7 +2418,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2330,7 +2428,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2340,7 +2438,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2350,7 +2448,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2360,7 +2458,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2370,7 +2468,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2380,7 +2478,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2390,7 +2488,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2400,7 +2498,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2410,7 +2508,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2420,7 +2518,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2430,7 +2528,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2440,7 +2538,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2450,7 +2548,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2460,7 +2558,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2470,7 +2568,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2480,7 +2578,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2490,7 +2588,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2500,7 +2598,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2510,7 +2608,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2520,7 +2618,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2530,7 +2628,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2540,7 +2638,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2550,7 +2648,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2560,7 +2658,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2570,7 +2668,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2580,7 +2678,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2590,7 +2688,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2600,7 +2698,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2610,7 +2708,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2620,7 +2718,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2630,7 +2728,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2640,7 +2738,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2650,7 +2748,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2660,7 +2758,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2670,7 +2768,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2680,7 +2778,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2690,7 +2788,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2700,7 +2798,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2710,7 +2808,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2720,7 +2818,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2730,7 +2828,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2740,7 +2838,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2750,7 +2848,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2760,7 +2858,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2770,7 +2868,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2780,7 +2878,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2822,7 +2920,7 @@
                 
 
                 <div class='flex-1'>
-                  <a class='font-bold text-green-700  hover:underline' href='OldClasses/ParallelComputing/mock_exam.html'>
+                  <a class='font-bold text-blue-700  hover:underline' href='OldClasses/ParallelComputing/mock_exam.html'>
                     mock_exam
                   </a>
                 </div>
@@ -2830,7 +2928,7 @@
               <div class>
                 
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2840,7 +2938,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2850,7 +2948,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2860,7 +2958,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2870,7 +2968,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2880,7 +2978,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2890,7 +2988,7 @@
 
                     </div>
                   
-                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-green-600'>
+                    <div class='bg-white py-1.5 px-2 my-1 rounded shadow border-2 hover:border-blue-600'>
                       <svg xmlns='http://www.w3.org/2000/svg' class='inline h-4 w-4 mb-1 text-gray-600 stroke-current' fill='none' viewBox='0 0 28 28'><desc>☐</desc><rect stroke-width='3' x='2' y='2' width='24' height='24' rx='3'></rect></svg>
 <span>
   
@@ -2914,27 +3012,26 @@
   
   <div>
     <a href='' title='Go to Home page'>
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'></path>
       </svg>
     </a>
   </div>
   <div>
     <a href='-/all.html' title='View Index'>
-      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
-        </path>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'></path>
       </svg>
     </a>
   </div>
   <div>
-    <a href='https://emanote.srid.ca' target='_blank' title='Generated by Emanote 1.0.1.6'>
-      <img class='w-6 h-6 hover:text-green-700' src='_emanote-static/emanote-logo.svg' />
+    <a href='https://emanote.srid.ca' target='_blank' title='Generated by Emanote 1.3.17.1'>
+      <img class='w-6 h-6 hover:text-blue-700' src='_emanote-static/emanote-logo.svg' />
     </a>
   </div>
   <div>
     <a href='-/tags.html' title='View tags'>
-      <svg class='w-6 h-6 hover:text-green-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+      <svg class='w-6 h-6 hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
         </path>
       </svg>
@@ -2942,7 +3039,7 @@
   </div>
   <div>
     <a href='-/tasks.html' title='View tasks'>
-      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-green-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
       </svg>
     </a>
