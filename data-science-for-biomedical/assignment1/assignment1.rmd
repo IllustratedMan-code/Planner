@@ -1,0 +1,95 @@
+---
+title: "Assignment 1"
+output: pdf_document
+---
+
+## import the data
+```{r}
+Turtles <- data.frame(readxl::read_excel("PaintedTurtles.xlsx"))
+```
+
+## 1. What is the dimension of the data?
+```{r}
+dim(Turtles)
+```
+
+The data has 24 rows and 3 columns (three dimensions, 24 points).
+
+## 2. Exhibit the entire data
+```{r}
+Turtles
+```
+
+## 3. Find the summary of each column of the data
+```{r}
+summary(Turtles)
+```
+
+## 4. Find the variance covariance matrix
+```{r}
+var(Turtles)
+```
+
+## 5. Transform the data into natural logarithm and reproduce the transformed data.
+
+```{r}
+Turtles1 <- data.frame(L1 = log(Turtles$Length), W1 = log(Turtles$Width), H1 = log(Turtles$Height))
+Turtles1
+```
+
+## 6. Obtain the variance covariance of the transformed data     
+
+```{r}
+var(Turtles1)
+```
+
+
+## 7. Total amount of variation present in the transformed data
+Sum of variance values (diagonal in variance covariance matrix).
+```{r}
+sum(diag(var(Turtles1)))
+```
+
+## 8. Principal component analysis on the transformed data
+```{r}
+Turtles2 <- princomp(Turtles1)
+Turtles_prcomp <- prcomp(Turtles1)
+```
+
+## 9. Obtain the eigenvalues and eigenvectors of the variance-covariance matrix of the data. 
+
+```{r}
+eigen(var(Turtles1))
+```
+
+## 10. Spell out the three principal components of the data.
+```{r}
+summary(Turtles2)
+```
+
+## 11. Calculate the percentage of variation accounted by the first principal component, first two principal components, and all principal components. 
+
+This is taken from the summary in the above question.
+
+- Percentage of first component: 96.05%
+- Percentage of first 2 components: 98.52%
+- Percentage of all components: 100%
+
+## 12. Plot the variances of the principal component scores.
+```{r}
+plot(Turtles2)
+```
+
+## 14. Calculate the mean of each of the principle component scores
+
+```{r}
+Turtles2$center
+mean(Turtles2$scores)
+```
+
+
+## 15. Write the first prinicple component in terms of the original measurements
+
+```{r}
+predict(Turtles_prcomp)[, 1]
+```

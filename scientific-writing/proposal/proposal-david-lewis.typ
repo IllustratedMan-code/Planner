@@ -1,0 +1,122 @@
+
+#import "./proposal-template.typ": conf
+#import "@preview/marge:0.1.0": sidenote
+#show: doc => conf(title: "Proposal", doc)
+
+#let sidenote = sidenote.with(
+  numbering: "1",
+  padding: 0pt,
+  format: it => { text(size: 9pt, weight: "regular")[#it.default] },
+)
+
+
+#let todocite(content) = {
+  strong(text(red)[(CITE: #content)])
+}
+#outline()
+#pagebreak()
+
+#let number(..numbs) = {
+  numbs = numbs.pos()
+  if numbs.first() <= 1 { } else {
+    numbs.at(0) = numbs.at(0) - 1
+    numbering("A.1.a.", ..numbs)
+  }
+}
+#set heading(numbering: number, hanging-indent: 0pt)
+#show heading: it => {
+  if it.level == 1 {
+    upper(it)
+  } else {
+    it
+  }
+}
+
+= Specific Aims
+//#quote()[Am I suppost to cite anything in the specific aims? This #underline(text(blue)[#link("https://www.niaid.nih.gov/sites/default/files/r01ai181321-01-liu-application.pdf", "proposal")]) example on the nih website seems to wait until the significance section.]
+
+Transcription factors regulate the epigenetic machinery within cells leading to environmentally dependant phenotypes. PU.1 is a member of the ETS family of transcription factors and is integral to immune cell development and differentiation. @liTranscriptionFactorPU12020 While the general effects of PU.1 transcription factors are understood, many specifc interactions have yet to be discovered. Understanding of transcription factor interactions drives advancement of medical treatments and leads to greater understanding of biological systems.
+
+The central objective of this proposal is to understand the role of PU.1 in immune cell development and uncover novel epigenetic interactions via the use of a newly developed computational pipeline.
+
+== Specific Aim 1: Develop a portable Computational pipeline that facilitates analysis of peak data for discovery of novel transcription factor interactions.
+- Rust based pipeline
+- Extendable with python or R
+- Support for high-performance clusters
+- containerized
+- Computes unexpectedness of interactions using global gene regulatory networks
+
+
+== Specific Aim 1: Determine specific effect of PU.1 on immune cell differentiation.
+Many possible transcription factor interactions have yet to be uncovered. Identifying these interactions will shed light on the greater role of PU.1.
+
+PU.1 is known to interact with GATA in certain immune cell types. This proposal aims to verify this relationship as well as determine novel partner transcription factors @chouGradedRepressionPU12009.
+
+
+== Specific Aim 3: Examine potential drug-disease interactions related to PU.1 pathways
+
+#quote()[This one is kind of a shot in the dark, don't know how useful this would be. Might not be worth an entire paper.]
+
+Using novel PU.1 interactions, uncover potential pathways affected by known pharmaceutical agents.
+
+
+= Significance
+Transcription factors regulate the expression of genes. Transcription factors interact with genetic and protein components to create environmentally dependant phenotypes. PU.1 is a transcription factor related to immune cell differentiation. @liTranscriptionFactorPU12020. Previous work on the PU.1 factor in neutrophils predicted novel interactions with genes underlying immune cell phenotypes. @wattGeneticPerturbationPU12021
+
+Additionally, PU.1 has been shown to have interactions with another transcription factor family, GATA in certain immune cell types. @chouGradedRepressionPU12009 This proposal will attempt to verify these interactions as well as predict novel interactions in diverse cell types.
+
+Computational pipelines for bioinformatics analysis often lack software engineering rigor, leading to lack of performance and longer turnover times for analysis. Pipelines are often monolithic and hard to interpret, making mistakes hard to catch. Bad software can even lead to article retractions. @millerScientistsNightmareSoftware2006 This proposoal will highlight methods used to create a pipeline framework that facilitates pipeline creation and inspection.
+
+== Focus on mechanisms that explain PU.1's importance to immune cell development.
+While it is known that PU.1 is an important regulator of immune cell differentiation, not much is known about the mechanism and potential recruitment of other transcription factors. Particularly, with the exception of neutrophils @wattGeneticPerturbationPU12021, specific details about the effect of PU.1 on immune cell type development are relatively unknown @liTranscriptionFactorPU12020.
+
+
+== Integrating novel interactions into global gene regulatory models
+
+#quote()[I need to do more research on this point, but looks like a fairly undiscovered verification method for gene regulatory models]
+
+Global Gene regulatory networks attempt to model attempt to model all active epigenetic machinery for a specific condition. Determining the role of PU.1 within the predicted network could give insight into accuracy of predicted interactions.
+
+
+
+= Innovation
+
+== Techinical innovation - Development of computational pipeline
+A computational pipeline would be developed for completing the comparitive analysis of PU.1 activity in immune cell types but would be applicable to any future study that compares transcription factor activities between cell types.
+
+
+== Novel PU.1 relationships to previously unstudied cell types
+
+Applying Homer + RELI + GREAT analysis on new and previously studied data to perform comparitive analysis between cell types.
+
+== Identification of novel drug interactions
+
+
+= Approach
+== First Aim
+
+- *Specific Aim 1:*
+
+- *Hypothesis 1:*
+- *Expected outcomes:*
+=== Justification and Feasiblity
+=== Research Design
+=== Potential problems and alternative strategies
+
+
+
+== Data Collection
+- ChIP-seq
+- ATAC-seq
+- CUT and RUN?
+- Public Datasets
+
+
+== Data Management
+
+
+== Future Directions
+- Use developed pipeline to analyze other transcription factors
+- Iterative use of the pipeline could allow for incremental exploration of pathways related to PU.1
+
+#bibliography("proposal.bib", style: "american-medical-association")

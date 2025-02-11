@@ -1,3 +1,0 @@
----
-title: Designing a protocol
----

@@ -15,7 +15,7 @@ title: "Bluetooth Planck"
 # Plate
 
 [Plate](https://drop.com/buy/planck-mechanical-keyboard?defaultSelectionIds=985560)
-[trackpoint] ttps://holykeebs.com/products/trackpoint-module
+[trackpoint](https://holykeebs.com/products/trackpoint-module)
 
 Maybe I should design a pcb to handle the trackpoint and bluetooth and a custom
 firmware.
@@ -26,3 +26,4 @@ between the star buttons.
 [peakcock trackpad](https://github.com/george-norton/peacock)
 
 [Diy trackpoint](https://www.gbryant.co.uk/posts/2021-07-17_pointing-stick/post.html)
+[Sprintek SK8707-01 (trackpoint module)](https://cdn.shopify.com/s/files/1/0689/0812/2402/files/DS0048_SK8707-01_Compact_Pointing_Stick_Module_Datasheet.pdf?v=1726991386)
