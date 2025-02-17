@@ -1,5 +1,6 @@
 ---
 title: "Assignment 1"
+author: David Lewis
 output: pdf_document
 ---
 
@@ -37,6 +38,7 @@ Turtles1 <- data.frame(L1 = log(Turtles$Length), W1 = log(Turtles$Width), H1 = l
 Turtles1
 ```
 
+
 ## 6. Obtain the variance covariance of the transformed data     
 
 ```{r}
@@ -59,13 +61,17 @@ Turtles_prcomp <- prcomp(Turtles1)
 ## 9. Obtain the eigenvalues and eigenvectors of the variance-covariance matrix of the data. 
 
 ```{r}
-eigen(var(Turtles1))
+eigens <- eigen(var(Turtles1))
+eigens
 ```
 
 ## 10. Spell out the three principal components of the data.
 ```{r}
+eigens
 summary(Turtles2)
 ```
+
+[, 1] = Comp.1
 
 ## 11. Calculate the percentage of variation accounted by the first principal component, first two principal components, and all principal components. 
 
@@ -80,16 +86,22 @@ This is taken from the summary in the above question.
 plot(Turtles2)
 ```
 
+
+## 13. Tally the variances with the eigenvalues of the transformed variance covariance matrix
+```{r}
+sum(eigens$values)
+```
+
+
 ## 14. Calculate the mean of each of the principle component scores
 
 ```{r}
-Turtles2$center
-mean(Turtles2$scores)
+apply(Turtles2$scores, 2, mean)
 ```
 
 
 ## 15. Write the first prinicple component in terms of the original measurements
 
 ```{r}
-predict(Turtles_prcomp)[, 1]
+Turtles_prcomp$rotation[, 1]
 ```

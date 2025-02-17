@@ -91,6 +91,13 @@ Applying Homer + RELI + GREAT analysis on new and previously studied data to per
 
 == Identification of novel drug interactions
 
+Pathway analysis can be performed to identify possible drug interactions with novel PU.1 interactions.
+
+
+== Novel Network Verification method
+
+Gene network models are often unable to assess the accuracy of predicted interactions. Using popular gene regulatory network models, this proposal hopes to create a standardized "unexpectedness" score for novel interactions when compared to popular gene regulatory network models.
+
 
 = Approach
 == First Aim
