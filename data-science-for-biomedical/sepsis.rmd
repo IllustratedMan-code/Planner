@@ -1,0 +1,22 @@
+```{r}
+library(tidyverse)
+d <- readxl::read_excel("data-science-for-biomedical/Sepsis.xls")
+# d <- table(d$Alcoholism, d$Outcome)
+# chisq.test(d)
+# summary(d)
+# d
+
+ggplot(d, aes(x = Age, group = Outcome, color = Outcome, fill = Outcome)) +
+    geom_bar()
+```
+
+```{r}
+sample <- sample(c(TRUE, FALSE), nrow(d), replace = TRUE, prob = c(0.7, 0.3))
+train <- d[sample, ]
+test <- d[!sample, ]
+
+logit <- glm(Outcome ~ Age + Alcoholism + Shock + Malnutrition + Infarction, train, family = "binomial")
+test$prediction <- predict(logit, test, type = "response") > 0.5
+accuracy <- sum(test$Outcome == test$prediction) / nrow(test)
+accuracy
+```

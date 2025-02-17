@@ -1,0 +1,139 @@
+---
+title: Assignment 2
+author: David Lewis
+output: pdf_document
+---
+
+## Import the data
+```{r}
+biopsy <- MASS::biopsy
+```
+
+
+
+## 1. What is the dimension of the data? 1 point
+```{r}
+dim(biopsy)
+```
+699 rows, 11 columns (11 dimensions, 699 points)
+
+
+## 2. Show the top ten rows of the data. 1 point
+```{r}
+head(biopsy, 10)
+```
+
+## 3. The first column is id. Create a new folder eliminating the first column. 1 point
+```{r}
+biopsy_no_id <- biopsy
+biopsy_no_id$ID <- NULL
+head(biopsy_no_id)
+```
+
+## 4. Describe the first nine columns. 1 point
+```{r}
+?biopsy
+```
+
+- V1: clump thickness.
+- V2: uniformity of cell size.
+- V3: uniformity of cell shape.
+- V4: marginal adhesion.
+- V5: single epithelial cell size.
+- V6: bare nuclei (16 values are missing).
+- V7: bland chromatin.
+- V8: normal nucleoli.
+- V9: mitoses.
+
+## 5. Obtain the summary statistics of the data. 3 points
+
+```{r}
+summary(biopsy_no_id)
+```
+## 6. Identify the missing observations and eliminate them. (The R function na.omit(dataname) removes all rows in which there is at least one missing observation.) What is the dimension of the data now? 4 points
+
+```{r}
+biopsy_no_id_no_na <- na.omit(biopsy_no_id)
+dim(biopsy_no_id_no_na)
+```
+
+683 rows, 10 columns (10 dimensions, 683 points)
+
+## 7. Obtain summary statistics of the cleaned data. 2 points
+```{r}
+summary(biopsy_no_id_no_na)
+```
+
+## 8. Fit a logistic regression model to the data. Write the prediction model. Check goodness-of-fit. Identify the significant predictors. 3 + 3 + 3 + 3 points
+
+### Finding a tight regression model
+
+```{r}
+model <- glm(class ~ .,
+    data = biopsy_no_id_no_na,
+    family = "binomial"
+)
+
+summary(model)
+```
+
+#### Identify significant predictors
+
+V2 and V5 and V7 are not significant (Pr value > 0.05), the rest are significant.
+
+```{r}
+tight_model <- glm(class ~ V1 + V3 + V4 + V6 + V8 + V9, data = biopsy_no_id_no_na, family = "binomial")
+summary(tight_model)
+```
+
+### Creating a prediction model
+
+Given a point (6 dimensions), the prediction model uses the coeffients from the regression model as weights.
+
+```{r}
+cf <- tight_model$coefficients
+cf
+```
+
+\begin{align*} 
+log(p/1-p) = & `r cf[1]` + `r cf[2]` \cdot V1 + `r cf[3]` \cdot V3 + \\ 
+& `r cf[4]` \cdot V4 + `r cf[5]` \cdot V6+ `r cf[6]` \cdot V8 + `r cf[7]` \cdot V9
+\end{align*}
+
+Where $p$ is the probability that the point lies in the logistic distribution.
+
+### Check goodness of fit
+Use residual deviance with stated degrees of freedom.
+```{r}
+pchisq(111.69, 676, lower.tail = F)
+```
+
+p-value is much larger than 0.05, no reason to reject the null hypothesis
+
+## 9. Report the odds ratios and their confidence intervals. 2 points
+
+```{r}
+confidence_intervals <- data.frame(confint(tight_model))
+colnames(confidence_intervals) <- c("2.5 %", "97.5 %")
+confidence_intervals$odds_ratio <- exp(coef(tight_model))
+confidence_intervals
+```
+
+
+## 10. Obtain the confusion matrix. 3 points
+We can classify points as 0 or 1 by using a "greater than or equal to" 0.5 cutoff as 1 and a less than 0.5 cutoff as 0.
+
+
+```{r}
+data <- biopsy_no_id_no_na
+data$predicted_class <- factor(predict(tight_model, data, type = "response") > 0.5, levels = c(FALSE, TRUE), labels = c("benign", "malignant"))
+table(actual = data$class, predicted = data$predicted_class)
+```
+
+## 11. Calculate the misclassification rate. 1 point
+
+\begin{align*}
+\text{misclassification rate} & =  \frac{(FN + FP)}{FP + FN + TP + TN} \\
+\text{misclassification rate} & = \frac{(9 + 10)}{435 + 229 + 9 + 10} \\
+\text{misclassification rate} & = `r (9+10)/(435+229+9+10)`
+\end{align*}
