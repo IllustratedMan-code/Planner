@@ -1,0 +1,153 @@
+---
+title: Assignment 4
+author: David Lewis
+date: March 25, 2025 
+documentclass: assignments
+output: pdf_document
+---
+
+```{r include=FALSE}
+library(printr)
+```
+
+## 1. What is the dimension of the data? 1 point
+```{r}
+data <- MASS::birthwt
+```
+
+## 2. Show the top ten rows of the data. 1 point
+```{r}
+head(data, n = 10)
+```
+
+## 3. Describe the columns of the data. 3 points
+```{r}
+## ?MASS::birthwt
+```
+
+This data frame contains the following columns:
+
+`low`:
+indicator of birth weight less than 2.5 kg.
+
+`age`:
+mother's age in years.
+
+`lwt`:
+mother's weight in pounds at last menstrual period.
+
+`race`:
+mother's race (1 = white, 2 = black, 3 = other).
+
+`smoke`:
+smoking status during pregnancy.
+
+`ptl`:
+number of previous premature labours.
+
+`ht`:
+history of hypertension.
+
+`ui`:
+presence of uterine irritability.
+
+`ftv`:
+number of physician visits during the first trimester.
+
+`bwt`:
+birth weight in grams
+
+## 4. The response variable is ‘low,’ which is binary. the response variable was built from the last column, which gives the actual birth weight. Remove the last column. Make ‘Race’ categorical (factor). 1 + 1 points
+```{r}
+data <- data[1:length(data) - 1]
+data$race <- as.factor(data$race)
+```
+
+## 5. Obtain the summary statistics of the data. 2 points
+```{r}
+summary(data)
+```
+
+## 6. Fit the logistic regression model. Check model adequacy. Write the prediction model in the form of logits, which is taken to be a biomarker. 2 + 2 + 2 points
+```{r}
+model <- glm(low ~ ., data = data, family = "binomial")
+summary(model)
+```
+The error is quite high for some variables, it is likely that the performance of this model will be much lower than the one created in the lecture for this topic.
+
+```{r, include=FALSE}
+n <- names(model$coefficients)
+c <- round(model$coefficients, digits = 4)
+```
+
+$$
+\begin{aligned}
+\log(\frac{pr(low)}{pr(not low)}) =&  `r n[2]` \cdot `r c[2]` + `r n[3]` \cdot `r c[3]`  + `r n[4]` \cdot `r c[4]` + \\&`r n[5]` \cdot `r c[5]`  + `r n[6]` \cdot `r c[6]`  + `r n[7]` \cdot `r c[7]`  + `r c[1]`
+\end{aligned}
+$$
+
+
+## 7. Add the biomarker column to the data. Segregate the data by the levels of low.’ Obtain the summary statistics of the ‘biomarker’ by the levels of ‘low.’ Comment on the summary statistics. Lay down the structure of a diagnostic test. 1 + 1 + 1 + 1 + 1 points
+```{r}
+data$biomarker <- predict(model, newdata = data, type = "link")
+low <- data[data$low == 1, ]
+notlow <- data[data$low == 0, ]
+summary(low$biomarker)
+summary(notlow$biomarker)
+```
+
+The biomarker in low has a greater value than the notlow condition in every metric except the last (max). This means the biomarker value can likely be used as classifier metric (diagnostic test). 
+
+To design the test, we define some cutoff value where if the biomarker is higher, it is classified as low, and if lower is classified as notlow.
+
+$$
+classify(\text{biomarker}) = \begin{cases}
+    \text{low} & \text{biomarker } \ge \text{cutoff} \\
+    \text{notlow} & \text{biomarker } < \text{cutoff}
+\end{cases}
+$$
+
+## 8. Invoke the ‘roc’ function. Gather information on Sensitivity, Specificity, and cutoffs. Build the ROC curve. Calculate the area under the curve. Obtain a 95% confidence interval for the population AUC. 1 + 2 + 2 + 1 + 1 points
+
+```{r}
+roc <- pROC::roc(data$low, data$biomarker, levels = c(0, 1))
+roctable <- data.frame(Sensitivity = roc$sensitivities, Specificity = roc$specificities, Cutoff = roc$thresholds)
+
+roc$auc
+pROC::ci.auc(roc)
+```
+
+```{r}
+plot(1 - roctable$Specificity, roctable$Sensitivity, xlab = "1 - Specificity", ylab = "Sensitivity", type = "l", col = "red", main = "ROC Curve of Low biomarker threshold")
+```
+
+## 9. Determine a good choice for the cutoff point. Lay out explicitly the diagnostic test that arises. Mark it on the ROC curve graph.
+
+
+Using minimum distance between sensitivity and specificity, we can determine the best cutoff for classification.
+
+```{r}
+roctable$distance_squared <- (roctable$Sensitivity - 1)^2 + (roctable$Specificity - 1)^2
+
+best_cutoff <- roctable[which.min(roctable$distance_squared), ]
+best_cutoff
+
+x <- 1 - best_cutoff$Specificity
+y <- best_cutoff$Sensitivity
+
+
+plot(1 - roctable$Specificity, roctable$Sensitivity, xlab = "1 - Specificity", ylab = "Sensitivity", type = "l", col = "red", main = "ROC Curve of Low biomarker threshold")
+arrows(x, y + 0.2, x, y + 0.01, lwd = 3)
+points(x, y)
+text(x, y + 0.22, labels = sprintf("Best Cutoff: %f", round(best_cutoff$Cutoff, digits = 4)))
+```
+
+
+### Definition of final classifier
+
+$$
+classify(\text{biomarker}) = \begin{cases}
+    \text{low} & \text{biomarker } \ge  `r best_cutoff$Cutoff` \\
+    \text{notlow} & \text{biomarker } < `r best_cutoff$Cutoff`
+\end{cases}
+$$

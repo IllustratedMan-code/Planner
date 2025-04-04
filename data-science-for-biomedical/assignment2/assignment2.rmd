@@ -113,7 +113,7 @@ p-value is much larger than 0.05, no reason to reject the null hypothesis
 ## 9. Report the odds ratios and their confidence intervals. 2 points
 
 ```{r}
-confidence_intervals <- data.frame(confint(tight_model))
+confidence_intervals <- data.frame(exp(confint(tight_model)))
 colnames(confidence_intervals) <- c("2.5 %", "97.5 %")
 confidence_intervals$odds_ratio <- exp(coef(tight_model))
 confidence_intervals

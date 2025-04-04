@@ -1,6 +1,7 @@
 {
   nixConfig.extra-substituters = "https://cache.srid.ca";
-  nixConfig.extra-trusted-public-keys = "cache.srid.ca:8sQkbPrOIoXktIwI0OucQBXod2e9fDjjoEZWn8OXbdo=";
+  nixConfig.extra-trusted-public-keys =
+    "cache.srid.ca:8sQkbPrOIoXktIwI0OucQBXod2e9fDjjoEZWn8OXbdo=";
 
   inputs = {
     emanote.url = "github:srid/emanote";
@@ -18,17 +19,18 @@
           # package = inputs.emanote.packages.${system}.default;
           sites."default" = {
             port = 8080;
-	    layers = [{ path = ./.; pathString = "."; }];	
-            baseUrl = "/Planner/"; # Change to "/" (or remove it entirely) if using CNAME
+            layers = [{
+              path = ./.;
+              pathString = ".";
+            }];
+            baseUrl =
+              "/Planner/"; # Change to "/" (or remove it entirely) if using CNAME
             allowBrokenLinks = true;
             # prettyUrls = true;
           };
         };
-        devShells.default = pkgs.mkShell {
-          buildInputs = [
-            pkgs.nixpkgs-fmt
-          ];
-        };
+        devShells.default =
+          pkgs.mkShell { buildInputs = [ pkgs.nixpkgs-fmt ]; };
         formatter = pkgs.nixpkgs-fmt;
       };
 

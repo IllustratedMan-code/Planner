@@ -2,6 +2,7 @@
 #import "./proposal-template.typ": conf
 #import "@preview/marge:0.1.0": sidenote
 #show: doc => conf(title: "Proposal", doc)
+#import "@preview/drafting:0.2.1": margin-note
 
 #let sidenote = sidenote.with(
   numbering: "1",
@@ -81,13 +82,19 @@ Global Gene regulatory networks attempt to model attempt to model all active epi
 
 = Innovation
 
+#quote()[
+  I feel like I am wrestling with my lack of knowledge about specific implementation details that I know exist but don't have a solid intellectual understanding of. For example, I know that to obtain useable ChIP-seq data, one must perform 'peak calling' to obtain the usable data. However, I do not know the details of this process. I'm not super sure of what processes are considered 'default' and which require detailed descriptions. I don't think I am struggling with the exercise of writing the innovation section, just that I would have lots of PI-specific questions.
+]
+
 == Techinical innovation - Development of computational pipeline
 A computational pipeline would be developed for completing the comparitive analysis of PU.1 activity in immune cell types but would be applicable to any future study that compares transcription factor activities between cell types.
 
 
 == Novel PU.1 relationships to previously unstudied cell types
 
-Applying Homer + RELI + GREAT analysis on new and previously studied data to perform comparitive analysis between cell types.
+To identify novel PU.1 relationships, motif enrichment analysis would be performed to first identify potential binding partners. Then additional ChIP-seq experiements would be performed to assess the validity of the likely binding partners. Additionally, identification of the relationships between separate ChIP experiments would be done by performing intersection analysis of the resulting peaks.
+
+Applying Homer + RELI + GREAT analysis on new and previously studied data to perform comparitive analysis between cell types. #margin-note()[Which specifics do I save for the Approach?]
 
 == Identification of novel drug interactions
 
@@ -102,24 +109,44 @@ Gene network models are often unable to assess the accuracy of predicted interac
 = Approach
 == First Aim
 
-- *Specific Aim 1:*
+- *Specific Aim 1:* Determine specific effect of PU.1 on immune cell differentiation.
 
-- *Hypothesis 1:*
-- *Expected outcomes:*
-=== Justification and Feasiblity
+- *Hypothesis 1:* PU.1 has additional Transcription factor partners/competitors that alter cell fate.
+- *Expected outcomes:* Identification and verification of transcription factor partners/competitors present during cell-specific differentiation.
+=== Justification and Feasibility
+Identifying the interactions between other transcription factors and PU.1 during immune cell differentiation lays the groundwork for treating conditions related to the immune system.
+PU.1 is an important transcription factor for immune health @liTranscriptionFactorPU12020. Therefore, understanding the role of PU.1 is advantageous for understanding immune conditions.
+
+As this aim is an application of existing methodologies, there should be no feasibility concerns.
+
 === Research Design
+==== Methods
+
+To assess the relationship between PU.1 and other transcription factors during immune cell differentiation, the creation, and collection of ChIP-seq @parkChIPSeqAdvantagesChallenges2009 experimental data
+targeting PU.1 in differentiating immune cells. Once the ChIP-seq data is acquired, motif enrichment analysis would be performed to predict
+potential transcription factors that interact with PU.1.
+
+First, depending on the source of the PU.1 ChIP-seq data, raw reads are transformed into peak sets via a process called peak calling. Once the peak sets are acquired,
+motif enrichment is performed, @HomerSoftwareData2016 utilizing an existing database of transcription factor motifs, or binding preferences are used to predict potential transcription factor
+binding. Since the ChIP-seq peaks represent known binding sites for PU.1 during cell differentiation, any other predicted transcription factors represent potential binding partners/competitors to Pu.1.
+
+Once potential binding partners are identified, additional ChIP-seq experiments can be performed to verify whether the predicted binding partners are actually present during differentiation.
+
 === Potential problems and alternative strategies
+There may not be enough public data or the data may be of poor quality. To assuage this problem, more ChIP-seq experiments could be performed, however this may increase the cost.
 
 
 
-== Data Collection
-- ChIP-seq
-- ATAC-seq
-- CUT and RUN?
-- Public Datasets
 
 
-== Data Management
+// == Data Collection
+// - ChIP-seq
+// - ATAC-seq
+// - CUT and RUN?
+// - Public Datasets
+
+
+// == Data Management
 
 
 == Future Directions
