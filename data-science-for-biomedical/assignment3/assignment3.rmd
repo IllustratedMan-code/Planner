@@ -1,0 +1,124 @@
+---
+title: Homework 3
+author: David Lewis
+date: March 11, 2025
+output:
+    pdf_document: default
+    # pdf_document: default
+    #     template
+
+# header-includes:
+#     - \usepackage{fvextra}
+#     - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+documentclass: assignments
+
+---
+<!--
+A preamble: I have analyzed the biomarker CA125 protein. It is your turn to make
+something out of the protein CA19.9.
+-->
+
+## Import the data
+```{r}
+library("printr")
+data <- read.csv("PancreaticCancer.csv")
+```
+
+## 1. Dig up some information on these proteins. 1 + 1 points
+CA 19-9 is a biomarker associated with cancers relating to the colon, stomach and bile duct.
+It is in fact, not a protein at all, but a tetrasaccharide known to play a role in cell-to-cell recognition processes.
+
+CA125 on the other hand is a glycoprotein that can carry CA 19-9. As such, 
+they should have similar levels of activity in cancerous cells.
+
+
+
+
+## 2. I recommend using the log transform of the protein CA19.9 as the biomarker.
+### Justification Function
+```{r}
+justification <- function(v) {
+    data.frame(mean = mean(v), sd = sd(v), CV = mean(v) / sd(v))
+}
+```
+### Log transform
+```{r}
+justification(data[["CA19.9"]])
+justification(log(data[["CA19.9"]]))
+data <- within(data, {
+    CA19.9 <- log(CA19.9)
+})
+```
+
+The standard deviation and coefficient of variation significantly decrease after log transformation making the data much easier to work with and visualize.
+
+## 3. Segregate the data by cancer and pancreatitis. Obtain the kernel densities of logCA19.9 in the same graph. Make the graph as informative as possible. Comment. 1 + 3 + 1 points
+
+### Segregate data
+```{r}
+cancer <- subset(data, data$Outcome == 1)
+pancreatitis <- subset(data, data$Outcome == 0)
+```
+
+### Plot kernel densities
+```{r}
+cancer_density <- density(cancer$CA19.9)
+pancreatitis_density <- density(pancreatitis$CA19.9)
+
+ylim <- max(c(cancer_density$y, pancreatitis_density$y))
+
+plot(density(cancer$CA19.9), xlab = "Carbohydrate Antigen 19-9", ylab = "Density", col = "red", lwd = 2, main = "Kernel Densities", ylim = c(0, ylim + 0.05))
+lines(density(pancreatitis$CA19.9), col = "blue", lwd = 2)
+legend("topright", legend = c("Pancreatic Cancer", "Pancreatitis"), pch = c(16, 16), col = c("red", "blue"))
+rug(cancer$CA19.9, side = 1, col = "red")
+rug(pancreatitis$CA19.9, side = 3, col = "blue")
+```
+
+
+## 4. Obtain the summary statistics of logCA19.9 by Cancer and Pancreatitis.
+```{r}
+summary(cancer$CA19.9)
+summary(pancreatitis$CA19.9)
+```
+
+The cancer data has much more variability when compared to the pancreatitis data set. 
+
+## 5. Lay down the structure of a potential diagnostic test. 2 points
+
+Using the first quartile of the cancer patients as a cutoff, one can make a "classifier" for positive and negative for cancer.
+
+- cancer positive if logCA19.9 $\ge$ 1.872
+- cancer negative if logCA19.9 $<$ 1.872
+
+### diagnostic test R implementation
+```{r}
+diagnostic_test <- function(x, y, cutoff = 1.872) {
+    pred_x <- x >= cutoff
+    TP <- sum((pred_x == y) & (pred_x == 1))
+    FP <- sum((pred_x != y) & (pred_x == 1))
+    TN <- sum((pred_x == y) & (pred_x == 0))
+    FN <- sum((pred_x != y) & (pred_x == 0))
+    data.frame(Cancer = c(TP, FN), "No Cancer" = c(FP, TN), row.names = c("Positive", "Negative"))
+}
+diagnostic_test(data$CA19.9, data$Outcome)
+```
+
+
+## 6. Big step: Present the ROC table consisting of sensitivities, and specificities for a vast range of cutoffs. 5 points
+```{r}
+roc <- pROC::roc(data$Outcome, data$CA19.9, levels = c(0, 1), direction = "<")
+data.frame(Sensitivity = roc$sensitivities, Specificity = roc$specificities, Cutoff = roc$thresholds)
+```
+
+
+## 7. Present the ROC curve associated with the biomarker. Make the graph as informative as possible. 3 points
+```{r}
+plot(roc, col = "red", main = "ROC curve for Pancreatic Cancer of CA19.9")
+```
+## 8. Report the area under the curve and 95% confidence interval for the
+population AUC. 1 + 1 points
+
+```{r}
+roc$auc
+pROC::ci.auc(roc)
+```
