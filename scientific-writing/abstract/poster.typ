@@ -25,7 +25,7 @@
           fill: rgb("a1cc3a"),
           width: 100%,
           height: 100%,
-          align(horizon, pad(text(size: 2em, weight: "bold", title), left: 3em, bottom: 1em)),
+          align(horizon, pad(text(size: 1.5em, weight: "bold", title), left: 3em, bottom: 1em)),
         ),
         pad(bottom: 0em, cchmclogo),
       ),
@@ -41,7 +41,7 @@
       continue
     }
     let heading-elem = (:)
-    if repr(elem).starts-with("heading") {
+    if repr(elem).starts-with("heading(depth: 1") {
       if headings.len() > 0 {
         if headings.last().elems.len() == 0 {
           headings.last().elems.push(parbreak())
@@ -51,10 +51,9 @@
       heading-elem.insert("elems", ())
       headings.push(heading-elem)
     } else {
-
       if headings.len() == 0 {
         heading-elem.insert("heading", none)
-        heading-elem.insert("elems", ())
+        //heading-elem.insert("elems", ())
         headings.push(heading-elem)
       }
 
@@ -62,6 +61,7 @@
       headings.last().elems.push(elem)
     }
   }
+  show "(": " ("
   pad(
     left: 3em,
     right: 3em,
