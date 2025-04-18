@@ -1,5 +1,20 @@
 #import "poster.typ": conf
-#show: doc => conf(title: [Comparison Of "Healthy Controls" using B Cell Repertoires ], doc)
+#show: doc => conf(
+  title: [Comparison Of "Healthy Controls" using B Cell Repertoires ],
+  authors: (
+    "David Lewis": (affiliation: ("Cincinatti Children's Medical Center", "University of Cincinnati")),
+    "Krishna Roskin PhD": (affiliation: ("Cincinatti Children's Medical Center",)),
+  ),
+  width: 40in,
+  height: 27in,
+  ncolumns: 8,
+  nrows: 6,
+  rowspans: (3, 3, 3, 3, 3),
+  colspans: (2, 3, 3, 6, 2),
+  x: (0, 2, 5, 0, 6),
+  y: (0, 0, 0, 3, 3),
+  doc,
+)
 
 
 = Abstract
@@ -7,41 +22,44 @@ To make inferences about treatment groups across diffferent data sets, consisten
 within control group is necessary to ensure quality results. To this end, this study hopes to identify potential confounders by comparing various groups of "healthy controls".
 
 = Introduction
-Two types of diversity are created in B cell lineages. Initial diversity is created via VDJ recombination.
+#grid(
+  columns: (1fr, 1fr),
+  [Two types of diversity are created in B cell lineages. Initial diversity is created via VDJ recombination.
 
-#figure(image("vdj-antibody.png", width: 60%))
-After vdj recombintation, additional diversity is created after antigen exposure and detection via somatic hypermutation (SHM) on the V and D segments. These VDJ segments are sequenced for each healthy cohort and compared to identify potential confounding factors.
-
+    After VDJ recombintation, additional diversity is created after antigen exposure and detection via somatic hypermutation (SHM) on the V and D segments. These VDJ segments are sequenced for each healthy cohort and compared to identify potential confounding factors.],
+  image("vdj-antibody.png", width: 95%),
+)
 = Results
-Initial Results compared SHM rates between adult (HHC) and child (MPAACH) data sets.
-#figure(image("facetgrid.svg", width: 80%))
+
+#figure(image("facetgrid.svg", height: 90%)),
 
 
-#v(1fr)
 = Methods
 
-== Data Fetching
+#grid(
+  columns: (1fr, 1fr, 1fr),
+  rows: (0.5fr, 1fr),
+  [== Data Fetching
 
-Custom python scripts use a REST API from Adaptive Immune Receptor Repertoire (AIRR) community data repositories (IReceptor).
+    Custom python scripts use a REST API from Adaptive Immune Receptor Repertoire (AIRR) community data repositories (IReceptor).
+  ],
+  [
+    == Data Annotation
+    AIRR community nextflow pipeline (airrflow).
+  ],
+  [
+    == Data Visualization
 
-== Data Annotation
-AIRR community nextflow pipeline (airrflow).
+    Custom Python Visualization Scripts and nextflow pipeline outputs.
 
-#figure(image("airrflow_workflow_overview.png"))
+    #par([
+      SHM rates are collapsed to subject level from read level using a median, then a mean operation.
+    ])
 
-
-== Data Visualization
-
-Custom Python Visualization Scripts and nextflow pipeline outputs.
-
-#par([
-  SHM rates are collapsed to subject level from read level using a median, then a mean operation.
-])
-
-
-#figure(image("organization.png"))
-
-
+  ],
+  grid.cell(x: 2, y: 1, figure(image("organization.png", width: 100%))),
+  grid.cell(x: 0, y: 1, colspan: 2, figure(image("airrflow_workflow_overview.png", height: 85%)))
+)
 
 = Discussion
 
