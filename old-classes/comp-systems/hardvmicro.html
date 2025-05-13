@@ -1,0 +1,4087 @@
+<!DOCTYPE html>
+<!-- DoNotFormat -->
+<!-- DoNotFormat -->
+
+
+
+
+<!-- DoNotFormat -->
+<!-- DoNotFormat -->
+
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1' />
+  <title>
+    HardWiredVsMicroProgrammed; – Planner
+  </title>
+  
+    
+      <meta property='og:description' content />
+      <meta property='og:site_name' content='Planner' />
+      <meta property='og:image' content />
+      <meta property='og:type' content='website' />
+      <meta property='og:title' content='HardWiredVsMicroProgrammed;' />
+      
+        <meta name='twitter:card' content='summary_large_image' />
+      
+    
+    
+      <base href='/Planner/' />
+      <link href='favicon.svg' rel='icon' />
+    
+    <script>
+  window.MathJax = {
+    startup: {
+      ready: () => {
+        MathJax.startup.defaultReady();
+      }
+    }
+  };
+</script>
+<script async id='MathJax-script' src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>
+<!-- highlight.js -->
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/hybrid.min.css' />
+<script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js'></script>
+<!-- Include languages that Emanote itself uses -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/languages/haskell.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/languages/nix.min.js'></script>
+<script>hljs.highlightAll();</script>
+
+
+<script>
+  window.MathJax = {
+    startup: {
+      ready: () => {
+        MathJax.startup.defaultReady();
+      }
+    }
+  };
+</script>
+<script async id='MathJax-script' src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>
+
+
+  
+  
+  <link href='tailwind.css?instanceId=1c4ed3f0-e310-42f2-8d34-d760b44ebbd5' rel='stylesheet' type='text/css' />
+
+  <style>
+    /* Heist error element */
+    strong.error {
+      color: lightcoral;
+      font-size: 90%;
+      font-family: monospace;
+    }
+
+    /* Callouts */
+    div.callout {
+      background-color: #f5f5f5;
+      padding: 1em 1em 0.5em;
+      border-radius: 0.5em;
+      margin-bottom: 1em;
+    }
+
+    .callout[data-callout="note"] {
+      --callout-color: 8, 109, 221;
+    }
+
+    .callout[data-callout="info"] {
+      --callout-color: 8, 109, 221;
+    }
+
+    .callout[data-callout="tip"] {
+      --callout-color: 8, 191, 188;
+    }
+
+    .callout[data-callout="warning"] {
+      --callout-color: 236, 117, 0;
+    }
+
+    .callout[data-callout="failure"] {
+      --callout-color: 233, 49, 71;
+    }
+
+    div.callout {
+      background-color: rgba(var(--callout-color), 0.1);
+    }
+
+    .callout .callout-title {
+      color: rgb(var(--callout-color));
+    }
+
+    div.callout-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5em;
+      font-variation-settings: 'wght' 600;
+    }
+
+    div.callout-title div.callout-title-inner {
+      margin-left: 0.5em;
+    }
+
+    a.--ema-toc:not(.toc-item-active) {
+      background-color: #ffffff !important;
+    }
+
+    /* External link icon */
+    a[data-linkicon=""]::after {
+      content: ""
+    }
+
+    a[data-linkicon=none]::after {
+      content: ""
+    }
+
+    a[data-linkicon="external"] {
+      padding-right: 24px;
+    }
+
+    a[data-linkicon="external"]::after {
+      margin-right: -24px;
+      content: url('data:image/svg+xml,\
+      <svg xmlns="http://www.w3.org/2000/svg" height="0.7em" viewBox="0 0 20 20"> \
+        <g style="stroke:gray;stroke-width:1"> \
+          <line x1="5" y1="5" x2="5" y2="14" /> \
+          <line x1="14" y1="9" x2="14" y2="14" /> \
+          <line x1="5" y1="14" x2="14" y2="14" /> \
+          <line x1="5" y1="5" x2="9" y2="5"  /> \
+          <line x1="10" y1="2" x2="17" y2="2"  /> \
+          <line x1="17" y1="2" x2="17" y2="9" /> \
+          <line x1="10" y1="9" x2="17" y2="2" style="stroke-width:1.0" /> \
+        </g> \
+      </svg>');
+    }
+
+    a[data-linkicon="external"][href^="mailto:"]::after {
+      content: url('data:image/svg+xml,\
+        <svg \
+          xmlns="http://www.w3.org/2000/svg" \
+          height="0.7em" \
+          fill="none" \
+          viewBox="0 0 24 24" \
+          stroke="gray" \
+          stroke-width="2"> \
+          <path \
+            stroke-linecap="round" \
+            stroke-linejoin="round" \
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /> \
+        </svg>');
+    }
+  </style>
+  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
+
+<style>
+  @font-face {
+    font-family: 'WorkSans';
+    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
+    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
+    font-display: swap;
+  }
+
+  body {
+    font-family: 'WorkSans', sans-serif;
+    font-variation-settings: 'wght' 350;
+  }
+
+  a.mavenLinkBold {
+    font-variation-settings: 'wght' 400;
+  }
+
+  strong {
+    font-variation-settings: 'wght' 500;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  header,
+  .header-font {
+    font-family: 'WorkSans', sans-serif;
+  }
+
+  h1 {
+    font-variation-settings: 'wght' 500;
+  }
+
+  h2 {
+    font-variation-settings: 'wght' 400;
+  }
+
+  h3 {
+    font-variation-settings: 'wght' 300;
+  }
+</style>
+
+
+  
+    <style>
+      /* For use in sidebar.tpl, as we cannot achieve this in tailwind itself! */
+      /* md:min-w-48  */
+      @media (min-width: 768px) {
+        #sidebar {
+          min-width: 12rem;
+        }
+      }
+
+      /* xl:min-w-64  */
+      @media (min-width: 1280px) {
+        #sidebar {
+          min-width: 16rem;
+        }
+      }
+    </style>
+
+    
+  
+  <link rel='stylesheet' href='_emanote-static/stork/flat.css' />
+<!-- Custom Stork-search styling for Emanote -->
+<style>
+  #stork-search-container {
+    z-index: 1000;
+    background-color: rgb(15 23 42/.8);
+  }
+
+  .stork-overflow-hidden-important {
+    overflow: hidden !important;
+  }
+</style>
+
+
+<script src='_emanote-static/stork/stork.js'></script>
+
+  
+    <script id='emanote-stork' data-emanote-base-url='/Planner/'>
+      window.emanote = {};
+      window.emanote.stork = {
+        searchShown: false,
+        indexIsStale: false,
+        toggleSearch: function () {
+          window.emanote.stork.refreshIndex();
+          document.getElementById('stork-search-container').classList.toggle('hidden');
+          window.emanote.stork.searchShown = document.body.classList.toggle('stork-overflow-hidden-important');
+          if (window.emanote.stork.searchShown) {
+            document.getElementById('stork-search-input').focus();
+          }
+        },
+        clearSearch: function () {
+          document.getElementById('stork-search-container').classList.add('hidden');
+          document.body.classList.remove('stork-overflow-hidden-important');
+          window.emanote.stork.searchShown = false;
+        },
+
+        getBaseUrl: function () {
+          const baseUrl = document.getElementById("emanote-stork").getAttribute('data-emanote-base-url') || '/';
+          return baseUrl;
+        },
+
+        registerIndex: function (options) {
+          const indexName = 'emanote-search'; // used to match input[data-stork] attribute value
+          const indexUrl = window.emanote.stork.getBaseUrl() + '-/stork.st';
+          stork.register(
+            indexName,
+            indexUrl,
+            options);
+        },
+
+        init: function () {
+          if (document.readyState !== 'complete') {
+            window.addEventListener('load', function () {
+              stork.initialize(window.emanote.stork.getBaseUrl() + '_emanote-static/stork/stork.wasm');
+              window.emanote.stork.registerIndex();
+            });
+
+            document.addEventListener('keydown', event => {
+              if (window.emanote.stork.searchShown && event.key === 'Escape') {
+                window.emanote.stork.clearSearch();
+                event.preventDefault();
+              } else if ((event.key == 'k' || event.key == 'K') && (event.ctrlKey || event.metaKey)) {
+                window.emanote.stork.toggleSearch();
+                event.preventDefault();
+              }
+            });
+          } else {
+            // This section is called during Ema's hot reload.
+            // 
+            // Mark the current index as stale, and refresh it *only when* the
+            // user actually invokes search.
+            // 
+            // We do not refresh the index *right away*, as that will cause
+            // memory leaks in the browser. See
+            // https://github.com/srid/emanote/issues/411#issuecomment-1402056235
+            console.log("stork: Marking index as stale");
+            window.emanote.stork.markIndexAsStale();
+          }
+        },
+
+        markIndexAsStale: function () {
+          window.emanote.stork.indexIsStale = true;
+        },
+
+        refreshIndex: function () {
+          if (window.emanote.stork.indexIsStale) {
+            console.log("stork: Reloading index");
+            window.emanote.stork.indexIsStale = false;
+            // NOTE: This will leak memory. See the comment above.
+            window.emanote.stork.registerIndex({ forceOverwrite: true });
+          }
+        }
+
+      };
+
+      window.emanote.stork.init();
+    </script>
+  
+
+</head>
+
+<!-- DoNotFormat -->
+
+
+
+<!-- DoNotFormat -->
+
+<body class='bg-gray-400 overflow-y-scroll'>
+  
+    <div class='container mx-auto md:mt-8 '>
+      
+
+      
+        <nav id='breadcrumbs' class='w-full text-gray-700 md:hidden'>
+  <div class='flex justify-left'>
+    <div class='w-full px-2 py-2 bg-gray-50'>
+      <ul class='flex flex-wrap text-lg'>
+        <li class='inline-flex items-center'>
+          
+            
+              <img style='width: 1rem;' src='favicon.svg' />
+            
+          
+        </li>
+        
+          
+            <li class='inline-flex items-center'>
+              <a class='px-1 font-bold' href=''>
+                David’s Notes
+              </a>
+              <svg fill='currentColor' viewBox='0 0 20 20' class='w-auto h-5 text-gray-400'>
+                <path fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd'></path>
+              </svg>
+            </li>
+          
+            <li class='inline-flex items-center'>
+              <a class='px-1 font-bold' href='old-classes.html'>
+                old-classes
+              </a>
+              <svg fill='currentColor' viewBox='0 0 20 20' class='w-auto h-5 text-gray-400'>
+                <path fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd'></path>
+              </svg>
+            </li>
+          
+            <li class='inline-flex items-center'>
+              <a class='px-1 font-bold' href='old-classes/comp-systems.html'>
+                comp-systems
+              </a>
+              <svg fill='currentColor' viewBox='0 0 20 20' class='w-auto h-5 text-gray-400'>
+                <path fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd'></path>
+              </svg>
+            </li>
+          
+        
+      </ul>
+    </div>
+    <button class='inline px-2 py-1 bg-gray-50 outline-none cursor-pointer focus:outline-none' title='Search (Ctrl+K)' type='button' onclick='window.emanote.stork.toggleSearch()'>
+      <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-blue-700' f
+ fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
+  <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+</svg>
+    </button>
+    <button class='inline px-2 py-1 text-white bg-blue-600 outline-none cursor-pointer focus:outline-none' title='Toggle sidebar' type='button' onclick="toggleHidden('sidebar')">
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6h16M4 12h16M4 18h16'></path>
+      </svg>
+    </button>
+    <script>
+      function toggleHidden(elemId) {
+        document.getElementById(elemId).classList.toggle("hidden");
+      }
+    </script>
+  </div>
+</nav>
+      
+
+      
+        <div id='container' class='flex flex-nowrap flex-col md:flex-row bg-gray-50 md:shadow-2xl md:mb-8'>
+          <!-- Sidebar column -->
+          <nav id='sidebar' class='flex-shrink hidden leading-relaxed md:block md:sticky md:top-0 md:max-h-screen md:overflow-y-auto md:w-48 xl:w-64'>
+  <div class='px-2 py-2 text-gray-800'>
+    <div id='indexing-links' class='flex flex-row float-right p-2 space-x-2 text-gray-500'>
+      <a href='-/tags.html' title='View tags'>
+        <svg style='width: 1rem;' class='hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
+          </path>
+        </svg>
+      </a>
+      <a href='-/all.html' title='Expand full tree'>
+        <svg style='width: 1rem;' class='hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'>
+          </path>
+        </svg>
+      </a>
+      <a title='Search (Ctrl+K)' class='cursor-pointer' onclick='window.emanote.stork.toggleSearch()'>
+        <svg xmlns='http://www.w3.org/2000/svg' style='width: 1rem;' class='hover:text-blue-700' f
+ fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
+  <path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+</svg>
+      </a>
+    </div>
+
+    <div id='site-logo' class='pl-2'>
+      <div class='flex items-center my-2 space-x-2 justify-left'>
+        <a href='' title='Go to Home'>
+          
+            
+              <!-- The style width attribute here is to prevent huge
+                      icon from displaying at those rare occasions when Tailwind
+                      hasn't kicked in immediately on page load 
+                      -->
+              <img style='width: 1rem;' class='transition transform hover:scale-110 hover:opacity-80' src='favicon.svg' />
+            
+          
+        </a>
+        <a class='font-bold truncate' title='Go to Home' href=''>
+          Home
+        </a>
+      </div>
+    </div>
+
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
+        </path>
+      </svg>
+    
+  
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='README' href='README.html'>
+      README
+    </a>
+    
+      
+        
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='non-classes.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='non-classes' href='non-classes.html'>
+      non-classes
+    </a>
+    
+      
+        <span class='text-gray-300' title='9 children inside'>
+          9
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+    
+      
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+    
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='w-4 h-4 flex-shrink-0 inline text-gray-700' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z' clip-rule='evenodd'></path>
+      </svg>
+      
+  
+        
+    </span>
+    <a class='mavenLinkBold hover:bg-blue-200 rounded px-1.5 truncate' title='old-classes' href='old-classes.html'>
+      old-classes
+    </a>
+    
+      
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/AI.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='AI' href='old-classes/AI.html'>
+      AI
+    </a>
+    
+      
+        <span class='text-gray-300' title='4 children inside'>
+          4
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/Automata.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Automata' href='old-classes/Automata.html'>
+      Automata
+    </a>
+    
+      
+        <span class='text-gray-300' title='6 children inside'>
+          6
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/Discrete-Structures.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Discrete-Structures' href='old-classes/Discrete-Structures.html'>
+      Discrete-Structures
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/Functional-Genomics.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Functional-Genomics' href='old-classes/Functional-Genomics.html'>
+      Functional-Genomics
+    </a>
+    
+      
+        <span class='text-gray-300' title='4 children inside'>
+          4
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/Intelligent_Data_Design.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Intelligent_Data_Design' href='old-classes/Intelligent_Data_Design.html'>
+      Intelligent_Data_Design
+    </a>
+    
+      
+        <span class='text-gray-300' title='31 children inside'>
+          31
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/MolCel.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='MolCel' href='old-classes/MolCel.html'>
+      MolCel
+    </a>
+    
+      
+        <span class='text-gray-300' title='5 children inside'>
+          5
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/Networking.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Networking' href='old-classes/Networking.html'>
+      Networking
+    </a>
+    
+      
+        <span class='text-gray-300' title='7 children inside'>
+          7
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/Operating_Systems.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Operating_Systems' href='old-classes/Operating_Systems.html'>
+      Operating_Systems
+    </a>
+    
+      
+        <span class='text-gray-300' title='2 children inside'>
+          2
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/OrganicChemistry.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='OrganicChemistry' href='old-classes/OrganicChemistry.html'>
+      OrganicChemistry
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/ParallelComputing.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='ParallelComputing' href='old-classes/ParallelComputing.html'>
+      ParallelComputing
+    </a>
+    
+      
+        <span class='text-gray-300' title='4 children inside'>
+          4
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/Physics2001.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Physics2001' href='old-classes/Physics2001.html'>
+      Physics2001
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/Principles-Of-ClinicalTrials.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='Principles-Of-ClinicalTrials' href='old-classes/Principles-Of-ClinicalTrials.html'>
+      Principles-Of-ClinicalTrials
+    </a>
+    
+      
+        <span class='text-gray-300' title='6 children inside'>
+          6
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/bioinformatics.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='bioinformatics' href='old-classes/bioinformatics.html'>
+      bioinformatics
+    </a>
+    
+      
+        <span class='text-gray-300' title='2 children inside'>
+          2
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+    
+      
+    
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+    
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='w-4 h-4 flex-shrink-0 inline text-gray-700' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z' clip-rule='evenodd'></path>
+      </svg>
+      
+  
+        
+    </span>
+    <a class='mavenLinkBold hover:bg-blue-200 rounded px-1.5 truncate' title='comp-systems' href='old-classes/comp-systems.html'>
+      comp-systems
+    </a>
+    
+      
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
+        </path>
+      </svg>
+    
+  
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='compPosts' href='old-classes/comp-systems/compPosts.html'>
+      compPosts
+    </a>
+    
+      
+        
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+  
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'>
+        </path>
+      </svg>
+      
+  
+        
+    </span>
+    <a class='mavenLinkBold bg-blue-100 hover:bg-blue-200 rounded px-1.5 truncate' title='HardWiredVsMicroProgrammed;' href='old-classes/comp-systems/hardvmicro.html'>
+      HardWiredVsMicroProgrammed;
+    </a>
+    
+      
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+    
+  
+</div>
+    
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/ecology.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='ecology' href='old-classes/ecology.html'>
+      ecology
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/intro-to-bioinformatics.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='intro-to-bioinformatics' href='old-classes/intro-to-bioinformatics.html'>
+      intro-to-bioinformatics
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/medical-informatics.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='medical-informatics' href='old-classes/medical-informatics.html'>
+      medical-informatics
+    </a>
+    
+      
+        <span class='text-gray-300' title='4 children inside'>
+          4
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/programming-languages.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='programming-languages' href='old-classes/programming-languages.html'>
+      programming-languages
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='old-classes/scientific-writing.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='scientific-writing' href='old-classes/scientific-writing.html'>
+      scientific-writing
+    </a>
+    
+      
+        <span class='text-gray-300' title='1 children inside'>
+          1
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+  
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          <a href='weirauchlab.html' title='View folgezettel children'>
+            
+    
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4 flex-shrink-0 inline text-gray-500' viewBox='0 0 24 24' fill='currentColor'>
+        <path fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z' clip-rule='evenodd'></path>
+      </svg>
+    
+  
+          </a>
+          
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='weirauchlab' href='weirauchlab.html'>
+      weirauchlab
+    </a>
+    
+      
+        <span class='text-gray-300' title='6 children inside'>
+          6
+        </span>
+      
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+      <!-- Variable bindings for this tree-->
+
+  
+
+
+
+  
+
+
+<!-- Rendering of this tree -->
+<div class='pl-2'>
+  <!-- Node's rootLabel-->
+  <div class='flex items-center my-2 space-x-2 justify-left'>
+    <span>
+      
+        
+          
+    
+      <svg class='w-4 h-4 flex-shrink-0 inline' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'>
+        </path>
+      </svg>
+    
+  
+        
+      
+    </span>
+    <a class='hover:bg-blue-200 rounded px-1.5 truncate' title='agenda' href='agenda.html'>
+      agenda
+    </a>
+    
+      
+        
+    
+  </div>
+
+  <!-- Node's children forest, displayed only on active trees
+    TODO: Use <details> to toggle visibility?
+  -->
+  
+</div>
+    
+
+  </div>
+</nav>
+          <!-- Main body column -->
+          <div class='flex-1 w-full bg-white'>
+  <main class='px-4 py-4'>
+    <h1 class='flex items-end justify-center mb-4 p-3 bg-blue-100 text-5xl font-extrabold text-black rounded'>
+  <a class='z-40 tracking-tighter '>
+    HardWiredVsMicroProgrammed;
+  </a>
+</h1>
+    
+      <div class='md:grid md:gap-4 md:grid-cols-8'>
+        <div class='md:col-span-6'>
+          <article class='overflow-auto'>
+  <!-- What goes in this file will appear on top of note body-->
+  
+
+
+
+
+
+<pre class='pandoc-raw-"org"'>#+hugo_base_dir: ../</pre><pre class='pandoc-raw-"org"'>#+hugo_section: Intro-to-Comp-Systems/Hard-Vs-Micro/</pre><pre class='pandoc-raw-"org"'>#+hugo_custom_front_matter: subpage false :hide "nav"</pre><pre class='pandoc-raw-"org"'>#+EXPORT_FILE_NAME: _index.md</pre>
+    <h1 id='intro' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Intro
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#intro' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <p class='mb-3'>
+      Describes a "big Picture" of computer systems through an example of a "simple" computer. This computer is <strong>Big Endian</strong> (reads the leftmost (most significant) bit first)
+    </p>
+  
+    <h1 id='the-basic-computer' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  The Basic Computer
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#the-basic-computer' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h2 id='two-principal-functional-parts' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Two Principal functional parts
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#two-principal-functional-parts' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Data path section where processing occurs
+        </li>
+      
+        <li>
+          Control section decodes instructions and leaves control sequence for Data path section
+        </li>
+      
+    </ul>
+  
+    <h2 id='two-types-of-control-units' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Two types of control units
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#two-types-of-control-units' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Hard wired controllers
+        </li>
+      
+        <li>
+          Micro programmed controllers
+        </li>
+      
+    </ul>
+  
+    <h2 id='pathways' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  figure 1 <span id='figure1'></span>
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#pathways' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  <img class='inline mb-3' src='old-classes/comp-systems/images/figure1.png' alt style='width: inherit;' />
+    <h3 id='description-of-figure-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Description of figure 1
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#description-of-figure-1' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <p class='mb-3'>
+      Data Path Sections
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Single 12-bit-wide bus
+    </p>
+  
+    <p class='mb-3'>
+      exchanges information between pairs of registers
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Registers + 256 X 12 bit RAM
+    </p>
+  
+    <p class='mb-3'>
+      controlled by 16 control signals
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Load(L) signals
+    </p>
+  
+    <p class='mb-3'>
+      Active L <strong>clocks</strong> <em>or loads</em> bus contents into register on next <strong>rising pulse</strong> from the system clock
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Enabled(E) signals
+    </p>
+  
+    <p class='mb-3'>
+      Active E signal enables the <strong>tristate</strong> outputs of the register or makes contents of register available to bus
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      <em>register tranfer from</em> example
+    </p>
+  
+    <p class='mb-3'>
+      Contents of Register A to B
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Requires EA signal (contents of A can be read by bus)
+        </li>
+      
+        <li>
+          Requires LB signal (contents of bus can be moved into B)
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  
+    <h3 id='arithmetic-logic-unit-alu' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Arithmetic-Logic-Unit (ALU)
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#arithmetic-logic-unit-alu' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <p class='mb-3'>
+      A circuit capable of adding or subtracting two 12 bit numbers When the first bit of the Accumulator(ACC) is 1 (<a href='#negativeflag' class='text-blue-600 mavenLinkBold hover:underline'>Negative Flag</a>) it is considered a negative number (represented using 2s compliment)
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Two input registers
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Accumulator (ACC)
+        </li>
+      
+        <li>
+          Register B
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          Two control signals
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Add (A)
+        </li>
+      
+        <li>
+          Subtract (S)
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  
+    <h3 id='ram-memory' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  RAM memory
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#ram-memory' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Registers
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      <span id='MAR'></span>Memory Address Register (MAR)
+    </p>
+  
+    <p class='mb-3'>
+      Register where address from memory is temporarily stored
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      <span id='MDR'></span>Memory Data Register (MDR)
+    </p>
+  
+    <p class='mb-3'>
+      Register where data (<strong>word</strong>) corresponding to the address in <strong>MAR</strong> is temporarily stored
+    </p>
+  
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Control Signals
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Read (R)
+    </p>
+  
+    <p class='mb-3'>
+      copies <strong>Word</strong> stored in RAM at address specified by <strong>MAR</strong> to <strong>MDR</strong>
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Write (W)
+    </p>
+  
+    <p class='mb-3'>
+      copies contents (<strong>Word</strong>) of <strong>MDR</strong> to RAM at address specified by <strong>MAR</strong>
+    </p>
+  
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Steps to write and read data to the RAM
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Read
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          8-bit address is stored in register <strong>MAR</strong>
+        </li>
+      
+        <li>
+          Active <strong>R</strong> signal is supplied to the RAM
+        </li>
+      
+        <li>
+          Data is copied from RAM at address specified by <strong>MAR</strong> to <strong>MDR</strong> register
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Write
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          8-bit address is stored in register <strong>MAR</strong>
+        </li>
+      
+        <li>
+          a <strong>Word</strong> is stored in register <strong>MDR</strong>
+        </li>
+      
+        <li>
+          Active <strong>W</strong> signal is supplied to RAM
+        </li>
+      
+        <li>
+          Data is copied from <strong>MDR</strong> to RAM at address specified by <strong>MAR</strong>
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Note about I/O implementation
+    </p>
+  
+    <p class='mb-3'>
+      In this specific computer design, all I/O devices are <strong>memory mapped</strong> This means that several memory locations are reserved for the I/O devices writing and reading to these I/O devices works in the same way as any other location in the ram.
+    </p>
+  
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  
+    <h3 id='program-counter-pc-register' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  <span id='PC'></span>Program Counter (PC) Register
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#program-counter-pc-register' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Increment Program Counter (IP) control signal
+    </p>
+  
+    <p class='mb-3'>
+      When <strong>PC</strong> recieves an <strong>IP</strong> signal it increments contents of <strong>PC</strong> by 1
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Instruction Register (IR)
+    </p>
+  
+    <p class='mb-3'>
+      Holds the instruction that is about to be executed and provides opcode to the controller/sequencer
+    </p>
+  
+        </li>
+      
+    </ul>
+  
+    <h1 id='computers-instruction-set' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Computer's Instruction Set
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#computers-instruction-set' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <p class='mb-3'>
+      A set of all instructions that the computer can process.
+    </p>
+  
+    <h2 id='instruction' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Instruction
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#instruction' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
+    <p class='mb-3'>
+      A 12-bit <strong>word</strong> made up of a 4-bit <strong>opcode</strong> and an 8-bit <strong>operand</strong> address
+    </p>
+  
+    <h3 id='operation-code-opcode' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  operation code (opcode)
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#operation-code-opcode' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <p class='mb-3'>
+      specifies the action to be taken by the computer
+    </p>
+  
+    <h3 id='operand' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  operand
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#operand' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <p class='mb-3'>
+      The data that the opcode operates on. Located at a memory location specified by the 8 bit address in the instruction.
+    </p>
+  
+    <h2 id='table-1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  <span id='table1'></span>Table 1
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#table-1' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  <img class='inline mb-3' src='old-classes/comp-systems/images/table1.png' alt style='width: inherit;' />
+    <h3 id='table-1-description' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Table 1 description
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#table-1-description' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Op-Code
+    </p>
+  
+    <p class='mb-3'>
+      The base 10 identity of the 4 bit code(in this computer) at the beginning of every instruction. Specifies the <em>action</em> that will be performed, such as loading, moving values. Not shown is the <a href='#fetch' class='text-blue-600 mavenLinkBold hover:underline'>Fetch Instruction</a> (an instruction used to load the next instruction) and can be thought of as having the opcode 0000, but it really doesn't require one (in Hard-Wired)
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Opcode are specified in assembly by the <strong>Mnemonic</strong>
+    </p>
+  
+    <p class='mb-3'>
+      The Mnemonic makes the assembly code much more human readable
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          LDA (Load accumlulator(ACC)) is equivalent to op-code 0001
+        </li>
+      
+        <li>
+          STA (Store ACC) is equivalent to op-code 0002
+        </li>
+      
+        <li>
+          The codes 8(1000) - 15(1111) are all equivalent to the HLT Mnemonic
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Register Transfers
+    </p>
+  
+    <p class='mb-3'>
+      This column shows how data is transferred from one register to another until the action specified by the opcode has been accomplished.
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          LDA 00100010 is an example instruction LDA (Loads data from RAM to accumlulator register) by following the steps required to access data from RAM
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          MAR &lt;– IR moves (copies) the contents of the Instruction Register(<a href='#IR' class='text-blue-600 mavenLinkBold hover:underline'>IR</a>) to the Memory Address Register
+        </li>
+      
+        <li>
+          MDR &lt;– RAM(MAR) moves the data at address specified by MAR to the MDR register
+        </li>
+      
+        <li>
+          ACC &lt;– MDR moves the contents of MDR to ACC
+        </li>
+      
+        <li>
+          ACC &lt;– RAM is then accomplished.
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Active Control Signals
+    </p>
+  
+    <p class='mb-3'>
+      This column shows the signals that are required (power to signal pin) to perform the specified register transfers. Signal Pins are shown in <a href='#figure1' class='text-blue-600 mavenLinkBold hover:underline'>Figure 1</a>
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          MAR &lt;– IR requires the EI (enable instruction register) and the LM (Load MAR) signals
+        </li>
+      
+        <li>
+          MDR &lt;– RAM(MAR) requires the R (read) signal
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  
+    <h1 id='hard-wired-control-unit' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Hard-Wired Control Unit
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#hard-wired-control-unit' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <h2 id='figure-2' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Figure 2 <span id='figure2'></span>
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#figure-2' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  <img class='inline mb-3' src='old-classes/comp-systems/images/figure2.png' alt style='width: inherit;' />
+    <h3 id='description-of-figure-2' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Description of Figure 2
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#description-of-figure-2' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <p class='mb-3'>
+      Internal organization of a hard-wired control unit A hard wired version of our example computer. A control unit consists of a Ring counter, an instruction decoder, and a Control matrix
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      <span id='IR'></span>Instruction Register (IR)
+    </p>
+  
+    <p class='mb-3'>
+      Contains the current instruction (opcode + operand) The instruction register sends the Op-code (first 4 bits) to the instruction decoder. Each line to the Instruction Decoder represents a bit of the opcode.
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Instruction Decoder
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          Receives the opcode sent to it by the IR
+        </li>
+      
+        <li>
+          Interprets the opcode as a specific signal.
+        </li>
+      
+        <li>
+          Sends a signal to the control matrix corresponding to the opcode from the IR Each line to the Control matrix represents a different signal (a set of pins)
+        </li>
+      
+    </ul>
+  
+    <p class='mb-3'>
+      <a href='#figure4' class='text-blue-600 mavenLinkBold hover:underline'>Figure 4</a>
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      <span id='negativeflag'></span>Negative Flag
+    </p>
+  
+    <p class='mb-3'>
+      The leading bit ("negative flag") of the ACC register is fed into the control matrix allowing for Boolean logic within the control matrix.
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      <span id='ringcounter'></span>Ring Counter
+    </p>
+  
+    <p class='mb-3'>
+      Six <strong>Consecutive</strong> active signals that cycle continuously with every beat of the system clock
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          <strong>Ring Pulse</strong> or <strong>Ring Counter Pulse</strong> When the signal becomes active (ring pulse T0 means when T0 becomes active)
+        </li>
+      
+    </ul>
+  
+    <p class='mb-3'>
+      <a href='https://www.electronics-tutorials.ws/sequential/seq_6.html' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>A useful article about ring counters</a> <a href='#table2' class='text-blue-600 mavenLinkBold hover:underline'>Table 2</a>
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Control Matrix
+    </p>
+  
+    <p class='mb-3'>
+      Most important part of the control unit The control matrix sends out signals to every register in the computer as shown in <a href='#figure1' class='text-blue-600 mavenLinkBold hover:underline'>Figure 1</a> and facilitates all of the instructions listed in <a href='#table1' class='text-blue-600 mavenLinkBold hover:underline'>Table 1</a> using those signals.
+    </p>
+  
+        </li>
+      
+    </ul>
+  
+    <h2 id='figure-3' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  <span id='figure3'></span>Figure 3
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#figure-3' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
+    <p class='mb-3'>
+      A visualization of the inner workings of the ring counter <img src='old-classes/comp-systems/images/figure3.png' alt='images/figure3.png' />
+    </p>
+  
+    <h2 id='figure-4' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  <span id='figure4'></span>Figure 4
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#figure-4' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
+    <p class='mb-3'>
+      A visualization of the inner working of the Instruction Decoder. Shows how each opcode corresponds to an output line. <img src='old-classes/comp-systems/images/figure4.png' alt='images/figure4.png' />
+    </p>
+  
+    <h2 id='table-2' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  <span id='table2'></span>Table 2
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#table-2' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
+    <p class='mb-3'>
+      Times at which each <strong>Control Signal</strong> must be active in order to execute the hard-wired Basic Computer's instructions. <img src='old-classes/comp-systems/images/table2.png' alt='images/table2.png' />
+    </p>
+  
+    <h3 id='fetch-instruction' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  <span id='fetch'></span>Fetch instruction
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#fetch-instruction' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <p class='mb-3'>
+      The fetch instruction is executed every time the <a href='#ringcounter' class='text-blue-600 mavenLinkBold hover:underline'>Ring Counter</a> loops. This facilitates the next instruction being sent to the Control unit. This instruction is actually executed during the same ring counter loop as any other instructions. So when an opcode is sent to the control matrix, fetch is executed <strong>And</strong> whatever instruction is specified by the opcode. This ensures that the next instruction is fetched by the end of the ring counter loop.
+    </p>
+  
+    <h3 id='how-does-the-computer-choose-which-signals-to-use-for-an-opcode' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  How does the computer choose which signals to use for an opcode?
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#how-does-the-computer-choose-which-signals-to-use-for-an-opcode' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          LM signal for example, the signal to load data into MAR according to <a href='#figure1' class='text-blue-600 mavenLinkBold hover:underline'>Figure 1</a> LM has a T3 on the LDA and SDA Rows and a T0 on the Fetch row
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          An AND operation is performed between each Tx and its instruction signal (in the column).
+        </li>
+      
+        <li>
+          An OR operation is performed between each AND operation.
+        </li>
+      
+        <li>
+          As this can be represented with <strong>bits</strong> (1s or 0s) These operations can be simplified to an arithmetic expression <strong>LM = T0 + T3*LDA + T3*STA</strong>. T0 does not need an AND because the fetch instruction is executed every ring counter cycle.
+        </li>
+      
+        <li>
+          According to the expression: LM is active when T0 is active and when T3 and (LDA or STA) is active
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          JN(jump negative) Row All Tx in this row have an AND operation with the value of NF(<a href='#negativeflag' class='text-blue-600 mavenLinkBold hover:underline'>Negative Flag</a>) as well as the instruction signal JN. This provides another level of conditional logic based on the value of the ACC negative flag. The arithmetic expression for the LP column is: <strong>LP = T3*JN*NF + T3*JMP(Jump)</strong>
+        </li>
+      
+        <li>
+          A list of all the conditional expressions for the control signals (where * = AND, + = OR) is located in <a href='#figure6' class='text-blue-600 mavenLinkBold hover:underline'>Figure 6</a>
+        </li>
+      
+    </ul>
+  
+    <h2 id='figure-5' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  <span id='figure5'></span>Figure 5
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#figure-5' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
+    <p class='mb-3'>
+      A hard wired example of how the control matrix would work <img src='old-classes/comp-systems/images/figure5.png' alt='images/figure5.png' />
+    </p>
+  
+    <h2 id='figure-6' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  <span id='figure6'></span>Figure 6
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#figure-6' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
+    <p class='mb-3'>
+      A list of possible conditional expressions for the example computer. <img src='old-classes/comp-systems/images/figure6.png' alt='images/figure6.png' />
+    </p>
+  
+    <h1 id='micro-programmed-control-unit' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Micro-programmed Control Unit
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#micro-programmed-control-unit' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <p class='mb-3'>
+      In the Hard Wired control unit example, the signals that come from the control matrix do so because of an actual circuit that is wired to perform the conditional logic shown in <a href='#figure5' class='text-blue-600 mavenLinkBold hover:underline'>Figure 5</a>. In a <strong>Micro-Programmed</strong> <strong>Control Unit</strong> an opcode is sent to the Control unit where it fetches a list of <strong>Micro-Instructions</strong> that together perform the instruction from a memory. The control unit can be thought of as a Computer within a computer.
+    </p>
+  
+    <h2 id='micro-routine' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Micro-routine
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#micro-routine' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
+    <p class='mb-3'>
+      A <strong>micro-routine</strong> is a set of <strong>Micro-Instructions</strong> that implement an <strong>instruction</strong>.
+    </p>
+  
+    <h3 id='micro-instruction' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Micro-Instruction
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#micro-instruction' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <p class='mb-3'>
+      Similar to the instruction in a hard-wired computer, the micro-instruction operates on the hard wired circuits within the control unit. A micro-instruction is composed of bits that might correspond to a control signal(LM for example).
+    </p>
+  
+    <h2 id='figure-7' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Figure 7
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#figure-7' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
+    <p class='mb-3'>
+      A block diagram of an example micro-programmed control unit. <img src='old-classes/comp-systems/images/figure7.png' alt='images/figure7.png' />
+    </p>
+  
+    <h3 id='x-24-control-romread-only-memory' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  32 X 24 Control ROM(Read-only memory)
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#x-24-control-romread-only-memory' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          32 24-bit long <strong>Micro-Instructions</strong> can be stored in the ROM memory A <strong>Word</strong> is 24 bits in the context of the micro-programmable Control unit
+        </li>
+      
+        <li>
+          Micro-instructions in this example are composed of two fields
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          16-bit control signal field Each bit corresponds to a control signal
+        </li>
+      
+        <li>
+          8-bit next-address field address(in ROM) of next micro-instruction to be executed. which permits additional Boolean logic shown in <a href='#figure8' class='text-blue-600 mavenLinkBold hover:underline'>Figure 8</a>.
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          Micro-instructions(<strong>Words</strong>) from the Control ROM are fed into the micro-instruction register.
+        </li>
+      
+    </ul>
+  
+    <h3 id='bit-micro-instruction-register' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  24-bit Micro-instruction Register
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#bit-micro-instruction-register' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          analogous to the external computer's <a href='#IR' class='text-blue-600 mavenLinkBold hover:underline'>Instruction Register</a>.
+        </li>
+      
+        <li>
+          16 signal lines are the same as the lines coming from the control matrix in <a href='#figure2' class='text-blue-600 mavenLinkBold hover:underline'>Figure 2</a> and are connected to the signal pins shown in <a href='#figure1' class='text-blue-600 mavenLinkBold hover:underline'>Figure 1</a>.
+        </li>
+      
+        <li>
+          triggered by a falling clock edge <a href='https://en.wikipedia.org/wiki/Signal_edge' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>See this article about signal edges</a>
+        </li>
+      
+    </ul>
+  
+    <h3 id='micro-counter-register' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  micro-counter register
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#micro-counter-register' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Analogous to the external computer's <a href='#PC' class='text-blue-600 mavenLinkBold hover:underline'>Program counter Register</a>
+        </li>
+      
+        <li>
+          recieves input from the <strong>Multiplexer</strong>
+        </li>
+      
+        <li>
+          triggered by a rising clock edge. <a href='https://en.wikipedia.org/wiki/Signal_edge' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>signal edges</a>
+        </li>
+      
+    </ul>
+  
+    <h3 id='multiplexer-data-selector' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Multiplexer (data selector)
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#multiplexer-data-selector' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <p class='mb-3'>
+      Chooses between 3 values to send to the micro-counter register
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          Output of Address ROM
+        </li>
+      
+        <li>
+          Output from Current Address Incrementer
+        </li>
+      
+        <li>
+          Address stored in next-address field of the current micro-instruction (CRJA)
+        </li>
+      
+        <li>
+          The conditional logic is shown in the description of <a href='#figure8' class='text-blue-600 mavenLinkBold hover:underline'>Figure 8</a>
+        </li>
+      
+    </ul>
+  
+    <h3 id='x-5-address-rom' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  16 X 5 Address ROM
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#x-5-address-rom' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <p class='mb-3'>
+      Fed by outer computer's <a href='#IR' class='text-blue-600 mavenLinkBold hover:underline'>Instruction Register</a>. The contents of the Instruction Register can be found in <a href='#table3' class='text-blue-600 mavenLinkBold hover:underline'>Table 3</a>
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          maps opcode of external computer's instruction to starting address of corresponding micro-routine. The first Micro-Instruction of the routine
+        </li>
+      
+        <li>
+          Address zero of Address ROM contains address of fetch routine in the Control ROM
+        </li>
+      
+        <li>
+          Other addresses in ROM correspond to the opcodes(external computer) in <a href='#table1' class='text-blue-600 mavenLinkBold hover:underline'>Table 1</a> addresses are of micro-routines in Control ROM
+        </li>
+      
+    </ul>
+  
+    <h3 id='note-about-signal-edges' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Note about signal edges
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#note-about-signal-edges' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <p class='mb-3'>
+      The micro-counter is triggered by a rising clock edge (along with all operations in data path in <a href='#figure1' class='text-blue-600 mavenLinkBold hover:underline'>Figure 1</a>). The Micro-instruction register is triggered by a falling clock edge. In a series of steps:
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          micro-counter is triggered (positive edge), presenting the new Micro-instruction address to the control ROM
+        </li>
+      
+        <li>
+          Previous micro-instruction is converted to signals which are sent to external system
+        </li>
+      
+        <li>
+          control ROM presents micro-instruction <strong>Word</strong> to micro-instruction register
+        </li>
+      
+        <li>
+          Micro-instruction register is triggered (negative edge) causing it to receive the micro-instruction <strong>Word</strong>
+        </li>
+      
+    </ul>
+  
+    <h2 id='table-3' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  <span id='table3'></span>Table 3
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#table-3' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
+    <p class='mb-3'>
+      Mapping of Op-codes to the contents of the Address ROM in the Control Unit <img src='old-classes/comp-systems/images/table3.png' alt='images/table3.png' />
+    </p>
+  
+    <h3 id='example-using-the-add-instruction' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Example using the ADD instruction
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#example-using-the-add-instruction' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <p class='mb-3'>
+      ADD instruction has the 3 opcode which maps to the 09 micro-routine start address. The address is then goes to the multiplexer -&gt; micro-counter -&gt; Control ROM -&gt; Micro-instruction register
+    </p>
+  
+    <h2 id='figure-8' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  <span id='figure8'></span>Figure 8
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#figure-8' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
+    <p class='mb-3'>
+      Next address field of the micro-instruction register. <img src='old-classes/comp-systems/The_Basic_Computer/Figure8.jpg' alt='The_Basic_Computer/Figure8.jpg' />
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          CD is condition bit when CD is 1 (MAP is zero) the multiplexer's select lines produce a 00 or a 10 (binary) based on the <a href='#negativeflag' class='text-blue-600 mavenLinkBold hover:underline'>Negative Flag</a> of the ACC register (of external computer). 00 00 selects incrementer address, 10 selects CRJA address
+        </li>
+      
+        <li>
+          MAP causes next microinstruction to be obtained from address ROM When the MAP bit is 1 (Multiplexer's select line produce a 01(binary) (selects the address ROM))
+        </li>
+      
+        <li>
+          HLT stops clock, terminating execution of activities in the entire computer
+        </li>
+      
+        <li>
+          CRJA (5 bits) is the control ROM jump address field (next-address field). When (CD, MAP is 0) then multiplexer's select lines produce a 10(binary), selecting the CRJA field as the address to the next micro-instruction (in Control ROM).
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          With no branches, (CD=0, MAP=0, CRJA = address of next instruction in routine)
+        </li>
+      
+        <li>
+          Last micro-instruction in the fetch routine should have map=1 to take an instruction from the address ROM
+        </li>
+      
+        <li>
+          The last micro-instruction in a routine should have 00000(binary) as its CRJA field, CD=0, MAP=0 branching back to the fetch micro-routine.
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  
+    <h2 id='table-4' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  <span id='table4'></span>Table 4
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#table-4' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
+    <p class='mb-3'>
+      A micro-program (set of all micro-routines) that implements described instruction set from <a href='#table1' class='text-blue-600 mavenLinkBold hover:underline'>table1</a> When loaded into Control ROM
+    </p>
+  <img class='inline mb-3' src='old-classes/comp-systems/images/table4.png' alt style='width: inherit;' />
+    <h3 id='microroutine-name-mnemonic' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Microroutine Name (Mnemonic)
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#microroutine-name-mnemonic' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <p class='mb-3'>
+      The functional shortened name of each operation specified by the op-codes (Load Accumulator = LDA = 1) Used in assembly programming.
+    </p>
+  
+    <h3 id='columns-micro-instruction-address-to-address-of-next-micro-instruction' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Columns Micro-Instruction Address to Address of Next Micro-Instruction
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#columns-micro-instruction-address-to-address-of-next-micro-instruction' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <p class='mb-3'>
+      When taken together, forms the raw contents (changing hexadecimal to binary) of the Micro Control ROM
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Address-ROM Address (Op-code)
+    </p>
+  
+    <p class='mb-3'>
+      input of instruction from external computer that is equivalent to first address of Micro-instruction in micro-routine.
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Micro-Instruction Address
+    </p>
+  
+    <p class='mb-3'>
+      Micro-Instruction addresses (2 bits) listed sequentially as part of a micro-routine
+    </p>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          LDA micro-routine = Opcode 1
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          03
+        </li>
+      
+        <li>
+          04
+        </li>
+      
+        <li>
+          05
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Control Signal Field
+    </p>
+  
+    <p class='mb-3'>
+      Same order of signals (bits) as the in <a href='#table2' class='text-blue-600 mavenLinkBold hover:underline'>Table 2</a> bits are equivalent to signals which are equivalent to pins.
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      CD
+    </p>
+  
+    <p class='mb-3'>
+      Conditional bit, when 1 causes multiplexer to depend on value of <a href='#negativeflag' class='text-blue-600 mavenLinkBold hover:underline'>NF</a> if MAP bit is 0
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      MAP
+    </p>
+  
+    <p class='mb-3'>
+      When MAP bit is 1, multiplexer sends address of the first Micro-Instruction for the next micro-routine
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Halt
+    </p>
+  
+    <p class='mb-3'>
+      When HLT bit is 1, the Micro-Instruction Register will trigger the HALT signal, stopping the clock.
+    </p>
+  
+        </li>
+      
+        <li>
+          
+    <p class='mb-3'>
+      Address of Next micro-instruction
+    </p>
+  
+    <p class='mb-3'>
+      Only matters if HLT and MAP are not 1 (arbitrary values). The Micro-Instruction Address of the next Micro-Instruction in a non-branching program. Refer to description of <a href='#figure8' class='text-blue-600 mavenLinkBold hover:underline'>Figure 8</a> for more explanation.
+    </p>
+  
+        </li>
+      
+    </ul>
+  
+    <h3 id='comment' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+      
+  Comment
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#comment' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h3>
+  
+    <p class='mb-3'>
+      This column provides a simple explanation for what happens in the micro-programmable control unit after each Micro-Instruction.
+    </p>
+  
+    <h2 id='FETCH' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  Fetch micro-routine
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#FETCH' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Control ROM addresses 0, 1, 2 (3 Micro-Instructions)
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          Micro-Instruction 0
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Activates control Signal bits EP, LM
+        </li>
+      
+        <li>
+          Moves data from the <a href='#PC' class='text-blue-600 mavenLinkBold hover:underline'>Program Counter Register</a> to the <a href='#MAR' class='text-blue-600 mavenLinkBold hover:underline'>Memory Access Register</a>
+        </li>
+      
+        <li>
+          MAR now contains address in RAM of the next instruction
+        </li>
+      
+        <li>
+          CD and MAP bits are zero, next Micro-Instruction corresponds to the address in the CRJA field (Micro-Instruction 1)
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          Micro-Instruction 1
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Activates control Signal bit R
+        </li>
+      
+        <li>
+          Reads the data at adress MAR into <a href='#MDR' class='text-blue-600 mavenLinkBold hover:underline'>Memory Data Register</a> from RAM
+        </li>
+      
+        <li>
+          CD and MAP bits are zero, use CRJA field again (Micro-Instruction 2)
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          Micro-Instruction 2
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Activates control Signal bits ED, LI, IP
+        </li>
+      
+        <li>
+          ED, LI moves the <strong>Word</strong> from MDR to the <a href='#IR' class='text-blue-600 mavenLinkBold hover:underline'>Instruction Register</a>
+        </li>
+      
+        <li>
+          IP increments the PC Register
+        </li>
+      
+        <li>
+          New instruction is in IR
+        </li>
+      
+        <li>
+          PC now points to the next instruction
+        </li>
+      
+        <li>
+          MAP is now 1, so the next micro-instruction is from Address ROM (specified by op-code)
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          Signal pin description is in <a href='#figure1' class='text-blue-600 mavenLinkBold hover:underline'>Figure 1</a>
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  
+    <h2 id='JN' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+      
+  JN micro-routine
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#JN' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h2>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Control ROM addresses 0F, 10, 11
+    <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
+      
+        <li>
+          Micro-Instruction 0F
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Does nothing except set the CD bit to 1
+        </li>
+      
+        <li>
+          Execution of the next micro-instruction now depends on value of <a href='#negativeflag' class='text-blue-600 mavenLinkBold hover:underline'>Negative Flag</a>
+        </li>
+      
+        <li>
+          If NF is 0, increments Micro Program counter 0F + 1 = 10, Micro-Instruction 10
+        </li>
+      
+        <li>
+          If NF is 1, uses CRJA field (Micro-Instruction 11)
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          Micro-Instruction 10
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Does nothing (no set signal bits)
+        </li>
+      
+        <li>
+          MAP, CD = 0, uses CRJA field (Micro-Instruction 00 (Fetch routine))
+        </li>
+      
+        <li>
+          <a href='#PC' class='text-blue-600 mavenLinkBold hover:underline'>PC</a> is not altered, so next instruction is executed normally
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+        <li>
+          Micro-Instruction 11
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Activates Control Signal Bits EI, LP
+        </li>
+      
+        <li>
+          Moves contents of <a href='#IR' class='text-blue-600 mavenLinkBold hover:underline'>IR</a>(least significan eight bits) to <a href='#PC' class='text-blue-600 mavenLinkBold hover:underline'>PC</a>
+        </li>
+      
+        <li>
+          Next Instruction at location corresponding to value of the least significant 8 bits of IR
+        </li>
+      
+        <li>
+          Control of the computer is transferred to the "Jump address"
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  
+        </li>
+      
+    </ul>
+  
+    <h1 id='hard-wired-vs.-micro-programmed-computers' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Hard-Wired vs. Micro-programmed Computers
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#hard-wired-vs.-micro-programmed-computers' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <ul class='my-3 ml-6 space-y-1 list-disc'>
+      
+        <li>
+          Large majority of computers today are micro-programmed
+        </li>
+      
+        <li>
+          Micro-programmed computers are much more flexible you don't have to make a new computer to change instruction set, only alter Control ROM
+        </li>
+      
+        <li>
+          Changing the firmware is the same as changing the contents of the Control ROM
+        </li>
+      
+        <li>
+          Hard-Wired architecture can not be easily(almost impossible) changed New architecture has do be designed at the hardware level (can't add new instructions easily)
+        </li>
+      
+        <li>
+          Hard-Wired computers are faster (micro-program doesn't have to react to input) and can be easier to manufacture (cheaper).
+        </li>
+      
+    </ul>
+  
+    <h1 id='old-figures' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+      
+  Old figures
+  
+  <a href='old-classes/comp-systems/hardvmicro.html#old-figures' class='--ema-anchor'>
+    <span class='hover:text-blue-400 group-hover:visible invisible cursor-pointer text-sm align-middle' aria-label='Copy link'><svg class='inline w-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'></path>
+        <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'></path>
+      </svg></span>
+  </a>
+
+
+    </h1>
+  
+    <p class='mb-3'>
+      <img src='old-classes/comp-systems/The_Basic_Computer/Figure1.JPG' alt='The_Basic_Computer/Figure1.JPG' /> <img src='old-classes/comp-systems/The_Basic_Computer/Figure2.GIF' alt='The_Basic_Computer/Figure2.GIF' /> <img src='old-classes/comp-systems/The_Basic_Computer/Figure3.GIF' alt='The_Basic_Computer/Figure3.GIF' /> <img src='old-classes/comp-systems/The_Basic_Computer/Figure4.GIF' alt='The_Basic_Computer/Figure4.GIF' /> <img src='old-classes/comp-systems/The_Basic_Computer/Figure5.GIF' alt='The_Basic_Computer/Figure5.GIF' /> <img src='old-classes/comp-systems/The_Basic_Computer/Figure6.png' alt='The_Basic_Computer/Figure6.png' /> <img src='old-classes/comp-systems/The_Basic_Computer/Figure7.GIF' alt='The_Basic_Computer/Figure7.GIF' /> <img src='old-classes/comp-systems/The_Basic_Computer/Figure8.jpg' alt='The_Basic_Computer/Figure8.jpg' /> <img src='old-classes/comp-systems/The_Basic_Computer/Table1.png' alt='The_Basic_Computer/Table1.png' /> <img src='old-classes/comp-systems/The_Basic_Computer/Table2.png' alt='The_Basic_Computer/Table2.png' /> <img src='old-classes/comp-systems/The_Basic_Computer/Table3.png' alt='The_Basic_Computer/Table3.png' /> <img src='old-classes/comp-systems/The_Basic_Computer/Table4.png' alt='The_Basic_Computer/Table4.png' />
+    </p>
+  
+  <div class='flex items-center justify-center mt-2'>
+  
+    
+      <a class='text-gray-300 hover:text-blue-600 text-sm' title='Edit this page on GitHub' href='https://github.com/IllustratedMan-code/Planner/blob/main/old-classes/comp-systems/hardvmicro.org'>
+        <svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'></path>
+        </svg>
+      </a>
+    
+  
+</div>
+</article>
+        </div>
+        <div class='hidden md:block md:col-span-2 md:border-l'>
+          <nav id='toc' class='hidden leading-relaxed md:block md:sticky md:top-0 md:max-h-screen md:overflow-y-auto'>
+  <div class='text-gray-600 text-sm -mt-2'>
+    
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Intro'>
+              <a href='old-classes/comp-systems/hardvmicro.html#intro' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Intro
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='The Basic Computer'>
+              <a href='old-classes/comp-systems/hardvmicro.html#the-basic-computer' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                The Basic Computer
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Two Principal functional parts'>
+              <a href='old-classes/comp-systems/hardvmicro.html#two-principal-functional-parts' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Two Principal functional parts
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Two types of control units'>
+              <a href='old-classes/comp-systems/hardvmicro.html#two-types-of-control-units' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Two types of control units
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='figure 1 '>
+              <a href='old-classes/comp-systems/hardvmicro.html#pathways' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                figure 1 
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Description of figure 1'>
+              <a href='old-classes/comp-systems/hardvmicro.html#description-of-figure-1' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Description of figure 1
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Arithmetic-Logic-Unit (ALU)'>
+              <a href='old-classes/comp-systems/hardvmicro.html#arithmetic-logic-unit-alu' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Arithmetic-Logic-Unit (ALU)
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='RAM memory'>
+              <a href='old-classes/comp-systems/hardvmicro.html#ram-memory' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                RAM memory
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Program Counter (PC) Register'>
+              <a href='old-classes/comp-systems/hardvmicro.html#program-counter-pc-register' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Program Counter (PC) Register
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title="Computer's Instruction Set">
+              <a href='old-classes/comp-systems/hardvmicro.html#computers-instruction-set' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Computer's Instruction Set
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Instruction'>
+              <a href='old-classes/comp-systems/hardvmicro.html#instruction' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Instruction
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='operation code (opcode)'>
+              <a href='old-classes/comp-systems/hardvmicro.html#operation-code-opcode' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                operation code (opcode)
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='operand'>
+              <a href='old-classes/comp-systems/hardvmicro.html#operand' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                operand
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Table 1'>
+              <a href='old-classes/comp-systems/hardvmicro.html#table-1' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Table 1
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Table 1 description'>
+              <a href='old-classes/comp-systems/hardvmicro.html#table-1-description' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Table 1 description
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Hard-Wired Control Unit'>
+              <a href='old-classes/comp-systems/hardvmicro.html#hard-wired-control-unit' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Hard-Wired Control Unit
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Figure 2 '>
+              <a href='old-classes/comp-systems/hardvmicro.html#figure-2' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Figure 2 
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Description of Figure 2'>
+              <a href='old-classes/comp-systems/hardvmicro.html#description-of-figure-2' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Description of Figure 2
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Figure 3'>
+              <a href='old-classes/comp-systems/hardvmicro.html#figure-3' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Figure 3
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Figure 4'>
+              <a href='old-classes/comp-systems/hardvmicro.html#figure-4' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Figure 4
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Table 2'>
+              <a href='old-classes/comp-systems/hardvmicro.html#table-2' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Table 2
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Fetch instruction'>
+              <a href='old-classes/comp-systems/hardvmicro.html#fetch-instruction' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Fetch instruction
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='How does the computer choose which signals to use for an opcode?'>
+              <a href='old-classes/comp-systems/hardvmicro.html#how-does-the-computer-choose-which-signals-to-use-for-an-opcode' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                How does the computer choose which signals to use for an opcode?
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Figure 5'>
+              <a href='old-classes/comp-systems/hardvmicro.html#figure-5' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Figure 5
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Figure 6'>
+              <a href='old-classes/comp-systems/hardvmicro.html#figure-6' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Figure 6
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Micro-programmed Control Unit'>
+              <a href='old-classes/comp-systems/hardvmicro.html#micro-programmed-control-unit' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Micro-programmed Control Unit
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Micro-routine'>
+              <a href='old-classes/comp-systems/hardvmicro.html#micro-routine' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Micro-routine
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Micro-Instruction'>
+              <a href='old-classes/comp-systems/hardvmicro.html#micro-instruction' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Micro-Instruction
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Figure 7'>
+              <a href='old-classes/comp-systems/hardvmicro.html#figure-7' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Figure 7
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='32 X 24 Control ROM(Read-only memory)'>
+              <a href='old-classes/comp-systems/hardvmicro.html#x-24-control-romread-only-memory' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                32 X 24 Control ROM(Read-only memory)
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='24-bit Micro-instruction Register'>
+              <a href='old-classes/comp-systems/hardvmicro.html#bit-micro-instruction-register' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                24-bit Micro-instruction Register
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='micro-counter register'>
+              <a href='old-classes/comp-systems/hardvmicro.html#micro-counter-register' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                micro-counter register
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Multiplexer (data selector)'>
+              <a href='old-classes/comp-systems/hardvmicro.html#multiplexer-data-selector' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Multiplexer (data selector)
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='16 X 5 Address ROM'>
+              <a href='old-classes/comp-systems/hardvmicro.html#x-5-address-rom' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                16 X 5 Address ROM
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Note about signal edges'>
+              <a href='old-classes/comp-systems/hardvmicro.html#note-about-signal-edges' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Note about signal edges
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Table 3'>
+              <a href='old-classes/comp-systems/hardvmicro.html#table-3' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Table 3
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Example using the ADD instruction'>
+              <a href='old-classes/comp-systems/hardvmicro.html#example-using-the-add-instruction' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Example using the ADD instruction
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Figure 8'>
+              <a href='old-classes/comp-systems/hardvmicro.html#figure-8' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Figure 8
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Table 4'>
+              <a href='old-classes/comp-systems/hardvmicro.html#table-4' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Table 4
+              </a>
+              
+        <ul class='ml-2'>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Microroutine Name (Mnemonic)'>
+              <a href='old-classes/comp-systems/hardvmicro.html#microroutine-name-mnemonic' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Microroutine Name (Mnemonic)
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Columns Micro-Instruction Address to Address of Next Micro-Instruction'>
+              <a href='old-classes/comp-systems/hardvmicro.html#columns-micro-instruction-address-to-address-of-next-micro-instruction' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Columns Micro-Instruction Address to Address of Next Micro-Instruction
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Comment'>
+              <a href='old-classes/comp-systems/hardvmicro.html#comment' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Comment
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Fetch micro-routine'>
+              <a href='old-classes/comp-systems/hardvmicro.html#FETCH' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Fetch micro-routine
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='JN micro-routine'>
+              <a href='old-classes/comp-systems/hardvmicro.html#JN' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                JN micro-routine
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Hard-Wired vs. Micro-programmed Computers'>
+              <a href='old-classes/comp-systems/hardvmicro.html#hard-wired-vs.-micro-programmed-computers' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Hard-Wired vs. Micro-programmed Computers
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+            <li class='whitespace-nowrap truncate mt-2' title='Old figures'>
+              <a href='old-classes/comp-systems/hardvmicro.html#old-figures' class='--ema-toc bg-blue-200 rounded-md p-0.5'>
+                Old figures
+              </a>
+              
+        <ul class='ml-2'>
+          
+        </ul>
+      
+            </li>
+          
+        </ul>
+      
+  </div>
+  <script>
+    // Highlight the TOC, based from https://stackoverflow.com/a/75346369
+    // TODO: We should get rid of JavaScript! See https://github.com/srid/emanote/issues/520
+    function highlightTOC() {
+      // Grab the toc links
+      const links = document.querySelectorAll("ul > li > a.--ema-toc");
+
+      // Find the matching anchors in the document body
+      const sections = [];
+      links.forEach((link) => {
+        let found = {};
+        for (section of document.querySelectorAll("a.--ema-anchor")) {
+          if (link.href == section.href) {
+            found = section;
+            break;
+          }
+        }
+        sections.push(found);
+      });
+
+      // Current toc link is marked with the following class
+      const mark = "toc-item-active";
+
+      // Set window scroll handler to update the toc mark.
+      window.onscroll = () => {
+        // Remove previous mark
+        links.forEach((link) => {
+          link.classList.remove(mark);
+        });
+
+        // Mark the link of the section that is in view, starting from the end
+        let marked = false;
+        for (var i = sections.length - 1; i >= 0; i--) {
+          if (window.scrollY > sections[i].offsetTop - 80) {
+            links[i].classList.add(mark);
+            marked = true;
+            break;
+          }
+        }
+
+        // Special case for the first and last section which might not reach the top
+        if (!marked && window.scrollY > 0) {
+          let i = 0;
+          if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight) {
+            // We are at the bottom
+            i = links.length - 1
+          }
+          links[i].classList.add(mark);
+        }
+      };
+    }
+    highlightTOC();
+  </script>
+</nav>
+        </div>
+      </div>
+      
+    <div class='flex flex-col lg:flex-row lg:space-x-2'>
+      
+      
+    </div>
+    
+  <section class='flex flex-wrap items-end justify-center my-4 space-x-2 space-y-2 font-mono text-sm'>
+    
+  </section>
+
+    <!-- What goes in this file will at the very end of the main div -->
+  </main>
+</div>
+        </div>
+        
+      <footer class='flex items-center justify-center mt-2 mb-8 space-x-4 text-center text-gray-800'>
+  
+  <div>
+    <a href='' title='Go to Home page'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'></path>
+      </svg>
+    </a>
+  </div>
+  <div>
+    <a href='-/all.html' title='View Index'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'></path>
+      </svg>
+    </a>
+  </div>
+  <div>
+    <a href='https://emanote.srid.ca' target='_blank' title='Generated by Emanote 1.3.17.1'>
+      <img class='w-6 h-6 hover:text-blue-700' src='_emanote-static/emanote-logo.svg' />
+    </a>
+  </div>
+  <div>
+    <a href='-/tags.html' title='View tags'>
+      <svg class='w-6 h-6 hover:text-blue-700' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'>
+        </path>
+      </svg>
+    </a>
+  </div>
+  <div>
+    <a href='-/tasks.html' title='View tasks'>
+      <svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 hover:text-blue-700' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+      </svg>
+    </a>
+  </div>
+</footer>
+    </div>
+  
+  <div id='stork-search-container' class='hidden fixed w-screen h-screen inset-0 backdrop-filter backdrop-blur-sm'>
+  <div class='fixed w-screen h-screen inset-0' onclick='window.emanote.stork.toggleSearch()'></div>
+
+  <div class='container mx-auto p-10 mt-10'>
+    <div class='stork-wrapper-flat container mx-auto'>
+      <input id='stork-search-input' data-stork='emanote-search' class='stork-input' placeholder='Search (Ctrl+K) ...' />
+      <div data-stork='emanote-search-output' class='stork-output'></div>
+    </div>
+  </div>
+</div>
+  
+    
+  
+</body>
+
+</html>
