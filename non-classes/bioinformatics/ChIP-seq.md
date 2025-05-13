@@ -4,6 +4,8 @@ title: ChIP-seq
 
 # Useful Resources
 
+[Wikipedia](https://en.wikipedia.org/wiki/ChIP_sequencing)
+
 [Practical Guidelines for ChIP-seq analysis](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3828144/)
 
 # Overview

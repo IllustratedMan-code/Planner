@@ -1,0 +1,49 @@
+#+title: wet lab meeting 1
+#+date:<2025-05-09 Fri>
+
+* Diego Introductions
+- post-doc under Matt
+
+* VTR project (Matt Hass)
+- making stable HEK cells
+** Initial steps
+- Alphafold
+- transient transfection
+
+** VZV ORF29
+
+
+** VZV IE63
+- very little structure
+
+* Molly
+- MPRA atopic dermatitis
+- Paper in review
+- EMSA with recombinant JuneB (AP1) protein?
+
+** EMSA with recombinant JuneB proteins
+- dissapointing (didn't bind)
+- should like to bind AP1 proteins and homerdimerizes
+- Motif is found, but not through EMSA
+- No positive control
+- Is recombinant protein functional?
+- AP1-ChIP 
+
+* Lois
+- MPRA (genotype dependant binding)
+- CRISPR interfenerence screen
+- Wittle down plates
+- Knockdown efficiency of different gRNAs?
+- eQTL scores
+- Jerkit Cells?
+- Nextflow pipeline
+
+* Areme Diouf
+- vTR HSV1
+- vTR CMV
+- vTR KSHV
+  
+** Western Blots
+- Messy but informative
+
+

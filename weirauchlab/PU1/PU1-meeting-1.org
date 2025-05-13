@@ -1,0 +1,80 @@
+#+title: PU.1 Project Meeting 1
+#+date: <2025-05-09 Fri>
+* Starting Notes 
+
+** Wiki
+
+Add details about figures to wiki (add seperate figures page)
+
+** Add column to metadata
+- paper annotations 
+
+** Papers to read
+
+Pu.1.pdf in teams is highest priority. (only looks at one cell type).
+
+** TODO Figure 1
+
+Make UMAP instead of PCA.
+
+- What is the original dimension of the space?
+
+*** Expression data
+
+PU1 peak count doesn't match expression.
+
+- Protein Atlas SPI1 to get PU.1 (6)
+- Casey might know about Databases containing single cell expression data
+
+
+** Figure 2
+- GREAT has a peak limit so we can't find nearby genes.
+- nearest gene?
+- Bring Figure 2 to lab meeting
+
+*** B.
+
+Remake figure 2.B Shreeja has code.
+
+*** TODO C. (Pathway Analysis)
+
+- Hallmark Pathway analysis (bring up in computational meeting).
+
+** Figure 3
+
+Order columns by amount of SPI1 (ets) and  move SPI1 to bottom.
+
+Change long (small font) name to Shared PU.1 Peaks
+
+*** B.
+
+- SPAMO: MEME suite. Gives related motifs (co-occuring). html reports are in project directory.
+- look at other papers to see spamo results.
+
+*** C.
+
+Genome browser shots. PU.1 related motifs from literature
+
+** Figure 4 Mario (Top Priority)
+
+2018 John Harley, Matt (MARIO)
+
+Mario looks at allelic imbalance. Should be run on as many cell lines as possible (Bullock and neutrophils).
+
+Requires genotype data.
+- Download VCF files from EGA (EGAC00001000135)
+  
+** Pathway analysis
+
+How should we do it?
+
+  
+** Phenotype Reli (low priority)
+- Need to wait
+
+** Extra notes
+Look up Wilbur Lam MD, PhD
+
+Anemia photo detector (fingernails).
+
+

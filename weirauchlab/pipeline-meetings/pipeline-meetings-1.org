@@ -1,0 +1,24 @@
+#+title: Pipeline Meeting 1
+#+date:<2025-05-12 Mon>
+
+
+* Additional Genome Information
+- Do we pre-concatenate or concatenate within the pipeline
+- Useful for QC
+  
+** VTR
+Useful for VTR.
+- HG38 + VTR fasta info that we are studying
+
+  #+begin_quote
+Don't care about ATAC and ChIP 
+
+- Philip
+#+end_quote
+
+
+** What do we do when Kevin leaves?
+
+Shreeja is making panic page on wiki.
+
+

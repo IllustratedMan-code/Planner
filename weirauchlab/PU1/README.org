@@ -1,0 +1,23 @@
+#+title: PU.1 Project Description
+
+** Central Objective
+
+Identify Causal variants for altered PU.1 activity and their cell-type associations.
+
+*** Focus points
+
+- Get Enough Peaks (make sure I am satisfied with the quality and quantity of data)
+
+- Get Finished GWAS (updated GWAS)
+
+
+** Timeline
+
+Try to get it done by the end of the Fall.
+
+* HPV
+
+Sit down with Phil about it.
+
+
+VTR (learn about)

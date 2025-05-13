@@ -1,0 +1,53 @@
+
+#+title: Weirauch Lab Meeting 1
+#+date:<2025-05-07 Wed> 
+
+
+* Details about HPV project
+
+Experiments are done in Hek293. HCT-116 cell data is available but difficult.
+ChIP-seq data (Phillip) conflicts based on cell type (Hek vs HCT). Many more usable reads
+in Hek than HCT. Likely the experiments were bad, not the cell type. 
+
+** Potential transcriptional regulators in HPV
+Proteins:
+- E2
+- E6
+- E7
+
+** Similar to EBV paper (Phillip and Lee)
+- EBV paper is simpler (fewer risk factors)
+- What make HPV-16 a high risk strain.
+
+
+
+* MultiQC
+
+** Kraken
+- Percentage of reads that align with the top species (usually human)
+
+** Picard
+- Fragment length
+- nucleosome free region (150)
+
+** Deeptools
+- fingerprint plot should be non-linear (curve closer to 0)
+- line with slope of 1 represents random
+  
+** ENCODE
+- IDR = peak calling
+  
+
+* Definitions
+
+** HCT-116
+- colon cancer cell line.
+- Flippin reagents work in only a small number of cell types (including HCT-116).
+- HPV literature uses HCT-116
+
+** HPV-16
+- A high risk strain of human papilloma virus
+
+** Hek293 Cells
+- Hek293 cells (not a great model of specific cell types). Useful for making proteins.
+

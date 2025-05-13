@@ -1,0 +1,45 @@
+#+title: TF meeting 1
+#+date:<2025-05-09 Fri>
+
+
+* Ebola P01
+
+Dysregulated immune response to ebola virus
+
+
+** experimental design
+
+*** Cell types
+
+- CD4+
+- CD8+
+- Monocytes
+
+*** Day 4
+
+- RNA-seq
+- ATAC-seq
+- CUT&RUN
+  
+*** Day 6
+
+Animals were not doing well at this point, so this was the final time step.
+
+- RNA-seq
+- ATAC-seq
+- CUT&RUN
+
+** EBOV gene expression across cell types
+
+- mock on day 4 was lost
+- CD8 and Monocytes are similar
+
+
+** Tissue specific points
+
+Higher expression in the kidney
+
+
+** ATAC
+
+CD4 and CD8 have many more differentially available peaks.
