@@ -1,0 +1,21 @@
+
+* TODO How were the .fa files for SPAMO created?
+
+* TODO How were the protein atlas files filtered for SPI1?
+
+* DONE Where is the PCA code?
+
+** ANSWER
+The PCA code is in =manuscript/Figures/PCA=
+
+** TODO Where did =Copy of PU1_MARIO_analysis_summary_statistics_MSS.xlsx= come from?
+
+What is it for?
+
+** TODO Where to =samplesheet.csv= come from?
+
+Are they manually generated?
+
+
+
+

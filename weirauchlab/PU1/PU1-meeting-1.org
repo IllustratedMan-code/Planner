@@ -13,7 +13,7 @@ Add details about figures to wiki (add seperate figures page)
 
 Pu.1.pdf in teams is highest priority. (only looks at one cell type).
 
-** TODO Figure 1
+** TODO Figure 1 (UMAP)
 
 Make UMAP instead of PCA.
 
