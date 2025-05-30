@@ -25,12 +25,19 @@
 
 .note-h1 {
     border-bottom: 0.1rem solid black;
+    padding-bottom: 0.3rem;
 }
 
 .note-h2 {
     border-bottom: 0.1rem solid gray;
+    border-left: 0.1rem solid gray;
+    padding-bottom: 0.3rem;
+    padding-left: 0.3rem;
 }
 
-.note-h2 {
+.note-h3 {
     border-bottom: 0.1rem dashed gray;
+    border-left: 0.1rem dashed gray;
+    padding-bottom: 0.3rem;
+    padding-left: 0.3rem;
 }
