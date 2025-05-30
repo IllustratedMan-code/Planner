@@ -10,6 +10,8 @@
 - Task list is too scattered at the moment
 - Weekly task cleanup?
 - Don't need David category (can assign people)
+** ANSWER
+- Might not need this at all 
 
  
 * Folder structure for supplement + Figures
@@ -23,12 +25,16 @@ manuscript/Supplemental_Tables/...
 - Need to make plan (in meeting with Matt)
 
 
-* TODO Are we using SPAMO?
+* DONE Are we using SPAMO?
+CLOSED: [2025-05-30 Fri 10:52]
 - Not listed in figure mockups
 - I might be doing this
+- Molly said she would send out an email about this
 
 * TODO Where do the bed files come from in GREAT folder?
 - Ask hreeja?
+** Tentative ANSWER
+- Our suspicion is that these come from the same place as the homer bed files
  
 
 * DONE Where do the bed files come from in Homer folder?
