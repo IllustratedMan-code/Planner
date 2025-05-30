@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -3996,7 +3950,7 @@
       
     </ul>
   
-    <h1 id='section-1' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='section-1' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   2.
   
@@ -4031,10 +3985,10 @@
     </ul>
   <pre class='pandoc-raw-"org"'>#+attr_latex: :width 8cm</pre>
     <p class='mb-3'>
-      <a href='xournalpp:lda.xopp' class='text-blue-600 mavenLinkBold hover:underline' data-linkicon='external'>xournalpp:lda.xopp</a>
+      <a href='xournalpp:lda.xopp' class='text-blue-600 font-semibold hover:underline' data-linkicon='external'>xournalpp:lda.xopp</a>
     </p>
   
-    <h1 id='section-2' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='section-2' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   3.
   
@@ -4057,10 +4011,10 @@
     </ul>
   <pre class='pandoc-raw-"org"'>#+attr_latex: :width 8cm</pre>
     <p class='mb-3'>
-      <a href='xournalpp:lda2.xopp' class='text-blue-600 mavenLinkBold hover:underline' data-linkicon='external'>xournalpp:lda2.xopp</a>
+      <a href='xournalpp:lda2.xopp' class='text-blue-600 font-semibold hover:underline' data-linkicon='external'>xournalpp:lda2.xopp</a>
     </p>
   
-    <h1 id='section-3' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='section-3' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   4.
   
@@ -4097,28 +4051,28 @@
         </li>
       
         <li>
-          <span class='math inline'>\(S_B \leftarrow \(\mu_1-\mu_2)(\mu_1-\mu_2)^T\)</span> <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Calculate between class matrix by multiplying the two mean vectors</code>
+          <span class='math inline'>\(S_B \leftarrow \(\mu_1-\mu_2)(\mu_1-\mu_2)^T\)</span> <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Calculate between class matrix by multiplying the two mean vectors</code>
         </li>
       
         <li>
-          <span class='math inline'>\(Z_i \leftarrow D_i-\mu_i^T, i = 1,2\)</span> <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Subtract the mean from matrix</code>
+          <span class='math inline'>\(Z_i \leftarrow D_i-\mu_i^T, i = 1,2\)</span> <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Subtract the mean from matrix</code>
         </li>
       
         <li>
-          <span class='math inline'>\(S_i \leftarrow Z^T_iZ_i, i= 1,2 \)</span> <code class='verbatim py-0.5 px-0.5 bg-gray-100'>S matrix is n * covariance matrix for each class</code>
+          <span class='math inline'>\(S_i \leftarrow Z^T_iZ_i, i= 1,2 \)</span> <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>S matrix is n * covariance matrix for each class</code>
         </li>
       
         <li>
-          <span class='math inline'>\(S_w \leftarrow S_1 + S_2\)</span> <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Calculate Sw by summing the two S matricies</code>
+          <span class='math inline'>\(S_w \leftarrow S_1 + S_2\)</span> <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Calculate Sw by summing the two S matricies</code>
         </li>
       
         <li>
-          <span class='math inline'>\(\lambda_1,w \leftarrow eigen(S^{-1}B)\)</span> <code class='verbatim py-0.5 px-0.5 bg-gray-100'>get dominant eigenvector,eigenvalue using the eigen function in the previous homework</code>
+          <span class='math inline'>\(\lambda_1,w \leftarrow eigen(S^{-1}B)\)</span> <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>get dominant eigenvector,eigenvalue using the eigen function in the previous homework</code>
         </li>
       
     </ul>
   
-    <h1 id='section-4' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='section-4' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   5.
   

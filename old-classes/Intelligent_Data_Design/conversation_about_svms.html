@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -2889,7 +2843,7 @@
 
 
 
-    <h1 id='explain-the-dual-formation-of-support-vector-machines' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='explain-the-dual-formation-of-support-vector-machines' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Explain the dual formation of support vector machines
   
@@ -2923,7 +2877,7 @@
       Overall, the dual form of the SVM optimization problem provides an efficient way to find the hyperplane that best separates the data points in a high-dimensional feature space, and allows for the use of kernel functions to handle non-linearly separable datasets.
     </p>
   
-    <h1 id='can-you-show-me-the-sequential-miniamal-optimization-algorithm-for-svms' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='can-you-show-me-the-sequential-miniamal-optimization-algorithm-for-svms' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   can you show me the sequential miniamal optimization algorithm for SVMs?
   
@@ -2981,7 +2935,7 @@
       Overall, the SMO algorithm is an iterative algorithm that updates the Lagrange multipliers alpha in a pairwise fashion until the termination condition is met.
     </p>
   
-    <h1 id='kernel-functions' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='kernel-functions' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Kernel functions
   
@@ -3031,7 +2985,7 @@
       This mapping function takes the input features and maps them to a higher-dimensional space, where the dot product of the mapped features is equivalent to the kernel function.
     </p>
   
-    <h1 id='gaussian-kernel-visualization' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='gaussian-kernel-visualization' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Gaussian kernel visualization
   
@@ -3044,7 +2998,7 @@
 
 
     </h1>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python code' kernel='python3' session='py'>import numpy as np
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python code' kernel='python3' session='py'>import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -3077,7 +3031,7 @@ ax.set_ylabel('y')
 ax.set_zlabel('kernel value')
 plt.show()
 
-</code></pre></div><div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python code' kernel='python3' session='py2'>import numpy as np
+</code></pre></div><div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python code' kernel='python3' session='py2'>import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import svm
 
@@ -3116,7 +3070,7 @@ for i in range(len(clf.dual_coef_[0])):
 
 plt.show()
 
-</code></pre></div><div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python code' kernel='python3' session='py2'>import numpy as np
+</code></pre></div><div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python code' kernel='python3' session='py2'>import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn import datasets, svm
@@ -3152,7 +3106,7 @@ ax.view_init(60, 120)
 plt.show()
 
 </code></pre></div>
-    <h1 id='naive-bayes' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='naive-bayes' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Naive bayes
   
@@ -3165,7 +3119,7 @@ plt.show()
 
 
     </h1>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='bash language-bash' results='code' wrap='export markdown'>chat "what can you tell me about the naive bayes algorithm for itemsets?"
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='bash language-bash' results='code' wrap='export markdown'>chat "what can you tell me about the naive bayes algorithm for itemsets?"
 </code></pre></div>
   <div class='flex items-center justify-center mt-2'>
   

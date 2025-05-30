@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -1881,7 +1835,7 @@
 
 
 
-    <h1 id='chapter-3' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='chapter-3' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Chapter 3
   
@@ -1895,7 +1849,7 @@
 
     </h1>
   
-    <h2 id='udp' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='udp' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   UDP
   
@@ -1928,7 +1882,7 @@
     <p class='mb-3'>
       A handy python script I came up with:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' tangle='exam.py' exports='code' session='py'># calculate checksum
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python' tangle='exam.py' exports='code' session='py'># calculate checksum
 def checksum(numbers, hex=False):
 
     if len(numbers) &gt; 3:
@@ -1953,7 +1907,7 @@ def checksum(numbers, hex=False):
 if __name__ == "__main__":
     print(checksum(["0110011001100000", "0101010101010101", "1000111100001100"]))
 </code></pre></div><pre class='pandoc-raw-"latex"'>\includepdf[pages=205-211, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}</pre>
-    <h2 id='tcp' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='tcp' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   TCP
   
@@ -1970,16 +1924,16 @@ if __name__ == "__main__":
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>LastByteRcvd - LastByteRead &lt;=RcvBuffer</code>
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>LastByteRcvd - LastByteRead &lt;=RcvBuffer</code>
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>rwnd = RcvBuffer - [LastByteRcvd - LastByteRead]</code>
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>rwnd = RcvBuffer - [LastByteRcvd - LastByteRead]</code>
         </li>
       
     </ul>
   
-    <h3 id='fast-retransmit' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='fast-retransmit' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   fast retransmit
   
@@ -2001,7 +1955,7 @@ if __name__ == "__main__":
       
     </ul>
   
-    <h3 id='flow-control' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='flow-control' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   flow control
   
@@ -2027,7 +1981,7 @@ if __name__ == "__main__":
       
     </ul>
   
-    <h3 id='three-way-handshake' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='three-way-handshake' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   three way handshake
   
@@ -2049,7 +2003,7 @@ if __name__ == "__main__":
       
     </ul>
   <pre class='pandoc-raw-"latex"'>\includepdf[pages=238-266, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}</pre>
-    <h2 id='tcp-congestion-control' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='tcp-congestion-control' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   TCP congestion control
   
@@ -2095,7 +2049,7 @@ if __name__ == "__main__":
       
     </ul>
   <pre class='pandoc-raw-"latex"'>\includepdf[pages=274-290, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}</pre>
-    <h1 id='chapter-4' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='chapter-4' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Chapter 4
   
@@ -2109,7 +2063,7 @@ if __name__ == "__main__":
 
     </h1>
   
-    <h2 id='ip' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='ip' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   IP
   
@@ -2155,7 +2109,7 @@ if __name__ == "__main__":
       
     </ul>
   <pre class='pandoc-raw-"latex"'>\includepdf[pages=341-364, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}</pre>
-    <h1 id='chapter-5' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='chapter-5' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Chapter 5
   
@@ -2169,7 +2123,7 @@ if __name__ == "__main__":
 
     </h1>
   
-    <h2 id='routing-algorithms' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='routing-algorithms' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Routing Algorithms
   
@@ -2195,7 +2149,7 @@ if __name__ == "__main__":
       
     </ul>
   <pre class='pandoc-raw-"latex"'>\includepdf[pages=391-406, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}</pre>
-    <h2 id='intra-as-routing-in-the-internet-ospf' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='intra-as-routing-in-the-internet-ospf' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Intra-AS routing in the internet: OSPF
   
@@ -2225,7 +2179,7 @@ if __name__ == "__main__":
       
     </ul>
   <pre class='pandoc-raw-"latex"'>\includepdf[pages=406-410, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}</pre>
-    <h2 id='routing-among-the-isps-bgp' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='routing-among-the-isps-bgp' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   ROuting among the ISPs: BGP
   
@@ -2255,7 +2209,7 @@ if __name__ == "__main__":
       
     </ul>
   <pre class='pandoc-raw-"latex"'>\includepdf[pages=410-422, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}</pre>
-    <h2 id='icmp' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='icmp' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   ICMP
   
@@ -2277,7 +2231,7 @@ if __name__ == "__main__":
       
     </ul>
   <pre class='pandoc-raw-"latex"'>\includepdf[pages=434-436, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}</pre>
-    <h1 id='chapter-6' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='chapter-6' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Chapter 6
   
@@ -2291,7 +2245,7 @@ if __name__ == "__main__":
 
     </h1>
   
-    <h2 id='error-detection-and-correction-techniques' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='error-detection-and-correction-techniques' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Error-Detection and Correction techniques
   
@@ -2317,7 +2271,7 @@ if __name__ == "__main__":
       
     </ul>
   <pre class='pandoc-raw-"latex"'>\includepdf[pages=465-472, pagecommand={}]{computer-networking-a-top-down-approach-8th-edition.pdf}</pre>
-    <h2 id='switched-local-area-networks' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='switched-local-area-networks' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Switched Local Area Networks
   

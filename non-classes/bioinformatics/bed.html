@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -1730,7 +1684,7 @@
     <p class='mb-3'>
       Bed (browser extensible data) files are a list of ranges within a genome.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='txt language-txt'>browser position chr7:127471196-127495720
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='txt language-txt'>browser position chr7:127471196-127495720
 browser hide all
 track name="ItemRGBDemo" description="Item RGB demonstration" visibility=2 itemRgb="On"
 chr7    127471196    127472363    Pos1    0    +    127471196    127472363    255,0,0
@@ -1746,7 +1700,7 @@ chr7    127480532    127481699    Neg4    0    -    127480532    127481699    0,
       The first three columns are the only required columns. Column 1 is the chromosome, column 2 is the start of the range (0 indexed), column 3 is the end of the range (1 indexed).
     </p>
   
-    <h1 id='reference' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='reference' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Reference
   

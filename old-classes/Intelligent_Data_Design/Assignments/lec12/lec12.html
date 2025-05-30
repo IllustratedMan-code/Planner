@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -3955,7 +3909,7 @@
 
 
 
-    <h2 id='train' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='train' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   train
   
@@ -3969,7 +3923,7 @@
 
     </h2>
   
-    <h3 id='inputs' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='inputs' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   inputs
   
@@ -3999,7 +3953,7 @@
       
     </ul>
   
-    <h3 id='outputs' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='outputs' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   outputs
   
@@ -4025,7 +3979,7 @@
       
     </ul>
   
-    <h2 id='test' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='test' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   test
   
@@ -4039,7 +3993,7 @@
 
     </h2>
   
-    <h3 id='inputs-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='inputs-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   inputs
   
@@ -4069,7 +4023,7 @@
       
     </ul>
   
-    <h3 id='outputs-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='outputs-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   outputs
   
@@ -4091,7 +4045,7 @@
       
     </ul>
   
-    <h1 id='section-1' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='section-1' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   2.
   
@@ -4105,7 +4059,7 @@
 
     </h1>
   
-    <h2 id='a' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='a' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   a
   
@@ -4123,7 +4077,7 @@
       Yes, this is possible with this dataset because it is very small, it is easy to note that when Z==T, the class is 1, when it is false, Y==R determines the class. For large data sets with many conditions this would very prohibitive to do by hand.
     </p>
   
-    <h2 id='b' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='b' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   b
   
@@ -4149,7 +4103,7 @@
       
     </ul>
   
-    <h2 id='c' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='c' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   c
   
@@ -4207,7 +4161,7 @@
       
     </ul>
   
-    <h2 id='d.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='d.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   d.
   
@@ -4220,7 +4174,7 @@
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='code'>import math
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python' exports='code'>import math
 
 classes = {1:1, 2:1, 3:1, 4:1, 5:2, 6:2, 7:3, 8:3}
 
@@ -4252,7 +4206,7 @@ output.append(["y == r"] + list(entropyyesno(yer)))
 output.append(["z == T"] + list(entropyyesno(zeT)))
 return output
 </code></pre></div><table class='mb-3'><thead><tr class='border-b-2 border-t-2 border-gray-300'><th class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'></th><th class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>YES</th><th class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>NO</th></tr></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>x &lt; 4</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1.0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1.0</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>y == p</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1.0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1.4591479170272446</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>y == q</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1.0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1.4591479170272446</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>y == r</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1.0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1.0</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>z == T</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1.0</td></tr></tbody></table>
-    <h2 id='e.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='e.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   e.
   
@@ -4265,7 +4219,7 @@ return output
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='both'>import math
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python' exports='both'>import math
 
 classes = {1:1, 2:1, 3:1, 4:1, 5:2, 6:2, 7:3, 8:3}
 D = [1,2,3,4,5,6,7,8]
@@ -4311,7 +4265,7 @@ return output
       Z == T has the most information gain, so it should be used for the root.
     </p>
   
-    <h2 id='f' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='f' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   f
   
@@ -4329,7 +4283,7 @@ return output
       The right branch (the NOs) needs to be split. all z == T is class 1 (the left branch)
     </p>
   
-    <h2 id='g.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='g.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   g.
   
@@ -4347,7 +4301,7 @@ return output
       The split criteria is Y==P Y==q, Y==r, x &lt; 4.
     </p>
   
-    <h2 id='h.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='h.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   h.
   
@@ -4360,7 +4314,7 @@ return output
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='both'>import math
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python' exports='both'>import math
 
 classes = {1:1, 2:1, 3:1, 4:1, 5:2, 6:2, 7:3, 8:3}
 D = [5,6,7,8]
@@ -4405,7 +4359,7 @@ return output
       Both X &lt; 4 and Y == R have the same information gain, so either can be used, and the other, tossed out.
     </p>
   
-    <h2 id='i' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='i' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   i
   
@@ -4423,7 +4377,7 @@ return output
       <span title='Link is broken'><s>[file:tree.pdf](tree.pdf)</s>❌</span>
     </p>
   
-    <h2 id='j' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='j' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   j
   
@@ -4436,7 +4390,7 @@ return output
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='both'>Data = [[2.0,"P","T",1],
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python' exports='both'>Data = [[2.0,"P","T",1],
 [2.0,"Q","T",1],
 [4.0,"R","T",1],
 [4.0,"R","T",1],
@@ -4458,7 +4412,7 @@ for i in Data:
     if tree(i):
         sum+=1
 return sum/len(Data)
-</code></pre></div><div class='py-0.5 mb-3 text-sm'><pre><code class='example language-example'>0.5
+</code></pre></div><div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='example language-example'>0.5
 </code></pre></div>
     <p class='mb-3'>
       The accuracy is 50%.

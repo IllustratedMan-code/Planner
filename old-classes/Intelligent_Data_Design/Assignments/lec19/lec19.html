@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -3959,7 +3913,7 @@
       a. <span class='math inline'>\(4^8 \cdot 3 = 96\)</span> b. It takes exponential time, permutations increase exponenetially with number of data points
     </p>
   
-    <h1 id='section-1' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='section-1' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   2.
   
@@ -3973,7 +3927,7 @@
 
     </h1>
   
-    <h2 id='a.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='a.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   a.
   
@@ -3986,7 +3940,7 @@
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code id='assignments' class='python language-python' session='py'>D = [2, 3, 4, 8, 9, 10, 15, 16, 17]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code id='assignments' class='python language-python' session='py'>D = [2, 3, 4, 8, 9, 10, 15, 16, 17]
 M = [5, 14, 21]
 A = []
 for i in D:
@@ -3994,7 +3948,7 @@ for i in D:
     A.append(M[L.index(min(L))])
 A
 </code></pre></div><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>5</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>5</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>5</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>5</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>5</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>14</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>14</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>14</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>14</td></tr></tbody></table>
-    <h2 id='b.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='b.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   b.
   
@@ -4007,7 +3961,7 @@ A
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' session='py'>import random
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python' session='py'>import random
 def update_centroids(M, A):
     def reassign_empty(M, A):
         for i in M:
@@ -4029,7 +3983,7 @@ def update_centroids(M, A):
 M = update_centroids(M, A)
 M
 </code></pre></div>
-    <h2 id='c.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='c.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   c.
   
@@ -4042,14 +3996,14 @@ M
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code id='assignments2' class='python language-python' session='py'>D = [2, 3, 4, 8, 9, 10, 15, 16, 17]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code id='assignments2' class='python language-python' session='py'>D = [2, 3, 4, 8, 9, 10, 15, 16, 17]
 A = []
 for i in D:
     L = [(i-m)**2 for m in M]
     A.append(M[L.index(min(L))])
 A
 </code></pre></div><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>5.2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>5.2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>5.2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>10.0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>10.0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>10.0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>16.0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>16.0</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>16.0</td></tr></tbody></table>
-    <h2 id='d.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='d.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   d.
   
@@ -4067,7 +4021,7 @@ A
       In my code above, I select a random member of D to be reassigned to the empty centroid. I made this function recursive in case the reasignment creates a new empty centroid. The function will run until each centroid has at least one assignment.
     </p>
   
-    <h2 id='e.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='e.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   e.
   
@@ -4080,7 +4034,7 @@ A
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='example language-example'>Assignment: assign each observation to the closest cluster
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='example language-example'>Assignment: assign each observation to the closest cluster
 while assignments change:
     while centroid has no assignments:
         assign random observation to empty centroid
@@ -4091,7 +4045,7 @@ while assignments change:
       Time complexity: <span class='math inline'>\(O(n^{dk+1}\log n)\)</span>
     </p>
   
-    <h1 id='section-2' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='section-2' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   3.
   
@@ -4105,7 +4059,7 @@ while assignments change:
 
     </h1>
   
-    <h2 id='a.-1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='a.-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   a.
   
@@ -4118,7 +4072,7 @@ while assignments change:
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code id='probablility' class='python language-python' session='py2'>from scipy.stats import norm
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code id='probablility' class='python language-python' session='py2'>from scipy.stats import norm
 D = [1, 4, 6, 9]
 Mu = [1, 9]
 Sigma = [1, 1]
@@ -4127,7 +4081,7 @@ for mu, sigma in zip(Mu, Sigma):
     results.append([f"mu={mu}, sigma={sigma}"]+ list(norm.pdf(D, mu, sigma)))
 results
 </code></pre></div><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>mu=1, sigma=1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.3989422804014327</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.0044318484119380075</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1.4867195147342979e-06</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>5.052271083536893e-15</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>mu=9, sigma=1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>5.052271083536893e-15</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1.4867195147342979e-06</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.0044318484119380075</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>0.3989422804014327</td></tr></tbody></table>
-    <h2 id='b.-1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='b.-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   b.
   
@@ -4140,7 +4094,7 @@ results
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' session='py2'>D = list(zip(results[0][1:], results[1][1:]))
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python' session='py2'>D = list(zip(results[0][1:], results[1][1:]))
 posterior = []
 for i1, i2 in D:
     normalization = i1 + i2
@@ -4148,7 +4102,7 @@ for i1, i2 in D:
 
 posterior
 </code></pre></div>
-    <h2 id='c.-1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='c.-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   c.
   
@@ -4161,14 +4115,14 @@ posterior
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' session='py2'>prior = [0, 0]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python' session='py2'>prior = [0, 0]
 for i in posterior:
     prior[0] += i[0]
     prior[1] += i[1]
 prior = [i/len(posterior) for i in prior]
 prior
 </code></pre></div>
-    <h2 id='d.-1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='d.-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   d.
   
@@ -4181,7 +4135,7 @@ prior
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' session='py2'>mu = [0, 0]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python' session='py2'>mu = [0, 0]
 mu_d = [0, 0]
 for p, (d1, d2) in zip(posterior, D):
     mu[0] += p[0] * d1
@@ -4203,7 +4157,7 @@ sigma[1] = sigma[1] / sigma_d[1]
 sigma
 [["mu_1", "mu2"], mu, ["sigma2_1", "sigma2_2"], sigma]
 </code></pre></div>
-    <h2 id='e' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='e' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   e
   

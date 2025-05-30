@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -1141,7 +1095,7 @@
       Plover development doesn’t seem very active. It does work well, but the GUI is old looking and its implemented in python. One feature I would like is automatic input selection based on available devices (COM8 -&gt; COM7 -&gt; keyboard). I’ll only begin implementation after learning stenography. It is assumed that plover will continue to be maintained (they do have a foundation).
     </p>
   
-    <h1 id='high-level-set-of-features' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='high-level-set-of-features' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   High level set of features
   
@@ -1179,7 +1133,7 @@
       
     </ul>
   
-    <h2 id='lower-level-implementation-details' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='lower-level-implementation-details' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Lower level implementation details
   
@@ -1229,7 +1183,7 @@
       
     </ul>
   
-    <h1 id='packages' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='packages' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Packages
   
@@ -1243,7 +1197,7 @@
 
     </h1>
   
-    <h2 id='input-handling' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='input-handling' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   input handling
   
@@ -1261,7 +1215,7 @@
       <a href='https://github.com/obv-mikhail/InputBot' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>inputbot</a> for input sending and listening for keyboard events. The main problem is that it doesn’t have MacOS compatibility though it seems partially implemted. Also, if this thing gets popular, someone with a mac can just update inputbot. I could even maintain my own fork.
     </p>
   
-    <h2 id='serialport-handling' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='serialport-handling' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Serialport handling
   
@@ -1279,7 +1233,7 @@
       Can use <a href='https://github.com/serialport/serialport-rs' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>serialport-rs</a> for listening for serial ports. This is completely cross-platform, which is awesome.
     </p>
   
-    <h2 id='tray-icon' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='tray-icon' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   tray icon
   

@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -3955,7 +3909,7 @@
 
 
 
-    <h2 id='a.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='a.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   a.
   
@@ -3968,7 +3922,7 @@
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python code' session='py' kernel='python3' outputs='both'>D = [1, 2, 3, 3, 3, 4, 6, 7, 8, 8, 8, 9]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python code' session='py' kernel='python3' outputs='both'>D = [1, 2, 3, 3, 3, 4, 6, 7, 8, 8, 8, 9]
 unique = set(D)
 counts = {}
 for i in unique:
@@ -3988,7 +3942,7 @@ for i in rel_freq:
     total+=i
 CDF
 </code></pre></div>
-    <h2 id='b.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='b.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   b.
   
@@ -4001,12 +3955,12 @@ CDF
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python code' session='py' kernel='python3' file='test.png' exports='both'>import matplotlib.pyplot as plt
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python code' session='py' kernel='python3' file='test.png' exports='both'>import matplotlib.pyplot as plt
 fig, ax = plt.subplots()
 ax.step(list(unique), CDF)
 plt.show()
 </code></pre></div><span title='Link is broken'><s>![](./.ob-jupyter/a4122c9ddc64a86253e2b5f7ff7e3ae46d02de51.png)</s>❌</span>
-    <h2 id='c.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='c.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   c.
   
@@ -4023,7 +3977,7 @@ plt.show()
     <p class='mb-3'>
       <span class='math inline'>\(f(x,h) = \frac{F(x+h/2)- F(x-h/2)}{h}\)</span>
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python code' session='py' kernel='python3' outputs='both'>F = dict(zip(list(unique), CDF))
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python code' session='py' kernel='python3' outputs='both'>F = dict(zip(list(unique), CDF))
 # add missing values to step function (quick hack)
 F[0] = 0
 F[5] = F[4]
@@ -4042,7 +3996,7 @@ def f(x, h):
 h_1 = [f(x, 1) for x in range(0,11)]
 h_1
 </code></pre></div>
-    <h2 id='d.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='d.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   d.
   
@@ -4055,10 +4009,10 @@ h_1
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python code' session='py' kernel='python3' outputs='both'>h_5 = [f(x, 5) for x in range(0,11)]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python code' session='py' kernel='python3' outputs='both'>h_5 = [f(x, 5) for x in range(0,11)]
 h_5
 </code></pre></div>
-    <h2 id='e.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='e.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   e.
   
@@ -4071,13 +4025,13 @@ h_5
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python code' session='py' kernel='python3' outputs='both'>import matplotlib.pyplot as plt
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python code' session='py' kernel='python3' outputs='both'>import matplotlib.pyplot as plt
 fig, (ax1, ax2) = plt.subplots(2)
 ax1.step(range(0,11), h_1)
 ax2.step(range(0,11), h_5)
 plt.show()
 </code></pre></div>
-    <h2 id='f.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='f.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   f.
   
@@ -4095,7 +4049,7 @@ plt.show()
       I would expect that the above plot would dip into the negative, as it appears to be a visualization of the changes in the step (empirical cumulative distribution) kernel.
     </p>
   
-    <h1 id='section-1' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='section-1' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   2.
   
@@ -4121,7 +4075,7 @@ plt.show()
       
     </ul>
   
-    <h1 id='section-2' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='section-2' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   3.
   
@@ -4135,7 +4089,7 @@ plt.show()
 
     </h1>
   
-    <h2 id='a.-1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='a.-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   a.
   
@@ -4164,7 +4118,7 @@ plt.show()
       
     </ul>
   
-    <h2 id='b.-1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='b.-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   b.
   
@@ -4182,7 +4136,7 @@ plt.show()
       Because A is closer to the marked location, it will have a greater affect on the direction of the gradient. This is because the Kernel term is inversely proportional to the distance.
     </p>
   
-    <h2 id='c.-1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='c.-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   c.
   

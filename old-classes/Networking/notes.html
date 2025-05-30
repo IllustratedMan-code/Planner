@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -1881,7 +1835,7 @@
 
 
 
-    <h1 id='chapter-1' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='chapter-1' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Chapter 1
   
@@ -1895,7 +1849,7 @@
 
     </h1>
   
-    <h2 id='terms' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='terms' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Terms
   
@@ -1912,31 +1866,31 @@
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Hosts</code>: end systems that run apps
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Hosts</code>: end systems that run apps
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Apps</code>
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Apps</code>
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Devices</code>: run apps
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Devices</code>: run apps
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Packet switches</code> (chucks of data)
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Packet switches</code> (chucks of data)
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Communication links</code>: transmission forms like fiber, radio, etc
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Communication links</code>: transmission forms like fiber, radio, etc
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Access Network</code>: A network that bottlenecks to one router (edge router) to get back to isp
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Access Network</code>: A network that bottlenecks to one router (edge router) to get back to isp
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Edge Router</code>: A router on the "edge" of a network
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Edge Router</code>: A router on the "edge" of a network
         </li>
       
         <li>
@@ -1969,7 +1923,7 @@
       
     </ul>
   
-    <h2 id='nuts-and-bolts' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='nuts-and-bolts' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Nuts and bolts
   
@@ -2007,7 +1961,7 @@
       
     </ul>
   
-    <h2 id='access-networks' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='access-networks' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Access networks
   
@@ -2089,7 +2043,7 @@
       
     </ul>
   
-    <h3 id='g-fixed-wireless' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='g-fixed-wireless' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   5g fixed wireless
   
@@ -2107,7 +2061,7 @@
       Data is sent wirelessy to modem in home
     </p>
   
-    <h2 id='wireless-access-networks' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='wireless-access-networks' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Wireless access networks
   
@@ -2129,7 +2083,7 @@
       
     </ul>
   
-    <h2 id='wide-area-cellular-access-networks' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='wide-area-cellular-access-networks' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Wide-area cellular access networks
   
@@ -2151,7 +2105,7 @@
       
     </ul>
   
-    <h2 id='enterprise-networks' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='enterprise-networks' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   enterprise networks
   
@@ -2173,7 +2127,7 @@
       
     </ul>
   
-    <h2 id='packets-of-data' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='packets-of-data' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Packets of data
   
@@ -2207,7 +2161,7 @@
       
     </ul>
   
-    <h2 id='links' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='links' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   links
   
@@ -2245,7 +2199,7 @@
       
     </ul>
   
-    <h2 id='packet-queuing-and-loss' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='packet-queuing-and-loss' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Packet queuing and loss
   
@@ -2271,7 +2225,7 @@
       
     </ul>
   
-    <h2 id='two-key-network-core-functions' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='two-key-network-core-functions' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Two key network-core functions
   
@@ -2305,7 +2259,7 @@
       
     </ul>
   
-    <h2 id='circuit-switching' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='circuit-switching' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Circuit switching
   
@@ -2335,7 +2289,7 @@
       
     </ul>
   
-    <h3 id='fequency-division-multiplexing-fdm' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='fequency-division-multiplexing-fdm' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Fequency Division Multiplexing (FDM)
   
@@ -2365,7 +2319,7 @@
       
     </ul>
   
-    <h3 id='time-division-multiplexing-tdm' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='time-division-multiplexing-tdm' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Time Division Multiplexing (TDM)
   
@@ -2391,7 +2345,7 @@
       
     </ul>
   
-    <h2 id='packet-switching' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='packet-switching' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Packet switching
   
@@ -2417,7 +2371,7 @@
       
     </ul>
   
-    <h2 id='isp-structure' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='isp-structure' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Isp structure
   
@@ -2451,7 +2405,7 @@
       
     </ul>
   
-    <h3 id='dproc' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='dproc' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   d<sub>proc</sub>
   
@@ -2473,7 +2427,7 @@
       
     </ul>
   
-    <h3 id='transmission-delay' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='transmission-delay' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   transmission delay
   
@@ -2491,7 +2445,7 @@
       <span class='math inline'>\(d_{trans} = L/R\)</span>
     </p>
   
-    <h3 id='propegation' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='propegation' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Propegation
   
@@ -2509,7 +2463,7 @@
       Length/Rate
     </p>
   
-    <h3 id='traffic-intensity' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='traffic-intensity' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Traffic intensity
   
@@ -2546,12 +2500,12 @@
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>traceroute</code> shows delay between packet transmission
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>traceroute</code> shows delay between packet transmission
         </li>
       
     </ul>
   
-    <h3 id='throughput' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='throughput' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Throughput
   
@@ -2581,7 +2535,7 @@
       
     </ul>
   
-    <h2 id='tcp' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='tcp' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   TCP
   
@@ -2615,7 +2569,7 @@
       
     </ul>
   
-    <h3 id='vanilla' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='vanilla' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Vanilla
   
@@ -2641,7 +2595,7 @@
       
     </ul>
   
-    <h3 id='tls' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='tls' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   TLS
   
@@ -2671,7 +2625,7 @@
       
     </ul>
   
-    <h2 id='udp' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='udp' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   UDP
   
@@ -2701,7 +2655,7 @@
       
     </ul>
   
-    <h2 id='http2' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='http2' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   HTTP/2
   
@@ -2731,7 +2685,7 @@
       
     </ul>
   
-    <h2 id='http1.1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='http1.1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Http/1.1
   
@@ -2753,7 +2707,7 @@
       
     </ul>
   
-    <h2 id='dns' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='dns' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   DNS
   
@@ -2791,7 +2745,7 @@
       
     </ul>
   
-    <h1 id='finite-state-machines' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='finite-state-machines' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Finite state machines
   
@@ -2805,7 +2759,7 @@
 
     </h1>
   
-    <h2 id='rdt2.0-channel-with-bit-errors' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='rdt2.0-channel-with-bit-errors' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Rdt2.0 channel with bit errors
   
@@ -2843,7 +2797,7 @@
       
     </ul>
   
-    <h2 id='rdt2.1-sender-handling-garbled-acknaks' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='rdt2.1-sender-handling-garbled-acknaks' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Rdt2.1 sender, handling garbled ACK/NAKS
   
@@ -2865,7 +2819,7 @@
       
     </ul>
   
-    <h2 id='rdt3.0' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='rdt3.0' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Rdt3.0
   

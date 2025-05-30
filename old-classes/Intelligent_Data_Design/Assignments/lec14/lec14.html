@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -3955,7 +3909,7 @@
 
 
 
-    <h2 id='a-c' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='a-c' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   a-c
   
@@ -3973,7 +3927,7 @@
       <span title='Link is broken'><s>[file:1a.pdf](1a.pdf)</s>❌</span>
     </p>
   
-    <h2 id='d' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='d' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   d
   
@@ -3991,7 +3945,7 @@
       <span class='math inline'>\(\begin{cases} (1,3)x -11 &lt; 0 \\ (1,3)x-11 &gt; 0 \end{cases}\)</span>
     </p>
   
-    <h2 id='e.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='e.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   e.
   
@@ -4008,7 +3962,7 @@
     <p class='mb-3'>
       The above hyperplane does split all points accurately. See the python results.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' exports='both'>d = [[3,1,-1],
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python' exports='both'>d = [[3,1,-1],
     [4,1,-1],
     [4,2,-1],
     [5,1,-1],
@@ -4030,7 +3984,7 @@ def half_space():
 
 return [[i, d] for i,d in zip(range(1,len(half_space())+1), half_space())]
 </code></pre></div><table class='mb-3'><thead></thead><tbody><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>1</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>-</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>2</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>-</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>3</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>-</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>4</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>-</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>5</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>+</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>6</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>+</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>7</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>+</td></tr><tr class='border-b-2 border-t-2 border-gray-300'><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>8</td><td class='py-2 px-2 align-top border-r-2 border-l-2 border-gray-300'>+</td></tr></tbody></table>
-    <h2 id='f.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='f.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   f.
   
@@ -4047,7 +4001,7 @@ return [[i, d] for i,d in zip(range(1,len(half_space())+1), half_space())]
     <p class='mb-3'>
       <span class='math inline'>\(\sigma = \frac{yh(x)}{\|w\|}\)</span>
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>import math
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>import math
 d_w = math.sqrt(1**2 + 3**2)
 
 d = [[3,1,-1],
@@ -4067,7 +4021,7 @@ for i in d:
 
 return [[i, d] for i,d in zip(range(1,len(distances)+1), distances)]
 </code></pre></div>
-    <h2 id='g.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='g.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   g.
   
@@ -4085,7 +4039,7 @@ return [[i, d] for i,d in zip(range(1,len(distances)+1), distances)]
       the closest vector to hyperplane is 3, with a distance of 0.32. This does not align with the analysis above, meaning that this hyperplane does not maximize the margin. This hyperplane is not canonical.
     </p>
   
-    <h1 id='section-1' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='section-1' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   2.
   
@@ -4099,7 +4053,7 @@ return [[i, d] for i,d in zip(range(1,len(distances)+1), distances)]
 
     </h1>
   
-    <h2 id='a.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='a.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   a.
   
@@ -4117,7 +4071,7 @@ return [[i, d] for i,d in zip(range(1,len(distances)+1), distances)]
       <span class='math inline'>\(\min L = \frac{1}{2}\|w\|^2 - \displaystyle \sum \limits^n_{i=1}\alpha_i(y_i(w^Tx_i + b)-1)\)</span>
     </p>
   
-    <h2 id='b.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='b.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   b.
   
@@ -4151,7 +4105,7 @@ return [[i, d] for i,d in zip(range(1,len(distances)+1), distances)]
       
     </ul>
   
-    <h2 id='c.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='c.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   c.
   
@@ -4177,7 +4131,7 @@ return [[i, d] for i,d in zip(range(1,len(distances)+1), distances)]
       
     </ul>
   
-    <h2 id='d.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='d.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   d.
   
@@ -4215,7 +4169,7 @@ return [[i, d] for i,d in zip(range(1,len(distances)+1), distances)]
       
     </ul>
   
-    <h1 id='section-2' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='section-2' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   3.
   
@@ -4229,7 +4183,7 @@ return [[i, d] for i,d in zip(range(1,len(distances)+1), distances)]
 
     </h1>
   
-    <h2 id='a.-1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='a.-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   a.
   
@@ -4257,7 +4211,7 @@ return [[i, d] for i,d in zip(range(1,len(distances)+1), distances)]
       
     </ul>
   
-    <h2 id='b.-1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='b.-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   b.
   
@@ -4287,7 +4241,7 @@ return [[i, d] for i,d in zip(range(1,len(distances)+1), distances)]
       
     </ul>
   
-    <h2 id='c.-1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='c.-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   c.
   

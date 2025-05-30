@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -1617,7 +1571,7 @@
       Genome alignment requires that "reads" - short dna sequences - are matched to regions of the target genome.
     </p>
   
-    <h1 id='big-o-notation' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='big-o-notation' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Big O notation
   
@@ -1635,7 +1589,7 @@
       Big O notation refers to the worst case time complexity, i.e. how long would a program take if everything went horribly wrong. O(n) for example would take 1 operation for every member of the input. A sum operation takes O(n) time.
     </p>
   
-    <h1 id='naive-solution' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='naive-solution' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Naive Solution
   
@@ -1664,7 +1618,7 @@
     <p class='mb-3'>
       Compare first member of read to member of sequence, if no match, move to next member of sequence. If match, compare second member of read to next member of sequence, if no match, move to next member of sequence and start again.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' session='py'>sequence = "AGTCGATCATGGGCGAT"
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python' session='py'>sequence = "AGTCGATCATGGGCGAT"
 read = "GAT"
 
 def check_read(read, sequence):
@@ -1684,7 +1638,7 @@ check_sequence(read, sequence)
       
     </ul>
   
-    <h1 id='suffix-tree' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='suffix-tree' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Suffix Tree
   

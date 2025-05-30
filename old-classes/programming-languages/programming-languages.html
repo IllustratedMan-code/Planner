@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -1613,7 +1567,7 @@
 
 
 <pre class='pandoc-raw-"org"'>#+hugo_base_dir: ../</pre><pre class='pandoc-raw-"org"'>#+STARTUP: show2levels</pre>
-    <h1 id='programming-languages' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='programming-languages' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Programming Languages
   
@@ -1636,10 +1590,10 @@
     </p>
   
     <p class='mb-3'>
-      conversion didn't go as well as I hoped, but the jupyter notebook version is <a href='old-classes/programming-languages/programming-languages.ipynb' class='text-blue-600 mavenLinkBold hover:underline'>here</a>. Need to look into more pandoc stuff.
+      conversion didn't go as well as I hoped, but the jupyter notebook version is <a href='old-classes/programming-languages/programming-languages.ipynb' class='text-blue-600 font-semibold hover:underline'>here</a>. Need to look into more pandoc stuff.
     </p>
   
-    <h2 id='section-1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   8/23/2021
   
@@ -1653,7 +1607,7 @@
 
     </h2>
   
-    <h3 id='definitions' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='definitions' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Definitions:
   
@@ -1695,7 +1649,7 @@
       
     </ul>
   
-    <h3 id='concepts' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='concepts' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Concepts:
   
@@ -1713,7 +1667,7 @@
       There are four fundamental components of every programming language: syntax, names, types, and semantics.
     </p>
   
-    <h3 id='practice' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='practice' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Practice:
   
@@ -1755,7 +1709,7 @@
       
     </ul>
   
-    <h2 id='section-2' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-2' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   8/25/2021
   
@@ -1769,7 +1723,7 @@
 
     </h2>
   
-    <h3 id='the-value-of-studying-pls' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='the-value-of-studying-pls' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   The value of studying PLs
   
@@ -1839,7 +1793,7 @@
       
     </ul>
   
-    <h3 id='programming-domains' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='programming-domains' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Programming domains
   
@@ -1917,7 +1871,7 @@
       This list is non-exhaustive, obviously!
     </p>
   
-    <h3 id='the-john-von-neumann-model-of-computing' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='the-john-von-neumann-model-of-computing' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   The John von Neumann Model of Computing
   
@@ -1986,7 +1940,7 @@
         </li>
       
     </ul>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>for (int i = 0; i &lt; 100; i++) {
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>for (int i = 0; i &lt; 100; i++) {
   statement1;
   statement2;
   statement3;
@@ -2016,7 +1970,7 @@
       
     </ul>
   
-    <h2 id='section-3' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-3' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   8/27/2021
   
@@ -2030,7 +1984,7 @@
 
     </h2>
   
-    <h3 id='programming-paradigms' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='programming-paradigms' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Programming Paradigms
   
@@ -2148,7 +2102,7 @@
       
     </ul>
   
-    <h3 id='language-evaluation-criteria-new-material-alert' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='language-evaluation-criteria-new-material-alert' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Language Evaluation Criteria (New Material Alert)
   
@@ -2245,7 +2199,7 @@
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          e.g., the difference between <code class='verbatim py-0.5 px-0.5 bg-gray-100'>int userHappy = 0;</code> and <code class='verbatim py-0.5 px-0.5 bg-gray-100'>bool userHappy = True;</code>
+          e.g., the difference between <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>int userHappy = 0;</code> and <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>bool userHappy = True;</code>
         </li>
       
     </ul>
@@ -2378,7 +2332,7 @@
       
     </ul>
   
-    <h2 id='section-4' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-4' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   8/30/2021
   
@@ -2396,7 +2350,7 @@
       Today we learned a more complete definition of imperative programming languages and studied the defining characteristics of variables. Unfortunately we did not get as far as I wanted during the class which means that there is some new material in this edition of the Daily PL!
     </p>
   
-    <h3 id='imperative-programming-languages' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='imperative-programming-languages' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Imperative Programming Languages
   
@@ -2458,7 +2412,7 @@
       
     </ul>
   
-    <h3 id='variables' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='variables' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Variables
   
@@ -2504,7 +2458,7 @@
       
     </ul>
   
-    <h3 id='looking-forward-to-binding-new-material-alert' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='looking-forward-to-binding-new-material-alert' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Looking forward to Binding (New Material Alert)
   
@@ -2558,7 +2512,7 @@
       Notice that the six "things" we talked about that characterize variables are actually attributes!! In other words, those attributes have to be bound to variables at some point. When these bindings occur is important for users of a programming language to understand. We will discuss this on Wednesday! <a href='blob:https://1492301-4.kaf.kaltura.com/903896d9-2341-4dd3-9709-ca344de08719' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>blob:https://1492301-4.kaf.kaltura.com/903896d9-2341-4dd3-9709-ca344de08719</a>
     </p>
   
-    <h2 id='section-5' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-5' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   9/1/2021
   
@@ -2576,7 +2530,7 @@
       Welcome to the Daily PL for September 1st, 2021! As we turn the page from August to September, we started the month discussing variable lifetime and scope. Lifetime is related to the storage binding and scope is related to the name binding. Before we learned that new material, however, we went over an example of the different bindings and their times in an assignment statement.
     </p>
   
-    <h3 id='binding-example' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='binding-example' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Binding Example
   
@@ -2593,7 +2547,7 @@
     <p class='mb-3'>
       Consider a Python statement like this:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>vrb = arb + 5
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>vrb = arb + 5
 </code></pre></div>
     <p class='mb-3'>
       Recall that a binding is an association between an attribute and an entity. What are some of the possible bindings (and their times) in the statement above?
@@ -2610,16 +2564,16 @@
         </li>
       
         <li>
-          The value (attribute) of the variables <code class='verbatim py-0.5 px-0.5 bg-gray-100'>vrb</code> and <code class='verbatim py-0.5 px-0.5 bg-gray-100'>arb</code> (entities) are bound at runtime. Remember that the value of a variable is just another binding.
+          The value (attribute) of the variables <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>vrb</code> and <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>arb</code> (entities) are bound at runtime. Remember that the value of a variable is just another binding.
         </li>
       
     </ul>
   
     <p class='mb-3'>
-      This is not an exhaustive list of the bindings that are active for this statement. In particular, the variables <code class='verbatim py-0.5 px-0.5 bg-gray-100'>vrb</code> and <code class='verbatim py-0.5 px-0.5 bg-gray-100'>arb</code> must be bound to some address, lifetime and scope. Discussing those bindings requires more information about the statement's place in the source code.
+      This is not an exhaustive list of the bindings that are active for this statement. In particular, the variables <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>vrb</code> and <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>arb</code> must be bound to some address, lifetime and scope. Discussing those bindings requires more information about the statement's place in the source code.
     </p>
   
-    <h3 id='variables-storage-bindings' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='variables-storage-bindings' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Variables' Storage Bindings
   
@@ -2656,7 +2610,7 @@
         </li>
       
         <li>
-          In C++, variables with static storage binding are declared using the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>static</code> keyword inside functions and classes.
+          In C++, variables with static storage binding are declared using the <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>static</code> keyword inside functions and classes.
         </li>
       
         <li>
@@ -2688,7 +2642,7 @@
         </li>
       
         <li>
-          Explicit heap dynamic: Variable is bound to storage by explicit instruction from the programmer. E.g., <code class='verbatim py-0.5 px-0.5 bg-gray-100'>new</code> / <code class='verbatim py-0.5 px-0.5 bg-gray-100'>malloc</code> in C/C++.
+          Explicit heap dynamic: Variable is bound to storage by explicit instruction from the programmer. E.g., <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>new</code> / <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>malloc</code> in C/C++.
     <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
       
         <li>
@@ -2733,7 +2687,7 @@
       
     </ul>
   
-    <h3 id='variables-name-bindings' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='variables-name-bindings' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Variables' Name Bindings
   
@@ -2770,12 +2724,12 @@
         </li>
       
     </ul>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def add(a, b):
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>def add(a, b):
     total = a + b
     return total
 </code></pre></div>
     <p class='mb-3'>
-      <code class='verbatim py-0.5 px-0.5 bg-gray-100'>total</code> is a local variable.
+      <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>total</code> is a local variable.
     </p>
   
     <ul class='my-3 ml-6 space-y-1 list-disc'>
@@ -2818,7 +2772,7 @@
       
     </ul>
   
-    <h2 id='section-6' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-6' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   9/3/2021
   
@@ -2836,7 +2790,7 @@
       Welcome to The Daily PL for 9/3/2021. We spent most of Friday reviewing material from Episode 1 of PL After Dark and going over scoping examples in C++ and Python. Before continuing, make sure that you have viewed Episode 1 of PL After Dark.
     </p>
   
-    <h3 id='scope' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='scope' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Scope
   
@@ -2877,7 +2831,7 @@
     <p class='mb-3'>
       Here is pseudocode for the algorithm of determining the name/variable binding in a statically scoped programming language:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def resolve(name, current_scope) -&gt; variable
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>def resolve(name, current_scope) -&gt; variable
   s = current_scope
   while (s != InvalidScope)
     if s.contains(name)
@@ -2900,11 +2854,11 @@
     <p class='mb-3'>
       Python and C++ have different ways of creating scopes. In Python and C++ a new scope is created at the beginning of a function definition (and that scope contains the function's parameters automatically). However, Python and C++ differ in the way that scopes are declared (or not!) for variables used in loops. Consider the following Python and C++ code (also available at <a href='https://github.com/hawkinsw/cs3003/blob/main/scope_lifetime/loop_scope.cpp' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>loop<sub>scope</sub>.cpp</a> and <a href='https://github.com/hawkinsw/cs3003/blob/main/scope_lifetime/loop_scope.py' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>loop<sub>scope</sub>.py</a> :
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def f():
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>def f():
   for i in range(1, 10):
     print(f"i (in loop body): {i}")
   print(f"i (outside loop body): {i}")
-</code></pre></div><div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>void f() {
+</code></pre></div><div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>void f() {
   for (int i = 0; i&lt;10; i++) {
     std::cout &lt;&lt; "i: " &lt;&lt; i &lt;&lt; "\n";
   }
@@ -2916,9 +2870,9 @@
 }
 </code></pre></div>
     <p class='mb-3'>
-      In the C++ code, the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>for</code> loop introduces a new scope and <code class='verbatim py-0.5 px-0.5 bg-gray-100'>i</code> is in that scope. In the Python code, the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>for</code> loop does not introduce a new scope and <code class='verbatim py-0.5 px-0.5 bg-gray-100'>i</code> is in the scope of <code class='verbatim py-0.5 px-0.5 bg-gray-100'>f</code>. Try to run the following Python code also available here at <a href='https://github.com/hawkinsw/cs3003/blob/main/scope_lifetime/loop_scope_error.py' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>loop<sub>scopeerror</sub>.py</a> to see why this distinction is important:
+      In the C++ code, the <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>for</code> loop introduces a new scope and <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>i</code> is in that scope. In the Python code, the <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>for</code> loop does not introduce a new scope and <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>i</code> is in the scope of <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>f</code>. Try to run the following Python code also available here at <a href='https://github.com/hawkinsw/cs3003/blob/main/scope_lifetime/loop_scope_error.py' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>loop<sub>scopeerror</sub>.py</a> to see why this distinction is important:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def f():
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>def f():
   print(f"i (outside loop body): {i}")
   for i in range(1, 10):
     print(f"i (in loop body): {i}")
@@ -2934,7 +2888,7 @@
     <p class='mb-3'>
       <em>Dynamic scoping</em> is the type of scope that can be determined only during program execution. In a dynamically scoped programming language, determining the name/value binding is done iteratively by searching through a block's nesting dynamic parents. The <em>dynamic parent</em> of a block is the block from which the current block was executed. Very few programming languages use dynamic scoping (BASH, Perl [optionally] are two examples) because it makes checking the types of variables difficult for the programmer (and impossible for the compiler/interpreter) and because it increases the "distance" between name/variable binding and use during program execution. However, dynamic binding makes it possible for functions to require fewer parameters because dynamically scoped non local variables can be used in their place.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def resolve(name, current_scope) -&gt; variable
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>def resolve(name, current_scope) -&gt; variable
   s = current_scope
   while (s != InvalidScope)
     if s.contains(name)
@@ -2943,7 +2897,7 @@
   return NameError
 </code></pre></div>
     <p class='mb-3'>
-      For practice doing name/variable binding in a dynamically scoped language, play around with an example in Python: <a href='https://github.com/hawkinsw/cs3003/blob/main/scope_lifetime/dynamic_scope.py' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>dynamic<sub>scope</sub>.py</a> . Note that because Python is intrinsically a statically scoped language, the example includes some hacking of the Python interpreter to emulate dynamic scoping. Compare the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>dynamic</code> in the aforementioned Python code with the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>resolve</code> function in the pseudocode and see if there are differences!
+      For practice doing name/variable binding in a dynamically scoped language, play around with an example in Python: <a href='https://github.com/hawkinsw/cs3003/blob/main/scope_lifetime/dynamic_scope.py' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>dynamic<sub>scope</sub>.py</a> . Note that because Python is intrinsically a statically scoped language, the example includes some hacking of the Python interpreter to emulate dynamic scoping. Compare the <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>dynamic</code> in the aforementioned Python code with the <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>resolve</code> function in the pseudocode and see if there are differences!
     </p>
   
         </li>
@@ -2973,7 +2927,7 @@
     <p class='mb-3'>
       It is common for programmers to think that the scope and the lifetime of a variable are the same. However, this is not always true. Consider the following code in C++ (also available at <a href='https://github.com/hawkinsw/cs3003/blob/main/scope_lifetime/scope_ne_lifetime.cpp' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>scope<sub>newlifetime</sub>.cpp</a>)
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>#include &lt;iostream&gt;
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>#include &lt;iostream&gt;
 
 void f(void) {
   static int variable = 4;
@@ -2992,7 +2946,7 @@ int main() {
       
     </ul>
   
-    <h2 id='section-7' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-7' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   9/8/2021
   
@@ -3010,7 +2964,7 @@ int main() {
       Welcome to The Daily PL for September 8, 2021. I'm not lying when I say that this is the best. edition. ever. There is new material included in this edition which will be covered in a forthcoming episode of PL After Dark. When that video is available, this post will be updated!
     </p>
   
-    <h3 id='recap' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='recap' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Recap
   
@@ -3057,7 +3011,7 @@ int main() {
     </ul>
   
     <p class='mb-3'>
-      In order to have a completely a satisfying definition of strongly typed language, we defined type error as any error that occurs when an operation is attempted on a type for which it is not well defined. In Python, <code class='verbatim py-0.5 px-0.5 bg-gray-100'>"3" + 5</code> results in a <code class='verbatim py-0.5 px-0.5 bg-gray-100'>TypeError: can only concatenate str (not "int") to str</code>. In this example, the operation is <code class='verbatim py-0.5 px-0.5 bg-gray-100'>+</code> and the types are <code class='verbatim py-0.5 px-0.5 bg-gray-100'>str</code> and <code class='verbatim py-0.5 px-0.5 bg-gray-100'>int</code>.
+      In order to have a completely a satisfying definition of strongly typed language, we defined type error as any error that occurs when an operation is attempted on a type for which it is not well defined. In Python, <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>"3" + 5</code> results in a <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>TypeError: can only concatenate str (not "int") to str</code>. In this example, the operation is <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>+</code> and the types are <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>str</code> and <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>int</code>.
     </p>
   
     <p class='mb-3'>
@@ -3084,7 +3038,7 @@ int main() {
       
     </ul>
   
-    <h3 id='array' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='array' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Array
   
@@ -3114,7 +3068,7 @@ int main() {
       Keep in mind that this description is only one way (or many) to store two dimensional arrays. There are (Links to an external site.) others (Links to an external site.).
     </p>
   
-    <h3 id='associative-arrays-records-tuples-lists-unions-algebraic-data-types-pattern-matching-list-comprehensions-and-equivalence' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='associative-arrays-records-tuples-lists-unions-algebraic-data-types-pattern-matching-list-comprehensions-and-equivalence' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Associative Arrays, Records, Tuples, Lists, Unions, Algebraic Data Types, Pattern Matching, List Comprehensions, and Equivalence
   
@@ -3136,7 +3090,7 @@ int main() {
       Note: In this video, I said that Python's Lists function as arrays and that Python does not have true arrays. Your book implies as much in the section on Lists. However, I went back to check, and it does appear that there is a standard module in Python that provides arrays, in certain cases. Take a look at the documentation here: <a href='https://docs.python.org/3/library/array.html' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>python arrays</a> . The commonly used NumPy package also provides an array type: <a href='https://numpy.org/doc/stable/reference/generated/numpy.array.html' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>numpy arrays</a> . While the language, per se, does not define an array type, the presence of the modules (particularly the former) is important to note. Sorry for the confusion!
     </p>
   
-    <h2 id='section-8' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-8' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   9/10/2021
   
@@ -3154,7 +3108,7 @@ int main() {
       In today's edition of the Daily PL we will recap our discussion from today that covered expressions, order of evaluation, short-circuit evaluation and referential transparency.
     </p>
   
-    <h3 id='expressions' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='expressions' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Expressions
   
@@ -3175,27 +3129,27 @@ int main() {
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>5</code> is an expression (value 5)
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>5</code> is an expression (value 5)
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>5 + 2</code> is an expression (value 7)
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>5 + 2</code> is an expression (value 7)
         </li>
       
         <li>
-          Assuming <code class='verbatim py-0.5 px-0.5 bg-gray-100'>fun</code> is a function that returns a value, <code class='verbatim py-0.5 px-0.5 bg-gray-100'>fun()</code> is an expression (value is the return value)
+          Assuming <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>fun</code> is a function that returns a value, <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>fun()</code> is an expression (value is the return value)
         </li>
       
         <li>
-          Assuming <code class='verbatim py-0.5 px-0.5 bg-gray-100'>f</code> is a variable, <code class='verbatim py-0.5 px-0.5 bg-gray-100'>f</code> is an expression (the value is the value of the variable)
+          Assuming <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>f</code> is a variable, <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>f</code> is an expression (the value is the value of the variable)
         </li>
       
     </ul>
   
     <p class='mb-3'>
-      Certain languages allow more exotic statements to be expressions. For example, in C/C++, the <code class='py-0.5 px-0.5 bg-gray-100'>=</code> operator yields a value (the value of the expression on the right operand). It is this choice by the language designer that allows a C/C++ programmer to write
+      Certain languages allow more exotic statements to be expressions. For example, in C/C++, the <code class='py-0.5 px-0.5 bg-gray-100 font-mono'>=</code> operator yields a value (the value of the expression on the right operand). It is this choice by the language designer that allows a C/C++ programmer to write
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>int a, b, c, d;
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>int a, b, c, d;
 a = b = c = d = 5;
 </code></pre></div>
     <p class='mb-3'>
@@ -3206,7 +3160,7 @@ a = b = c = d = 5;
       When we discuss functional programming languages, we will see how many more things are expressions that programmers typically think are simply statements.
     </p>
   
-    <h3 id='order-of-evaluation' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='order-of-evaluation' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Order of Evaluation
   
@@ -3227,7 +3181,7 @@ a = b = c = d = 5;
     <p class='mb-3'>
       What programmers often forget to learn about their language, is the order of evaluation of operands. Take several of those constants from the previous expression and replace them with variables and function calls:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>5 + a() * c / b()
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>5 + a() * c / b()
 </code></pre></div>
     <p class='mb-3'>
       The questions abound:
@@ -3277,7 +3231,7 @@ a = b = c = d = 5;
       But there is at least one really good reason for not defining that order: optimizations. If the compiler/interpreter can move around the order of evaluation of those operands, it may be able to find a way to generate faster code!
     </p>
   
-    <h3 id='short-circuit-evaluation' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='short-circuit-evaluation' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Short-circuit Evaluation
   
@@ -3292,13 +3246,13 @@ a = b = c = d = 5;
     </h3>
   
     <p class='mb-3'>
-      Languages with <em>short-circuit evaluation</em> take these potential optimizations one step further. For a boolean expression, the compiler will stop evaluating the expression as soon as the result is fixed. For instance, in <code class='verbatim py-0.5 px-0.5 bg-gray-100'>a() && b()</code>, if <code class='verbatim py-0.5 px-0.5 bg-gray-100'>a()</code> is <code class='verbatim py-0.5 px-0.5 bg-gray-100'>false</code>, then the entire statement will always be false, no matter the value of <code class='verbatim py-0.5 px-0.5 bg-gray-100'>b()</code>. In this case, the compiler/interpreter will simply not execute <code class='verbatim py-0.5 px-0.5 bg-gray-100'>b()</code>. On the other hand, in <code class='verbatim py-0.5 px-0.5 bg-gray-100'>a() || b()</code> if <code class='verbatim py-0.5 px-0.5 bg-gray-100'>a()</code> is true, then the entire statement will always be true, no matter the value of <code class='verbatim py-0.5 px-0.5 bg-gray-100'>b()</code>. In this case, the compiler/interpreter will simply not execute <code class='verbatim py-0.5 px-0.5 bg-gray-100'>b()</code>.
+      Languages with <em>short-circuit evaluation</em> take these potential optimizations one step further. For a boolean expression, the compiler will stop evaluating the expression as soon as the result is fixed. For instance, in <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>a() && b()</code>, if <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>a()</code> is <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>false</code>, then the entire statement will always be false, no matter the value of <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>b()</code>. In this case, the compiler/interpreter will simply not execute <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>b()</code>. On the other hand, in <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>a() || b()</code> if <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>a()</code> is true, then the entire statement will always be true, no matter the value of <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>b()</code>. In this case, the compiler/interpreter will simply not execute <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>b()</code>.
     </p>
   
     <p class='mb-3'>
       A programmer's reliance on this type of behavior in a programming language is very common. For instance, this is a common idiom in C/C++:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>int *variable = nullptr;
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>int *variable = nullptr;
 
 ...
 
@@ -3310,7 +3264,7 @@ if (variable != nullptr && *variable &gt; 5) {
       In this code, the programmer is checking to see whether there is memory allocated to variable before they attempt to read that memory. This is defensive programming thanks to short-circuit evaluation.
     </p>
   
-    <h3 id='referential-transparency' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='referential-transparency' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Referential Transparency
   
@@ -3328,7 +3282,7 @@ if (variable != nullptr && *variable &gt; 5) {
       Most of these issues would not be a problem if programmer's wrote functions that did not have side effects (remember that those are called pure functions). There are languages that will not allow side effects and those languages support referential transparency: A function has referential transparency if its value (its output) depends only on the value of its parameter(s). In other words, if given the same inputs, a referentially transparent function always gives the same output. ​
     </p>
   
-    <h3 id='put-it-all-together' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='put-it-all-together' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Put It All Together
   
@@ -3346,7 +3300,7 @@ if (variable != nullptr && *variable &gt; 5) {
       Try you hand at the practice quiz Expressions, precedence, associativity and coercions to check your understanding of the material we covered in class on Friday and the material from your assigned reading! For the why, check out <a href='https://github.com/hawkinsw/cs3003/blob/main/expressions/relational.cpp' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>relational.cpp</a> .
     </p>
   
-    <h2 id='section-9' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-9' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   9/13/2021
   
@@ -3364,7 +3318,7 @@ if (variable != nullptr && *variable &gt; 5) {
       In today's edition of the Daily PL we will recap our discussion from today that covered subprograms, polymorphism and coroutines!
     </p>
   
-    <h3 id='subprograms' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='subprograms' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Subprograms
   
@@ -3422,7 +3376,7 @@ if (variable != nullptr && *variable &gt; 5) {
       
     </ul>
   
-    <h3 id='polymorphism' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='polymorphism' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Polymorphism
   
@@ -3453,19 +3407,19 @@ if (variable != nullptr && *variable &gt; 5) {
     </ul>
   
     <p class='mb-3'>
-      Ad-hoc polymorphism is sometimes call function overloading (C++). Subprograms that participate in ad-hoc polymorphism share the same name but must have different protocols. If the subprograms' protocols and names were the same, how would the compiler/interpreter choose which one to invoke? Although a subprogram's protocol includes its return type, not all languages allow ad-hoc polymorphism to depend on the return type (e.g., C++). See the various definitions of <code class='verbatim py-0.5 px-0.5 bg-gray-100'>add</code> in the C++ code here: <a href='https://github.com/hawkinsw/cs3003/blob/main/subprograms/subprograms.cpp' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>subprograms.cpp</a> . Note how they all have different protocols. Further, note that not all the versions of the function <code class='verbatim py-0.5 px-0.5 bg-gray-100'>add</code> perform an actual addition! That's the point of ad-hoc polymorphism – the programmer can change the meaning of a function.
+      Ad-hoc polymorphism is sometimes call function overloading (C++). Subprograms that participate in ad-hoc polymorphism share the same name but must have different protocols. If the subprograms' protocols and names were the same, how would the compiler/interpreter choose which one to invoke? Although a subprogram's protocol includes its return type, not all languages allow ad-hoc polymorphism to depend on the return type (e.g., C++). See the various definitions of <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>add</code> in the C++ code here: <a href='https://github.com/hawkinsw/cs3003/blob/main/subprograms/subprograms.cpp' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>subprograms.cpp</a> . Note how they all have different protocols. Further, note that not all the versions of the function <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>add</code> perform an actual addition! That's the point of ad-hoc polymorphism – the programmer can change the meaning of a function.
     </p>
   
     <p class='mb-3'>
-      Functions that are parametrically polymorphic are sometimes called function templates (C++) or generics (Java, soon to be in Go, Rust). A parametrically polymorphic function is like the blueprint for a house with a variable number of floors. A home buyer may want a home with three stories – the architect takes their variably floored house blueprint and "stamps out" a version with three floors. Some "new" languages call this process monomorphization (Links to an external site.). See the definition of minimum in the C++ code here: <a href='https://github.com/hawkinsw/cs3003/blob/main/subprograms/subprograms.cpp' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>subprograms.cpp</a> . Note how there is only one definition of the function. The associated type parameter is <code class='verbatim py-0.5 px-0.5 bg-gray-100'>T</code>. The compiler will "stamp out" copies of minimum for different types when it is invoked. For example, if the programmer writes
+      Functions that are parametrically polymorphic are sometimes called function templates (C++) or generics (Java, soon to be in Go, Rust). A parametrically polymorphic function is like the blueprint for a house with a variable number of floors. A home buyer may want a home with three stories – the architect takes their variably floored house blueprint and "stamps out" a version with three floors. Some "new" languages call this process monomorphization (Links to an external site.). See the definition of minimum in the C++ code here: <a href='https://github.com/hawkinsw/cs3003/blob/main/subprograms/subprograms.cpp' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>subprograms.cpp</a> . Note how there is only one definition of the function. The associated type parameter is <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>T</code>. The compiler will "stamp out" copies of minimum for different types when it is invoked. For example, if the programmer writes
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>
 auto m = minimum(5, 4);
 </code></pre></div>
     <p class='mb-3'>
       then the compiler will generate
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>int minimum(int a, int b) {
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>int minimum(int a, int b) {
 
  return a &lt; b ? a : b;
 }
@@ -3474,7 +3428,7 @@ auto m = minimum(5, 4);
       behind the scenes.
     </p>
   
-    <h3 id='coroutines' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='coroutines' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Coroutines
   
@@ -3512,7 +3466,7 @@ auto m = minimum(5, 4);
       Coroutines could be used to write a card game. Each player is a coroutine that knows about the player to their left (that is, a coroutine). The PlayerA coroutine performs their actions (perhaps drawing a card from the deck, etc) and checks to see if they won. If they did not win, then the PlayerA coroutine yields to the PlayerB coroutine who performs the same set of actions. This process continues until a player no longer has someone to their left. At that point, everything unwinds back to the point where PlayerA was last resumed – the signal that a round is complete. The process continues by resuming PlayerA to start another round of the game. Because each player is a coroutine, it never ceased to exist and, therefore, retains information about previous draws from the deck. When a player finally wins, the process completes. To see this in code, check out <a href='https://github.com/hawkinsw/cs3003/blob/main/subprograms/cardgame.py' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>cardgame.py</a> .
     </p>
   
-    <h2 id='section-10' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-10' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   9/20/2021
   
@@ -3530,7 +3484,7 @@ auto m = minimum(5, 4);
       This is an issue of the Daily PL that you are going to want to make sure that you keep safe – definitely worth framing and passing on to your children! You will want to make sure you remember where you were when you first learned about …
     </p>
   
-    <h3 id='formal-program-semantics' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='formal-program-semantics' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Formal Program Semantics
   
@@ -3576,7 +3530,7 @@ auto m = minimum(5, 4);
       If you are interested, you can find the <a href='https://isocpp.org/std/the-standard' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>C++ language standard</a> , <a href='https://docs.oracle.com/javase/specs/' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>the Java language standard</a> , the <a href='http://www.open-std.org/jtc1/sc22/wg14/' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>C language standard</a> , <a href='https://golang.org/ref/spec' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>the Go language standard</a> and <a href='https://docs.python.org/3/reference/' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>the Python language standard</a> all online.
     </p>
   
-    <h3 id='testing-vs-proving' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='testing-vs-proving' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Testing vs Proving
   
@@ -3602,7 +3556,7 @@ auto m = minimum(5, 4);
       There is an entire field of computer science known as formal methods whose goal is to understand how to write software that is provably correct. There are systems available for writing programs about which things can be proven. There is <a href='https://pvs.csl.sri.com/' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>PVS</a>, <a href='https://coq.inria.fr/' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Coq</a> ,<a href='https://isabelle.in.tum.de/doc/tutorial.pdf' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Isabelle</a> , and <a href='https://lamport.azurewebsites.net/tla/tla.html' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>TLA+</a> , to name a few. PVS is used by NASA to write its mission-critical software and even it makes an appearance in the movie <a href='https://shemesh.larc.nasa.gov/fm/pvs/TheMartian/' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>The Martian</a> .
     </p>
   
-    <h3 id='three-types-of-formal-semantics' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='three-types-of-formal-semantics' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Three Types of Formal Semantics
   
@@ -3640,7 +3594,7 @@ auto m = minimum(5, 4);
       We will focus on operational semantics only!
     </p>
   
-    <h3 id='operational-semantics' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='operational-semantics' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Operational Semantics
   
@@ -3727,7 +3681,7 @@ auto m = minimum(5, 4);
       
     </ul>
   
-    <h3 id='example-1-defining-the-semantics-of-variable-access.' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='example-1-defining-the-semantics-of-variable-access.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Example 1: Defining the semantics of variable access.
   
@@ -3783,7 +3737,7 @@ auto m = minimum(5, 4);
       
     </ul>
   
-    <h3 id='example-2-defining-the-semantics-of-variable-assignment-for-a-variable-that-already-exists.' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='example-2-defining-the-semantics-of-variable-assignment-for-a-variable-that-already-exists.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Example 2: Defining the semantics of variable assignment (for a variable that already exists).
   
@@ -3798,7 +3752,7 @@ auto m = minimum(5, 4);
     </h3>
   
     <p class='mb-3'>
-      In STIMPL, the expression to overwrite the value of an existing variable, say i, with, say, an integer literal 5 is written like <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Assign(Variable("i"), IntLiteral(5))</code>. Our operational semantic rule for evaluating such an assignment should "read" something like: When the program is about to execute an expression to assign variable i to the integer literal 5 in a state σ and the type of the variable i in state σ is Integer, the value of the expression will be the triple of 5, Integer and the changed state σ' which is exactly the same as state σ
+      In STIMPL, the expression to overwrite the value of an existing variable, say i, with, say, an integer literal 5 is written like <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Assign(Variable("i"), IntLiteral(5))</code>. Our operational semantic rule for evaluating such an assignment should "read" something like: When the program is about to execute an expression to assign variable i to the integer literal 5 in a state σ and the type of the variable i in state σ is Integer, the value of the expression will be the triple of 5, Integer and the changed state σ' which is exactly the same as state σ
     </p>
   
     <p class='mb-3'>
@@ -3862,7 +3816,7 @@ auto m = minimum(5, 4);
     <p class='mb-3'>
       Compare that with the code for it's implementation in the STIMPL skeleton that you are provided for Assignment 1:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def evaluate(expression, state):
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>def evaluate(expression, state):
 ...
 
     case Variable(variable_name=variable_name):
@@ -3872,14 +3826,14 @@ auto m = minimum(5, 4);
       return (*value, state)
 </code></pre></div>
     <p class='mb-3'>
-      At this point in the code we are in a function named evaluate whose first parameter is the next expression to evaluate and whose second parameter is a state. Does that sound familiar? That's because it's the same as a <em>configuration</em>! We use <em>pattern matching</em> to select the code to execute. The pattern is based on the structure of <code class='verbatim py-0.5 px-0.5 bg-gray-100'>expression</code> and we match in the code above when <code class='verbatim py-0.5 px-0.5 bg-gray-100'>expression</code> is a variable access. Refer to Pattern Matching in Python for the exact form of the syntax. The <em>state</em> variable is an instance of the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>State</code> object that provides a method called <code class='verbatim py-0.5 px-0.5 bg-gray-100'>get_value</code> (see Assignment 1: Implementing STIMPL for more information about that function) that returns a tuple of (v, τ) In other words, get<sub>value</sub> works the same as σ. So,
+      At this point in the code we are in a function named evaluate whose first parameter is the next expression to evaluate and whose second parameter is a state. Does that sound familiar? That's because it's the same as a <em>configuration</em>! We use <em>pattern matching</em> to select the code to execute. The pattern is based on the structure of <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>expression</code> and we match in the code above when <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>expression</code> is a variable access. Refer to Pattern Matching in Python for the exact form of the syntax. The <em>state</em> variable is an instance of the <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>State</code> object that provides a method called <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>get_value</code> (see Assignment 1: Implementing STIMPL for more information about that function) that returns a tuple of (v, τ) In other words, get<sub>value</sub> works the same as σ. So,
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>value = state.get_value(variable_name)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>value = state.get_value(variable_name)
 </code></pre></div>
     <p class='mb-3'>
       is a means of implementing the premise of the operational semantics.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>return (*value, state)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>return (*value, state)
 </code></pre></div>
     <p class='mb-3'>
       yields the final result! Pretty cool, right?
@@ -3896,7 +3850,7 @@ auto m = minimum(5, 4);
     <p class='mb-3'>
       And here's the implementation:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def evaluate(expression, state):
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>def evaluate(expression, state):
 ...
 
    case Assign(variable=variable, value=value):
@@ -3916,29 +3870,29 @@ auto m = minimum(5, 4);
     <p class='mb-3'>
       First, look at
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>value_result, value_type, new_state = evaluate(value, state)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>value_result, value_type, new_state = evaluate(value, state)
 </code></pre></div>
     <p class='mb-3'>
       which is how we are able to find the values needed to satisfy the left-hand premise. value<sub>result</sub> is v, value<sub>type</sub> is τ and new<sub>state</sub> is σ'.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>variable_from_state = new_state.get_value(variable.variable_name)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>variable_from_state = new_state.get_value(variable.variable_name)
 </code></pre></div>
     <p class='mb-3'>
       is how we are able to find the values needed to satisfy the right-hand premise. Notice that we are using new<sub>state</sub> (σ') to get variable.variable<sub>name</sub> (x). There is some trickiness in_, variable<sub>type</sub> = variable<sub>fromstate</sub> if variable<sub>fromstate</sub> else (None, None) to set things up in case we are doing the first assignment to the variable (which sets its type), so ignore that for now! Remember that in our premises we guaranteed that the type of the variable in state σ' matches the type of the expression:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>if value_type != variable_type and variable_type != None:
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>if value_type != variable_type and variable_type != None:
   raise InterpTypeError(f"""Mismatched types for Assignment:
       Cannot assign {value_type} to {variable_type}""")
 </code></pre></div>
     <p class='mb-3'>
       performs that check!
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>new_state = new_state.set_value(variable.variable_name, value_result, value_type)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>new_state = new_state.set_value(variable.variable_name, value_result, value_type)
 </code></pre></div>
     <p class='mb-3'>
       generates a new, new state (σ′[(v,τ)/x]) and
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>
 return (value_result, value_type, new_state)
 </code></pre></div>
     <p class='mb-3'>
@@ -3949,7 +3903,7 @@ return (value_result, value_type, new_state)
       
     </ul>
   
-    <h2 id='section-11' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-11' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   9/22/2021
   
@@ -3967,7 +3921,7 @@ return (value_result, value_type, new_state)
       Like other popular newspapers that do in-depth analysis of popular topics (Links to an external site.), this edition of the Daily PL is part 2/2 of an investigative report on …
     </p>
   
-    <h3 id='formal-program-semantics-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='formal-program-semantics-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Formal Program Semantics
   
@@ -4112,7 +4066,7 @@ return (value_result, value_type, new_state)
     <p class='mb-3'>
       Now, how does that translate to an actual implementation?
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>
 def evaluate(expression, state):
   match expression:
   ...
@@ -4185,7 +4139,7 @@ def evaluate(expression, state):
     <p class='mb-3'>
       Let's look at how this translates into actual working code:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def evaluate(expression, state):
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>def evaluate(expression, state):
   match expression:
   ...
 
@@ -4206,14 +4160,14 @@ def evaluate(expression, state):
       return (result_value, result_type, new_state)
 </code></pre></div>
     <p class='mb-3'>
-      The local variables <code class='verbatim py-0.5 px-0.5 bg-gray-100'>condition</code>, <code class='verbatim py-0.5 px-0.5 bg-gray-100'>true</code> and <code class='verbatim py-0.5 px-0.5 bg-gray-100'>false</code> match c, t and f, respectively from the rule in the operational semantics. The first step in the implementation is to determine the value/type/updated state when c is evaluated in state σ. Immediately after doing that, the code checks to make sure that the condition statement has boolean type. Remember how our rule only applies when this is the case? Next, depending on whether the condition evaluated to true or false, the appropriate next expression is evaluated in the σ' state (<code class='verbatim py-0.5 px-0.5 bg-gray-100'>new_state</code>). It is the result of that evaluation that is the ultimate value of the expression and what is returned.
+      The local variables <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>condition</code>, <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>true</code> and <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>false</code> match c, t and f, respectively from the rule in the operational semantics. The first step in the implementation is to determine the value/type/updated state when c is evaluated in state σ. Immediately after doing that, the code checks to make sure that the condition statement has boolean type. Remember how our rule only applies when this is the case? Next, depending on whether the condition evaluated to true or false, the appropriate next expression is evaluated in the σ' state (<code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>new_state</code>). It is the result of that evaluation that is the ultimate value of the expression and what is returned.
     </p>
   
         </li>
       
     </ul>
   
-    <h2 id='section-12' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-12' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   9/24/2021
   
@@ -4231,7 +4185,7 @@ def evaluate(expression, state):
       As we conclude the penultimate week of September, we are turning the page from imperative programming and beginning our work on object-oriented programming!
     </p>
   
-    <h3 id='the-definitions-of-object-oriented-programming' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='the-definitions-of-object-oriented-programming' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   The Definitions of Object-Oriented Programming
   
@@ -4265,7 +4219,7 @@ def evaluate(expression, state):
       As graduates of CS1021C and CS1080C, the second definition is probably not surprising. The first definition, however, leaves something to be desired. Using Definition (1) means that we have to a) know the definition of abstraction and abstract data types and b) know what it means to apply abstraction to ADTs.
     </p>
   
-    <h3 id='abstraction-reprise' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='abstraction-reprise' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Abstraction (Reprise)
   
@@ -4359,7 +4313,7 @@ def evaluate(expression, state):
       
     </ul>
   
-    <h3 id='the-requirements-of-an-object-oriented-programming-language' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='the-requirements-of-an-object-oriented-programming-language' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   The Requirements of an Object-Oriented Programming Language
   
@@ -4424,7 +4378,7 @@ def evaluate(expression, state):
     <p class='mb-3'>
       OOP Example with Inheritance and Dynamic Method Binding
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='java language-java'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='java language-java'>
 abstract class Mammal {
   protected int legs = 0;
   Mammal() {
@@ -4474,7 +4428,7 @@ public class MammalDemo {
     <p class='mb-3'>
       The function makeARuckus has a parameter whose type is a Mammal. As we said above, in OOP that means that I can assign to that variable a Mammal or anything that inherits from Mammal. When we call makeARuckus with an argument whose type is Dog, the function relies of dynamic method binding to make sure that the proper makeNoise function is called – the one that barks – even though makeARuckus does not know whether m is a generic Mammal, a Dog or a Cat. It is because of dynamic method binding that the code above generates
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='example language-example'>bark
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='example language-example'>bark
 meow
 </code></pre></div>
     <p class='mb-3'>
@@ -4485,7 +4439,7 @@ meow
       
     </ul>
   
-    <h2 id='section-13' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-13' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   9/27/2021
   
@@ -4503,7 +4457,7 @@ meow
       It's the last week of September but the first full week of OOP. Let's do this!
     </p>
   
-    <h3 id='overriding-in-oop' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='overriding-in-oop' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Overriding in OOP
   
@@ -4540,7 +4494,7 @@ meow
     <p class='mb-3'>
       Let's make it concrete with an example:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='java language-java'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='java language-java'>
 class Car {
   protected boolean electric = false;
   protected int wheels = 4;
@@ -4580,13 +4534,13 @@ class Chevrolet extends Car {
 }
 </code></pre></div>
     <p class='mb-3'>
-      In this example, Car is the superclass of Tesla and Chevrolet. The Car class defines a method named ignite. That method will ignite the engine of the car – an action whose mechanics differ based on the car's type. In other words, this is a perfect candidate for overriding. Both Tesla and Chevrolet implement a method with the same name, return value and parameters, thereby meeting Java's requirements for overriding. In Java, the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>@Override</code> is known as an annotation. Annotations are [[<a href='https://docs.oracle.com/javase/tutorial/java/annotations/' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>https://docs.oracle.com/javase/tutorial/java/annotations/</a>]["a form of metadata [that] provide data about a program that is not part of the program itself."]] Annotations in Java are attached to particular syntactic units. In this case, the @Override annotation is attached to a method and it tells the compiler that the method is overriding a method from its superclass. If the compiler does not find a method in the superclass(es) that is capable of being overridden by the method, an error is generated. This is a good check for the programmer. (Note: C++ offers similar functionality through the override specifier (Links to an external site.).)
+      In this example, Car is the superclass of Tesla and Chevrolet. The Car class defines a method named ignite. That method will ignite the engine of the car – an action whose mechanics differ based on the car's type. In other words, this is a perfect candidate for overriding. Both Tesla and Chevrolet implement a method with the same name, return value and parameters, thereby meeting Java's requirements for overriding. In Java, the <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>@Override</code> is known as an annotation. Annotations are [[<a href='https://docs.oracle.com/javase/tutorial/java/annotations/' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>https://docs.oracle.com/javase/tutorial/java/annotations/</a>]["a form of metadata [that] provide data about a program that is not part of the program itself."]] Annotations in Java are attached to particular syntactic units. In this case, the @Override annotation is attached to a method and it tells the compiler that the method is overriding a method from its superclass. If the compiler does not find a method in the superclass(es) that is capable of being overridden by the method, an error is generated. This is a good check for the programmer. (Note: C++ offers similar functionality through the override specifier (Links to an external site.).)
     </p>
   
     <p class='mb-3'>
       Let's say that the programmer actually implemented the Tesla class like this:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='java language-java'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='java language-java'>
 class Tesla extends Car {
   Tesla() {
     super();
@@ -4602,13 +4556,13 @@ class Tesla extends Car {
 }
 </code></pre></div>
     <p class='mb-3'>
-      The ignite method implemented in Tesla does not override the ignite method from Car because it has a different set of parameters. The <code class='verbatim py-0.5 px-0.5 bg-gray-100'>@Override</code> annotation tells the compiler that the programmer thought they were overriding something. An error is generated and the programmer can make the appropriate fix. Without the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>@Override</code> annotation, the code will compile but produce incorrect output when executed.
+      The ignite method implemented in Tesla does not override the ignite method from Car because it has a different set of parameters. The <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>@Override</code> annotation tells the compiler that the programmer thought they were overriding something. An error is generated and the programmer can make the appropriate fix. Without the <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>@Override</code> annotation, the code will compile but produce incorrect output when executed.
     </p>
   
     <p class='mb-3'>
       Assume that the following program exists:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='java language-java'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='java language-java'>
 public class CarDemo {
   public static void main(String args[]) {
     Car c = new Car();
@@ -4624,14 +4578,14 @@ public class CarDemo {
     <p class='mb-3'>
       This code instantiates three different cars – the first is a generic Car, the second is a Tesla and the third is a Chevrolet. Look carefully and note that the type of each of the three is actually stored in a variable whose type is Car and not a more-specific type (ie, Tesla or Chevy). This is not a problem because of dynamic dispatch. At runtime, the JVM will find the proper ignite function and invoke it according to the variable's actual type and not its static type. Because ignite is overridden by Chevy and Tesla, the output of the program above is:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='example language-example'>Igniting a generic car's engine!
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='example language-example'>Igniting a generic car's engine!
 Igniting a Tesla's engine!
 Igniting a Chevrolet's engine!
 </code></pre></div>
     <p class='mb-3'>
       Most OOP languages provide the programmer the option to invoke the method they are overriding from the superclass. Java is no different. If an overriding method implementation wants to invoke the functionality of the method that it is overriding, it can do so using the super keyword.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='java language-java'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='java language-java'>
 class Tesla extends Car {
   Tesla() {
     super();
@@ -4662,16 +4616,16 @@ class Chevrolet extends Car {
     <p class='mb-3'>
       With these changes, the program now outputs:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='example language-example'>Igniting a generic car's engine!
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='example language-example'>Igniting a generic car's engine!
 Igniting a generic car's engine!
 Igniting a Tesla's engine!
 Igniting a generic car's engine!
 Igniting a Chevrolet's engine!
 </code></pre></div>
     <p class='mb-3'>
-      <strong>New material alert:</strong> What if the programmer does not want a subclass to be able to customize the behavior of a certain method? For example, no matter how you subclass Dog, it's noise method is always going to bark – no inheriting class should change that. Java provides the <code class='verbatim py-0.5 px-0.5 bg-gray-100'>final</code> keyword to guarantee that the implementation of a method cannot be overridden by a subclass. Let's change the code for the classes from above to look like this:
+      <strong>New material alert:</strong> What if the programmer does not want a subclass to be able to customize the behavior of a certain method? For example, no matter how you subclass Dog, it's noise method is always going to bark – no inheriting class should change that. Java provides the <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>final</code> keyword to guarantee that the implementation of a method cannot be overridden by a subclass. Let's change the code for the classes from above to look like this:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='java language-java'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='java language-java'>
 class Car {
   protected boolean electric = false;
   protected int wheels = 4;
@@ -4722,9 +4676,9 @@ class Chevrolet extends Car {
 }
 </code></pre></div>
     <p class='mb-3'>
-      Notice that <code class='verbatim py-0.5 px-0.5 bg-gray-100'>ignite</code> in the Car class has a <code class='verbatim py-0.5 px-0.5 bg-gray-100'>final</code> before the return type. This makes <code class='verbatim py-0.5 px-0.5 bg-gray-100'>ignite</code> a <a href='https://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.3.3' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>final method</a> : "A method can be declared final to prevent subclasses from overriding or hiding it". (C++ has something similar – <a href='https://en.cppreference.com/w/cpp/language/final' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>the final specifier</a> .) Attempting to compile the code above produces this output:
+      Notice that <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>ignite</code> in the Car class has a <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>final</code> before the return type. This makes <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>ignite</code> a <a href='https://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.3.3' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>final method</a> : "A method can be declared final to prevent subclasses from overriding or hiding it". (C++ has something similar – <a href='https://en.cppreference.com/w/cpp/language/final' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>the final specifier</a> .) Attempting to compile the code above produces this output:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='example language-example'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='example language-example'>
 CarDemo.java:30: error: ignite() in Tesla cannot override ignite() in Car
   boolean ignite() {
           ^
@@ -4735,7 +4689,7 @@ CarDemo.java:43: error: ignite() in Chevrolet cannot override ignite() in Car
   overridden method is final
 2 errors
 </code></pre></div>
-    <h3 id='subclass-vs-subtype' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='subclass-vs-subtype' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Subclass vs Subtype
   
@@ -4769,7 +4723,7 @@ CarDemo.java:43: error: ignite() in Chevrolet cannot override ignite() in Car
       Barbara Liskov who pioneered the definition and study of subtypes put it this way (Links to an external site.): "If for each object o1 of type S there is an object o2 of type T such that for all programs P defined in terms of T, the behavior of P is unchanged when o1 is substituted for o2, then S is a subtype of T."
     </p>
   
-    <h3 id='open-recursion' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='open-recursion' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Open Recursion
   
@@ -4786,7 +4740,7 @@ CarDemo.java:43: error: ignite() in Chevrolet cannot override ignite() in Car
     <p class='mb-3'>
       Open recursion in an OO PL is a fancy term for the combination of a) functionality that gives the programmer the ability to refer to the current object from within a method (usually through a variable named this or self) and b) dynamic dispatch. . Thanks to open recursion, some method A of class C can call some method B of the same class. But wait, there's more! (Links to an external site.) Continuing our example, in open recursion, if method B is overriden in class D (a subclass of C), then the overriden version of the method is invoked when called from method A on an object of type D even though method A is only implemented by class C. Wild! It is far easier to see this work in real life than talk about it abstractly. So, consider our cars again:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='java language-java'>class Car {
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='java language-java'>class Car {
   protected boolean electric = false;
   protected int wheels = 4;
 
@@ -4836,7 +4790,7 @@ class Chevrolet extends Car {
     <p class='mb-3'>
       The start method is only implemented in the Car class. At the time that it is compiled, the Car class has no awareness of any subclasses (ie, Tesla and Chevrolet). Let's run this code and see what happens:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='java language-java'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='java language-java'>
 public class CarDemo {
   public static void main(String args[]) {
     Car c = new Car();
@@ -4852,7 +4806,7 @@ public class CarDemo {
     <p class='mb-3'>
       Here's the output:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='example language-example'>Starting a car ...
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='example language-example'>Starting a car ...
 Igniting a generic car's engine!
 Ignited the engine!
 Starting a car ...
@@ -4870,7 +4824,7 @@ Did NOT ignite the engine!
       How cool is that?
     </p>
   
-    <h2 id='section-14' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-14' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   10/1/2021
   
@@ -4892,7 +4846,7 @@ Did NOT ignite the engine!
       We made it into October!! Spooky, spooky!
     </p>
   
-    <h3 id='corrections' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='corrections' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Corrections
   
@@ -4913,7 +4867,7 @@ Did NOT ignite the engine!
     <p class='mb-3'>
       <strong>The JVM will</strong> insert an implicit call to the to-be-instantiated class' default constructor (i.e., the one with no parameters) if the the to-be-constructed (sub)class does not do so explicitly. We'll make this clear with an example:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='java language-java'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='java language-java'>
 class Parent {
   Parent() {
     System.out.println("I am in the Parent constructor.");
@@ -4943,7 +4897,7 @@ public class DefaultConstructor {
     <p class='mb-3'>
       When this program is executed, it will print
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='example language-example'>I am in the Parent constructor.
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='example language-example'>I am in the Parent constructor.
 I am in the Child constructor.
 </code></pre></div>
     <p class='mb-3'>
@@ -4953,7 +4907,7 @@ I am in the Child constructor.
     <p class='mb-3'>
       However, if we make the following change:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='java language-java'>class Parent {
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='java language-java'>class Parent {
   Parent() {
     System.out.println("I am in the Parent constructor.");
   }
@@ -4992,7 +4946,7 @@ public class DefaultConstructor {
       The C++ standard sanctions a main function without a return statement. The standard says: "if control reaches the end of main without encountering a return statement, the effect is that of executing return 0;."
     </p>
   
-    <h3 id='a-different-way-to-oop' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='a-different-way-to-oop' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   A Different Way to OOP
   
@@ -5074,7 +5028,7 @@ public class DefaultConstructor {
       How scary is that? Can you imagine working on a system where certain methods you "inherit" change at runtime?
     </p>
   <span title='Link is broken'><s>![](images/pl/1.jpg)</s>❌</span>
-    <h3 id='oop-or-interfaces' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='oop-or-interfaces' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   OOP or Interfaces?
   
@@ -5099,7 +5053,7 @@ public class DefaultConstructor {
     <p class='mb-3'>
       Instead, modern languages are using a slimmer mechanism known as an interface or a trait. An interface just defines a list of methods that an implementer of that interface must support. Let's see some real Go code that does this – it'll clear things up:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='java language-java'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='java language-java'>
 type Readable interface {
   Read()
 }
@@ -5107,7 +5061,7 @@ type Readable interface {
     <p class='mb-3'>
       This snippet defines an interface with one function (Read) that takes no parameters and returns no value. That interface is named Readable. Simple.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='java language-java'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='java language-java'>
 type Book struct {
   title string
 }
@@ -5115,7 +5069,7 @@ type Book struct {
     <p class='mb-3'>
       This snippet defines a data structure called a Book – such structs are the closest that Go has to classes.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='java language-java'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='java language-java'>
 func (book Book) Read() {
   fmt.Printf("Reading the book %v\n", book.title)
 }
@@ -5123,7 +5077,7 @@ func (book Book) Read() {
     <p class='mb-3'>
       This snippet simply says that if variable b is of type Book then the programmer can call b.Read(). Now, for the payoff:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='java language-java'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='java language-java'>
 func WhatAreYouReading(r Readable) {
   r.Read()
 }
@@ -5131,7 +5085,7 @@ func WhatAreYouReading(r Readable) {
     <p class='mb-3'>
       This function only accepts arguments that implement (i.e., meet the criteria specified in the definition of) the Readable interface. In other words, with this definition, the code in the body of the function can safely assume that it can can call Read on r. And, for the encore:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='java language-java'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='java language-java'>
 book := Book{title: "Infinite Jest"}
 WhatAreYouReading(book)
 </code></pre></div>
@@ -5139,7 +5093,7 @@ WhatAreYouReading(book)
       This code works exactly like you'd expect. book is a valid argument to WhatAreYouReading because it implements the Read method which, implicitly, means that it implements the Readable interface. But, what's really cool is that the programmer never had to say explicitly that Book implements the Readable interface! The compiler checks automatically. This gives the programmer the ability to generate a list of only the methods absolutely necessary for its parameters to implement to achieve the necessary ends – and nothing unnecessary. Further, it decouples the person implementing a function from the person using the function – those two parties do not have to coordinate requirements beforehand. Finally, this functionality means that a structure can implement as few or as many interfaces as its designer wants.
     </p>
   
-    <h3 id='dip-our-toe-into-the-pool-of-pointers' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='dip-our-toe-into-the-pool-of-pointers' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Dip Our Toe Into the Pool of Pointers
   
@@ -5173,7 +5127,7 @@ WhatAreYouReading(book)
       In an ideal scenario, it would always be the case that the type of the pointer and the type of the object at the target of the pointer are the same. However, that's not always the case. Come to the next lecture to see what can go wrong when that simple fact fails to hold!
     </p>
   
-    <h2 id='section-15' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-15' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   10/4/2021
   
@@ -5191,7 +5145,7 @@ WhatAreYouReading(book)
       Original is <a href='https://uc.instructure.com/courses/1476336/pages/the-daily-pl-10-slash-4-slash-2021?module_item_id=65438167' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>here</a> One day closer to Candy Corn!
     </p>
   
-    <h3 id='corrections-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='corrections-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Corrections
   
@@ -5213,7 +5167,7 @@ WhatAreYouReading(book)
       We also discussed the operations that you can perform on a pointer-type variable. What we omitted was a discussion of an operation that will fetch the address of a variable in memory. For languages that use pointers to support indirect addressing (see below), such an operation is required. In C/C++, this operation is performed using the address of (&) operator.
     </p>
   
-    <h3 id='pointers' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='pointers' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Pointers
   
@@ -5431,7 +5385,7 @@ WhatAreYouReading(book)
       
     </ul>
   
-    <h2 id='section-16' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-16' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   10/6/2021
   
@@ -5453,7 +5407,7 @@ WhatAreYouReading(book)
       I love Reese's Pieces.
     </p>
   
-    <h3 id='corrections-2' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='corrections-2' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Corrections
   
@@ -5471,7 +5425,7 @@ WhatAreYouReading(book)
       None to speak of!!
     </p>
   
-    <h3 id='pointers-for-dynamic-memory-management' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='pointers-for-dynamic-memory-management' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Pointers for Dynamic Memory Management
   
@@ -5605,7 +5559,7 @@ WhatAreYouReading(book)
       
     </ul>
   
-    <h2 id='section-17' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-17' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   10/15/2021
   
@@ -5623,7 +5577,7 @@ WhatAreYouReading(book)
       The hunt for October!
     </p>
   
-    <h3 id='corrections-3' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='corrections-3' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Corrections
   
@@ -5641,7 +5595,7 @@ WhatAreYouReading(book)
       None to speak of!!
     </p>
   
-    <h3 id='introduction-to-functional-programming' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='introduction-to-functional-programming' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Introduction to Functional Programming
   
@@ -5659,7 +5613,7 @@ WhatAreYouReading(book)
       We spent Friday beginning our module on Functional Programming (FP)! As we said at the beginning of the semester when we were learning about programming paradigms, FP is very different than imperative programming. In imperative programming, developers tell the computer how to do the operation. While functional programming is not logic programming (where developers just tell the computer what to compute and leave the how entirely to the language implementation), the writer of a program in a functional PL is much more concerned with specifying what to compute than how to compute it.
     </p>
   <span title='Link is broken'><s>![](images/pl/Programming Language What_How Continuum.png)</s>❌</span>
-    <h3 id='four-characteristics-of-functional-programming' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='four-characteristics-of-functional-programming' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Four Characteristics of Functional Programming
   
@@ -5737,7 +5691,7 @@ WhatAreYouReading(book)
       Lists are a fundamental data type in functional programming languages. Powerful syntactic tools for manipulating lists are built in to most functional PLs. Understanding how to wield these tools effectively is vital for writing code in functional PLs.
     </p>
   
-    <h3 id='the-historical-setting-of-the-development-of-functional-pls' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='the-historical-setting-of-the-development-of-functional-pls' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   The Historical Setting of the Development of Functional PLs
   
@@ -5763,7 +5717,7 @@ WhatAreYouReading(book)
       The inability to execute a Lisp program efficiently on a physical computer based on the von Neumann model has given Lisp (and other functional programming languages) a reputation as slow and wasteful. (N.B.: This is not true today!) Until the late 1980s hardware vendors thought that it would be worthwhile to build physical machines with non-von Neumann architectures that made executing Lisp programs faster. Here is an image of a so-called Lisp Machine.
     </p>
   <span title='Link is broken'><s>![](images/pl/800px-LISP_machine.jpg)</s>❌</span>
-    <h3 id='lisp' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='lisp' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   LISP
   
@@ -5788,27 +5742,27 @@ WhatAreYouReading(book)
     <p class='mb-3'>
       For instance,
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='elisp language-elisp'>(car (1 2 3))
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='elisp language-elisp'>(car (1 2 3))
 </code></pre></div>
     <p class='mb-3'>
-      is <code class='verbatim py-0.5 px-0.5 bg-gray-100'>1</code>.
+      is <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>1</code>.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='elisp language-elisp'>(cdr (1 2 3))
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='elisp language-elisp'>(cdr (1 2 3))
 </code></pre></div>
     <p class='mb-3'>
-      is <code class='verbatim py-0.5 px-0.5 bg-gray-100'>(2 3)</code>.
+      is <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>(2 3)</code>.
     </p>
   
     <p class='mb-3'>
       Second, you should know that, in Lisp, all data are lists <em>and</em> programs are lists.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='elisp language-elisp'>(a b c)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='elisp language-elisp'>(a b c)
 </code></pre></div>
     <p class='mb-3'>
       is a list in Lisp. In Lisp, (a b c) could be interpreted as a list of atoms a, b and c or an invocation of function a with parameters b and c. ​
     </p>
   
-    <h3 id='lambda-calculus' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='lambda-calculus' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Lambda Calculus
   
@@ -5859,14 +5813,14 @@ WhatAreYouReading(book)
     </p>
   
     <p class='mb-3'>
-      <code class='verbatim py-0.5 px-0.5 bg-gray-100'>\(\lambda\)x . x</code>
+      <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>\(\lambda\)x . x</code>
     </p>
   
     <p class='mb-3'>
       Lambda Calculiticians (yes, I just made up that term) refer to this as the identity function. This function simply returns the value of its argument! But didn't I say that functions in the Lambda Calculus don't have names? Yes, I did. Within the language there is no way to name a function. That does not mean that we cannot assign semantic values to those functions. In fact, associating meaning with functions of a certain format is exactly how high-level computing is done with the Lambda Calculus.
     </p>
   
-    <h2 id='section-18' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-18' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   10/18/2021
   
@@ -5884,7 +5838,7 @@ WhatAreYouReading(book)
       <a href='https://www.youtube.com/watch?v=gq7pxUgjLz0' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Lambda lower now. How low can you go?</a>
     </p>
   
-    <h3 id='corrections-4' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='corrections-4' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Corrections
   
@@ -5902,7 +5856,7 @@ WhatAreYouReading(book)
       None to speak of!!
     </p>
   
-    <h3 id='recalling-lambda-calculus' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='recalling-lambda-calculus' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   (Recalling) Lambda Calculus
   
@@ -5935,7 +5889,7 @@ WhatAreYouReading(book)
         </li>
       
         <li>
-          Function: <span class='math inline'>\(\lambda\)</span>&lt;name&gt; <code class='verbatim py-0.5 px-0.5 bg-gray-100'>.</code> &lt;expression&gt;
+          Function: <span class='math inline'>\(\lambda\)</span>&lt;name&gt; <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>.</code> &lt;expression&gt;
         </li>
       
         <li>
@@ -5948,7 +5902,7 @@ WhatAreYouReading(book)
       We made the point in class that, without loss of generality, we will assume that all names are single letters from the alphabet. In other words, if you see two consecutive letters, e.g., ab, those are two separate names.
     </p>
   
-    <h3 id='bound-and-free-names-and-the-tao-of-function-application' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='bound-and-free-names-and-the-tao-of-function-application' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Bound and Free Names and the Tao of Function Application
   
@@ -6078,7 +6032,7 @@ WhatAreYouReading(book)
       Voila!
     </p>
   
-    <h3 id='currying-functions' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='currying-functions' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Currying Functions
   
@@ -6095,7 +6049,7 @@ WhatAreYouReading(book)
     <p class='mb-3'>
       Currying is the process of turning a function that takes multiple parameters into a sequence of functions that each take a single parameter. Currying is only possible in languages that support high-order functions: functions that a) take functions as parameters, b) return functions or c) both. Python is such a language. Let's look at how you would write a function that calculates the sum of three numbers in Python:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def sum3(a, b, c):
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>def sum3(a, b, c):
   return a + b + c
 </code></pre></div>
     <p class='mb-3'>
@@ -6105,13 +6059,13 @@ WhatAreYouReading(book)
     <p class='mb-3'>
       Let's see if we can Curry that function. Because a Curried function can only take one parameter and we are Currying a function with three parameters, it stands to reason that we are going to have to generate three different functions. Let's start with the first:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def sum1(a):
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>def sum1(a):
   # Something?
 </code></pre></div>
     <p class='mb-3'>
       What something are we going to do? Well, we are going to declare another function inside sum1, call it sum2, that takes a parameter and then use that as the return value of sum1! It looks something like this:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def sum1(a):
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>def sum1(a):
   def sum2(b):
     pass
   return sum2
@@ -6119,7 +6073,7 @@ WhatAreYouReading(book)
     <p class='mb-3'>
       That means, if we call sum1 with a single parameter, the result is another function, one that takes a single parameter! So, we've knocked off two of the three parameters, now we need one more. So, let's write something like this:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def sum1(a):
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>def sum1(a):
   def sum2(b):
     def sum3(c):
       pass
@@ -6130,7 +6084,7 @@ WhatAreYouReading(book)
     <p class='mb-3'>
       This means that if we call sum1 with a single parameter and call the result of that with a single parameter, the result is another function, one that also takes a single parameter! What do we want that innermost function to do? That's right: the summation! So, here's our final code:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def sum1(a):
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>def sum1(a):
   def sum2(b):
     def sum3(c):
       return a + b + c
@@ -6149,7 +6103,7 @@ WhatAreYouReading(book)
     <p class='mb-3'>
       Because we Curried the sum3 function as sum1, we have to call them slightly differently:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>sum3(1, 2, 3)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>sum3(1, 2, 3)
 sum1(1)(2)(3)
 </code></pre></div>
     <p class='mb-3'>
@@ -6180,7 +6134,7 @@ sum1(1)(2)(3)
       for example.
     </p>
   
-    <h3 id='doing-something-with-lambda-calculus' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='doing-something-with-lambda-calculus' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Doing Something with Lambda Calculus
   
@@ -6254,7 +6208,7 @@ sum1(1)(2)(3)
       Try your hand at working through a few examples and make sure you get the expected results!
     </p>
   
-    <h2 id='section-19' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-19' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   10/22/2021
   
@@ -6268,7 +6222,7 @@ sum1(1)(2)(3)
 
     </h2>
   
-    <h3 id='corrections-5' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='corrections-5' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Corrections
   
@@ -6302,7 +6256,7 @@ sum1(1)(2)(3)
       thunks are covered below!
     </p>
   
-    <h3 id='function-invocation-in-functional-programming-languages' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='function-invocation-in-functional-programming-languages' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Function Invocation in Functional Programming Languages
   
@@ -6319,7 +6273,7 @@ sum1(1)(2)(3)
     <p class='mb-3'>
       In imperative programming languages, it may matter to the correctness of a program the order in which parameters to a function are evaluated. (Note: For the purposes of this discussion we will assume that all operators [+, -, /, etc] are implemented as functions that take the operands as arguments in order to simplify the discussion. In other words, when describe the order of function evaluation we are also talking about the order of operand evaluation.) While the choice of the order in which we evaluate the operands is the language designer's prerogative, the choice has consequences. Why? Because of side effects! For example:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='c language-c'>#include &lt;stdio.h&gt;
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='c language-c'>#include &lt;stdio.h&gt;
 
 int operation(int parameter) {
   static int divisor = 1;
@@ -6335,12 +6289,12 @@ int main() {
     <p class='mb-3'>
       prints
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>result: 6
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>result: 6
 </code></pre></div>
     <p class='mb-3'>
       whereas
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='c language-c'>#include &lt;stdio.h&gt;
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='c language-c'>#include &lt;stdio.h&gt;
 
 int operation(int parameter) {
   static int divisor = 1;
@@ -6357,7 +6311,7 @@ int main() {
     <p class='mb-3'>
       prints
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>result: 4
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>result: 4
 </code></pre></div>
     <p class='mb-3'>
       In the difference between the two programs we see vividly the role that the static variable plays in the state of the program and its ultimate output.
@@ -6386,18 +6340,18 @@ int main() {
     <p class='mb-3'>
       Let's look at an example: Assume that there are two functions: dbl, a function that doubles its input, and average, a function that averages its three parameters:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>dbl x = (+) x x
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>dbl x = (+) x x
 average a b c = (/) ((+) a ((+) b c)) 3
 </code></pre></div>
     <p class='mb-3'>
       Both functions are written using prefix notation (i.e., (&lt;operator&gt; &lt;operand1&gt; … &lt;operandn&gt;). We will call these functions like this:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>dbl (average 3 4 5)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>dbl (average 3 4 5)
 </code></pre></div>
     <p class='mb-3'>
       If the language designer chooses to evaluate function arguments only when their results are needed, the execution of this function call proceeds as follows:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>dbl (average 3 4 5)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>dbl (average 3 4 5)
 + (average 3 4 5) (average 3 4 5)
 + ((/) ((+) 3 ((+) 4 5)) 3) (average 3 4 5)
 + (4) (average 3 4 5)
@@ -6412,7 +6366,7 @@ average a b c = (/) ((+) a ((+) b c)) 3
     <p class='mb-3'>
       If, however, the language designer chooses to evaluate function arguments before the function is evaluated, the execution of the function call proceeds as follows:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>dbl (average 3 4 5)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>dbl (average 3 4 5)
 dbl ((/) ((+) 3 ((+) 4 5)) 3)
 dbl 4
 + 4 4
@@ -6451,9 +6405,9 @@ dbl 4
     </p>
   
     <p class='mb-3'>
-      Scheme is a <a href='https://en.wikipedia.org/wiki/Lisp_(programming_language)#Major_dialects' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Lisp dialect</a> . I told you that we weren't going to work much with Lisp, but I lied. Sort of. Scheme is an applicative-order language with the same list-is-everything syntax as all other Lisps (see <a href='https://uc.instructure.com/courses/1476336/pages/the-daily-pl-10-slash-15-slash-2021' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>The Daily PL - 10/15/2021</a>). In Scheme, you would define an if function named <code class='verbatim py-0.5 px-0.5 bg-gray-100'>myif</code> like this:
+      Scheme is a <a href='https://en.wikipedia.org/wiki/Lisp_(programming_language)#Major_dialects' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Lisp dialect</a> . I told you that we weren't going to work much with Lisp, but I lied. Sort of. Scheme is an applicative-order language with the same list-is-everything syntax as all other Lisps (see <a href='https://uc.instructure.com/courses/1476336/pages/the-daily-pl-10-slash-15-slash-2021' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>The Daily PL - 10/15/2021</a>). In Scheme, you would define an if function named <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>myif</code> like this:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(define (myif c t f) (cond (c t) (else f)))
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(define (myif c t f) (cond (c t) (else f)))
 </code></pre></div>
     <p class='mb-3'>
       c is a boolean and myif returns t when c is true and f when c is false. No surprises.
@@ -6462,12 +6416,12 @@ dbl 4
     <p class='mb-3'>
       We can define a name a and set its value to 5:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(define a 5)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(define a 5)
 </code></pre></div>
     <p class='mb-3'>
       Now, let's call myif:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(myif (= a 0) 1 (/ 1 a))
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(myif (= a 0) 1 (/ 1 a))
 </code></pre></div>
     <p class='mb-3'>
       If a is equal to 0, then the call returns 1. Perfect. If a is not zero, the call returns the reciprocal of a. Given the value of a, the result is 1/7.
@@ -6476,17 +6430,17 @@ dbl 4
     <p class='mb-3'>
       Let's define the name b and set its value to 0:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(define b 0)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(define b 0)
 </code></pre></div>
     <p class='mb-3'>
       Now, let's call myif:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(myif (= b 0) 1 (/ 1 b))
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(myif (= b 0) 1 (/ 1 b))
 </code></pre></div>
     <p class='mb-3'>
       If b is equal to 0, then the call returns 1. If b is not zero, the call returns the reciprocal of b. Given the value of b, the result is 1:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>/: division by zero
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>/: division by zero
   context...:
    "/home/hawkinsw/code/uc/cs3003/scheme/applicative/applicative.rkt": [running body]
    temp37_0
@@ -6513,32 +6467,32 @@ dbl 4
     <p class='mb-3'>
       In Scheme, you can specify that the evaluation of an expression be delayed until it is forced.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(define d (delay (/ 1 7)))
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(define d (delay (/ 1 7)))
 </code></pre></div>
     <p class='mb-3'>
       defines d to be the eventual result of the evaluation of the division of 1 by 7. If we ask Scheme to print out d, we see
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>#&lt;promise:d&gt;
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>#&lt;promise:d&gt;
 </code></pre></div>
     <p class='mb-3'>
       To bring the future tense into the present tense, we force a delayed evaluation:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(force d)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(force d)
 </code></pre></div>
     <p class='mb-3'>
       If we ask Scheme to print the result of that expression, we see:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>1/7
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>1/7
 </code></pre></div>
     <p class='mb-3'>
       Exactly what we expect! With this newfound knowledge, we can rewrite the myif function:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(define (myif c t f) (cond (c (force t)) (else (force f))))
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(define (myif c t f) (cond (c (force t)) (else (force f))))
 </code></pre></div>
     <p class='mb-3'>
       Now myif can accept ts and fs that are delayed and we can use myif safely:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(define b 0)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(define b 0)
 (myif (= b 0) (delay 1) (delay (/ 1 b)))
 </code></pre></div>
     <p class='mb-3'>
@@ -6548,13 +6502,13 @@ dbl 4
     <p class='mb-3'>
       and we see the reasonable result:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>1
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>1
 </code></pre></div>
     <p class='mb-3'>
       Kotlin, a modern language, has a concept similar to delay called <a href='https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/lazy.html' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>lazy</a> . Ocaml, an object-oriented functional programming language, <a href='https://ocaml.org/manual/coreexamples.html#s:lazy-expr' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>contains</a> the same concept . Swift has some sense of <a href='https://docs.swift.org/swift-book/LanguageGuide/Properties.html' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>laziness</a> , too!
     </p>
   
-    <h3 id='well-we-are-back-to-normal-order' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='well-we-are-back-to-normal-order' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Well, We Are Back to Normal Order
   
@@ -6612,7 +6566,7 @@ dbl 4
       A thunk, then, is the mechanism that allows the programmer to have the efficiency of applicative order function invocation with the semantics of the normal order function invocation!
     </p>
   
-    <h2 id='section-20' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-20' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   10/27/2021
   
@@ -6626,7 +6580,7 @@ dbl 4
 
     </h2>
   
-    <h3 id='the-tail-that-wags-the-dog' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='the-tail-that-wags-the-dog' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   The Tail That Wags the Dog
   
@@ -6655,7 +6609,7 @@ dbl 4
     <p class='mb-3'>
       That's all very abstract. Let's look at the implications with a real-world example, which we will write in Haskell syntax:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>myLen [] = 0
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>myLen [] = 0
 myLen (x:xs) = 1 + (myLen xs)
 </code></pre></div>
     <p class='mb-3'>
@@ -6678,7 +6632,7 @@ myLen (x:xs) = 1 + (myLen xs)
       Wrong. Modern hardware is fast. Modern computers have lots of memory. Unfortunately, they don't have an infinite amount of memory. A program only has a finite amount of stack space. Given a long enough list, myLen could cause so many activation records to be placed on the stack that the amount of stack space is exhausted and the program crashes. In other words, it's not just that a recursive algorithm might execute slower, a recursive algorithm might fail to calculate the correct result entirely!
     </p>
   
-    <h3 id='tail-recursion---hope' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='tail-recursion---hope' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Tail Recursion - Hope
   
@@ -6704,7 +6658,7 @@ myLen (x:xs) = 1 + (myLen xs)
       With a tail-recursive function, we get the expressiveness of a recursive definition of the algorithm along with the efficiency of an iterative solution! Ron Popeil, that's a deal!
     </p>
   
-    <h3 id='rewriting' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='rewriting' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Rewriting
   
@@ -6721,7 +6675,7 @@ myLen (x:xs) = 1 + (myLen xs)
     <p class='mb-3'>
       The rub is that we need to figure out a way to rewrite those non-tail recursive functions into tail-recursive versions. I am not aware of any general purpose algorithms for such a conversion. However, there is one technique that is widely applicable: accumulators. It is sometimes possible to add a parameter to a non-tail recursive function and use that parameter to define a tail-recursive version. Seeing an accumulator in action is the easiest way to define the technique. Let's rewrite myLen in a tail-recursive manner using an accumulator:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>myLen list = myLenImpl 0 list
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>myLen list = myLenImpl 0 list
 myLenImpl acc [] = acc
 myLenImpl acc (x:xs) = myLenImpl (1 + acc) xs
 </code></pre></div>
@@ -6737,7 +6691,7 @@ myLenImpl acc (x:xs) = myLenImpl (1 + acc) xs
       A constant amount of stack space is being used – amazing!
     </p>
   
-    <h2 id='section-21' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-21' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   10/29/2021
   
@@ -6751,7 +6705,7 @@ myLenImpl acc (x:xs) = myLenImpl (1 + acc) xs
 
     </h2>
   
-    <h3 id='no-one-puts-locals-in-a-corner' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='no-one-puts-locals-in-a-corner' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   No one Puts Locals In a Corner
   
@@ -6768,7 +6722,7 @@ myLenImpl acc (x:xs) = myLenImpl (1 + acc) xs
     <p class='mb-3'>
       One of the really cool things about functional programming languages is their first-class support for functions. In functional programming languages, the programmer can pass functions as parameters to other functions and return functions from functions. Let's take a closer look at functions that "generate" other functions. JavaScript has the capability to return functions from functions so we'll use that language to explore:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='javascript language-javascript'>function urlGenerator(prefix) {
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='javascript language-javascript'>function urlGenerator(prefix) {
   function return_function(url) {
     return prefix + "://" + url;
   }
@@ -6778,7 +6732,7 @@ myLenImpl acc (x:xs) = myLenImpl (1 + acc) xs
     <p class='mb-3'>
       The urlGenerator function takes a single parameter – prefix. The caller of urlGenerator passes the protocol prefix as the argument (probably either "http" or "https"). The return value of urlGenerator is itself a function that takes a single parameter, a url, and returns url prepended with the prefix specified by the call to urlGenerator. An example might help:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='javascript language-javascript'>const httpsUrlGenerator = urlGenerator("https");
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='javascript language-javascript'>const httpsUrlGenerator = urlGenerator("https");
 const httpUrlGenerator = urlGenerator("http");
 
 console.log(httpsUrlGenerator("google.com"));
@@ -6787,33 +6741,33 @@ console.log(httpUrlGenerator("google.com"));
     <p class='mb-3'>
       generates
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>"https://google.com"
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>"https://google.com"
 "http://google.com"
 </code></pre></div>
     <p class='mb-3'>
       In other words, the definition of httpsUrlGenerator is (conceptually)
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='javascript language-javascript'>function httpsUrlGenerator(url) {
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='javascript language-javascript'>function httpsUrlGenerator(url) {
   return "https" + "://" + url;
 }
 </code></pre></div>
     <p class='mb-3'>
       and the definition of httpUrlGenerator is (conceptually)
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='javascript language-javascript'>function httpUrlGenerator(url) {
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='javascript language-javascript'>function httpUrlGenerator(url) {
   return "http" + "://" + url;
 }
 </code></pre></div>
     <p class='mb-3'>
       But that's only a conceptual definition! The real definition continues to contain prefix:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='javascript language-javascript'>return prefix + "://" + url;
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='javascript language-javascript'>return prefix + "://" + url;
 </code></pre></div>
     <p class='mb-3'>
       But, prefix is locally scoped to the urlGenerator function. So, how can httpUrlGenerator and httpsUrlGenerator continue to use its value after leaving the scope of urlGenerator?
     </p>
   
-    <h3 id='the-walls-are-closing-in' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='the-walls-are-closing-in' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   The Walls Are Closing In
   
@@ -6835,7 +6789,7 @@ console.log(httpUrlGenerator("google.com"));
       In the example above, there are two different copies of return<sub>function</sub> generated – one when urlGenerator is called with the argument "http" and one when urlGenerator is called with the parameter "https". Visually, the situation is
     </p>
   <span title='Link is broken'><s>![](images/pl/Closures.png)</s>❌</span>
-    <h3 id='connections-with-other-material' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='connections-with-other-material' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Connections with Other Material
   
@@ -6853,7 +6807,7 @@ console.log(httpUrlGenerator("google.com"));
       Think about the connection between closures and the format of the urlGenerator/return<sub>function</sub> functions and other concepts we've explored previously like partial application and currying.
     </p>
   
-    <h2 id='section-22' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-22' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   11/1/2021
   
@@ -6867,7 +6821,7 @@ console.log(httpUrlGenerator("google.com"));
 
     </h2>
   
-    <h3 id='your-total-is' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='your-total-is' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Your Total Is …
   
@@ -6884,25 +6838,25 @@ console.log(httpUrlGenerator("google.com"));
     <p class='mb-3'>
       In today's class, we started with writing a simple function to sum the numbers in a list and ended up with the definition of a fundamental operation of functional programming: the fold. Let's start by writing the simple, recursive definition of a sum function in Haskell:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>simpleSum [] = 0
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>simpleSum [] = 0
 simpleSum (first:rest) = first + (simpleSum rest)
 </code></pre></div>
     <p class='mb-3'>
       When invoked with the list [1,2,3,4], the result is 10:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>*Summit&gt; simpleSum [1,2,3,4]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>*Summit&gt; simpleSum [1,2,3,4]
 10
 </code></pre></div>
     <p class='mb-3'>
       Exactly what we expected. Let's think about our job security: The boss tells us that they want a function does "products" all the elements in the list. Okay, that's easy:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>simpleProduct [] = 1
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>simpleProduct [] = 1
 simpleProduct (first:rest) = first * (simpleProduct rest)
 </code></pre></div>
     <p class='mb-3'>
       When invoked with the list [1,2,3,4], the result is 24:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>*Summit&gt; simpleProduct [1,2,3,4]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>*Summit&gt; simpleProduct [1,2,3,4]
 24
 </code></pre></div>
     <p class='mb-3'>
@@ -6912,30 +6866,30 @@ simpleProduct (first:rest) = first * (simpleProduct rest)
     <p class='mb-3'>
       I hear some of your shouting at me already: This isn't tail recursive; you told us that tail recursive functions are important. Fine! Let's rewrite the two functions so that they are tail recursive. We will do so using an accumulator and a helper function:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>trSimpleSum list = trSimpleSumImpl 0 list
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>trSimpleSum list = trSimpleSumImpl 0 list
 trSimpleSumImpl runningTotal [] = runningTotal
 trSimpleSumImpl runningTotal (x:xs) = trSimpleSumImpl (runningTotal + x) xs
 </code></pre></div>
     <p class='mb-3'>
       When invoked with the list [1,2,3,4], the result is 10:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>*Summit&gt; trSimpleSum [1,2,3,4]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>*Summit&gt; trSimpleSum [1,2,3,4]
 10
 </code></pre></div>
     <p class='mb-3'>
       And, we'll do the same for the function that calculates the product of all the elements in the list:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>trSimpleProduct list = trSimpleProductImpl 1 list
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>trSimpleProduct list = trSimpleProductImpl 1 list
 trSimpleProductImpl runningTotal [] = runningTotal
 trSimpleProductImpl runningTotal (x:xs) = trSimpleProductImpl (runningTotal * x) xs
 </code></pre></div>
     <p class='mb-3'>
       When invoked with the list [1,2,3,4], the result is 24:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>*Summit&gt; trSimpleProduct [1,2,3,4]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>*Summit&gt; trSimpleProduct [1,2,3,4]
 24
 </code></pre></div>
-    <h3 id='one-of-these-things-is-just-like-the-other' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='one-of-these-things-is-just-like-the-other' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   One of These Things is Just Like The Other
   
@@ -6952,29 +6906,29 @@ trSimpleProductImpl runningTotal (x:xs) = trSimpleProductImpl (runningTotal * x)
     <p class='mb-3'>
       Notice the similarities between trSimpleSumImpl and trSimpleProductImpl. Besides the names, the only difference is really the operation that is performed on the runningTotal and the head element of the list. Because we're using a functional programming language, what if we wanted to let the user specify that operation in terms of a function parameter? Such a function would need have to accept two arguments (the up-to-date running total and the head element) and return a new running total. For summing, we might write a sumOperation function:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>sumOperation runningTotal headElement = runningTotal + headElement
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>sumOperation runningTotal headElement = runningTotal + headElement
 </code></pre></div>
     <p class='mb-3'>
       Next, instead of defining trSimpleSumImpl and trSimpleProductImpl with fixed definitions of their operation, let's define a trSimpleOpImpl that could use sumOperation:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>trSimpleOpImpl runningTotal operation [] = runningTotal
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>trSimpleOpImpl runningTotal operation [] = runningTotal
 trSimpleOpImpl runningTotal operation (x:xs) = trSimpleOpImpl (operation runningTotal x) operation xs
 </code></pre></div>
     <p class='mb-3'>
       Fancy! Now, let's use trSimpleOpImpl and sumOperation to recreate trSimpleSum from above:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>trSimpleSum list = trSimpleOpImpl 0 sumOperation list
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>trSimpleSum list = trSimpleOpImpl 0 sumOperation list
 </code></pre></div>
     <p class='mb-3'>
       Let's check to make sure that we get the same results: When invoked with the list [1,2,3,4], the result is 10:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>*Summit&gt; trSimpleSum [1,2,3,4]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>*Summit&gt; trSimpleSum [1,2,3,4]
 10
 </code></pre></div>
     <p class='mb-3'>
       To confirm our understanding of what's going on here, let's visualize the invocations of sumOperation necessary to complete the calculation of trSimpleSum:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>sumOperation 0 1
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>sumOperation 0 1
 sumOperation 1 2
 sumOperation 3 3
 sumOperation 6 4
@@ -6982,17 +6936,17 @@ sumOperation 6 4
     <p class='mb-3'>
       Let's do a similar thing for trSimpleProduct:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>productOperation runningTotal headElement = runningTotal * headElement
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>productOperation runningTotal headElement = runningTotal * headElement
 trSimpleProduct list = trSimpleOpImpl 0 productOperation list
 
 </code></pre></div>
     <p class='mb-3'>
       Let's check to make sure that we get the same results: When invoked with the list [1,2,3,4], the result is 24:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>*Summit&gt; trSimpleProduct [1,2,3,4]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>*Summit&gt; trSimpleProduct [1,2,3,4]
 24
 </code></pre></div>
-    <h3 id='think-about-the-types' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='think-about-the-types' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Think About the Types:
   
@@ -7045,41 +6999,41 @@ trSimpleProduct list = trSimpleOpImpl 0 productOperation list
     <p class='mb-3'>
       Let's play around and see what we can write using this pattern. How about a concatenation of a list of strings in to a single string?
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>concatenateOperation concatenatedString newString = concatenatedString ++ newString
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>concatenateOperation concatenatedString newString = concatenatedString ++ newString
 concatenateStrings list = trSimpleOpImpl "" concatenateOperation list
 </code></pre></div>
     <p class='mb-3'>
       (the ++ just concatenates two strings together). When we run this on ["Hello", ",", "World"] the result is "Hello, World":
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>*Summit&gt; concatenateStrings ["Hello", ",", "World"]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>*Summit&gt; concatenateStrings ["Hello", ",", "World"]
 "Hello,World"
 </code></pre></div>
     <p class='mb-3'>
       So far our Ts and Rs have been the same – integers and strings. But, the signatures indicate that they could be different types! Let's take advantage of that! Let's use trSimplOpImpl to write a function that returns True if every element in the list is equal to the number 1 and False otherwise. Let's call the operation function continuesToBeAllOnes and define it like this:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>continuesToBeAllOnes equalToOneSoFar maybeOne = equalToOneSoFar && (maybeOne == 1)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>continuesToBeAllOnes equalToOneSoFar maybeOne = equalToOneSoFar && (maybeOne == 1)
 </code></pre></div>
     <p class='mb-3'>
       This function will return True if the list (to this point) has contained all ones (equalToOneSoFar) and the current element (maybeOne) is equal to one. In this case, the R is a boolean and the T is an integer. Let's implement a function named isListAllOnes using continuesToBeAllOnes and trSimplOpImpl:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>isListAllOnes list = trSimpleOpImpl True continuesToBeAllOnes list
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>isListAllOnes list = trSimpleOpImpl True continuesToBeAllOnes list
 </code></pre></div>
     <p class='mb-3'>
       Does it work? When invoked with the list [1,1,1,1], the result is True:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>*Summit&gt; isListAllOnes [1,1,1,1]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>*Summit&gt; isListAllOnes [1,1,1,1]
 True
 </code></pre></div>
     <p class='mb-3'>
       When invoked with the list [1,2,1,1], the result is False:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>*Summit&gt; isListAllOnes [1,2,1,1]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>*Summit&gt; isListAllOnes [1,2,1,1]
 False
 </code></pre></div>
     <p class='mb-3'>
       Naming those "operation" functions every time is getting annoying, don't you think? I bet that we could be lazier!! Let's rewrite isListAllOnes without specifically defining the continuesToBeAllOnes function:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>isListAllOnes list = trSimpleOpImpl True (\equalToOneSoFar maybeOne -&gt; equalToOneSoFar && (maybeOne == 1)) list
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>isListAllOnes list = trSimpleOpImpl True (\equalToOneSoFar maybeOne -&gt; equalToOneSoFar && (maybeOne == 1)) list
 </code></pre></div>
     <p class='mb-3'>
       Now we are really getting functional!
@@ -7088,13 +7042,13 @@ False
     <p class='mb-3'>
       I am greedy. I want to write a function that returns True if any element of the list is a one:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>isAnyElementOne list = trSimpleOpImpl False (\anyOneSoFar maybeOne -&gt; anyOneSoFar || (maybeOne == 1)) list
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>isAnyElementOne list = trSimpleOpImpl False (\anyOneSoFar maybeOne -&gt; anyOneSoFar || (maybeOne == 1)) list
 </code></pre></div>
     <p class='mb-3'>
       This is just way too much fun!
     </p>
   
-    <h3 id='fold-the-laundry' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='fold-the-laundry' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Fold the Laundry
   
@@ -7127,19 +7081,19 @@ False
     <p class='mb-3'>
       This will make more sense visually, I swear:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>*Summit&gt; foldl (\x y -&gt; x /y ) 1 [3,2,1]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>*Summit&gt; foldl (\x y -&gt; x /y ) 1 [3,2,1]
 0.16666666666666666
-</code></pre></div><span title='Link is broken'><s>![](images/pl/Division (foldl)(1).png)</s>❌</span><div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>*Summit&gt; foldr (\x y -&gt; x / y ) 1 [3,2,1]
+</code></pre></div><span title='Link is broken'><s>![](images/pl/Division (foldl)(1).png)</s>❌</span><div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>*Summit&gt; foldr (\x y -&gt; x / y ) 1 [3,2,1]
 1.5
 </code></pre></div><span title='Link is broken'><s>![](images/pl/Division (foldr).png)</s>❌</span>
     <p class='mb-3'>
       Let's use our newfound fold power, to recreate our work from above:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='haskell language-haskell'>isAnyElementOne list = foldl (\anyOneSoFar maybeOne -&gt; anyOneSoFar || (maybeOne == 1)) False list
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='haskell language-haskell'>isAnyElementOne list = foldl (\anyOneSoFar maybeOne -&gt; anyOneSoFar || (maybeOne == 1)) False list
 isListAllOnes list = foldl (\equalToOneSoFar maybeOne -&gt; equalToOneSoFar && (maybeOne == 1)) True list
 concatenateStrings list = foldl (\concatenatedString newString -&gt; concatenatedString ++ newString) "" list
 </code></pre></div>
-    <h2 id='section-23' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-23' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   11/3/2021
   
@@ -7157,7 +7111,7 @@ concatenateStrings list = foldl (\concatenatedString newString -&gt; concatenate
       It's the 3rd day of November and we are about to switch to non-daylight savings time. What better way to celebrate the <a href='https://www.timeanddate.com/time/change/usa' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>worst day of the year</a> than switching our attention to a new topic!
     </p>
   
-    <h3 id='i-do-declare' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='i-do-declare' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   I Do Declare
   
@@ -7179,7 +7133,7 @@ concatenateStrings list = foldl (\concatenatedString newString -&gt; concatenate
       As we have worked through the different programming paradigms, we have discussed the theoretical underpinning of each. For imperative programming languages, the theoretical model is the Turing Machine. For the functional programming languages, the theoretical model is the Lambda Calculus. The declarative programming paradigm has a theoretical underpinning, too: first-order predicate calculus. We will talk more about that in class soon!
     </p>
   
-    <h3 id='in-the-beginning' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='in-the-beginning' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   In the Beginning
   
@@ -7249,7 +7203,7 @@ concatenateStrings list = foldl (\concatenatedString newString -&gt; concatenate
       The best way to learn Prolog is to start writing some programs. We'll come back to the theory later!
     </p>
   
-    <h3 id='just-the-facts' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='just-the-facts' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Just The Facts
   
@@ -7266,7 +7220,7 @@ concatenateStrings list = foldl (\concatenatedString newString -&gt; concatenate
     <p class='mb-3'>
       At its most basic, a Prolog program is a set of facts:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>takes(jane, cs4999).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>takes(jane, cs4999).
 takes(alicia, cs2020).
 takes(alice, cs4000).
 takes(mary, cs1021).
@@ -7283,12 +7237,12 @@ takes(alicia, cs3050).
     <p class='mb-3'>
       Let's read one of these facts in English:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>takes(jane, cs4999).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>takes(jane, cs4999).
 </code></pre></div>
     <p class='mb-3'>
       could be read as "Jane takes CS4999.". As programmers, we know what that means: the student named Jane is enrolled in the class CS4999. However, Prolog does not share our sense of meaning! Prolog simply thinks that we are defining one element of the takes relationship where jane is somehow related to cs4999. As a Prolog programmer, we could just has easily have written
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>tennis_shoes(jane, cs4999).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>tennis_shoes(jane, cs4999).
 tennis_shoes(alicia, cs2020).
 tennis_shoes(alice, cs4000).
 tennis_shoes(mary, cs1021).
@@ -7301,7 +7255,7 @@ tennis_shoes(alicia, cs3050).
     <p class='mb-3'>
       and gotten the same result! But, we programmers want to define something that is meaningful, so we choose to use atoms that reflect their semantic meaning. With nothing more than the facts that we have defined above, we can write queries. In order to interact with queries in real time, we can use the Prolog REPL. Once we have started the Prolog REPL, we will see a prompt like this:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?-
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?-
 </code></pre></div>
     <p class='mb-3'>
       The world awaits …
@@ -7310,13 +7264,13 @@ tennis_shoes(alicia, cs3050).
     <p class='mb-3'>
       To load a Prolog file in to the REPL, we will use the consult predicate:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- consult('intro.pl').
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- consult('intro.pl').
 true.
 </code></pre></div>
     <p class='mb-3'>
       The Prolog facts, rules and queries in the intro.pl file are now available to us. Assume that intro.pl contains the takes facts from above. Let's make some queries:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- takes(bob, cs1021).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- takes(bob, cs1021).
 true.
 
 ?- takes(will, cs2080).
@@ -7328,7 +7282,7 @@ false.
     <p class='mb-3'>
       These are simple yes/no queries and Prolog obliges us with terse answers. But, even with the simple facts shown above, Prolog can be used to make some powerful inferences. Prolog can tell us the names of all the people it knows who are taking a particular class:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- takes(Students, cs1021).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- takes(Students, cs1021).
 Students = mary ;
 Students = bob ;
 Students = sam.
@@ -7336,7 +7290,7 @@ Students = sam.
     <p class='mb-3'>
       Wow! Here Prolog is telling us that there are three different values of the Students variable that will make the query true: mary, bob and sam. In the lingo, Prolog is unifying Students with the values that will make our query true. Let's go the other way around:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- takes(alicia, Classes).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- takes(alicia, Classes).
 Classes = cs2020 ;
 Classes = cs3050.
 </code></pre></div>
@@ -7347,7 +7301,7 @@ Classes = cs3050.
     <p class='mb-3'>
       That's great, but pretty limited: it's kind of terrible if we had to write out each fact explicitly! The good news is that we don't have to do that! We can use a Prolog rule to define facts based on the existence of other facts. Let's define a rule which will tell us the students who are CS majors. To be a CS major, you must be taking (exactly) two classes:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>cs_major(X) :- takes(X, Y), takes(X, Z), Y @&lt; Z.
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>cs_major(X) :- takes(X, Y), takes(X, Z), Y @&lt; Z.
 </code></pre></div>
     <p class='mb-3'>
       That's lots to take in at first glance. Start by looking at the general format of a rule:
@@ -7360,7 +7314,7 @@ Classes = cs3050.
     <p class='mb-3'>
       To make the next few examples a little more meaningful, let's update our list of facts before moving on:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>takes(jane, cs4999).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>takes(jane, cs4999).
 takes(alicia, cs2020).
 takes(alice, cs4000).
 takes(mary, cs1021).
@@ -7374,14 +7328,14 @@ takes(alicia, cs3050).
     <p class='mb-3'>
       With that, let's find out if our rule works as intended!
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- cs_major(alicia).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- cs_major(alicia).
 true ;
 false.
 </code></pre></div>
     <p class='mb-3'>
       Wow! Pretty cool! Prolog used the rule that we wrote, combined it with the facts that it knows, and inferred that Alicia is a CS major! (For now, disregard the second False – we'll come back to that!). Like we could use Prolog to generate the list of classes that a particular student is taking, can we ask Prolog to generate a list of all the CS majors that it knows?
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- cs_major(X).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- cs_major(X).
 X = alicia ;
 X = bob ;
 false.
@@ -7390,7 +7344,7 @@ false.
       Boom!
     </p>
   
-    <h2 id='section-24' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-24' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   11/5/2021
   
@@ -7408,7 +7362,7 @@ false.
       *The retreat to move forward.
     </p>
   
-    <h3 id='backtracking' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='backtracking' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Backtracking
   
@@ -7449,7 +7403,7 @@ false.
     <p class='mb-3'>
       In Prolog, rules and facts are written to define predicates. A rule defines the conditions under which a predicate is true using a body – a list of other predicates, logical conjunctives, implications, etc. See The Daily PL - 11/3/2021 for additional information about rules. A fact is a rule without a body and unconditionally defines that a certain relationship is true for a predicate.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>related(will, bill).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>related(will, bill).
 related(ali, bill).
 related(bill, william).
 </code></pre></div>
@@ -7469,7 +7423,7 @@ related(bill, william).
       That's a mouthful! I think that the best way to understand this is to look at backtracking in action and see where choice points exist.
     </p>
   
-    <h3 id='give-and-take' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='give-and-take' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Give and Take
   
@@ -7486,7 +7440,7 @@ related(bill, william).
     <p class='mb-3'>
       Remember the takes predicate that we defined in the last class:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>takes(jane, cs4999).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>takes(jane, cs4999).
 takes(alicia, cs2020).
 takes(alice, cs4000).
 takes(mary, cs1021).
@@ -7500,32 +7454,32 @@ takes(alicia, cs3050).
     <p class='mb-3'>
       We subsequently defined a cs<sub>major</sub> predicate:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>cs_major(X) :- takes(X, Y), takes(X, Z), Y @&lt; Z.
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>cs_major(X) :- takes(X, Y), takes(X, Z), Y @&lt; Z.
 </code></pre></div>
     <p class='mb-3'>
       The cs<sub>major</sub> predicate says that a student who takes two CS classes is a CS major. Let's walk through how Prolog would respond to the following query:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>cs_major(X).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>cs_major(X).
 </code></pre></div>
     <p class='mb-3'>
       To start, Prolog realizes that in order to satisfy our query, it has to at least satisfy the query
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>takes(X, Y).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>takes(X, Y).
 </code></pre></div>
     <p class='mb-3'>
       So, Prolog starts there. In order to satisfy that query, it searches its knowledge base (its list of facts/rules that define predicates) from top to bottom. X and Y are variables and the first appropriate fact that it finds is
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>takes(jane, cs4999).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>takes(jane, cs4999).
 </code></pre></div>
     <p class='mb-3'>
       So, it unifies X with jane and Y with cs4999. Having satisfied that query, Prolog realizes that it must also satisfy the query:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>takes(X, Z).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>takes(X, Z).
 </code></pre></div>
     <p class='mb-3'>
       However, Prolog has already provisionally unified X with jane. So, Prolog really attempts to satisfy the query:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>takes(jane, Z).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>takes(jane, Z).
 </code></pre></div>
     <p class='mb-3'>
       Great. For Prolog, attempting to satisfy this query is completely distinct from its attempt to satisfy the query takes(X, Y) which means that Prolog starts searching its knowledge base anew (again, from top to bottom!). The first appropriate fact that it finds that satisfies this query is
@@ -7538,7 +7492,7 @@ takes(alicia, cs3050).
     <p class='mb-3'>
       So, it unifies Z with cs4999. Having satisfied that query too, Prolog moves on to the third query:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>Y @&lt; Z.
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>Y @&lt; Z.
 </code></pre></div>
     <p class='mb-3'>
       Unfortunately, because X and Y are both unified to cs4999, Prolog fails to satisfy that query. In other words, Prolog realizes that its provisional unification of X with jane, Y with cs4999 and Z with cs4999 is not a way to satisfy our original query (cs<sub>major</sub>(X)).
@@ -7559,37 +7513,37 @@ takes(alicia, cs3050).
     <p class='mb-3'>
       I ask again, does Prolog just give up? No, it backtracks again! This time it backtracks to its most-recent choicepoint. Now, that most recently choicepoint was its provisional unification of X with jane. Prolog forgets that attempt, and restarts the search of its knowledge base! Again, because this is the continuation of a previous search, Prolog begins where it left off in its top-to-bottom search of its knowledge base. The next fact that it see is
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>takes(alicia, cs2020)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>takes(alicia, cs2020)
 </code></pre></div>
     <p class='mb-3'>
       So, Prolog provisionally unifies X with alicia and Y with cs2020. Having satisfied that query (for a second time!), Prolog realizes that it must also satisfy the query:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>takes(X, Z).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>takes(X, Z).
 </code></pre></div>
     <p class='mb-3'>
       However, Prolog has provisionally unified X with alicia. So, Prolog really attempts to satisfy the query:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>takes(alicia, Z).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>takes(alicia, Z).
 </code></pre></div>
     <p class='mb-3'>
       Great. For Prolog, attempting to satisfy this query is completely distinct from its attempt to satisfy the query takes(X, Y) and its previous attempt to satisfy the query takes(jane, Z). Therefore, Prolog starts searching its knowledge base anew (again, from top to bottom!). The first appropriate fact that it finds that satisfies this query is
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>takes(alicia, cs2020).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>takes(alicia, cs2020).
 </code></pre></div>
     <p class='mb-3'>
       So, it unifies Z with cs2020. Having satisfied that query too, Prolog moves on to the third query:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>Y @&lt; Z.
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>Y @&lt; Z.
 </code></pre></div>
     <p class='mb-3'>
       Unfortunately, because Z and Y are both unified to cs2020, Prolog fails to satisfy that query. In other words, Prolog realizes that its provisional unification of X with alicia, Y with cs2020 and Z with cs2020 is not a way to satisfy our original query (cs<sub>major</sub>(X)). Again, Prolog does not give up and it backtracks to its most recent choicepoint. The good news is that Prolog can satisfy the query
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>takes(alicia, Z)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>takes(alicia, Z)
 </code></pre></div>
     <p class='mb-3'>
       a second way by unifying Z with cs3050. Prolog proceeds to the final part of the rule
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>X @&lt; Y
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>X @&lt; Y
 </code></pre></div>
     <p class='mb-3'>
       which can be satisfied this time because cs3050 and cs2020 are different!
@@ -7611,7 +7565,7 @@ takes(alicia, cs3050).
       A Prolog user at the REPL (or a Prolog program using this rule) could ask for all the ways that this query is satisfied. And, if the user/program does, then Prolog will backtrack as if it did not find a satisfactory unification for Z, Y or X (in that order!).* 11/5/2021
     </p>
   
-    <h2 id='section-25' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-25' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   11/8/2021
   
@@ -7629,7 +7583,7 @@ takes(alicia, cs3050).
       In the true spirit of a <a href='https://en.wikipedia.org/wiki/A_picture_is_worth_a_thousand_words' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>picture being worth a thousand words</a> , think of this Daily PL as a graphic novel.
     </p>
   
-    <h3 id='going-over-backtracking-again-see-what-i-did-there' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='going-over-backtracking-again-see-what-i-did-there' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Going Over Backtracking Again (see what I did there?)
   
@@ -7646,7 +7600,7 @@ takes(alicia, cs3050).
     <p class='mb-3'>
       In today's lecture, we went deeper into the discussion of backtracking and saw its utility. In particular, we discussed the following Prolog program for generating all the integers.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>generate_integer(0).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>generate_integer(0).
 generate_integer(X) :- generate_integer(Y), X is Y + 1.
 </code></pre></div>
     <p class='mb-3'>
@@ -7656,13 +7610,13 @@ generate_integer(X) :- generate_integer(Y), X is Y + 1.
     <p class='mb-3'>
       As discussed in the description of Assignment 3, the best way to learn Prolog, I think, is to play with it! So, let's see what this can do!
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- generate_integer(5).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- generate_integer(5).
 true ;
 </code></pre></div>
     <p class='mb-3'>
       In other words, it can be used to determine whether a given number is an integer. Awesome.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- generate_integer(X).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- generate_integer(X).
 X = 0 ;
 X = 1 ;
 X = 2 ;
@@ -7687,7 +7641,7 @@ X = 6
       It may be necessary to use a high-resolution version of the diagram if you are curious about the details. Such a version is available in SVG format here.
     </p>
   
-    <h3 id='chasing-our-tails' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='chasing-our-tails' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Chasing Our Tails
   
@@ -7708,7 +7662,7 @@ X = 6
     <p class='mb-3'>
       To find out, I timed how long it took Prolog to answer the query
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- generate_integer(50000).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- generate_integer(50000).
 </code></pre></div>
     <p class='mb-3'>
       The answer? On my desktop computer, it took 1 minute and 48 seconds.
@@ -7717,7 +7671,7 @@ X = 6
     <p class='mb-3'>
       If we want something for comparison, we'll have to come up with a tail-recursive version of generate<sub>integer</sub>/1. Let's call it generate<sub>integertr</sub>/1 (creative, I know), and define it like:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>generate_integer_tr(X) :- next_integer(0,X).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>generate_integer_tr(X) :- next_integer(0,X).
 
 next_integer(J, J).
 next_integer(J, L) :- K is J + 1, next_integer(K, L).
@@ -7742,7 +7696,7 @@ next_integer(J, L) :- K is J + 1, next_integer(K, L).
       Does this impact performance? Absolutely! On my desktop. Prolog can answer the query generate<sub>integertr</sub>(50000). in 0.029 seconds. Yeow!
     </p>
   
-    <h2 id='section-26' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-26' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   11/10/2021
   
@@ -7760,7 +7714,7 @@ next_integer(J, L) :- K is J + 1, next_integer(K, L).
       In today's class we learned about a workhorse rule in logic programming: append/3. append/3 can be used to implement many other different rules, including a rule that will generate all the permutations of a list!
     </p>
   
-    <h3 id='pin-the-tail-on-the-list' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='pin-the-tail-on-the-list' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Pin the Tail on the List
   
@@ -7777,13 +7731,13 @@ next_integer(J, L) :- K is J + 1, next_integer(K, L).
     <p class='mb-3'>
       The goal (pun intended) of append is to determine whether two lists, X and Y, are the same as a third list, Z, when appended together. We could use the append query like this:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- append([1,2,3], [a,b,c], [1,2,3,a,b,c]).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- append([1,2,3], [a,b,c], [1,2,3,a,b,c]).
 true.
 </code></pre></div>
     <p class='mb-3'>
       or
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- append([1,2,3], [a,b], [1,2,3,a,b,c]).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- append([1,2,3], [a,b], [1,2,3,a,b,c]).
 false.
 </code></pre></div>
     <p class='mb-3'>
@@ -7793,12 +7747,12 @@ false.
     <p class='mb-3'>
       The definition of append/3 will follow the pattern of other recursively defined rules that we have seen so far. Let's start with the base case. The result of appending an empty list with some list Y, is just list Y. Let's write that down:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>append([], Y, Y).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>append([], Y, Y).
 </code></pre></div>
     <p class='mb-3'>
       And now for the recursive case: appending list X to list Y yields some list Z where Z is the first element of the list X following by the result of appending the tail of X with Y. The natural language version of the definition is complicated but I think that the Prolog definition makes it more clear:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>append([H|T], Y, [H|AppendedList]) :- append(T, Y, AppendedList).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>append([H|T], Y, [H|AppendedList]) :- append(T, Y, AppendedList).
 </code></pre></div>
     <p class='mb-3'>
       Let's see how Prolog attempts to answer the query append([1,2], [a,b], [1,2,a,b]).
@@ -7811,14 +7765,14 @@ false.
     <p class='mb-3'>
       It's also natural to look at append/3 as a tool to "assign" a variable to be the result of appending two lists:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- append([1,2,3], [a,b,c], Z).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- append([1,2,3], [a,b,c], Z).
 Z = [1, 2, 3, a, b, c].
 </code></pre></div>
     <p class='mb-3'>
       Here we are asking Prolog to assign variable Z to be a list that holds the appended contents of the lists in the first two arguments.
     </p>
   
-    <h3 id='look-at-append-from-a-different-angle' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='look-at-append-from-a-different-angle' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Look at Append From a Different Angle
   
@@ -7839,7 +7793,7 @@ Z = [1, 2, 3, a, b, c].
     <p class='mb-3'>
       If we look at append/3 from a different angle, the declarative angle, we can see how it can be used to generate all the different combinations of two lists that, when appended together, yield a third list! For example,
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- append(X, Y, [1,2,3]).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- append(X, Y, [1,2,3]).
 X = [],
 Y = [1, 2, 3] ;
 X = [1],
@@ -7853,7 +7807,7 @@ Y = [] ;
       Wow. That's pretty cool! Prolog is telling us that it can figure out three different combinations of lists that, when appended together, will equal the list [1,2,3]. I mean, if that doesn't make your blood boil, I don't know what will.
     </p>
   
-    <h3 id='lets-ride-the-thoroughbred' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='lets-ride-the-thoroughbred' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Let's Ride the Thoroughbred
   
@@ -7882,7 +7836,7 @@ Y = [] ;
     <p class='mb-3'>
       Let's take a quick look at how to define a rule prefix/2. prefix/2 takes two arguments – a possible prefix, PP, and a list, L – and determines whether PP is a prefix of L. We've gotten so used to writing recursive definitions, it seems obvious that we would define prefix/2 using that pattern. In the base case, an empty list is a prefix of any list:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>prefix([], _).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>prefix([], _).
 </code></pre></div>
     <p class='mb-3'>
       (Remember that _ is "I don't care."). With that out of the way, we can say that PP is a prefix of L if
@@ -7891,12 +7845,12 @@ Y = [] ;
     <p class='mb-3'>
       the head element of PP is the same as the head element of L, and the tail of PP is a prefix of the tail of L:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>prefix([H|Xs], [H|Ys]) :- prefix(Xs, Ys).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>prefix([H|Xs], [H|Ys]) :- prefix(Xs, Ys).
 </code></pre></div>
     <p class='mb-3'>
       Fantastic. That's a pretty easy definition and it works in all the ways that we would expect:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- prefix([1,2], [1,2,3]).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- prefix([1,2], [1,2,3]).
 true.
 
 ?- prefix([1,2], [2,3]).
@@ -7915,7 +7869,7 @@ X = [1, 2, 3] ;
     <p class='mb-3'>
       Think about this alternate definition of prefix: PP is a prefix of L, when there is a (possibly empty) list, W (short for "whatever"), such that PP appended with W is equal to L. Did you see the magic word? Appended! We have append/3, so let's use it:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>prefix(PP, L) :- append(PP, _, L).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>prefix(PP, L) :- append(PP, _, L).
 </code></pre></div>
     <p class='mb-3'>
       (Note that we have replaced W from a natural-language definition with _ because we don't care about it's value!)
@@ -7924,12 +7878,12 @@ X = [1, 2, 3] ;
     <p class='mb-3'>
       We could go through the same process of defining suffix/2 recursively, or we could cut to the chase and define it in terms of append/3. Let's save ourselves some time: SS is a suffix of L, when there is a (possibly empty) list, W (short for "whatever"), such that W appended with SS is equal to L. Let's codify that:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>suffix(SS, L) :- append(_, SS, L).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>suffix(SS, L) :- append(_, SS, L).
 </code></pre></div>
     <p class='mb-3'>
       But, does it work?
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- suffix_append([3,4], [1,2,3,4]).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- suffix_append([3,4], [1,2,3,4]).
 true.
 
 ?- suffix_append([3,5], [1,2,3,4]).
@@ -7946,7 +7900,7 @@ X = [] ;
       
     </ul>
   
-    <h3 id='permutations' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='permutations' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Permutations
   
@@ -7963,7 +7917,7 @@ X = [] ;
     <p class='mb-3'>
       We're all friends here, aren't we? Good. I have no problem admitting that I am terrible at thinking about permutations of a set. I have tried and tried and tried to understand the section in Volume 4 of Knuth's TAOCP (Links to an external site.) about generating permutations (Links to an external site.) but it's just too hard for me. Instead, I just play around with them until I grok it. To help me play, I want Prolog's help. I want Prolog to generate for me all the permutations of a given list. We will call this permute/2. Procedurally, permute/2 will say whether its second argument is a permutation of its first argument. Declaratively, permute/2 will generate a list of permutations of elements in the list in its first argument. Let's work back from the end: We'll see how it should work before actually defining it:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- permutation([1,2,3], [3,1,2]).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- permutation([1,2,3], [3,1,2]).
 true .
 
 ?- permutation([1,2,3], L).
@@ -7982,7 +7936,7 @@ false.
     <p class='mb-3'>
       Now that we know the results of invoking permute/2, how are we going to define it? Again, let's take the easy way out and see the definition and then walk through it piece-by-piece in order to understand its meaning:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>permute([], []).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>permute([], []).
 permute(List, [X|Xs]) :- append(W, [X|U], List), append(W, U, ListWithoutX), permute(ListWithoutX, Xs).
 </code></pre></div>
     <p class='mb-3'>
@@ -8025,7 +7979,7 @@ permute(List, [X|Xs]) :- append(W, [X|U], List), append(W, U, ListWithoutX), per
       Below is a visualization of the process Prolog takes to generate the first two permutations of [1,2,3]:
     </p>
   <span title='Link is broken'><s>![](images/pl/Generate 1st Two Solutions for Permute.png)</s>❌</span>
-    <h2 id='section-27' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-27' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   11/12/2021
   
@@ -8043,7 +7997,7 @@ permute(List, [X|Xs]) :- append(W, [X|U], List), append(W, U, ListWithoutX), per
       If the append/3 predicate that we wrote on <a href='https://uc.instructure.com/courses/1476336/pages/the-daily-pl-11-slash-10-slash-2021' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Wednesday</a> is a horse that we can ride to accomplish many different tasks, then Prolog is like a wild stallion that tends to run in a direction of its choosing. We can use cuts to tame our mustang and make it go where we want it to go!
     </p>
   
-    <h3 id='the-possibilities-are-endless' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='the-possibilities-are-endless' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   The Possibilities Are Endless
   
@@ -8064,7 +8018,7 @@ permute(List, [X|Xs]) :- append(W, [X|U], List), append(W, U, ListWithoutX), per
     <p class='mb-3'>
       Let's deal with the base cases first: When either of the first two lists are empty, the merged list is the non-empty list. We'll write that like
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>merge(Xs, [], Xs).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>merge(Xs, [], Xs).
 merge([], Ys, Ys).
 </code></pre></div>
     <p class='mb-3'>
@@ -8094,18 +8048,18 @@ merge([], Ys, Ys).
     <p class='mb-3'>
       It's far easier to write this in Prolog than English:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>merge([X|Xs], [Y|Ys], [X|Zs]) :- X&lt;Y, merge(Xs, [Y|Ys], Zs).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>merge([X|Xs], [Y|Ys], [X|Zs]) :- X&lt;Y, merge(Xs, [Y|Ys], Zs).
 merge([X|Xs], [Y|Ys], [X|Zs]) :- X=:=Y, merge(Xs, Ys, Zs).
 merge([X|Xs], [Y|Ys], [Y|Zs]) :- Y&lt;X, merge([X|Xs], Ys, Zs).
 </code></pre></div>
     <p class='mb-3'>
-      (Note: <code class='verbatim py-0.5 px-0.5 bg-gray-100'>:</code> is the "equal to" boolean operator in Prolog. See =:=/2 (Links to an external site.) for more information.
+      (Note: <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>:</code> is the "equal to" boolean operator in Prolog. See =:=/2 (Links to an external site.) for more information.
     </p>
   
     <p class='mb-3'>
       For merge/3, let's write the base cases after our recursive cases. With that switcheroo, we have the following complete definition of merge/3:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>merge([X|Xs], [Y|Ys], [X|Zs]) :- X&lt;Y, merge(Xs, [Y|Ys], Zs).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>merge([X|Xs], [Y|Ys], [X|Zs]) :- X&lt;Y, merge(Xs, [Y|Ys], Zs).
 merge([X|Xs], [Y|Ys], [X|Zs]) :- X=:=Y, merge(Xs, Ys, Zs).
 merge([X|Xs], [Y|Ys], [Y|Zs]) :- Y&lt;X, merge([X|Xs], Ys, Zs).
 merge(Xs, [], Xs).
@@ -8114,27 +8068,27 @@ merge([], Ys, Ys).
     <p class='mb-3'>
       Let's follow Prolog as it attempts to use our predicate to answer the query
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>merge([1, 3, 5], [2,4,6], M).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>merge([1, 3, 5], [2,4,6], M).
 </code></pre></div>
     <p class='mb-3'>
       As we know, Prolog will search top to bottom when looking for ways to unify and the first rule that Prolog sees is applicable:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>merge([X|Xs], [Y|Ys], [X|Zs]) :- X&lt;Y, merge(Xs, [Y|Ys], Zs).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>merge([X|Xs], [Y|Ys], [X|Zs]) :- X&lt;Y, merge(Xs, [Y|Ys], Zs).
 </code></pre></div>
     <p class='mb-3'>
       Why? Because Prolog sees X as 1 and Y as 2 and 1 &lt; 2. Therefore, Prolog will complete its unification for this query by replacing it with another query:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>merge([3,5], [2,4,6], Zs).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>merge([3,5], [2,4,6], Zs).
 </code></pre></div><span title='Link is broken'><s>![](images/pl/Merge No Cut(1).png)</s>❌</span>
     <p class='mb-3'>
       Once Prolog has completed that query, the response comes back:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>M = [1,2,3,4,5,6]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>M = [1,2,3,4,5,6]
 </code></pre></div>
     <p class='mb-3'>
       Unfortunately, that's not the whole story. While Prolog is off attempting to satisfy the subquery merge([3,5], [2,4,6], Zs)., it believes that there are still several other viable alternatives for satisfying our original query:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>merge([X|Xs], [Y|Ys], [X|Zs]) :- X=:=Y, merge(Xs, Ys, Zs).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>merge([X|Xs], [Y|Ys], [X|Zs]) :- X=:=Y, merge(Xs, Ys, Zs).
 merge([X|Xs], [Y|Ys], [Y|Zs]) :- Y&lt;X, merge([X|Xs], Ys, Zs).
 merge(Xs, [], Xs).
 merge([], Ys, Ys).
@@ -8162,7 +8116,7 @@ merge([], Ys, Ys).
     <p class='mb-3'>
       Let's rewrite our merge/3 predicate to take advantage of cuts and save some overhead:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>merge([X|Xs], [Y|Ys], [X|Zs]) :- X&lt;Y, !, merge(Xs, [Y|Ys], Zs).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>merge([X|Xs], [Y|Ys], [X|Zs]) :- X&lt;Y, !, merge(Xs, [Y|Ys], Zs).
 merge([X|Xs], [Y|Ys], [X|Zs]) :- X=:=Y, !, merge(Xs, Ys, Zs).
 merge([X|Xs], [Y|Ys], [Y|Zs]) :- Y&lt;X, !, merge([X|Xs], Ys, Zs).
 merge(Xs, [], Xs) :- !.
@@ -8176,7 +8130,7 @@ merge([], Ys, Ys) :- !.
       <a href='https://uc.instructure.com/courses/1476336/pages/the-daily-pl-11-slash-10-slash-2021' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Merge Cut.png</a>
     </p>
   
-    <h3 id='dr.-cutyll-and-mr.-unify' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='dr.-cutyll-and-mr.-unify' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Dr. Cutyll and Mr. Unify
   
@@ -8198,7 +8152,7 @@ merge([], Ys, Ys) :- !.
       There are two types of cuts. A green cut is a cut that does not change the meaning of a predicate. The cut that we added in the merge/3 predicate above is a green cut. A red cut is, technically speaking, a cut that is not a green cut. I know that's a satisfying definition. Sorry. The implication, however, is that a red cut is a cut that changes the meaning of predicate.
     </p>
   
-    <h2 id='section-28' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-28' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   11/15/2021
   
@@ -8212,7 +8166,7 @@ merge([], Ys, Ys) :- !.
 
     </h2>
   
-    <h3 id='red-alert' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='red-alert' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Red Alert
   
@@ -8233,7 +8187,7 @@ merge([], Ys, Ys) :- !.
     <p class='mb-3'>
       To frame our discussion, let's look at a Prolog program that performs a Bubble Sort on a list of numbers. The predicate, bsort/2, is defined like this:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>bsort(Unsorted, Sorted):-
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>bsort(Unsorted, Sorted):-
   append(Left, [A, B | Right], Unsorted),
   B&lt;A,
   append(Left, [B, A | Right], MoreSorted),
@@ -8243,7 +8197,7 @@ bsort(Sorted, Sorted).
     <p class='mb-3'>
       The first rule handles the recursive case (when there is at least one list item out of order) and the second rule handles the base case (when the list is sorted). According to this definition, how does Prolog handle the query
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>bsort([2,1,3,5], M).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>bsort([2,1,3,5], M).
 </code></pre></div>
     <p class='mb-3'>
       Prolog (as we are well aware) searches its rule top to bottom. The first rule that it sees is the recursive case and Prolog immediately opts for it. Opting for this case is not without consequences – a choice point is created. Why? Because Prolog made the choice to attempt to satisfy the query according to the first rule and not the (just as applicable) second rule! Let's call this choice point A.
@@ -8260,12 +8214,12 @@ bsort(Sorted, Sorted).
     <p class='mb-3'>
       If the querier is using bsort/2 declaratively, this scenario is a problem: Prolog will backtrack to choice point A and then consider the base case rule for bsort/2. In other words, Prolog will also generate
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>[2,1,3,5]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>[2,1,3,5]
 </code></pre></div>
     <p class='mb-3'>
       as a unification! This is clearly not right. What's more, the Prolog programmer could query for
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>bsort([3,2,1,4,5], Sorted).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>bsort([3,2,1,4,5], Sorted).
 </code></pre></div>
     <p class='mb-3'>
       in which choice point B will have consequences. Run this query for yourself (using trace), examine the results, and make sure you understand why the results are generated.
@@ -8278,7 +8232,7 @@ bsort(Sorted, Sorted).
     <p class='mb-3'>
       Let's rewrite bsort/3 using cuts and see if our problem is sorted (see what I did there?):
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>bsort(Unsorted, Sorted):-
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>bsort(Unsorted, Sorted):-
   append(Left, [A, B | Right], Unsorted),
   B&lt;A, !,
   append(Left, [B, A | Right], MoreSorted),
@@ -8288,7 +8242,7 @@ bsort(Sorted, Sorted).
     <p class='mb-3'>
       And now let's see how our earlier troublesome queries perform:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='prolog language-prolog'>?- bsort([2,1,3,5], Sorted).
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='prolog language-prolog'>?- bsort([2,1,3,5], Sorted).
 Sorted = [1, 2, 3, 5].
 
 ?- bsort([3,2,1,4,5], Sorted).
@@ -8302,7 +8256,7 @@ Sorted = [1, 2, 3, 4, 5].
       Here's the rub: The version of our Prolog program with the cut gave different results than the version without. Is this cut a green or a red cut? That's right, it's a red cut. I guess there are such things as good red cuts after all!
     </p>
   
-    <h3 id='the-fundamentals' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='the-fundamentals' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   The Fundamentals
   
@@ -8396,7 +8350,7 @@ Sorted = [1, 2, 3, 4, 5].
       There is only one remaining question: Why is it called first-order predicate logic and not, say, higher-order predicate logic? "First-order" here indicates that the predicates in this logic cannot manipulate or reason about predicates themselves. Does this sound familiar? Imperative languages can define functions but they cannot reason about functions themselves while functional languages can!
     </p>
   
-    <h2 id='section-29' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-29' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   11/17/2021
   
@@ -8414,7 +8368,7 @@ Sorted = [1, 2, 3, 4, 5].
       So far in this course we have covered lots of material. We've learned lots of definitions, explored lots of concepts and programmed in languages that we've never seen before. In all that time, though, we never really got to the bottom of one thing: What exactly is a language? In the final module of this course, we are going to cover exactly that!
     </p>
   
-    <h3 id='back-to-basics' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='back-to-basics' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Back to Basics
   
@@ -8468,7 +8422,7 @@ Sorted = [1, 2, 3, 4, 5].
       Look closely at the relationship between <span class='math inline'>\(\sum\)</span> and <span class='math inline'>\(L\)</span>. While <span class='math inline'>\(L\)</span> never includes a sentence that is not included in <span class='math inline'>\(\sum\)</span>, they can be identical! Think of some languages where any combination of characters from its alphabet are valid sentences! Can you come up with one?
     </p>
   
-    <h3 id='the-really-bad-programmer' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='the-really-bad-programmer' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   The Really Bad Programmer
   
@@ -8489,7 +8443,7 @@ Sorted = [1, 2, 3, 4, 5].
     <p class='mb-3'>
       Not so fast. Aren't there an infinite number of valid C++ programs?
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='language-none'>int main() {
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='language-none'>int main() {
   if (true) {
     if (true) {
       if (true) {
@@ -8512,7 +8466,7 @@ Sorted = [1, 2, 3, 4, 5].
       It would be great to have a tool that does the same thing for languages – a common description that allows us to create something that recognizes and generates valid sentences in the language. We will do exactly that!
     </p>
   
-    <h3 id='language-classes' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='language-classes' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Language Classes
   
@@ -8538,7 +8492,7 @@ Sorted = [1, 2, 3, 4, 5].
       For our purposes, we are going to be concerned with those languages that belong to the Context-Free level of the hierarchy.
     </p>
   
-    <h3 id='context-free-grammars' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='context-free-grammars' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Context-Free Grammars
   
@@ -8572,7 +8526,7 @@ Sorted = [1, 2, 3, 4, 5].
       We start with the start symbol Integer and use the first production to replace it with one of the two options in the production. We choose to use the second part of the production and replace Integer with Integer Digit. Next, we use a production to replace Integer with Integer Digit again. At this point we have Integer Digit Digit. Next, we use one of the productions to replace Integer with Digit and we are left with Digit Digit Digit. Our next move is to replace the left-most Digit non-terminal with a terminal – the 1. We are left with 1 Digit Digit. Pressing forward, we replace the left-most Digit with 4 and we come to 14Digit. Almost there. Let's replace Digit with 2 and we get 142. Because 142 contains only terminals, we have completed the derivation. Because we can derive 142 from the grammar, we can confidently say that 142 is in the language described by the grammar.
     </p>
   
-    <h2 id='section-30' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-30' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   11/19/2021
   
@@ -8594,7 +8548,7 @@ Sorted = [1, 2, 3, 4, 5].
       Defining a way to generate all the sentences in a grammar is one way to specify a language. Another way to define a language is to build a tool that separates sentences that are in the language from sentences that are not in the language. This tool is known as a recognizer. There is a relationship between recognizers and generators and we will explore that in future lectures.
     </p>
   
-    <h3 id='grammatical-errors' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='grammatical-errors' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Grammatical Errors
   
@@ -8648,7 +8602,7 @@ Sorted = [1, 2, 3, 4, 5].
       Think about this grammar and see if you can see any problems with it. Are there integers that cannot be derived? Are there sentences that can be derived that are not integers?
     </p>
   
-    <h3 id='trees-or-derivations' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='trees-or-derivations' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Trees or Derivations
   
@@ -8678,7 +8632,7 @@ Sorted = [1, 2, 3, 4, 5].
       This is clearly not a good thing. We do not want our choice of productions to be arbitrary. Why? When the choice of the production to expand is arbitrary, we cannot "encode" in the grammar any semantic meaning. (We will learn how to encode that semantic meaning below). A grammar that produces two or more valid parse trees for a particular sentence is known as an ambiguous grammar.
     </p>
   
-    <h3 id='let-me-be-clear' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='let-me-be-clear' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Let Me Be Clear
   
@@ -8704,7 +8658,7 @@ Sorted = [1, 2, 3, 4, 5].
       Before we think about how to encode semantic meaning in to a parse tree, let's talk about the properties of a parse tree. The root node of the parse tree is always the start symbol of the grammar. The internal nodes of a parse tree are always non-terminals. The leaves of a parse tree are always terminals.
     </p>
   
-    <h3 id='making-meaning' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='making-meaning' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Making Meaning
   
@@ -8726,7 +8680,7 @@ Sorted = [1, 2, 3, 4, 5].
       Let's look back at our grammar for Expr. A Term and an addition operation have the same precedence. A Factor and a multiplication operation have the same precedence. The production for an addition operation is left-recursive and, therefore, the grammar specifies that addition is left associative. The same is true for the multiplication operation.
     </p>
   
-    <h2 id='section-31' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-31' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   11/22/2021
   
@@ -8744,7 +8698,7 @@ Sorted = [1, 2, 3, 4, 5].
       Before reading this Daily PL, please re-read the one from Friday, 11/19/2021. The content has been updated since it was originally published to reflect certain errors with the "better" Integer grammar we developed in class. Thanks, especially, to Jeroen for making sure that I got the grammar correct!
     </p>
   
-    <h3 id='making-meaning-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='making-meaning-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Making Meaning
   
@@ -8793,7 +8747,7 @@ Sorted = [1, 2, 3, 4, 5].
     <p class='mb-3'>
       Let's assume that we are looking at the following program written in our hypothetical language:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='c language-c'>int A;
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='c language-c'>int A;
 real B;
 A = A + B;
 </code></pre></div>
@@ -8809,7 +8763,7 @@ A = A + B;
       Right?
     </p>
   
-    <h3 id='this-grammar-goes-to-11' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='this-grammar-goes-to-11' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   This Grammar Goes To 11
   
@@ -8879,7 +8833,7 @@ A = A + B;
       The process of calculating the attributes of a production during parsing is known as decorating the parse tree. Let's look at the parse tree from the assignment statement A = A + B; and see how it is decorated:
     </p>
   <span title='Link is broken'><s>![](images/pl/Tree for Attribute Grammar Example(1).png)</s>❌</span>
-    <h2 id='section-32' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-32' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   11/29/2021
   
@@ -8893,7 +8847,7 @@ A = A + B;
 
     </h2>
   
-    <h3 id='recognizing-vs-generating' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='recognizing-vs-generating' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Recognizing vs Generating
   
@@ -8927,7 +8881,7 @@ A = A + B;
       In other words, the compiler is not a generator but rather a recognizer.
     </p>
   
-    <h3 id='parsers' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='parsers' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Parsers
   
@@ -8985,7 +8939,7 @@ A = A + B;
       Why does this matter? Because we can describe how to group the bytes on disk into tokens (and lexemes) using regular languages. You probably have a good idea about what is going on, but let's dig in to an example – that'll help!
     </p>
   
-    <h3 id='lexical-analysis-of-mathematical-expressions' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='lexical-analysis-of-mathematical-expressions' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Lexical Analysis of Mathematical Expressions
   
@@ -9015,7 +8969,7 @@ A = A + B;
       There is, however, one token whose lexeme is very important: the Id token. Why? Because that token can be any number! The actual lexeme of that Id makes a big difference when it comes time to actually evaluate the mathematical expression that we are parsing (if that is, indeed, the goal of the operation!).
     </p>
   
-    <h3 id='certitude-and-finitude' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='certitude-and-finitude' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Certitude and Finitude
   
@@ -9061,7 +9015,7 @@ A = A + B;
       Make the connection between the different aspects of the written and graphical description above and the formal components of an FA, especially the state transition function. In the image above, the state transition function is depicted with the gray arrows!
     </p>
   
-    <h3 id='the-last-step' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='the-last-step' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   The Last Step…
   
@@ -9087,7 +9041,7 @@ A = A + B;
       To see such an implementation in Python, check here (Links to an external site.).
     </p>
   
-    <h2 id='section-33' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='section-33' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   12/1/2021
   
@@ -9101,7 +9055,7 @@ A = A + B;
 
     </h2>
   
-    <h3 id='peanut-butter-and-jelly' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='peanut-butter-and-jelly' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Peanut Butter and Jelly
   
@@ -9127,7 +9081,7 @@ A = A + B;
       With those caveats in mind, let's dig in to the details!
     </p>
   
-    <h3 id='descent-into-madness' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='descent-into-madness' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Descent Into Madness
   
@@ -9153,7 +9107,7 @@ A = A + B;
       All of these words probably seem very arbitrary, but I think that an example will make things clear!
     </p>
   
-    <h3 id='old-faithful' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='old-faithful' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Old Faithful
   
@@ -9230,7 +9184,7 @@ A = A + B;
         </li>
       
     </ul>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def Factor:
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>def Factor:
   if lookhead() == OPEN_PAREN:
     # Parsing a ( Expr )
     #
@@ -9266,7 +9220,7 @@ A = A + B;
     <p class='mb-3'>
       Writing a function to parse a Factor is relatively straightforward. To get a sense for what it would be like to parse an expression, let's write a part of the Expr subprogram:
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python'>def Expr:
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python'>def Expr:
   ...
     leftHandExpr = Expr()
     if type(leftHandExpr) == Error:
@@ -9284,7 +9238,7 @@ A = A + B;
       What stands out is an emerging pattern that each of the subprograms will follow. Each subprogram is slowly matching the items from the grammar with the actual tokens that it sees. The subprogram associated with each nonterminal parses the nonterminals used in the production, "eats" the terminals in those same productions and converts it all into nodes in a parse tree. The subprogram that calls subprograms recursively melds together their return values into a new node that will become part of the overall parse tree, one level up.
     </p>
   
-    <h3 id='we-are-homefree' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='we-are-homefree' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   We Are Homefree
   
@@ -9315,7 +9269,7 @@ A = A + B;
     </p>
   <span title='Link is broken'><s>![](images/pl/Screenshot from 2021-12-07 18-35-50.png)</s>❌</span>
     <p class='mb-3'>
-      is indirect left recursive because A → B → A <code class='py-0.5 px-0.5 bg-gray-100'>b</code>.
+      is indirect left recursive because A → B → A <code class='py-0.5 px-0.5 bg-gray-100 font-mono'>b</code>.
     </p>
   
     <p class='mb-3'>
@@ -9334,7 +9288,7 @@ A = A + B;
       Allen B Tucker and Robert Noonan. 2006. Programming Languages (2nd. ed.). McGraw-Hill, Inc., USA.
     </p>
   
-    <h3 id='formalism-to-the-rescue' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='formalism-to-the-rescue' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Formalism To The Rescue
   
@@ -9400,7 +9354,7 @@ A = A + B;
       No sweat! It's just moving pieces around on a chessboard!
     </p>
   
-    <h3 id='the-final-countdown' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='the-final-countdown' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   The Final Countdown
   

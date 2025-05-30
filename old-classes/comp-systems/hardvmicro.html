@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -1655,7 +1609,7 @@
 
 
 <pre class='pandoc-raw-"org"'>#+hugo_base_dir: ../</pre><pre class='pandoc-raw-"org"'>#+hugo_section: Intro-to-Comp-Systems/Hard-Vs-Micro/</pre><pre class='pandoc-raw-"org"'>#+hugo_custom_front_matter: subpage false :hide "nav"</pre><pre class='pandoc-raw-"org"'>#+EXPORT_FILE_NAME: _index.md</pre>
-    <h1 id='intro' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='intro' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Intro
   
@@ -1673,7 +1627,7 @@
       Describes a "big Picture" of computer systems through an example of a "simple" computer. This computer is <strong>Big Endian</strong> (reads the leftmost (most significant) bit first)
     </p>
   
-    <h1 id='the-basic-computer' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='the-basic-computer' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   The Basic Computer
   
@@ -1687,7 +1641,7 @@
 
     </h1>
   
-    <h2 id='two-principal-functional-parts' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='two-principal-functional-parts' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Two Principal functional parts
   
@@ -1713,7 +1667,7 @@
       
     </ul>
   
-    <h2 id='two-types-of-control-units' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='two-types-of-control-units' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Two types of control units
   
@@ -1739,7 +1693,7 @@
       
     </ul>
   
-    <h2 id='pathways' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='pathways' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   figure 1 <span id='figure1'></span>
   
@@ -1753,7 +1707,7 @@
 
     </h2>
   <img class='inline mb-3' src='old-classes/comp-systems/images/figure1.png' alt style='width: inherit;' />
-    <h3 id='description-of-figure-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='description-of-figure-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Description of figure 1
   
@@ -1851,7 +1805,7 @@
       
     </ul>
   
-    <h3 id='arithmetic-logic-unit-alu' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='arithmetic-logic-unit-alu' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Arithmetic-Logic-Unit (ALU)
   
@@ -1866,7 +1820,7 @@
     </h3>
   
     <p class='mb-3'>
-      A circuit capable of adding or subtracting two 12 bit numbers When the first bit of the Accumulator(ACC) is 1 (<a href='#negativeflag' class='text-blue-600 mavenLinkBold hover:underline'>Negative Flag</a>) it is considered a negative number (represented using 2s compliment)
+      A circuit capable of adding or subtracting two 12 bit numbers When the first bit of the Accumulator(ACC) is 1 (<a href='#negativeflag' class='text-blue-600 font-semibold hover:underline'>Negative Flag</a>) it is considered a negative number (represented using 2s compliment)
     </p>
   
     <ul class='my-3 ml-6 space-y-1 list-disc'>
@@ -1905,7 +1859,7 @@
       
     </ul>
   
-    <h3 id='ram-memory' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='ram-memory' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   RAM memory
   
@@ -2071,7 +2025,7 @@
       
     </ul>
   
-    <h3 id='program-counter-pc-register' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='program-counter-pc-register' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   <span id='PC'></span>Program Counter (PC) Register
   
@@ -2113,7 +2067,7 @@
       
     </ul>
   
-    <h1 id='computers-instruction-set' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='computers-instruction-set' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Computer's Instruction Set
   
@@ -2131,7 +2085,7 @@
       A set of all instructions that the computer can process.
     </p>
   
-    <h2 id='instruction' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='instruction' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Instruction
   
@@ -2149,7 +2103,7 @@
       A 12-bit <strong>word</strong> made up of a 4-bit <strong>opcode</strong> and an 8-bit <strong>operand</strong> address
     </p>
   
-    <h3 id='operation-code-opcode' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='operation-code-opcode' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   operation code (opcode)
   
@@ -2167,7 +2121,7 @@
       specifies the action to be taken by the computer
     </p>
   
-    <h3 id='operand' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='operand' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   operand
   
@@ -2185,7 +2139,7 @@
       The data that the opcode operates on. Located at a memory location specified by the 8 bit address in the instruction.
     </p>
   
-    <h2 id='table-1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='table-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   <span id='table1'></span>Table 1
   
@@ -2199,7 +2153,7 @@
 
     </h2>
   <img class='inline mb-3' src='old-classes/comp-systems/images/table1.png' alt style='width: inherit;' />
-    <h3 id='table-1-description' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='table-1-description' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Table 1 description
   
@@ -2222,7 +2176,7 @@
     </p>
   
     <p class='mb-3'>
-      The base 10 identity of the 4 bit code(in this computer) at the beginning of every instruction. Specifies the <em>action</em> that will be performed, such as loading, moving values. Not shown is the <a href='#fetch' class='text-blue-600 mavenLinkBold hover:underline'>Fetch Instruction</a> (an instruction used to load the next instruction) and can be thought of as having the opcode 0000, but it really doesn't require one (in Hard-Wired)
+      The base 10 identity of the 4 bit code(in this computer) at the beginning of every instruction. Specifies the <em>action</em> that will be performed, such as loading, moving values. Not shown is the <a href='#fetch' class='text-blue-600 font-semibold hover:underline'>Fetch Instruction</a> (an instruction used to load the next instruction) and can be thought of as having the opcode 0000, but it really doesn't require one (in Hard-Wired)
     </p>
   
         </li>
@@ -2272,7 +2226,7 @@
     <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
       
         <li>
-          MAR &lt;– IR moves (copies) the contents of the Instruction Register(<a href='#IR' class='text-blue-600 mavenLinkBold hover:underline'>IR</a>) to the Memory Address Register
+          MAR &lt;– IR moves (copies) the contents of the Instruction Register(<a href='#IR' class='text-blue-600 font-semibold hover:underline'>IR</a>) to the Memory Address Register
         </li>
       
         <li>
@@ -2302,7 +2256,7 @@
     </p>
   
     <p class='mb-3'>
-      This column shows the signals that are required (power to signal pin) to perform the specified register transfers. Signal Pins are shown in <a href='#figure1' class='text-blue-600 mavenLinkBold hover:underline'>Figure 1</a>
+      This column shows the signals that are required (power to signal pin) to perform the specified register transfers. Signal Pins are shown in <a href='#figure1' class='text-blue-600 font-semibold hover:underline'>Figure 1</a>
     </p>
   
     <ul class='my-3 ml-6 space-y-1 list-disc'>
@@ -2321,7 +2275,7 @@
       
     </ul>
   
-    <h1 id='hard-wired-control-unit' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='hard-wired-control-unit' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Hard-Wired Control Unit
   
@@ -2335,7 +2289,7 @@
 
     </h1>
   
-    <h2 id='figure-2' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='figure-2' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Figure 2 <span id='figure2'></span>
   
@@ -2349,7 +2303,7 @@
 
     </h2>
   <img class='inline mb-3' src='old-classes/comp-systems/images/figure2.png' alt style='width: inherit;' />
-    <h3 id='description-of-figure-2' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='description-of-figure-2' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Description of Figure 2
   
@@ -2404,7 +2358,7 @@
     </ul>
   
     <p class='mb-3'>
-      <a href='#figure4' class='text-blue-600 mavenLinkBold hover:underline'>Figure 4</a>
+      <a href='#figure4' class='text-blue-600 font-semibold hover:underline'>Figure 4</a>
     </p>
   
         </li>
@@ -2440,7 +2394,7 @@
     </ul>
   
     <p class='mb-3'>
-      <a href='https://www.electronics-tutorials.ws/sequential/seq_6.html' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>A useful article about ring counters</a> <a href='#table2' class='text-blue-600 mavenLinkBold hover:underline'>Table 2</a>
+      <a href='https://www.electronics-tutorials.ws/sequential/seq_6.html' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>A useful article about ring counters</a> <a href='#table2' class='text-blue-600 font-semibold hover:underline'>Table 2</a>
     </p>
   
         </li>
@@ -2452,14 +2406,14 @@
     </p>
   
     <p class='mb-3'>
-      Most important part of the control unit The control matrix sends out signals to every register in the computer as shown in <a href='#figure1' class='text-blue-600 mavenLinkBold hover:underline'>Figure 1</a> and facilitates all of the instructions listed in <a href='#table1' class='text-blue-600 mavenLinkBold hover:underline'>Table 1</a> using those signals.
+      Most important part of the control unit The control matrix sends out signals to every register in the computer as shown in <a href='#figure1' class='text-blue-600 font-semibold hover:underline'>Figure 1</a> and facilitates all of the instructions listed in <a href='#table1' class='text-blue-600 font-semibold hover:underline'>Table 1</a> using those signals.
     </p>
   
         </li>
       
     </ul>
   
-    <h2 id='figure-3' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='figure-3' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   <span id='figure3'></span>Figure 3
   
@@ -2477,7 +2431,7 @@
       A visualization of the inner workings of the ring counter <img src='old-classes/comp-systems/images/figure3.png' alt='images/figure3.png' />
     </p>
   
-    <h2 id='figure-4' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='figure-4' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   <span id='figure4'></span>Figure 4
   
@@ -2495,7 +2449,7 @@
       A visualization of the inner working of the Instruction Decoder. Shows how each opcode corresponds to an output line. <img src='old-classes/comp-systems/images/figure4.png' alt='images/figure4.png' />
     </p>
   
-    <h2 id='table-2' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='table-2' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   <span id='table2'></span>Table 2
   
@@ -2513,7 +2467,7 @@
       Times at which each <strong>Control Signal</strong> must be active in order to execute the hard-wired Basic Computer's instructions. <img src='old-classes/comp-systems/images/table2.png' alt='images/table2.png' />
     </p>
   
-    <h3 id='fetch-instruction' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='fetch-instruction' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   <span id='fetch'></span>Fetch instruction
   
@@ -2528,10 +2482,10 @@
     </h3>
   
     <p class='mb-3'>
-      The fetch instruction is executed every time the <a href='#ringcounter' class='text-blue-600 mavenLinkBold hover:underline'>Ring Counter</a> loops. This facilitates the next instruction being sent to the Control unit. This instruction is actually executed during the same ring counter loop as any other instructions. So when an opcode is sent to the control matrix, fetch is executed <strong>And</strong> whatever instruction is specified by the opcode. This ensures that the next instruction is fetched by the end of the ring counter loop.
+      The fetch instruction is executed every time the <a href='#ringcounter' class='text-blue-600 font-semibold hover:underline'>Ring Counter</a> loops. This facilitates the next instruction being sent to the Control unit. This instruction is actually executed during the same ring counter loop as any other instructions. So when an opcode is sent to the control matrix, fetch is executed <strong>And</strong> whatever instruction is specified by the opcode. This ensures that the next instruction is fetched by the end of the ring counter loop.
     </p>
   
-    <h3 id='how-does-the-computer-choose-which-signals-to-use-for-an-opcode' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='how-does-the-computer-choose-which-signals-to-use-for-an-opcode' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   How does the computer choose which signals to use for an opcode?
   
@@ -2548,7 +2502,7 @@
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          LM signal for example, the signal to load data into MAR according to <a href='#figure1' class='text-blue-600 mavenLinkBold hover:underline'>Figure 1</a> LM has a T3 on the LDA and SDA Rows and a T0 on the Fetch row
+          LM signal for example, the signal to load data into MAR according to <a href='#figure1' class='text-blue-600 font-semibold hover:underline'>Figure 1</a> LM has a T3 on the LDA and SDA Rows and a T0 on the Fetch row
     <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
       
         <li>
@@ -2572,16 +2526,16 @@
         </li>
       
         <li>
-          JN(jump negative) Row All Tx in this row have an AND operation with the value of NF(<a href='#negativeflag' class='text-blue-600 mavenLinkBold hover:underline'>Negative Flag</a>) as well as the instruction signal JN. This provides another level of conditional logic based on the value of the ACC negative flag. The arithmetic expression for the LP column is: <strong>LP = T3*JN*NF + T3*JMP(Jump)</strong>
+          JN(jump negative) Row All Tx in this row have an AND operation with the value of NF(<a href='#negativeflag' class='text-blue-600 font-semibold hover:underline'>Negative Flag</a>) as well as the instruction signal JN. This provides another level of conditional logic based on the value of the ACC negative flag. The arithmetic expression for the LP column is: <strong>LP = T3*JN*NF + T3*JMP(Jump)</strong>
         </li>
       
         <li>
-          A list of all the conditional expressions for the control signals (where * = AND, + = OR) is located in <a href='#figure6' class='text-blue-600 mavenLinkBold hover:underline'>Figure 6</a>
+          A list of all the conditional expressions for the control signals (where * = AND, + = OR) is located in <a href='#figure6' class='text-blue-600 font-semibold hover:underline'>Figure 6</a>
         </li>
       
     </ul>
   
-    <h2 id='figure-5' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='figure-5' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   <span id='figure5'></span>Figure 5
   
@@ -2599,7 +2553,7 @@
       A hard wired example of how the control matrix would work <img src='old-classes/comp-systems/images/figure5.png' alt='images/figure5.png' />
     </p>
   
-    <h2 id='figure-6' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='figure-6' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   <span id='figure6'></span>Figure 6
   
@@ -2617,7 +2571,7 @@
       A list of possible conditional expressions for the example computer. <img src='old-classes/comp-systems/images/figure6.png' alt='images/figure6.png' />
     </p>
   
-    <h1 id='micro-programmed-control-unit' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='micro-programmed-control-unit' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Micro-programmed Control Unit
   
@@ -2632,10 +2586,10 @@
     </h1>
   
     <p class='mb-3'>
-      In the Hard Wired control unit example, the signals that come from the control matrix do so because of an actual circuit that is wired to perform the conditional logic shown in <a href='#figure5' class='text-blue-600 mavenLinkBold hover:underline'>Figure 5</a>. In a <strong>Micro-Programmed</strong> <strong>Control Unit</strong> an opcode is sent to the Control unit where it fetches a list of <strong>Micro-Instructions</strong> that together perform the instruction from a memory. The control unit can be thought of as a Computer within a computer.
+      In the Hard Wired control unit example, the signals that come from the control matrix do so because of an actual circuit that is wired to perform the conditional logic shown in <a href='#figure5' class='text-blue-600 font-semibold hover:underline'>Figure 5</a>. In a <strong>Micro-Programmed</strong> <strong>Control Unit</strong> an opcode is sent to the Control unit where it fetches a list of <strong>Micro-Instructions</strong> that together perform the instruction from a memory. The control unit can be thought of as a Computer within a computer.
     </p>
   
-    <h2 id='micro-routine' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='micro-routine' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Micro-routine
   
@@ -2653,7 +2607,7 @@
       A <strong>micro-routine</strong> is a set of <strong>Micro-Instructions</strong> that implement an <strong>instruction</strong>.
     </p>
   
-    <h3 id='micro-instruction' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='micro-instruction' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Micro-Instruction
   
@@ -2671,7 +2625,7 @@
       Similar to the instruction in a hard-wired computer, the micro-instruction operates on the hard wired circuits within the control unit. A micro-instruction is composed of bits that might correspond to a control signal(LM for example).
     </p>
   
-    <h2 id='figure-7' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='figure-7' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Figure 7
   
@@ -2689,7 +2643,7 @@
       A block diagram of an example micro-programmed control unit. <img src='old-classes/comp-systems/images/figure7.png' alt='images/figure7.png' />
     </p>
   
-    <h3 id='x-24-control-romread-only-memory' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='x-24-control-romread-only-memory' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   32 X 24 Control ROM(Read-only memory)
   
@@ -2718,7 +2672,7 @@
         </li>
       
         <li>
-          8-bit next-address field address(in ROM) of next micro-instruction to be executed. which permits additional Boolean logic shown in <a href='#figure8' class='text-blue-600 mavenLinkBold hover:underline'>Figure 8</a>.
+          8-bit next-address field address(in ROM) of next micro-instruction to be executed. which permits additional Boolean logic shown in <a href='#figure8' class='text-blue-600 font-semibold hover:underline'>Figure 8</a>.
         </li>
       
     </ul>
@@ -2731,7 +2685,7 @@
       
     </ul>
   
-    <h3 id='bit-micro-instruction-register' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='bit-micro-instruction-register' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   24-bit Micro-instruction Register
   
@@ -2748,11 +2702,11 @@
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          analogous to the external computer's <a href='#IR' class='text-blue-600 mavenLinkBold hover:underline'>Instruction Register</a>.
+          analogous to the external computer's <a href='#IR' class='text-blue-600 font-semibold hover:underline'>Instruction Register</a>.
         </li>
       
         <li>
-          16 signal lines are the same as the lines coming from the control matrix in <a href='#figure2' class='text-blue-600 mavenLinkBold hover:underline'>Figure 2</a> and are connected to the signal pins shown in <a href='#figure1' class='text-blue-600 mavenLinkBold hover:underline'>Figure 1</a>.
+          16 signal lines are the same as the lines coming from the control matrix in <a href='#figure2' class='text-blue-600 font-semibold hover:underline'>Figure 2</a> and are connected to the signal pins shown in <a href='#figure1' class='text-blue-600 font-semibold hover:underline'>Figure 1</a>.
         </li>
       
         <li>
@@ -2761,7 +2715,7 @@
       
     </ul>
   
-    <h3 id='micro-counter-register' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='micro-counter-register' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   micro-counter register
   
@@ -2778,7 +2732,7 @@
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          Analogous to the external computer's <a href='#PC' class='text-blue-600 mavenLinkBold hover:underline'>Program counter Register</a>
+          Analogous to the external computer's <a href='#PC' class='text-blue-600 font-semibold hover:underline'>Program counter Register</a>
         </li>
       
         <li>
@@ -2791,7 +2745,7 @@
       
     </ul>
   
-    <h3 id='multiplexer-data-selector' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='multiplexer-data-selector' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Multiplexer (data selector)
   
@@ -2824,12 +2778,12 @@
         </li>
       
         <li>
-          The conditional logic is shown in the description of <a href='#figure8' class='text-blue-600 mavenLinkBold hover:underline'>Figure 8</a>
+          The conditional logic is shown in the description of <a href='#figure8' class='text-blue-600 font-semibold hover:underline'>Figure 8</a>
         </li>
       
     </ul>
   
-    <h3 id='x-5-address-rom' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='x-5-address-rom' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   16 X 5 Address ROM
   
@@ -2844,7 +2798,7 @@
     </h3>
   
     <p class='mb-3'>
-      Fed by outer computer's <a href='#IR' class='text-blue-600 mavenLinkBold hover:underline'>Instruction Register</a>. The contents of the Instruction Register can be found in <a href='#table3' class='text-blue-600 mavenLinkBold hover:underline'>Table 3</a>
+      Fed by outer computer's <a href='#IR' class='text-blue-600 font-semibold hover:underline'>Instruction Register</a>. The contents of the Instruction Register can be found in <a href='#table3' class='text-blue-600 font-semibold hover:underline'>Table 3</a>
     </p>
   
     <ul class='my-3 ml-6 space-y-1 list-disc'>
@@ -2858,12 +2812,12 @@
         </li>
       
         <li>
-          Other addresses in ROM correspond to the opcodes(external computer) in <a href='#table1' class='text-blue-600 mavenLinkBold hover:underline'>Table 1</a> addresses are of micro-routines in Control ROM
+          Other addresses in ROM correspond to the opcodes(external computer) in <a href='#table1' class='text-blue-600 font-semibold hover:underline'>Table 1</a> addresses are of micro-routines in Control ROM
         </li>
       
     </ul>
   
-    <h3 id='note-about-signal-edges' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='note-about-signal-edges' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Note about signal edges
   
@@ -2878,7 +2832,7 @@
     </h3>
   
     <p class='mb-3'>
-      The micro-counter is triggered by a rising clock edge (along with all operations in data path in <a href='#figure1' class='text-blue-600 mavenLinkBold hover:underline'>Figure 1</a>). The Micro-instruction register is triggered by a falling clock edge. In a series of steps:
+      The micro-counter is triggered by a rising clock edge (along with all operations in data path in <a href='#figure1' class='text-blue-600 font-semibold hover:underline'>Figure 1</a>). The Micro-instruction register is triggered by a falling clock edge. In a series of steps:
     </p>
   
     <ul class='my-3 ml-6 space-y-1 list-decimal list-inside'>
@@ -2901,7 +2855,7 @@
       
     </ul>
   
-    <h2 id='table-3' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='table-3' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   <span id='table3'></span>Table 3
   
@@ -2919,7 +2873,7 @@
       Mapping of Op-codes to the contents of the Address ROM in the Control Unit <img src='old-classes/comp-systems/images/table3.png' alt='images/table3.png' />
     </p>
   
-    <h3 id='example-using-the-add-instruction' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='example-using-the-add-instruction' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Example using the ADD instruction
   
@@ -2937,7 +2891,7 @@
       ADD instruction has the 3 opcode which maps to the 09 micro-routine start address. The address is then goes to the multiplexer -&gt; micro-counter -&gt; Control ROM -&gt; Micro-instruction register
     </p>
   
-    <h2 id='figure-8' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='figure-8' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   <span id='figure8'></span>Figure 8
   
@@ -2958,7 +2912,7 @@
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          CD is condition bit when CD is 1 (MAP is zero) the multiplexer's select lines produce a 00 or a 10 (binary) based on the <a href='#negativeflag' class='text-blue-600 mavenLinkBold hover:underline'>Negative Flag</a> of the ACC register (of external computer). 00 00 selects incrementer address, 10 selects CRJA address
+          CD is condition bit when CD is 1 (MAP is zero) the multiplexer's select lines produce a 00 or a 10 (binary) based on the <a href='#negativeflag' class='text-blue-600 font-semibold hover:underline'>Negative Flag</a> of the ACC register (of external computer). 00 00 selects incrementer address, 10 selects CRJA address
         </li>
       
         <li>
@@ -2991,7 +2945,7 @@
       
     </ul>
   
-    <h2 id='table-4' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='table-4' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   <span id='table4'></span>Table 4
   
@@ -3006,10 +2960,10 @@
     </h2>
   
     <p class='mb-3'>
-      A micro-program (set of all micro-routines) that implements described instruction set from <a href='#table1' class='text-blue-600 mavenLinkBold hover:underline'>table1</a> When loaded into Control ROM
+      A micro-program (set of all micro-routines) that implements described instruction set from <a href='#table1' class='text-blue-600 font-semibold hover:underline'>table1</a> When loaded into Control ROM
     </p>
   <img class='inline mb-3' src='old-classes/comp-systems/images/table4.png' alt style='width: inherit;' />
-    <h3 id='microroutine-name-mnemonic' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='microroutine-name-mnemonic' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Microroutine Name (Mnemonic)
   
@@ -3027,7 +2981,7 @@
       The functional shortened name of each operation specified by the op-codes (Load Accumulator = LDA = 1) Used in assembly programming.
     </p>
   
-    <h3 id='columns-micro-instruction-address-to-address-of-next-micro-instruction' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='columns-micro-instruction-address-to-address-of-next-micro-instruction' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Columns Micro-Instruction Address to Address of Next Micro-Instruction
   
@@ -3102,7 +3056,7 @@
     </p>
   
     <p class='mb-3'>
-      Same order of signals (bits) as the in <a href='#table2' class='text-blue-600 mavenLinkBold hover:underline'>Table 2</a> bits are equivalent to signals which are equivalent to pins.
+      Same order of signals (bits) as the in <a href='#table2' class='text-blue-600 font-semibold hover:underline'>Table 2</a> bits are equivalent to signals which are equivalent to pins.
     </p>
   
         </li>
@@ -3114,7 +3068,7 @@
     </p>
   
     <p class='mb-3'>
-      Conditional bit, when 1 causes multiplexer to depend on value of <a href='#negativeflag' class='text-blue-600 mavenLinkBold hover:underline'>NF</a> if MAP bit is 0
+      Conditional bit, when 1 causes multiplexer to depend on value of <a href='#negativeflag' class='text-blue-600 font-semibold hover:underline'>NF</a> if MAP bit is 0
     </p>
   
         </li>
@@ -3150,14 +3104,14 @@
     </p>
   
     <p class='mb-3'>
-      Only matters if HLT and MAP are not 1 (arbitrary values). The Micro-Instruction Address of the next Micro-Instruction in a non-branching program. Refer to description of <a href='#figure8' class='text-blue-600 mavenLinkBold hover:underline'>Figure 8</a> for more explanation.
+      Only matters if HLT and MAP are not 1 (arbitrary values). The Micro-Instruction Address of the next Micro-Instruction in a non-branching program. Refer to description of <a href='#figure8' class='text-blue-600 font-semibold hover:underline'>Figure 8</a> for more explanation.
     </p>
   
         </li>
       
     </ul>
   
-    <h3 id='comment' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='comment' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Comment
   
@@ -3175,7 +3129,7 @@
       This column provides a simple explanation for what happens in the micro-programmable control unit after each Micro-Instruction.
     </p>
   
-    <h2 id='FETCH' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='FETCH' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Fetch micro-routine
   
@@ -3204,7 +3158,7 @@
         </li>
       
         <li>
-          Moves data from the <a href='#PC' class='text-blue-600 mavenLinkBold hover:underline'>Program Counter Register</a> to the <a href='#MAR' class='text-blue-600 mavenLinkBold hover:underline'>Memory Access Register</a>
+          Moves data from the <a href='#PC' class='text-blue-600 font-semibold hover:underline'>Program Counter Register</a> to the <a href='#MAR' class='text-blue-600 font-semibold hover:underline'>Memory Access Register</a>
         </li>
       
         <li>
@@ -3228,7 +3182,7 @@
         </li>
       
         <li>
-          Reads the data at adress MAR into <a href='#MDR' class='text-blue-600 mavenLinkBold hover:underline'>Memory Data Register</a> from RAM
+          Reads the data at adress MAR into <a href='#MDR' class='text-blue-600 font-semibold hover:underline'>Memory Data Register</a> from RAM
         </li>
       
         <li>
@@ -3248,7 +3202,7 @@
         </li>
       
         <li>
-          ED, LI moves the <strong>Word</strong> from MDR to the <a href='#IR' class='text-blue-600 mavenLinkBold hover:underline'>Instruction Register</a>
+          ED, LI moves the <strong>Word</strong> from MDR to the <a href='#IR' class='text-blue-600 font-semibold hover:underline'>Instruction Register</a>
         </li>
       
         <li>
@@ -3272,7 +3226,7 @@
         </li>
       
         <li>
-          Signal pin description is in <a href='#figure1' class='text-blue-600 mavenLinkBold hover:underline'>Figure 1</a>
+          Signal pin description is in <a href='#figure1' class='text-blue-600 font-semibold hover:underline'>Figure 1</a>
         </li>
       
     </ul>
@@ -3281,7 +3235,7 @@
       
     </ul>
   
-    <h2 id='JN' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='JN' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   JN micro-routine
   
@@ -3310,7 +3264,7 @@
         </li>
       
         <li>
-          Execution of the next micro-instruction now depends on value of <a href='#negativeflag' class='text-blue-600 mavenLinkBold hover:underline'>Negative Flag</a>
+          Execution of the next micro-instruction now depends on value of <a href='#negativeflag' class='text-blue-600 font-semibold hover:underline'>Negative Flag</a>
         </li>
       
         <li>
@@ -3338,7 +3292,7 @@
         </li>
       
         <li>
-          <a href='#PC' class='text-blue-600 mavenLinkBold hover:underline'>PC</a> is not altered, so next instruction is executed normally
+          <a href='#PC' class='text-blue-600 font-semibold hover:underline'>PC</a> is not altered, so next instruction is executed normally
         </li>
       
     </ul>
@@ -3354,7 +3308,7 @@
         </li>
       
         <li>
-          Moves contents of <a href='#IR' class='text-blue-600 mavenLinkBold hover:underline'>IR</a>(least significan eight bits) to <a href='#PC' class='text-blue-600 mavenLinkBold hover:underline'>PC</a>
+          Moves contents of <a href='#IR' class='text-blue-600 font-semibold hover:underline'>IR</a>(least significan eight bits) to <a href='#PC' class='text-blue-600 font-semibold hover:underline'>PC</a>
         </li>
       
         <li>
@@ -3375,7 +3329,7 @@
       
     </ul>
   
-    <h1 id='hard-wired-vs.-micro-programmed-computers' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='hard-wired-vs.-micro-programmed-computers' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Hard-Wired vs. Micro-programmed Computers
   
@@ -3413,7 +3367,7 @@
       
     </ul>
   
-    <h1 id='old-figures' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='old-figures' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Old figures
   

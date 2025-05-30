@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -3955,7 +3909,7 @@
 
 
 
-    <h2 id='a.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='a.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   a.
   
@@ -3973,7 +3927,7 @@
       It looks as if The coefficient of A2 is around 2, while the coefficient of A1 is around 1, set up in the equation of the form <span class='math inline'>\(1A_1 + 2A_2 = Y\)</span>
     </p>
   
-    <h2 id='b.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='b.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   b.
   
@@ -3994,7 +3948,7 @@
         </li>
       
     </ul>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' session='py'>import numpy as np
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python' session='py'>import numpy as np
 D = [[1, 2, 1],
      [2, 2, 1],
      [3, 4, 1],
@@ -4007,12 +3961,12 @@ W1 = W
 w = W[:-1]
 b = W[-1]
 f"w={w}, b={b}"
-</code></pre></div><div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' session='py'>def SSE(D):
+</code></pre></div><div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python' session='py'>def SSE(D):
     yhat = np.sum(D * W, axis=1)
     return sum((Y - yhat)**2)
 SSE(D)
 </code></pre></div>
-    <h2 id='c' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='c' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   c
   
@@ -4033,7 +3987,7 @@ SSE(D)
         </li>
       
     </ul>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' session='py'>alpha = 1
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python' session='py'>alpha = 1
 DT = np.transpose(D)
 DI = np.linalg.inv(np.matmul(DT, D) + alpha * np.identity(3))
 W = np.matmul(np.matmul(DI, DT), Y)
@@ -4041,9 +3995,9 @@ W2 = W
 w = W[:-1]
 b = W[-1]
 f"w={w}, b={b}"
-</code></pre></div><div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' session='py'>SSE(D)
+</code></pre></div><div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python' session='py'>SSE(D)
 </code></pre></div>
-    <h2 id='d.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='d.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   d.
   
@@ -4056,11 +4010,11 @@ f"w={w}, b={b}"
 
 
     </h2>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='python language-python' session='py'>p = [2, 5, 1]
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='python language-python' session='py'>p = [2, 5, 1]
 [["b", np.dot(p, W1)], ["c", np.dot(p, W2)]]
 
 </code></pre></div>
-    <h2 id='e.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='e.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   e.
   
@@ -4078,7 +4032,7 @@ f"w={w}, b={b}"
       The SSE is smaller than the linear regression model, this indicates that the model has less error
     </p>
   
-    <h1 id='section-1' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='section-1' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   2.
   
@@ -4092,7 +4046,7 @@ f"w={w}, b={b}"
 
     </h1>
   
-    <h2 id='a.-1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='a.-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   a.
   
@@ -4138,7 +4092,7 @@ f"w={w}, b={b}"
       
     </ul>
   
-    <h2 id='b.-1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='b.-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   b.
   

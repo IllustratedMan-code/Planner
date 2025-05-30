@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -1711,7 +1665,7 @@
       <img src='old-classes/Operating_Systems/hw1/ubuntu-settings.jpg' alt='ubuntu-settings.jpg' /> I followed the steps given in the assignment: I downloaded the ubuntu image from the website, loaded it into the virtual machine, and installed ubuntu. I used all the recommended specs given in the assignment. Additionally, I installed the virtualbox guest tools so I could fullscreen the vm. I have done this before, so did not run into many difficulties. The only minor difficulty was in getting virtualbox installed in my system (NixOS), but that was easily solved by following the directions on the NixOS wiki for virtualbox.
     </p>
   
-    <h1 id='task-2.1' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='task-2.1' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Task 2.1
   
@@ -1724,9 +1678,9 @@
 
 
     </h1>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='bash language-bash'>mkdir team_dropbox && chmod 760 team_dropbox # create directory, owner has all permissions, group has read write, others have none
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='bash language-bash'>mkdir team_dropbox && chmod 760 team_dropbox # create directory, owner has all permissions, group has read write, others have none
 </code></pre></div>
-    <h1 id='task-2.2' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='task-2.2' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Task 2.2
   
@@ -1741,11 +1695,11 @@
     </h1>
   
     <p class='mb-3'>
-      <code class='verbatim py-0.5 px-0.5 bg-gray-100'>find</code> is recursive by default, <code class='verbatim py-0.5 px-0.5 bg-gray-100'>.</code> refers to the current directory, <code class='verbatim py-0.5 px-0.5 bg-gray-100'>-newermt</code> refers to "modified files newer than timestamp". The time stamp is the current date at midnight (00:00:00).
+      <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>find</code> is recursive by default, <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>.</code> refers to the current directory, <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>-newermt</code> refers to "modified files newer than timestamp". The time stamp is the current date at midnight (00:00:00).
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='bash language-bash'>find . -newermt "$(date +'%m/%d/%y 00:00:00')"
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='bash language-bash'>find . -newermt "$(date +'%m/%d/%y 00:00:00')"
 </code></pre></div>
-    <h1 id='task-3' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='task-3' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Task 3
   
@@ -1760,14 +1714,14 @@
     </h1>
   <pre class='pandoc-raw-"org"'>#+attr_latex: :width 8cm</pre>
     <p class='mb-3'>
-      <img src='old-classes/Operating_Systems/hw1/grub2.jpg' alt='grub2.jpg' /> The tutorial linked in the assignment as well as the assignment instructions are out of date. The newest (stable) kernel is 6.1.8. The kernel listed (5.13.4) did not seem to be available through kernel.org. None of the grub instructions were relevant, they were all enabled by default. I did have to comment out <code class='verbatim py-0.5 px-0.5 bg-gray-100'>GRUB_HIDDEN_TIMEOUT</code> to get the grub menu to show up, which was not in the assignment instructions.
+      <img src='old-classes/Operating_Systems/hw1/grub2.jpg' alt='grub2.jpg' /> The tutorial linked in the assignment as well as the assignment instructions are out of date. The newest (stable) kernel is 6.1.8. The kernel listed (5.13.4) did not seem to be available through kernel.org. None of the grub instructions were relevant, they were all enabled by default. I did have to comment out <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>GRUB_HIDDEN_TIMEOUT</code> to get the grub menu to show up, which was not in the assignment instructions.
     </p>
   
     <p class='mb-3'>
       Also it is unclear whether or not I should have installed the kernel modules as well as the kernel. The instructions only mentioned running make 2 times. It would have been 3 to install the modules as well.
     </p>
   
-    <h1 id='task-4' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='task-4' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Task 4
   
@@ -1780,7 +1734,7 @@
 
 
     </h1>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='bash language-bash'>locate -b -e 6.1.8 | grep -v /home | xargs -n 1 -p sudo rm -r && sudo update-grub
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='bash language-bash'>locate -b -e 6.1.8 | grep -v /home | xargs -n 1 -p sudo rm -r && sudo update-grub
 </code></pre></div>
     <p class='mb-3'>
       This is a one-liner that removes all mention of the kernel and updates grub to reflect the change.
@@ -1789,19 +1743,19 @@
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>locate -b -e 6.1.8</code>: In my case the kernel was named 6.1.8. This command locates all files that contain 6.1.8 as a basename and also exist. This set of files happens to be the directories where the kernel is stored.
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>locate -b -e 6.1.8</code>: In my case the kernel was named 6.1.8. This command locates all files that contain 6.1.8 as a basename and also exist. This set of files happens to be the directories where the kernel is stored.
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>grep -v /home</code>: the results from locate are piped into grep, which removes the results in the home directory. This ensures I don't delete the build directory.
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>grep -v /home</code>: the results from locate are piped into grep, which removes the results in the home directory. This ensures I don't delete the build directory.
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>xargs -n 1 -p sudo rm -r</code>: the results from grep are piped into xargs, which runs <code class='verbatim py-0.5 px-0.5 bg-gray-100'>sudo rm -r</code>, line by line, asking for permission each time.
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>xargs -n 1 -p sudo rm -r</code>: the results from grep are piped into xargs, which runs <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>sudo rm -r</code>, line by line, asking for permission each time.
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>sudo update-grub</code>: this updates any grub related files, removing the kernel that no longer exists.
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>sudo update-grub</code>: this updates any grub related files, removing the kernel that no longer exists.
         </li>
       
         <li>

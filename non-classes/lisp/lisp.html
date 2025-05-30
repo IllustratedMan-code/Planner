@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -1179,7 +1133,7 @@
 
 
 
-    <h1 id='what-is-lisp' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='what-is-lisp' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   What is lisp?
   
@@ -1192,12 +1146,12 @@
 
 
     </h1>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(defun average (b &amp;rest a )
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(defun average (b &amp;rest a )
   (loop for i in a
         do (print i)))
 (average 1 1 1 1 4)
 </code></pre></div>
-    <h1 id='what-is-a-lisp-image' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='what-is-a-lisp-image' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   What is a lisp image?
   
@@ -1215,7 +1169,7 @@
       A lisp image is a collection of all of the information that the lisp compiler/interpreter needs to run a program
     </p>
   
-    <h1 id='lisp-macros' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='lisp-macros' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Lisp macros
   
@@ -1244,7 +1198,7 @@
     <p class='mb-3'>
       mapcar is definitly the more lispy way to do it, but I feel the loop way allows for more clarity in what is going on.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(defmacro setq* (value &amp;rest variables)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(defmacro setq* (value &amp;rest variables)
   `(progn ,@(mapcar (lambda (x) (list 'setq x value)) variables)))
 (defmacro setq-* (value &amp;rest variables)
   `(progn ,@(loop for variable in variables
@@ -1254,7 +1208,7 @@
     <p class='mb-3'>
       Essentially, we are creating a list of lists, or a list of statements. The ,@ sytax essentially just unwraps the outer list, leaving a sequence of evaluate-able statements.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(setq-* "hi" x y z)
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>(setq-* "hi" x y z)
 ;; this turns into
 '((setq x "hi") (setq y "hi" ) (setq x "hi"))
 ;; which turns into (because of ,@)

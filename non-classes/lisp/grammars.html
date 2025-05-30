@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -1177,7 +1131,7 @@
 
 
 
-    <h1 id='the-plan' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='the-plan' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   The plan
   
@@ -1216,17 +1170,17 @@
     </p>
   
     <p class='mb-3'>
-      say we have the grammar: <code class='verbatim py-0.5 px-0.5 bg-gray-100'>F -&gt; ( 'name spc 'F ) | 'args</code> the symbols are "capture groups" that will either be converted into other symbols via production rules, or the contents will be fed into a lisp macro determined by the name of the production rule, in this case F. spc in this grammar represents a " ", notably, whitespace should normally be pruned.
+      say we have the grammar: <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>F -&gt; ( 'name spc 'F ) | 'args</code> the symbols are "capture groups" that will either be converted into other symbols via production rules, or the contents will be fed into a lisp macro determined by the name of the production rule, in this case F. spc in this grammar represents a " ", notably, whitespace should normally be pruned.
     </p>
   
     <p class='mb-3'>
-      for this sample grammar, take this lisp function <code class='verbatim py-0.5 px-0.5 bg-gray-100'>(test (my args))</code>. It would be parsed using the following derivation <code class='verbatim py-0.5 px-0.5 bg-gray-100'>F -&gt; ('name spc 'F)</code>. 'name and 'F get passed to the F function as arguments, 'F gets expanded again, using the production rules and the F function. The final output would look like (if we are parsing to lisp): <code class='verbatim py-0.5 px-0.5 bg-gray-100'>(F test (F my args))</code>. If we wanted python function syntax we would use the grammar <code class='verbatim py-0.5 px-0.5 bg-gray-100'>F -&gt; 'name('F) | 'args</code> instead.
+      for this sample grammar, take this lisp function <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>(test (my args))</code>. It would be parsed using the following derivation <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>F -&gt; ('name spc 'F)</code>. 'name and 'F get passed to the F function as arguments, 'F gets expanded again, using the production rules and the F function. The final output would look like (if we are parsing to lisp): <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>(F test (F my args))</code>. If we wanted python function syntax we would use the grammar <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>F -&gt; 'name('F) | 'args</code> instead.
     </p>
   
     <p class='mb-3'>
       So, we need to generate a lexer/parser from a grammar definition.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='commonlisp language-commonlisp' org-language='lisp'>
 </code></pre></div>
   <div class='flex items-center justify-center mt-2'>
   

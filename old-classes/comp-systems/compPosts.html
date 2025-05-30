@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -1655,7 +1609,7 @@
 
 
 <pre class='pandoc-raw-"org"'>#+hugo_base_dir: ../</pre><pre class='pandoc-raw-"org"'>#+hugo_section: Intro-to-Comp-Systems</pre>
-    <h1 id='how-to-write-a-micro-instruction' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='how-to-write-a-micro-instruction' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   How to write a micro-instruction
   
@@ -1673,7 +1627,7 @@
       A micro-instruction is just a binary (often converted to hex) number that represents a list of control signals, and points to the next micro-instruction. Micro-instructions can be changed by changing the A set of micro-instructions forms a micro-routine (otherwise known as an instruction).
     </p>
   
-    <h2 id='control-signals' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='control-signals' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Control signals
   
@@ -1691,7 +1645,7 @@
       To understand the micro-instruction, you must understand what the control signals do. I will be referencing the Hard vs Micro paper. It has LA (load accumulator), and EA (enable accumulator) signals. They are essentially just wires connected to the control unit (referenced by the 16 coming out of CONTROL) Each register also generally has a clock signal (CLK), but that is connected directly to the clock circuit and is not required for the micro-instructions. The naming system for the signals is somewhat arbitrary but usually follows the pattern (L, E) (register). This is subverted somewhat by the ALU, but that will most likely be directly defined. The other main difference is the inclusion of I, which just means increment.
     </p>
   
-    <h3 id='load-l' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='load-l' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Load (L)
   
@@ -1709,7 +1663,7 @@
       A load signal allows the contents of a register to be changed by the state of the bus (a collection of wires). This signal must be paired with an E signal to do anything.
     </p>
   
-    <h3 id='enable-e' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='enable-e' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Enable (E)
   
@@ -1727,7 +1681,7 @@
       An enable signal changes the state of the bus to match the contents of the register. Say a register contains the value 1111, when the enable signal is used for that register, the contents of the bus will now be 1111. This signal must be paired with a L signal to do anything.
     </p>
   
-    <h2 id='micro-instructions' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='micro-instructions' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Micro-instructions
   
@@ -1742,10 +1696,10 @@
     </h2>
   
     <p class='mb-3'>
-      A micro-instruction is a binary number composed of several <code class='verbatim py-0.5 px-0.5 bg-gray-100'>fields</code> stored at a specific address in the ROM (read only memory) of the control unit.
+      A micro-instruction is a binary number composed of several <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>fields</code> stored at a specific address in the ROM (read only memory) of the control unit.
     </p>
   
-    <h3 id='control-field' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='control-field' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Control field
   
@@ -1775,7 +1729,7 @@
       A micro instruction will generally contain a pair of signals (L E) that transfers the contents of one register into another. The contents of the enabled register moves into the loaded register through the bus. A 1 means that the signal is on while a 0 means the signal is off.
     </p>
   
-    <h3 id='next-address-field' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='next-address-field' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Next Address field
   
@@ -1833,7 +1787,7 @@
       
     </ul>
   
-    <h2 id='lda-micro-routine' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='lda-micro-routine' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   LDA micro-routine
   
@@ -1959,7 +1913,7 @@
       
     </ul>
   
-    <h1 id='mock-exam-questions' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='mock-exam-questions' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Mock Exam Questions
   
@@ -1977,7 +1931,7 @@
       Question 1 and 2 seem to reference this article: <span title='Link is broken'><s>[8086-8088](pdfs/8086.pdf)</s>❌</span>
     </p>
   
-    <h2 id='q1' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='q1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Q1
   
@@ -2023,7 +1977,7 @@
       
     </ul>
   
-    <h2 id='q2' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='q2' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Q2
   
@@ -2044,7 +1998,7 @@
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>EA (effective Address), DS (D segment register), PA(Physical Address)</code>.
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>EA (effective Address), DS (D segment register), PA(Physical Address)</code>.
         </li>
       
     </ul>
@@ -2069,7 +2023,7 @@
       
     </ul>
   
-    <h2 id='q3' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='q3' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Q3
   
@@ -2086,7 +2040,7 @@
     <p class='mb-3'>
       Assuming, W, X, Y and Z as memory addresses. Write a program using any machine sequence that will carry out the following: Z ← W + (Z-X).
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='mips language-mips' tangle='code-examples/Q3.asm'>    .globl main
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='mips language-mips' tangle='code-examples/Q3.asm'>    .globl main
     .text
 
 main:
@@ -2111,10 +2065,10 @@ X: .word 10 #arbitrary value
 W: .word 5 #arbitrary value
 </code></pre></div>
     <p class='mb-3'>
-      <a href='old-classes/comp-systems/code-examples/Q3.asm' class='text-blue-600 mavenLinkBold hover:underline'>Downloadable solution</a> prints 7
+      <a href='old-classes/comp-systems/code-examples/Q3.asm' class='text-blue-600 font-semibold hover:underline'>Downloadable solution</a> prints 7
     </p>
   
-    <h2 id='q4' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='q4' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Q4
   
@@ -2131,7 +2085,7 @@ W: .word 5 #arbitrary value
     <p class='mb-3'>
       Assume that the code below is run on a machine with a 2 GHz clock that requires the following number of cycles for each instruction: add, addi, sll, sra take 4cc each, lw takes 5cc, bne, beq take 3cc each. How many seconds will it take to execute this code. The values of registers are $4=0x20, $5= 0x20, $6= 0x30, $7= 0x10.
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='mips language-mips' tangle='code-examples/Q4.asm'>    .globl  main
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='mips language-mips' tangle='code-examples/Q4.asm'>    .globl  main
     .text
 
 main:
@@ -2148,7 +2102,7 @@ L1: add $11, $5, $9 #marks L1, $11 = 0x20 + $9, $9 is iterator
     addi $8, $8, 4 # $8 = $8 + 4
     beq $8, $6, L2 # goes to L2 if $8 == $6 exits before  $8 can equal $6
 </code></pre></div>
-    <h3 id='instruction-definitions' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='instruction-definitions' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Instruction definitions
   
@@ -2165,11 +2119,11 @@ L1: add $11, $5, $9 #marks L1, $11 = 0x20 + $9, $9 is iterator
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          sra (shift right arithmetic) (sra <code class='verbatim py-0.5 px-0.5 bg-gray-100'>destination</code>, <code class='verbatim py-0.5 px-0.5 bg-gray-100'>origin</code>, <code class='verbatim py-0.5 px-0.5 bg-gray-100'>shift(in bits)</code>) rounds down
+          sra (shift right arithmetic) (sra <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>destination</code>, <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>origin</code>, <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>shift(in bits)</code>) rounds down
         </li>
       
         <li>
-          sll (shift left logical) (sll <code class='verbatim py-0.5 px-0.5 bg-gray-100'>destination</code>, <code class='verbatim py-0.5 px-0.5 bg-gray-100'>origin</code>, <code class='verbatim py-0.5 px-0.5 bg-gray-100'>shift</code>)
+          sll (shift left logical) (sll <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>destination</code>, <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>origin</code>, <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>shift</code>)
         </li>
       
         <li>
@@ -2182,7 +2136,7 @@ L1: add $11, $5, $9 #marks L1, $11 = 0x20 + $9, $9 is iterator
       
     </ul>
   
-    <h3 id='calculate-number-of-clock-cycles' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='calculate-number-of-clock-cycles' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Calculate number of clock cycles
   
@@ -2312,7 +2266,7 @@ L1: add $11, $5, $9 #marks L1, $11 = 0x20 + $9, $9 is iterator
       
     </ul>
   
-    <h3 id='calculate-time' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='calculate-time' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Calculate time
   
@@ -2330,7 +2284,7 @@ L1: add $11, $5, $9 #marks L1, $11 = 0x20 + $9, $9 is iterator
       288cc/(2*10<sup>9cc</sup>/s) = 1.44 * 10<sup>-7</sup> seconds
     </p>
   
-    <h2 id='q5' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='q5' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Q5
   
@@ -2345,7 +2299,7 @@ L1: add $11, $5, $9 #marks L1, $11 = 0x20 + $9, $9 is iterator
     </h2>
   
     <p class='mb-3'>
-      <code class='verbatim py-0.5 px-0.5 bg-gray-100'>X[i] = A[B[i]] + C[i+4]</code>
+      <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>X[i] = A[B[i]] + C[i+4]</code>
     </p>
   
     <ul class='my-3 ml-6 space-y-1 list-disc'>
@@ -2373,9 +2327,9 @@ L1: add $11, $5, $9 #marks L1, $11 = 0x20 + $9, $9 is iterator
     </ul>
   
     <p class='mb-3'>
-      <a href='old-classes/comp-systems/code-examples/Q5.asm' class='text-blue-600 mavenLinkBold hover:underline'>Q5 Solution download</a>
+      <a href='old-classes/comp-systems/code-examples/Q5.asm' class='text-blue-600 font-semibold hover:underline'>Q5 Solution download</a>
     </p>
-  <div class='py-0.5 mb-3 text-sm'><pre><code class='mips language-mips' tangle='code-examples/Q5.asm'>.globl main
+  <div class='py-0.5 mb-3 text-sm font-mono'><pre><code class='mips language-mips' tangle='code-examples/Q5.asm'>.globl main
 .text
 
 main:
@@ -2396,7 +2350,7 @@ main:
     add     $s3, $4, $s4        # offsets address of X by i
     sw      $t1, ($s3)          # stores $t1 to address of ($s3)
 </code></pre></div>
-    <h2 id='q6' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='q6' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Q6
   
@@ -2414,7 +2368,7 @@ main:
       The memory units that follow are specified by the number of words times the number of bits per word. How many address lines and input/output data lines are needed in each case? (a) 8K X 16 (b) 2G X 8 (c) 16M X 32 (d) 256K X 64
     </p>
   
-    <h3 id='part-a' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='part-a' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Part A
   
@@ -2456,7 +2410,7 @@ main:
       
     </ul>
   
-    <h3 id='part-b' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='part-b' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Part B
   
@@ -2490,7 +2444,7 @@ main:
       
     </ul>
   
-    <h3 id='part-c' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='part-c' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Part C
   
@@ -2524,7 +2478,7 @@ main:
       
     </ul>
   
-    <h3 id='part-d' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='part-d' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Part D
   
@@ -2558,7 +2512,7 @@ main:
       
     </ul>
   
-    <h2 id='q7' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='q7' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Q7
   
@@ -2576,7 +2530,7 @@ main:
       Find the number of bytes that can be stored in the memories: (a) 8K X 16 (b) 2G X 8 (c) 16M X 32 (d) 256K X 64
     </p>
   
-    <h3 id='part-a-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='part-a-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Part A
   
@@ -2614,7 +2568,7 @@ main:
       
     </ul>
   
-    <h3 id='part-b-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='part-b-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Part B
   
@@ -2640,7 +2594,7 @@ main:
       
     </ul>
   
-    <h3 id='part-c-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='part-c-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Part C
   
@@ -2662,7 +2616,7 @@ main:
       
     </ul>
   
-    <h3 id='part-d-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='part-d-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Part D
   
@@ -2684,7 +2638,7 @@ main:
       
     </ul>
   
-    <h2 id='q8' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='q8' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   <span class='done DONE'>DONE</span> Q8
   
@@ -2710,7 +2664,7 @@ main:
       
     </ul>
   
-    <h2 id='q9' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='q9' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Q9
   
@@ -2760,7 +2714,7 @@ main:
       
     </ul>
   <img class='inline mb-3' src='old-classes/comp-systems/images/Q9.png' alt style='width: inherit;' />
-    <h2 id='q10' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='q10' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Q10
   
@@ -2794,7 +2748,7 @@ main:
       
     </ul>
   
-    <h3 id='solution' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='solution' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Solution
   
@@ -2936,7 +2890,7 @@ main:
       
     </ul>
   
-    <h2 id='hard-drive-sample-question' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='hard-drive-sample-question' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Hard Drive Sample question
   
@@ -2958,7 +2912,7 @@ main:
       Consider a disk pack with the following specifications 16 surfaces, 128 tracks per surface, 256 sectors per track, 512 bytes per sector
     </p>
   
-    <h3 id='capacity-of-disk-space' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='capacity-of-disk-space' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Capacity of Disk Space
   
@@ -2975,7 +2929,7 @@ main:
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          Use the formula <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Capacity of Disk Space</code>.
+          Use the formula <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Capacity of Disk Space</code>.
         </li>
       
         <li>
@@ -2988,7 +2942,7 @@ main:
       
     </ul>
   
-    <h3 id='bit-required-to-address-sector' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='bit-required-to-address-sector' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Bit Required to address sector
   
@@ -3005,7 +2959,7 @@ main:
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          Use a modified version of <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Capacity of Disk Space</code> to find total number of sectors
+          Use a modified version of <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Capacity of Disk Space</code> to find total number of sectors
         </li>
       
         <li>
@@ -3022,7 +2976,7 @@ main:
       
     </ul>
   
-    <h3 id='formatted-disk-space-32-bytes-per-sector-format-overhead' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='formatted-disk-space-32-bytes-per-sector-format-overhead' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Formatted Disk Space (32 bytes per sector format overhead)
   
@@ -3039,7 +2993,7 @@ main:
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          Use the formula <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Formatting Overhead</code>
+          Use the formula <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Formatting Overhead</code>
         </li>
       
         <li>
@@ -3051,7 +3005,7 @@ main:
         </li>
       
         <li>
-          Use the formula <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Formatted disk space</code>
+          Use the formula <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Formatted disk space</code>
         </li>
       
         <li>
@@ -3068,7 +3022,7 @@ main:
       
     </ul>
   
-    <h1 id='useful-formulas-and-references' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='useful-formulas-and-references' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   Useful formulas and references
   
@@ -3082,7 +3036,7 @@ main:
 
     </h1>
   
-    <h2 id='hard-drives' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='hard-drives' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Hard Drives
   
@@ -3100,7 +3054,7 @@ main:
       <a href='https://www.gatevidyalay.com/magnetic-disk-secondary-memory-coa/' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>Hard Drive Website</a> <span title='Link is broken'><s>[Hard Drive Document from nitin](pdfs/MagneticDisk.pdf)</s>❌</span>
     </p>
   
-    <h3 id='formulas' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='formulas' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Formulas
   
@@ -3117,15 +3071,15 @@ main:
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Disk access time</code> = Seek Time + Rotational delay + Transfer time + Controller overhead + Queuing delay
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Disk access time</code> = Seek Time + Rotational delay + Transfer time + Controller overhead + Queuing delay
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Average Disk Access</code> Time = Average seek time + Average rotational delay + Transfer time + Controller overhead + Queuing delay
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Average Disk Access</code> Time = Average seek time + Average rotational delay + Transfer time + Controller overhead + Queuing delay
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Average Seek Time</code> = 1/3 * Time taken for one full stroke
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Average Seek Time</code> = 1/3 * Time taken for one full stroke
     <ul class='my-3 ml-6 space-y-1 list-disc'>
       
         <li>
@@ -3145,31 +3099,31 @@ main:
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Average Rotational Latency</code> = 1/2 * Time taken for one full rotation
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Average Rotational Latency</code> = 1/2 * Time taken for one full rotation
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Capacity of disk pack</code> = Total number of surfaces * Number of tracks per surface * Number of sectors per track * storage capacity of one sector
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Capacity of disk pack</code> = Total number of surfaces * Number of tracks per surface * Number of sectors per track * storage capacity of one sector
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Formatting Overhead</code> = Number of sectors * Overhead per sector
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Formatting Overhead</code> = Number of sectors * Overhead per sector
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Formatted Disk Space</code> = Total disk space or capacity - formatting overhead
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Formatted Disk Space</code> = Total disk space or capacity - formatting overhead
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Recording density or storage density</code> = Capacity of track / circumference of the track
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Recording density or storage density</code> = Capacity of track / circumference of the track
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Track Capacity</code> = Recording density of the track * Circumference of the track
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Track Capacity</code> = Recording density of the track * Circumference of the track
         </li>
       
         <li>
-          <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Data Transfer Rate</code> = Number of heads * Bytes that can be read in one full rotation * Number of rotations in one second = Number of heads * Capacity of one track * Number of rotations in one second
+          <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Data Transfer Rate</code> = Number of heads * Bytes that can be read in one full rotation * Number of rotations in one second = Number of heads * Capacity of one track * Number of rotations in one second
         </li>
       
         <li>
@@ -3178,7 +3132,7 @@ main:
       
     </ul>
   
-    <h2 id='circuit-reference' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='circuit-reference' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Circuit reference
   
@@ -3204,7 +3158,7 @@ main:
       
     </ul>
   <img class='inline mb-3' src='old-classes/comp-systems/images/fullAdder.png' alt style='width: inherit;' />
-    <h2 id='computer-arithmetic' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='computer-arithmetic' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Computer Arithmetic
   
@@ -3222,7 +3176,7 @@ main:
       <span title='Link is broken'><s>[Computer arithemetic document from nitin](pdfs/Computer Arithemtic.pdf)</s>❌</span>
     </p>
   
-    <h2 id='memory-cache' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='memory-cache' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Memory + Cache
   
@@ -3260,7 +3214,7 @@ main:
       
     </ul>
   
-    <h3 id='formulas-1' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='formulas-1' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Formulas
   
@@ -3346,7 +3300,7 @@ main:
       
     </ul>
   
-    <h2 id='pipelining' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='pipelining' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Pipelining
   
@@ -3364,7 +3318,7 @@ main:
       <span title='Link is broken'><s>[pipelining document from nitin](pdfs/Pipelining in Computer Architecture.pdf)</s>❌</span>
     </p>
   
-    <h3 id='formulas-2' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='formulas-2' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Formulas
   
@@ -3443,7 +3397,7 @@ main:
         <li>
           
     <p class='mb-3'>
-      <code class='verbatim py-0.5 px-0.5 bg-gray-100'>Cycle time</code> = Maximum delay due to any stage + Delay due to its register
+      <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>Cycle time</code> = Maximum delay due to any stage + Delay due to its register
     </p>
   
         </li>
@@ -3451,7 +3405,7 @@ main:
         <li>
           
     <p class='mb-3'>
-      <code class='verbatim py-0.5 px-0.5 bg-gray-100'>delay due to its register</code> = <code class='verbatim py-0.5 px-0.5 bg-gray-100'>latch delay</code>
+      <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>delay due to its register</code> = <code class='verbatim py-0.5 px-0.5 bg-gray-100 font-mono'>latch delay</code>
     </p>
   
         </li>
@@ -3470,7 +3424,7 @@ main:
       
     </ul>
   
-    <h2 id='mips' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='mips' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   MIPS
   
@@ -3499,11 +3453,11 @@ main:
         </li>
       
         <li>
-          <a href='old-classes/comp-systems/images/mips-datapath.png' class='text-blue-600 mavenLinkBold hover:underline'>MIPS DATAPATH</a>
+          <a href='old-classes/comp-systems/images/mips-datapath.png' class='text-blue-600 font-semibold hover:underline'>MIPS DATAPATH</a>
         </li>
       
         <li>
-          <a href='old-classes/comp-systems/images/mips-datapath-pipelined.png' class='text-blue-600 mavenLinkBold hover:underline'>MIPS PIPELINED DATAPATH</a>
+          <a href='old-classes/comp-systems/images/mips-datapath-pipelined.png' class='text-blue-600 font-semibold hover:underline'>MIPS PIPELINED DATAPATH</a>
         </li>
       
     </ul>

@@ -64,7 +64,7 @@
 
   
   
-  <link href='tailwind.css?instanceId=80fe9244-4f49-494e-bb38-b5445b9b14b4' rel='stylesheet' type='text/css' />
+  <link href='tailwind.css?instanceId=9a83d1a1-9c48-42b9-a33f-5ae33846fe08' rel='stylesheet' type='text/css' />
 
   <style>
     /* Heist error element */
@@ -170,53 +170,7 @@
         </svg>');
     }
   </style>
-  <!-- What goes in this file will appear on near the end of <head>--><link rel='preload' href='_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf' as='font' type='font/ttf' crossorigin />
-
-<style>
-  @font-face {
-    font-family: 'WorkSans';
-    /* FIXME: This ought to be: ${ema:emanoteStaticLayerUrl}/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf */
-    src: url(_emanote-static/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format("truetype");
-    font-display: swap;
-  }
-
-  body {
-    font-family: 'WorkSans', sans-serif;
-    font-variation-settings: 'wght' 350;
-  }
-
-  a.mavenLinkBold {
-    font-variation-settings: 'wght' 400;
-  }
-
-  strong {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  header,
-  .header-font {
-    font-family: 'WorkSans', sans-serif;
-  }
-
-  h1 {
-    font-variation-settings: 'wght' 500;
-  }
-
-  h2 {
-    font-variation-settings: 'wght' 400;
-  }
-
-  h3 {
-    font-variation-settings: 'wght' 300;
-  }
-</style>
-
+  <link rel='stylesheet' href='/templates/main.css' />
 
   
     <style>
@@ -1837,7 +1791,7 @@
 
 
 
-    <h1 id='in-the-context-of-uniformed-state-space-search' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='in-the-context-of-uniformed-state-space-search' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   In the context of uniformed state-space search
   
@@ -1883,7 +1837,7 @@
       
     </ul>
   
-    <h2 id='what-is-a-state-space' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='what-is-a-state-space' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   What is a state space
   
@@ -1901,7 +1855,7 @@
       All the possible states that can exist for a given problem, ie all possible positions of a set of queens on a chessboard.
     </p>
   
-    <h2 id='what-are-the-successor-states-of-a-state' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='what-are-the-successor-states-of-a-state' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   What are the successor states of a state
   
@@ -1919,7 +1873,7 @@
       All the possible states that can follow the current state, ie all the possible <strong>moves</strong> that a set of queens can make on a chessboard.
     </p>
   
-    <h2 id='which-states-are-present-on-the-open-list' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='which-states-are-present-on-the-open-list' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Which states are present on the Open List?
   
@@ -1937,7 +1891,7 @@
       All the states that have not been searched and are neighboring the current state.
     </p>
   
-    <h2 id='which-states-are-present-on-the-closed-list' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='which-states-are-present-on-the-closed-list' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Which states are present on the Closed List?
   
@@ -1955,7 +1909,7 @@
       All the states that have been searched.
     </p>
   
-    <h2 id='we-want-to-solve-the-4-queens-problem-as-an-uninformed-search-problem.' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='we-want-to-solve-the-4-queens-problem-as-an-uninformed-search-problem.' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   We want to solve the 4-queens problem as an uninformed search problem.
   
@@ -1997,7 +1951,7 @@
       
     </ul>
   
-    <h3 id='answer' class='group mt-6 mb-4 font-bold text-gray-700 text-3xl'>
+    <h3 id='answer' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h3'>
       
   Answer
   
@@ -2031,7 +1985,7 @@
       
     </ul>
   
-    <h2 id='what-is-the-problem-caused-by-repeated-states-during-the-search-process-what-are-the-advantages-and-disadvantages-of-letting-the-repeated-states-get-added-to-the-open-list' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='what-is-the-problem-caused-by-repeated-states-during-the-search-process-what-are-the-advantages-and-disadvantages-of-letting-the-repeated-states-get-added-to-the-open-list' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   What is the problem caused by repeated states during the search process? What are the advantages and disadvantages of letting the repeated states get added to the Open List?
   
@@ -2053,7 +2007,7 @@
       There is a cost associated with preventing repeats. It can be prohibitively expensive (computationally and or storage-wise) to prevent repeats.
     </p>
   
-    <h2 id='briefly-outline-how-breadth-first-search-is-used-for-finding-a-path-from-the-start-state-to-a-goal-state' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='briefly-outline-how-breadth-first-search-is-used-for-finding-a-path-from-the-start-state-to-a-goal-state' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Briefly outline how breadth-first search is used for finding a path from the start state to a goal state?
   
@@ -2079,7 +2033,7 @@
       
     </ul>
   
-    <h2 id='briefly-outline-how-uniform-cost-search-is-used-for-finding-a-path-from-the-start-state-to-a-goal-state' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='briefly-outline-how-uniform-cost-search-is-used-for-finding-a-path-from-the-start-state-to-a-goal-state' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Briefly outline how uniform-cost search is used for finding a path from the start state to a goal state?
   
@@ -2105,7 +2059,7 @@
       
     </ul>
   
-    <h2 id='what-are-some-advantagesdisadvantages-of-using-the-depth-first-search-as-opposed-to-the-breadth-first-search' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='what-are-some-advantagesdisadvantages-of-using-the-depth-first-search-as-opposed-to-the-breadth-first-search' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   What are some advantages/disadvantages of using the depth-first search as opposed to the breadth-first search?
   
@@ -2123,7 +2077,7 @@
       Depth first search does not have to keep each level of the tree in memory, but is not complete without backtracking, making it very vulnerable to loops.
     </p>
   
-    <h2 id='how-does-the-iterative-deepening-depth-first-search-work' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='how-does-the-iterative-deepening-depth-first-search-work' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   How does the iterative deepening depth-first search work?
   
@@ -2153,7 +2107,7 @@
       
     </ul>
   
-    <h2 id='when-is-a-search-algorithm-said-to-be-complete' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='when-is-a-search-algorithm-said-to-be-complete' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   When is a search algorithm said to be complete?
   
@@ -2175,7 +2129,7 @@
       
     </ul>
   
-    <h2 id='when-is-a-search-algorithm-said-to-be-optimal' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='when-is-a-search-algorithm-said-to-be-optimal' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   When is a search algorithm said to be optimal?
   
@@ -2197,7 +2151,7 @@
       
     </ul>
   
-    <h1 id='in-the-context-of-informed-state-space-search' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='in-the-context-of-informed-state-space-search' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   In the context of informed state-space search
   
@@ -2211,7 +2165,7 @@
 
     </h1>
   
-    <h2 id='what-is-a-hueristic-function' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='what-is-a-hueristic-function' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   What is a hueristic function
   
@@ -2229,7 +2183,7 @@
       It is a function h(n) that estimates the cost of a path between the current state and the final state.
     </p>
   
-    <h2 id='what-value-is-used-to-order-the-nodes-on-the-open-list' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='what-value-is-used-to-order-the-nodes-on-the-open-list' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   What value is used to order the nodes on the open list?
   
@@ -2247,7 +2201,7 @@
       The value of the f(n) + h(n) + current cost or g(n) is used to order the nodes.
     </p>
   
-    <h2 id='at-what-stage-do-you-know-that-you-have-found-the-shortest-path-to-the-goal-state' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='at-what-stage-do-you-know-that-you-have-found-the-shortest-path-to-the-goal-state' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   At what stage do you know that you have found the shortest path to the goal state?
   
@@ -2265,7 +2219,7 @@
       When the goal state is reached, the current path is the shortest, but this is not necessarily accurate depending on the heuristic.
     </p>
   
-    <h2 id='admissible-consequences' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='admissible-consequences' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Admissible? consequences?
   
@@ -2291,7 +2245,7 @@
       
     </ul>
   
-    <h2 id='consistent-consequences' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='consistent-consequences' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   consistent? consequences?
   
@@ -2317,7 +2271,7 @@
       
     </ul>
   
-    <h2 id='a-algorithm-optimal' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='a-algorithm-optimal' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   A* algorithm optimal?
   
@@ -2335,7 +2289,7 @@
       If nodes have finite branching factor, the heuristic is admissible and consistent, then A* is optimal
     </p>
   
-    <h2 id='what-happens-when-a-heuristic-dominates-another-heuristic' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='what-happens-when-a-heuristic-dominates-another-heuristic' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   What happens when a heuristic dominates another heuristic?
   
@@ -2353,7 +2307,7 @@
       <span class='math inline'>\(h_2 \ge h_1\)</span> and both are admissible, h2 is better
     </p>
   
-    <h1 id='in-the-context-of-hill-climbing-search' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='in-the-context-of-hill-climbing-search' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   In the context of hill climbing search
   
@@ -2367,7 +2321,7 @@
 
     </h1>
   
-    <h2 id='what-is-the-main-idea-underlying-the-hill-climbing-search' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='what-is-the-main-idea-underlying-the-hill-climbing-search' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   What is the main idea underlying the hill climbing search
   
@@ -2389,7 +2343,7 @@
       
     </ul>
   
-    <h2 id='what-are-the-local-and-global-maxima-and-minimal' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='what-are-the-local-and-global-maxima-and-minimal' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   What are the local and global maxima and minimal
   
@@ -2403,7 +2357,7 @@
 
     </h2>
   <img class='inline mb-3' src='old-classes/AI/midterm/min-max.png' alt style='width: inherit;' />
-    <h2 id='select-a-random-state-for-a-4-queens-problem-and-show-all-neighboring-states' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='select-a-random-state-for-a-4-queens-problem-and-show-all-neighboring-states' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Select a random state for a 4 queens problem and show all neighboring states
   
@@ -2421,7 +2375,7 @@
       <span class='math inline'>\(\mathbb{NO}\)</span>
     </p>
   
-    <h2 id='how-can-we-avoid-local-minima' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='how-can-we-avoid-local-minima' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   How can we avoid local minima
   
@@ -2447,7 +2401,7 @@
       
     </ul>
   
-    <h2 id='when-is-hill-climbing-better' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='when-is-hill-climbing-better' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   When is hill climbing better
   
@@ -2469,7 +2423,7 @@
       
     </ul>
   
-    <h2 id='map-coloring-with-hill-climbing' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='map-coloring-with-hill-climbing' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Map coloring with hill climbing?
   
@@ -2487,7 +2441,7 @@
       Use some hueristic to score the different regions of the map ajoining the current region. <img src='old-classes/AI/midterm/map_color.png' alt='map_color.png' />
     </p>
   
-    <h1 id='in-the-context-of-adversarial-search' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='in-the-context-of-adversarial-search' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   In the context of adversarial search
   
@@ -2501,7 +2455,7 @@
 
     </h1>
   
-    <h2 id='how-does-minmax-algorithm-work' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='how-does-minmax-algorithm-work' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   How does minmax algorithm work?
   
@@ -2519,7 +2473,7 @@
       2 players (min and max) that want the opposite thing. At each level of tree, the min or the max is found, depending on the player. <img src='old-classes/AI/midterm/min_max.png' alt='min_max.png' />
     </p>
   
-    <h2 id='what-guarantee-does-each-player-have' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='what-guarantee-does-each-player-have' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   What guarantee does each player have
   
@@ -2537,7 +2491,7 @@
       The move will be the best based on the best moves the other player makes
     </p>
   
-    <h2 id='what-is-the-advantaged-gained-by-alpha-beta-pruning' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='what-is-the-advantaged-gained-by-alpha-beta-pruning' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   What is the advantaged gained by alpha beta pruning
   
@@ -2559,7 +2513,7 @@
       
     </ul>
   
-    <h2 id='is-pruning-expected-to-be-different-right-to-left-and-left-to-right' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='is-pruning-expected-to-be-different-right-to-left-and-left-to-right' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Is pruning expected to be different right to left and left to right?
   
@@ -2577,7 +2531,7 @@
       yes, consider the above example, no pruning would occur right to left, but 4 nodes can be pruned left to right.
     </p>
   
-    <h2 id='move-ordering-is-it-good' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='move-ordering-is-it-good' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Move ordering, is it good?
   
@@ -2595,7 +2549,7 @@
       Move ordering can be used to maximize the amount of pruning that occurs. Again consider the above example. It has ideal ordering for left to right pruning.
     </p>
   
-    <h1 id='in-the-context-of-constrain-satisfaction-problems' class='group mt-6 mb-4 font-bold text-gray-700 text-5xl'>
+    <h1 id='in-the-context-of-constrain-satisfaction-problems' class='group mt-6 mb-4 font-bold font-sans text-2xl note-h1'>
       
   In the context of constrain satisfaction problems
   
@@ -2609,7 +2563,7 @@
 
     </h1>
   
-    <h2 id='unary-binary-and-global-constraints' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='unary-binary-and-global-constraints' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Unary, binary, and global constraints
   
@@ -2627,7 +2581,7 @@
       <img src='old-classes/AI/midterm/contraints.png' alt='contraints.png' /> <img src='old-classes/AI/midterm/global_constraints.png' alt='global_constraints.png' />
     </p>
   
-    <h2 id='what-is-the-meaning-of-arc-consistency' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='what-is-the-meaning-of-arc-consistency' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   What is the meaning of arc-consistency
   
@@ -2645,7 +2599,7 @@
       The arc Y = X+1 is consistent
     </p>
   
-    <h2 id='backtracking-in-csps' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='backtracking-in-csps' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   backtracking in CSPs
   
@@ -2663,7 +2617,7 @@
       <img src='old-classes/AI/midterm/backtracking.png' alt='backtracking.png' /> <img src='old-classes/AI/midterm/backtracking_algo.png' alt='backtracking_algo.png' />
     </p>
   
-    <h2 id='variable-and-value-ordering' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='variable-and-value-ordering' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Variable and value ordering
   
@@ -2681,7 +2635,7 @@
       <a href='https://ktiml.mff.cuni.cz/~bartak/constraints/ordering.html' class='text-blue-600 hover:underline' data-linkicon='external' target='_blank' rel='noopener'>some nice stuff here</a>
     </p>
   
-    <h2 id='least-constraining-value' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='least-constraining-value' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   Least constraining value
   
@@ -2695,7 +2649,7 @@
 
     </h2>
   <img class='inline mb-3' src='old-classes/AI/midterm/least.png' alt style='width: inherit;' />
-    <h2 id='ac-3' class='group mt-6 mb-4 font-bold text-gray-700 text-4xl'>
+    <h2 id='ac-3' class='group mt-6 mb-4 font-bold font-sans text-1xl note-h2'>
       
   AC-3
   
