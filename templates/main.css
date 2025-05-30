@@ -22,3 +22,15 @@
     color: black;
     
 }
+
+.note-h1 {
+    border-bottom: 0.1rem solid black;
+}
+
+.note-h2 {
+    border-bottom: 0.1rem solid gray;
+}
+
+.note-h2 {
+    border-bottom: 0.1rem dashed gray;
+}
