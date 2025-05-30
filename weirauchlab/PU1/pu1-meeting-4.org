@@ -1,0 +1,57 @@
+#+title: PU.1 meeting 4
+#+date:<2025-05-30 Fri> 
+
+
+* Draft Methods
+- put on the wiki? What is the easiest format?
+- Currently in the docs folder
+
+* Task organization?
+- Task list is too scattered at the moment
+- Weekly task cleanup?
+- Don't need David category (can assign people)
+
+ 
+* Folder structure for supplement + Figures
+
+#+begin_example
+manuscript/Figures/Figure1/PartA
+manuscript/Figures/Figure1/PartA/Supplement/..
+manuscript/Supplemental_Tables/...
+#+end_example
+
+- Need to make plan (in meeting with Matt)
+
+
+* TODO Are we using SPAMO?
+- Not listed in figure mockups
+- I might be doing this
+
+* TODO Where do the bed files come from in GREAT folder?
+- Ask hreeja?
+ 
+
+* DONE Where do the bed files come from in Homer folder?
+CLOSED: [2025-05-30 Fri 09:44]
+- Is it the same as the GREAT folder?
+- Molly has some script to do Union
+
+
+* DONE Progress update from Molly?
+CLOSED: [2025-05-30 Fri 09:42]
+- Check email
+- Figure 1 Part C
+
+
+* DONE Molly Meeting?
+CLOSED: [2025-05-30 Fri 09:46]
+- Should we meet about HPV project organization (how often?)
+- Molly mostly does MPRA (I do processing)
+- Use PU.1 time for this
+
+
+* TODO Make wiki page for meeting notes
+
+
+* Molly will work on upset plot this week
+- Manual barplot

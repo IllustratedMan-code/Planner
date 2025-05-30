@@ -1,0 +1,11 @@
+#+title: pipeline meeting 2
+#+date:<2025-05-19 Mon> 
+
+
+* The big one
+- Short fragments from ATAC runs
+- Mega QC is a multiqc Run aggregator
+- Might not have enough features to be relevant and contriubtion seems to be difficult (no pull requests merged in 2 years)
+
+
+

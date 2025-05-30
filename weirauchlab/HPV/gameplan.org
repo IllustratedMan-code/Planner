@@ -1,0 +1,20 @@
+
+#+title: HPV project
+#+date:<2025-05-14 Wed>
+
+
+* HPV manuscript should mirror EBV VTRs paper
+- Andrew is leading a somewhat unrelated HPV project
+
+* Data sources
+- ATAC seq
+- ChIP-seq (HEK cells)
+- VTRs
+
+* Design of MPRA
+
+
+
+* TIMELINE
+- Data freeze by the end of the summer
+

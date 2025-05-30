@@ -1,0 +1,6 @@
+#+title: Agenda for HPV paper
+
+* Papers to read
+- EBV manuscript (should almost plagerize format)
+
+* TODO get data from Phil

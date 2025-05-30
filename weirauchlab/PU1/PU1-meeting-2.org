@@ -1,0 +1,51 @@
+#+title: PU.1 meeting 2
+#+date:<2025-05-16 Fri>
+
+
+* Organizational 
+
+Would love some consistency. In an ideal world, I would love for everyone to use git/github as well,
+but realize that this is probably unrealistic (Maybe future projects?).
+
+
+** Mode 1 (Shreeja, Molly)?
+
+I need to know more about data plan, where does it go? Do we want to be methodical?
+
+#+begin_src
+|--figures
+   |--figure1
+      |--code.r
+      |--figure.png
+#+end_src
+
+** Mode 2 (David)
+
+#+begin_src
+|--figures
+|  |--figure1
+|     |--figure.png
+|--scripts
+   |--code.r
+   |--code.py
+|--data
+   |--Glass-lab
+   |--GEO
+|--makefile
+#+end_src
+
+
+* Phenotype RELI
+- Limited by GWAS annotation
+
+* DONE GREAT analysis (work on this)
+CLOSED: [2025-05-29 Thu 09:04]
+- Note taken on [2025-05-29 Thu 09:04] \\
+  Moved to PU.1 agenda
+- Subsampling solves the "too many peaks" problem
+- Should try with R as well.
+
+* MARIO
+- Still don't have access to EGA datasets
+  
+

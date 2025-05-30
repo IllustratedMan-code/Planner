@@ -1,0 +1,47 @@
+#+title: PU1 meeting 3
+#+date:<2025-05-23 Fri>
+
+* Figure 1
+** T cell is expressed early in T cell development
+- There is an X over T cells currently
+- In the legend, we should point out that PU.1
+  is expressed in T cell development, but not in adults
+
+** TODO UMAP
+- Set colors to match cell types figure
+
+* Add Bullets that tell you what you learn
+- Bullet summaries for each figure
+
+
+
+* GREAT ANALYSIS
+- Start with Biological process (GREAT)
+- 7 or 8 (eosinophil) (lump together)
+- GO slim (removes redundant pathways)
+- Lee has the code
+
+
+* TODO Figure 3
+Reorder columns by ets, spi1,  content
+
+
+
+
+* TODO MARIO, Phenotype RELI
+- Connect to GWAS (Leah sent out new catalogue)
+- write resuable tool for this plot
+
+** Phenotype RELI
+
+A clustered heatmap (rows are diseases, columns are cell types)
+
+Harley et al. 2018 Last figure?
+
+- New disease RELI
+- Over half of "diseases" are measurements (blood pressure) that are not necessary
+- Don't inlcude social variables
+- Run RELI before making figures
+
+
+

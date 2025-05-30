@@ -1,0 +1,50 @@
+#+title: PU.1 gameplan meeting
+#+date:<2025-05-14 Wed>
+
+
+
+* Act 0
+- Harley et al identifies PU.1 as important regulator
+- PU1 in LUPUS
+
+* Act 1
+Systematic ChIP-seq datasets for PU.1 in different cell types
+
+* Act 2
+
+Mechanism: potential differential binding of PU.1 in cell type specific way
+
+* Act 3
+
+Revisit RELI (disease against differential binding?)
+
+Mario
+
+
+
+* Todo list
+
+** Phenotype RELI
+- GWAS catalogue contains unecessary factors (non-diseases)
+- Leah wants to remove these factors
+- GWAS contains many logical ORs that don't make sense (disease 1 OR disease 2)
+- GM12878 vs NA12878 is the same
+
+*** RELI
++ All cell types
++ each cell types
++ cell type specific?
+
+*Only need to run if 10 or more risk loci are identified.*
+
+Figure 4 of harley paper.
+
+** MARIO Results
+
+*** Bulyk's LCLs
+- MARIO analysis on these
+
+*** Xioting
+Masked human genome?
+
+

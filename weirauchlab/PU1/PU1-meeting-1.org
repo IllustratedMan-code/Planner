@@ -13,7 +13,8 @@ Add details about figures to wiki (add seperate figures page)
 
 Pu.1.pdf in teams is highest priority. (only looks at one cell type).
 
-** TODO Figure 1 (UMAP)
+** DONE Figure 1 (UMAP)
+CLOSED: [2025-05-29 Thu 09:03]
 
 Make UMAP instead of PCA.
 
@@ -36,9 +37,14 @@ PU1 peak count doesn't match expression.
 
 Remake figure 2.B Shreeja has code.
 
-*** TODO C. (Pathway Analysis)
+*** DONE C. (Pathway Analysis)
 
 - Hallmark Pathway analysis (bring up in computational meeting).
+
+**** ANSWER
+
+We should subsample peaks for GREAT
+  
 
 ** Figure 3
 
@@ -63,6 +69,7 @@ Mario looks at allelic imbalance. Should be run on as many cell lines as possibl
 
 Requires genotype data.
 - Download VCF files from EGA (EGAC00001000135)
+
   
 ** Pathway analysis
 

@@ -1,0 +1,51 @@
+#+title: TF meeting 2
+
+* GRNs
+
+- TF -> gene interactions
+- Gene expression alone is challenging
+- ATAC can be used for Prior network
+- TRAC Loop is an alternative to ATAC
+- 20% of TF-gene interactions haven't been seen by the network
+  
+** MAXATAC
+- can be used to predict TF binding from ATAC better than motif scanning.
+
+
+** Validation
+- ChIP-seq and TF KO RNA-seq is used as "gold standard"
+- results are variable based on type of gold standard.
+
+
+** 14 CD4+ T cell populations
+20 ChIP GS
+
+
+* VTR meeting
+
+- Do we need to redo the experiments
+- 81 samples in 4 groups
+- 10 HPV ChIP
+- 3 ATAC HPV
+
+** HPV
+- 4 strains
+- 2 high risk (16, 18)
+- 3 VTRs in each strains (E2, E6, E7)
+- RNA, ChIP, ATAC
+
+
+*** MPRA
+- Combine VTRs
+- pull GWAS catalogue
+- lentivirus (chromatin context)
+  
+*** Can Skip QC
+- Matt Hass has passed them
+- Transient shows that tag does not affect physiological effect
+ 
+
+*** HPV16 and 18 have fewer usable reads than desired  
+- going to redo with existing chromatin
+  
+

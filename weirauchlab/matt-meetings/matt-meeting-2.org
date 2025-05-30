@@ -1,0 +1,15 @@
+#+title: Matt Meeting 2
+#+date:<2025-05-28 Wed>
+
+
+* Questions
+
+** What does MARIO do? How does it relate to Phenotype RELI?
+
+** How do I get the new GWAS catalogue?
+
+
+** GREAT?
+- Shreeja Question
+- Is MSigDB:H (hallmark gene sets) fine?
+- GO:BP

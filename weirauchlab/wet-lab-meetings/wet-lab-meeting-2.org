@@ -1,0 +1,42 @@
+#+title: Wet Lab meeting 2
+
+* Recycling Bins available
+- Re-use before recycling
+
+
+* Matt Hass
+
+HSV2 RL2-nGFP form nuclear foci, known to interact with PML body.
+
+RL2 = ICP0 in other viruses
+
+** PML body
+- may be involved in stress response
+- known sub-nuclear complex (protein)
+
+** Shingles and Dimentia in Wales
+
+Paper: Natural experiment on the effect of herpes zoster vaccination on dementia
+
+- Shingles (VZV) vaccine shows 20% decrease in dementia
+- Similar results to other groups
+
+
+* Leah
+
+[[https://www.nature.com/articles/d41586-025-01496-z][World's first personalized CRISPR therapy]]
+
+- Genome Editing for rare genetic diseases in the liver
+
+
+* Lois
+
+- Jurkat cells are growing nicely
+- Designed CRISPR RNAs and sent to company (CRISPIC)
+- Nextflow pipeline worked, but barcode reads have issues
+
+* Katelyn
+
+- vTR0326 sequencing didn't work
+
+

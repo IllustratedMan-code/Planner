@@ -1,0 +1,45 @@
+#+title: Computational Meeting 3
+#+date:<2025-05-28 Wed>
+
+* David
+
+- GREAT analysis in progress
+- Working on the comprehensive Exam
+
+* Marissa
+
+- No updates, Lee/Phil is taking up Marissa's slot
+
+
+* Casey
+
+- Wrapping up Shannon stuff
+
+
+* Xioting
+
+- Most samples are under control
+- Latest GWAS update
+- Trying to compile MAX-atac script
+- Andrew put RELI in a container
+
+* Lee
+
+- EBV paper
+- Looping for CMV paper
+
+* Phillip
+
+- EBV paper (presenting on Friday)
+- Wrapping up DNA core
+- Thinking about
+  
+* Mike
+
+- Having trouble with figures
+
+
+* Diego
+
+- Motif selection
+- Writing an article to present CisBP to the world

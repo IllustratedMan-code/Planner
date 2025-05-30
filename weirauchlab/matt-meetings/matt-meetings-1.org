@@ -1,0 +1,23 @@
+#+title: Matt meetings
+#+date:<2025-05-19 Mon>
+
+
+* UMAP
+
+Supplemental figures
+- Label by study
+- label by antibody
+- label by peak count (continout label)
+
+
+* HPV
+- Phillip needs to be done
+- Waiting on reads for the Hek cells
+- Waiting on HCT cells (need to do what Phil did)
+- mimic figures from EBV paper
+
+REST is a CTCF alternative
+
+How ancient are chromatin loopings? Nature this week. Barcelona 
+
+CTCF-L (CTCF-like which is only expressed in certain cells) Probably no antibody collisions.

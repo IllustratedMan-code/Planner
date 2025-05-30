@@ -3,3 +3,8 @@
 Read up on EBNA2.
 
 
+* DONE Read Qualifier Paper
+CLOSED: [2025-05-28 Wed 09:57] DEADLINE: <2025-05-18 Sun>
+
+
+

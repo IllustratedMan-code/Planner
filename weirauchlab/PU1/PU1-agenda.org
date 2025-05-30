@@ -1,0 +1,48 @@
+#+title: Agenda For PU1
+
+* TODO Create UMAP and PCA
+- Molly made the samplesheets manually so need to regenerate with code to add more metadata columns
+- Matt wants supplemental figures for antibody and experiment
+- Antibody already has label, but need experiment annotations
+
+
+* TODO Download EGA datasets (vcf files)
+- Required for MARIO analysis
+- Need Permission still (shreeja will know)
+
+* TODO Phenotype RELI
+- Needs new GWAS catalogue
+- Leah Released GWAS catalogue (how do I get it?)
+
+#+begin_quote
+Shreeja is the GWAS gatekeeper.
+
+-- Matt
+#+end_quote
+
+  
+** TODO Mario Analysis
+- Identifies allele dependant behavior
+
+
+* TODO GREAT analysis
+- In the Figures folder
+- Where did bed files come from?
+
+
+* DONE Draft Methods
+CLOSED: [2025-05-29 Thu 14:15]
+- Put in Docs folder
+- Maybe put on wiki instead?
+
+
+* TODO Figure 3 A-B
+Move SPI1/ets to bottom of bar plot
+
+
+* Papers to Read
+** TODO Harley et al
+
+
+* SPAMO analysis
+- Identifies likely partners for PU.1

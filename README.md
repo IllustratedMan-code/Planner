@@ -1,6 +1,1 @@
-
-This is my personal wiki. 
-
-
-
-
+This is my personal wiki.

@@ -2,4 +2,49 @@
 #+date:<2025-05-14 Wed>
 
 * Pathway Analysis Questions
-Hallmark pathway analysis
+- Hallmark pathway analysis
+#+begin_quote
+Hallmark is curated well (MSigDB)
+Check for immune library
+
+
+rGREAT has fixes
+
+- Andrew
+#+end_quote
+
+- GSCA is bad for ChIP-seq peaks
+- TOP-gene, GREAT (MSigDB), rGREAT
+- Subsample samples with too many peaks for GREAT
+
+
+* Lee
+- List of files for EBV paper to upload to GEO
+- pipeline for ChIP-seq data
+- In town next week
+
+* Philip
+- Whole Genome sequencing on Jurkat (sarek pipeline)
+- Jurkat cells are mostly European, but cells have too many SNPs (could be cancer)
+- TSTV should be around 2
+
+#+begin_quote
+Sift and Polyphen are garbage, I don't care what they say.
+
+- Philip
+#+end_quote
+
+** Diego's suggestion
+- Cell line sequencing could be followed by human cell sequencing
+
+* Mike Lape
+- Nextflow PGSC pipeline is throwing error despite a custom config
+
+* Xioting
+ChIP-seq QC benchmarks are too subjective?
+Want to filter public data (can't manually curate).
+
+- #IDR peaks > 500
+- Raw peak FRiP of 1% (ENCODE uses this for their method)
+- Establish a hard rank cutoff flag
+  
