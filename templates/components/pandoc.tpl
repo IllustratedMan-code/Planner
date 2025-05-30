@@ -118,7 +118,7 @@
   <Code class="py-0.5 px-0.5 bg-gray-100 font-mono" />
 
   <Header:1>
-    <h1 id="${header:id}" class="${header-class} text-2xl note-h1">
+    <h1 id="${header:id}" class="${header-class} text-1xl note-h1">
       <heading-inlines-with-anchor />
     </h1>
   </Header:1>

@@ -31,10 +31,12 @@ CLOSED: [2025-05-30 Fri 10:52]
 - I might be doing this
 - Molly said she would send out an email about this
 
-* TODO Where do the bed files come from in GREAT folder?
+* DONE Where do the bed files come from in GREAT folder?
+CLOSED: [2025-05-30 Fri 11:05]
 - Ask hreeja?
 ** Tentative ANSWER
 - Our suspicion is that these come from the same place as the homer bed files
+
  
 
 * DONE Where do the bed files come from in Homer folder?
