@@ -4,6 +4,7 @@
 - Molly made the samplesheets manually so need to regenerate with code to add more metadata columns
 - Matt wants supplemental figures for antibody and experiment
 - Antibody already has label, but need experiment annotations
+- Set colors to match cell type diagram
 
 
 * TODO Download EGA datasets (vcf files)

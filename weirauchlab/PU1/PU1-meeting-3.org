@@ -7,7 +7,10 @@
 - In the legend, we should point out that PU.1
   is expressed in T cell development, but not in adults
 
-** TODO UMAP
+** DONE UMAP
+CLOSED: [2025-06-02 Mon 19:17]
+- Note taken on [2025-06-02 Mon 19:18] \\
+  moved to the agenda
 - Set colors to match cell types figure
 
 * Add Bullets that tell you what you learn
@@ -22,13 +25,20 @@
 - Lee has the code
 
 
-* TODO Figure 3
+* DONE Figure 3
+CLOSED: [2025-06-02 Mon 19:17]
+- Note taken on [2025-06-02 Mon 19:17] \\
+  Moved to the agenda
 Reorder columns by ets, spi1,  content
 
 
 
 
-* TODO MARIO, Phenotype RELI
+
+* DONE MARIO, Phenotype RELI
+CLOSED: [2025-06-02 Mon 19:19]
+- Note taken on [2025-06-02 Mon 19:18] \\
+  moved to agenda
 - Connect to GWAS (Leah sent out new catalogue)
 - write resuable tool for this plot
 
