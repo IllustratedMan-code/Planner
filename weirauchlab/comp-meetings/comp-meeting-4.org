@@ -1,0 +1,65 @@
+#+title: Computational meeting 4
+#+date:<2025-06-04 Wed> 
+
+
+* How to manage R environments
+- Pixie adds conda environments in project directories.
+- Docker/Singularity
+- Conda
+- Just document dependencies
+
+
+* Kegg to GREAT
+
+https://maayanlab.cloud/Enrichr/help#background&q=4
+- Link above shows how to calculate odds ratio
+- Use fold enrichment instead of odds ratio
+- Look in code for fold enrichment, but suspicion is that fold enrichment is pre-log changed
+  
+
+#+begin_quote
+ probability over background = odds ratio
+
+ -- Diego
+#+end_quote
+
+- Odds ratio looks like fisher test
+
+
+* Lee
+# 
+#+begin_quote
+Comparing loops between conditions is not a solved problem
+
+  -- Matt
+#+end_quote
+
+#+begin_quote
+The best way would be to have replicates of each conditions, which requires deep sequencing
+
+  -- Lee
+#+end_quote
+
+
+* Diego
+
+- Going through the CisBP table
+- Can't find data
+  
+#+begin_quote
+- Uniprob contains lots of data
+- We want real data, not peaks
+
+  -- Matt
+#+end_quote
+
+* Phil
+
+- Still thinking about DNA corp
+- Nothing else to talk about
+
+* Xioting
+
+- Put together LLMs to run on cluster
+- Struggling to put together Docker container
+- GPU run failures

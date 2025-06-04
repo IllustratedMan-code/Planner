@@ -58,8 +58,10 @@ CLOSED: [2025-05-30 Fri 09:46]
 - Use PU.1 time for this
 
 
-* TODO Make wiki page for meeting notes
-
-
+* DONE Make wiki page for meeting notes
+CLOSED: [2025-06-03 Tue 13:11]
+- Note taken on [2025-06-03 Tue 13:11] \\
+  Just keep it as my notes, can use my personal website
+  
 * Molly will work on upset plot this week
 - Manual barplot

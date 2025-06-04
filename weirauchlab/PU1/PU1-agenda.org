@@ -1,17 +1,35 @@
 #+title: Agenda For PU1
 
-* TODO Create UMAP and PCA
-- Molly made the samplesheets manually so need to regenerate with code to add more metadata columns
-- Matt wants supplemental figures for antibody and experiment
+
+* Figure 1
+** TODO Create UMAP and PCA (Part B) [/]
+- Molly made the samplesheets manually so need to regenerate with code
+  to add more metadata columns
+- [ ] Matt wants supplemental figures for antibody and experiment
 - Antibody already has label, but need experiment annotations
-- Set colors to match cell type diagram
+- [X] Set colors to match cell type diagram
 
+* Figure 2
 
-* TODO Download EGA datasets (vcf files)
-- Required for MARIO analysis
-- Need Permission still (shreeja will know)
+** TODO GREAT analysis (Part D) [1/2]
+- In the Figures folder
+- Where did bed files come from?
+- [X] Emailed Lee about code
+- [ ] Use fold_enrichment instead of odds ratio
+  
+* Figure 3
 
-* TODO Phenotype RELI
+** TODO Part A-B 
+- Move SPI1/ets to bottom of bar plot
+  
+** TODO SPAMO analysis (Part C)
+- Identifies likely partners for PU.1
+- May or may not be working on it?
+
+  
+* Figure 4
+
+** TODO Phenotype RELI (Part A)
 - Needs new GWAS catalogue
 - Leah Released GWAS catalogue (how do I get it?)
 
@@ -21,29 +39,28 @@ Shreeja is the GWAS gatekeeper.
 -- Matt
 #+end_quote
 
-  
 ** TODO Mario Analysis
 - Identifies allele dependant behavior
 
+*** TODO Download EGA datasets (vcf files)
+- Required for MARIO analysis
+- Need Permission still (shreeja will know)
 
-* TODO GREAT analysis
-- In the Figures folder
-- Where did bed files come from?
+  
 
 
 * DONE Draft Methods
 CLOSED: [2025-05-29 Thu 14:15]
+-Note taken on [2025-06-03 Tue 13:06] \\
+  Added to wiki at [[https://tfwiki.cchmc.org/wiki/PU.1_Project/Methods]]
 - Put in Docs folder
 - Maybe put on wiki instead?
-
-
-* TODO Figure 3 A-B
-Move SPI1/ets to bottom of bar plot
 
 
 * Papers to Read
 ** TODO Harley et al
 
+* Want to, but don't need to?
 
-* SPAMO analysis
-- Identifies likely partners for PU.1
+** TODO Dockerize/Nixify R dependencies
+- Are we publishing code?

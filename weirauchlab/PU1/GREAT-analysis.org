@@ -1,0 +1,12 @@
+#+title: PU1 great analysis
+
+
+* Notes
+- Requires the new version of GREAT, old version truncates P-values
+
+* TODO Ask lee about plotting code
+DEADLINE: <2025-06-04 Wed>
+
+- Adapted from Kegg analysis,
+  need to know equivalent to odds_ratio
+  (is it the same as fold enrichment?)
