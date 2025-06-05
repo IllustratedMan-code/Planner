@@ -1,1 +1,1 @@
-<link rel="stylesheet" href="/templates/main.css" />
+<link rel="stylesheet" href="/static/main.css" />

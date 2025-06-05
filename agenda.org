@@ -3,8 +3,16 @@
 Read up on EBNA2.
 
 
-* DONE Read Qualifier Paper
+* DONE Read Comprehensive Paper
 CLOSED: [2025-05-28 Wed 09:57] DEADLINE: <2025-05-18 Sun>
 
+
+* TODO clean up the planner
+- Can archive everything that is old on sepearate repo?
+- Organization is difficult when the file sizes continue to increase.
+- Likelyhood is that I'll never need those files again, but would be nice to
+  have a place for them that doesn't interfere with my current system
+- have to take into account that my organizational priority are going to change
+  drastically as well. I won't have classes anymore.
 
 
