@@ -1,0 +1,36 @@
+#+title: Computational Meeting 5
+#+date:<2025-06-25 Wed>
+
+
+* Mike's paper is out!
+
+#+begin_quote
+It is ready to be retracted.
+
+-- Mike
+#+end_quote
+
+- Gonna work on nextflow with Andrew
+
+* Andrew
+
+- Homer is in pretty good shape
+- Xioting figured out how to color plots good
+  
+
+* Lee
+
+- Working on VTR paper
+- Submitted data to GO on monday and approved today
+
+
+* David
+
+- Work on Phenotype RELI runs
+
+
+* Casey
+
+- Ton of FastQs available recently (75 human skeletal muscle)
+
+  

@@ -1,0 +1,7 @@
+#+title: matt meeting 07-21-2025
+
+- Is the paper you wanted me to present the martha bulyk one?
+- Phil said to checkin in a month again
+- Then molly will start work on MPRA, and Phil will introduce me to his code base for the
+  EBV paper
+- May be giving a BUGS talk for Roskin next month about nix.

@@ -1,0 +1,55 @@
+#+title: PU.1 Meeting 6
+#+date: <2025-06-23 Mon>
+
+
+* TODO GO-slim analysis
+- How to restrict terms (top N, P value cutoff?)
+- How to set P value cutoff?
+- Some p-values are still not able to be calculated, may need to increase precision again
+
+  
+* TODO VCF files
+- Schreeja ran into error downloading
+- The tool is very unstable
+
+
+* Figure 1
+- Layout (avoid whitespace)
+- A is top row, B and C is bottom row
+
+
+
+* Figure 2
+
+** Part A
+- New Version is good
+- getting rid of blue bars is good idea
+- Average by number of datasets
+
+** Part D
+- Merge two long name bed files
+- Add 0.01 p value cutoff
+- correct p value for number of go-slim categories
+  
+
+* Figure 3
+
+** C.
+- Known composite PU.1 motif
+- Diego is the keeper of motif database
+  - ask how many motifs involve PU.1/SPI1
+- Motifs are in Matts inbox
+
+
+* Peak sets for HOMER
+
+
+* Browser session
+- representative peaks for B cells?
+- Trackgen?
+#+begin_quote
+Pause Browser session.
+#+end_quote
+
+
+

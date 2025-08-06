@@ -1,0 +1,10 @@
+
+
+Phenotype RELI is done "backwards" compared to normal overlap RELI.
+
+Where overlap RELI takes one sample and overlaps it against all the other samples,
+phenotype RELI takes one disease and overlaps with the data set of interest. This
+is then run for all diseases of interest.
+
+In my case, I have the small number of outputs of HOMER that I am running phenotype RELI on.
+

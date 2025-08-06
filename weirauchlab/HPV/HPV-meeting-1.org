@@ -1,0 +1,25 @@
+#+title: HPV Meeting 1
+
+
+
+* TODO Getting the Data
+DEADLINE: <2025-08-16 Sat>
+
+- Is there a spreadsheet
+- Data should be jamboreed soon (within a month)
+- Go to Seqbank/vtr/hpv
+- Generally speaking run2 is the one to use
+- Experiments are on Wiki: https://tfwiki.cchmc.org/wiki/VTR/Samples_for_paper
+- Get Paths to analysis files from seqbank: https://tf.cchmc.org/seqbank/admin/server/experiment/
+- use idr conservative peaks
+- Lot of APB1
+  
+
+* Analyzing the data
+- Half of the figures are done through nextflow
+- Lee did RNA, Phil did other stuff
+- Only care about figures 1-4
+- Just point input to output of seqbank directories (don't write to seqbank directories)
+
+* Timeline
+- First draft of figures by thanksgiving

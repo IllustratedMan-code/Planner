@@ -1,0 +1,33 @@
+#+title: pipeline meeting 4
+#+date:<2025-06-09 Mon>
+
+
+
+* Seqbank query (Lee)
+- Project summaries by status
+
+
+* Phillip
+- Interpretation puzzle
+- Compare whole virus infection to vtr
+- Latent (rest of life with EBV)
+- Lytic (initial infection)
+
+Different proteins are expressed in Lytic vs Latent stage.
+
+
+1 VTR at a time is equivalent to whole virus infection. Is Hek cells equivalent to B cells.
+
+28 day cells are equivalent to LCLs.
+
+#+begin_quote
+combine all lytic and all latent
+
+-- Andrew
+#+end_quote
+
+
+* Andrew
+- Code presentation
+
+

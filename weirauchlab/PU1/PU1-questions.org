@@ -17,8 +17,6 @@ What is it for?
 ** DONE Where does samplesheet.csv come from?
 CLOSED: [2025-06-02 Mon 19:37]
 
-- Note taken on [2025-06-02 Mon 19:36] \\
-  They are manually generated
 Are they manually generated?
 
 
@@ -26,6 +24,9 @@ Are they manually generated?
 
 *** ANSWER
 
+- Note taken on [2025-06-02 Mon 19:36] \\
+  They are manually generated
+  
 #+begin_quote
 Molly likely knows.
 

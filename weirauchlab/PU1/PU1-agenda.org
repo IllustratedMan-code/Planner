@@ -1,40 +1,61 @@
 #+title: Agenda For PU1
 
+* DONE Unify genesets [1/1]
+CLOSED: [2025-07-31 Thu 10:21]
+- Note taken on [2025-07-31 Thu 10:21] \\
+  shared_7_8
+- [X] Combine long-name cell intersections (bedtools merge)
 
 * Figure 1
-** TODO Create UMAP and PCA (Part B) [2/3]
+** DONE Create UMAP and PCA (Part B) [3/3]
+CLOSED: [2025-07-31 Thu 10:31]
 - Molly made the samplesheets manually so need to regenerate with code
   to add more metadata columns
-- [ ] Matt wants supplemental figures for antibody and experiment
+- [X] Matt wants supplemental figures for antibody and experiment
 - Antibody already has label, but need experiment annotations
 - [X] Antibody supplement
 - [X] Set colors to match cell type diagram
 
 * Figure 2
 
-** TODO GREAT analysis (Part D) [1/4]
+** TODO GREAT analysis (Part D) [4/5]
 - In the Figures folder
 - Where did bed files come from?
 - [X] Emailed Lee about code
-- [ ] Use fold enrichment instead of odds ratio
+- [X] Use fold enrichment instead of odds ratio
 - [ ] Generate Tables
-- [ ] Integrate great script with makefile?
+- [X] Integrate great script with makefile?
+- [X] Combine long-name cell intersections (bedtools merge)
   
 * Figure 3
 
-** TODO Part A-B 
-- Move SPI1/ets to bottom of bar plot
+** TODO Part A-B [0/1]
+- [ ] Move SPI1/ets to bottom of bar plot, 
+
+** TODO Part C [0/1]
+- [ ] Modify Phil's nextflow pipeline to generate part C
   
-** TODO SPAMO analysis (Part C)
+** DONE SPAMO analysis (Part C)
+CLOSED: [2025-07-31 Thu 10:23]
+- Note taken on [2025-07-31 Thu 10:23] \\
+  not doing this anymore?
 - Identifies likely partners for PU.1
 - May or may not be working on it?
 
+*** DONE Contact Diego
+- For motifs
   
 * Figure 4
 
-** TODO Phenotype RELI (Part A)
+** TODO Heatmap (Part A) [0/1]
+- [ ] Add proper hierarchical clustering?
+
+
+** DONE Phenotype RELI (Part A)
+CLOSED: [2025-07-31 Thu 10:23] DEADLINE: <2025-07-23 Wed>
 - Needs new GWAS catalogue
 - Leah Released GWAS catalogue (how do I get it?)
+- Send RELI results around
 
 #+begin_quote
 Shreeja is the GWAS gatekeeper.
@@ -44,6 +65,7 @@ Shreeja is the GWAS gatekeeper.
 
 ** TODO Mario Analysis
 - Identifies allele dependant behavior
+- Talk to Xioting
 
 *** TODO Download EGA datasets (vcf files)
 - Required for MARIO analysis
@@ -59,6 +81,9 @@ CLOSED: [2025-05-29 Thu 14:15]
 - Put in Docs folder
 - Maybe put on wiki instead?
 
+* TODO Browser sessions
+- Look for SNPs that show up as differentially regulated
+- Reaquaint myself with Trackgen
 
 * Papers to Read
 ** TODO Harley et al
@@ -66,4 +91,10 @@ CLOSED: [2025-05-29 Thu 14:15]
 * Want to, but don't need to?
 
 ** TODO Dockerize/Nixify R dependencies
+- Note taken on [2025-07-31 Thu 10:30] \\
+  Trying to implement a nextflow pipeline.
+
+  Already implemented dockerization/nixification of depenedencies,
+  so just need to write the pipelines themselves.
 - Are we publishing code?
+  

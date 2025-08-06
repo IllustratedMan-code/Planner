@@ -1,0 +1,10 @@
+#+title: Comp Meeting 8
+#+date: <2025-07-16 Wed>
+date: <2025-07-16 Wed>
+
+
+
+* How do I set GWAS in RELI module Andrew
+- Is RELI module working?
+
+

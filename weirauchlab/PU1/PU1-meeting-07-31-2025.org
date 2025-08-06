@@ -1,0 +1,74 @@
+
+* Attendies
+- David
+- Matt
+- Leah
+- Molly
+- Lucinda
+- Shreeja
+
+
+* Points of discussion
+
+- [ ] MARIO Results
+- [ ] Heatmaps
+- [ ] Updated Dotplot
+- [ ] Agenda for next meeting
+
+
+
+
+* Figure 1
+- microglia come from glass lab
+- Adaptive immune cells, Inncate immune cells
+- First letter is Captial, lower is after (sentence case)
+- No dashes
+- No gridlines
+  
+** B
+- UMAP of peaks, shows that peaks clusterable into cell types
+- Shows that peaks are clusterable by cell type
+- How many datasets for each TF?
+
+
+* Figure 2
+
+** A
+- Clarify cumulative number of datasets
+
+** B
+- should respect order in A
+
+** C
+- Orient Vertically
+
+** D
+- remove specific,
+- Use biggest size and get rid of fold enrichment
+
+* Figure 3
+
+
+** A.
+Delete
+
+
+** B.
+Move to A
+- Rank by green (PU.1) and move green to bottom, make coloring consistent
+
+** New B.
+- List of composite elements from Matt and Diego
+- Into heatmap (will take a while
+
+
+* Figure 4
+
+- Union set Categories + EBV+ + EBV-
+- use 10 or more loci
+- 10^-6 P value
+- Separate into 3 excel sheets for disease-only, cell-count, all
+
+
+* Figure 5
+- SOme of the allelic data looks like genome mismatch (Xioting)

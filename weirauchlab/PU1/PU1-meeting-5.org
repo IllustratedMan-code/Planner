@@ -1,14 +1,47 @@
 #+title: PU.1 Meeting 5
 #+date:<2025-06-06 Fri>
 
+Progress updates, SPAMO, and more
 
-* TODO Show GREAT figure
 
-** TODO Ask about merging bed files
+* TODO Show GREAT figure [1/2]
+- Looks good, but need to check GO slim
+
+** TODO Talk to Lee about GO Slim
+- I need a [[https://jokergoo.github.io/rGREAT/reference/read_gmt.html][GMT file]], can be from a URL
+- Can be done by intersecting, than recomputing FDR (False discovery rate)
+- Use Generic GO subset [[https://geneontology.org/docs/go-subset-guide/]]
+- Can try to convert OWL to [[https://rdrr.io/bioc/paxtoolsr/man/toGSEA.html][GSEA GMT gene set]]
+  
+
+** DONE Ask about merging bed files
+CLOSED: [2025-06-06 Fri 10:27]
+- Note taken on [2025-06-06 Fri 10:20] \\
+  - Intervene generates bed file sets (upset plot)
+  - In old_analysis directory
+  - Molly will send us code
 - Just bedtools merge?
+- Need to Make the 7 or 8 merge (how is this different than merging 8?)
 
 
-* 
+* DONE SPAMO?
+CLOSED: [2025-06-06 Fri 10:19]
+- Note taken on [2025-06-06 Fri 10:07] \\
+  Matt wants to go in a different direction, but molly is taking care of it
+- I need to send to matt right?
+- May not be relevant
+
+* DONE Next week's agenda
+CLOSED: [2025-06-06 Fri 10:19]
+- Note taken on [2025-06-06 Fri 10:10] \\
+  Wait until Shreeja Gets back for Phenotype RELI
 
 
 
+* DONE Methods Wiki page (is this a good place for draft methods?)
+CLOSED: [2025-06-06 Fri 10:17]
+- Note taken on [2025-06-06 Fri 10:09] \\
+  Wiki is a good forum
+- Subpage of PU.1
+
+ 

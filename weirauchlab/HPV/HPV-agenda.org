@@ -4,3 +4,31 @@
 - EBV manuscript (should almost plagerize format)
 
 * TODO get data from Phil
+- Could Start RNA-figure
+- Could start freeze on RNA (ask Phil about process)
+- If only duplicate instead of triplicate, its fine
+
+* DONE Does Phil Have A nextflow pipeline for EBV?
+CLOSED: [2025-07-16 Wed 13:14]
+- Note taken on [2025-07-16 Wed 13:14] \\
+  Multiple pipelines exist for each figure and
+  there is R code from Lee
+- If so, can I have it?
+
+* TODO Establish Data Flow
+- need to set up all data steps, ideally before writing anything.
+
+
+* TODO Read EBV manuscript
+DEADLINE:<2025-07-04 Fri> 
+
+* See if data is useful for another lab
+- Look for emails
+
+* TODO Review VTR Paper to read
+  https://pubmed.ncbi.nlm.nih.gov/32649876/
+
+* DONE Pester Matt for Grant if he didn't send it
+CLOSED: [2025-07-16 Wed 12:26]
+
+* TODO Read HPV paper (from matt)

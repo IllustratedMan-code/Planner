@@ -1,0 +1,20 @@
+#+title: computational meeting 6
+#+date:<2025-07-02 Wed>
+
+* Andrew
+- Barsky's group (HOMER)
+
+
+* Diego
+- Has spi1 composite motifs ready to send to molly.
+- Make ticket owners
+  
+* Xioting
+- In MaxATAC world to evaluate validation metrics.
+
+* Lucinda
+- Still battling with NCBI
+
+* David
+- Confident data freeze on the hek cells, pause on the HCT
+- Should talk to fill about where the data is.
