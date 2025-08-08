@@ -4,8 +4,8 @@
 * Notes
 - Requires the new version of GREAT, old version truncates P-values
 
-* TODO Ask lee about plotting code
-DEADLINE: <2025-06-04 Wed>
+* DONE Ask lee about plotting code
+CLOSED: [2025-08-07 Thu 16:16] DEADLINE: <2025-06-04 Wed>
 
 - Adapted from Kegg analysis,
   need to know equivalent to odds_ratio

@@ -12,8 +12,8 @@
 
 
 .DONE {
-    background-color: #FAFFCA;
-    border: 0.2rem solid color-mix(in srgb, #FAFFCA 80%, orange);
+    background-color: #A3BE8C;
+    border: 0.2rem solid color-mix(in srgb, #A3BE8C 80%, orange);
     border-radius: 0.2rem;
     padding: 0.1rem;
     font-size: 1rem;

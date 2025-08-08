@@ -1,4 +1,10 @@
 
+
+
+* TODO What is the code publishing situation like?
+- How reproducible does the analysis need to be?
+
+
 * TODO How were the .fa files for SPAMO created?
 
 * DONE How were the protein atlas files filtered for SPI1?
@@ -7,7 +13,7 @@ Manually
 
 * DONE Where is the PCA code?
 
-** ANSWERk
+** ANSWER
 The PCA code is in =manuscript/Figures/PCA=
 
 ** TODO Where did Copy of PU1_MARIO_analysis_summary_statistics_MSS.xlsx come from?

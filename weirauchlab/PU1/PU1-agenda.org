@@ -18,7 +18,10 @@ CLOSED: [2025-07-31 Thu 10:31]
 
 * Figure 2
 
-** TODO GREAT analysis (Part D) [4/5]
+** TODO Percent ChIP peaks (Part C) [0/1]
+- [ ] Integrate phil's script into nextflow pipeline
+
+** TODO GREAT analysis (Part D) [4/6]
 - In the Figures folder
 - Where did bed files come from?
 - [X] Emailed Lee about code
@@ -26,14 +29,20 @@ CLOSED: [2025-07-31 Thu 10:31]
 - [ ] Generate Tables
 - [X] Integrate great script with makefile?
 - [X] Combine long-name cell intersections (bedtools merge)
+- [ ] Update to set consistent radius (don't need the fold change)
   
 * Figure 3
+:PROPERTIES:
+:CATEGORY: PU1/Figure3
+:END:
+
 
 ** TODO Part A-B [0/1]
-- [ ] Move SPI1/ets to bottom of bar plot, 
+DEADLINE: <2025-08-15 Fri>
 
-** TODO Part C [0/1]
-- [ ] Modify Phil's nextflow pipeline to generate part C
+- [ ] Move SPI1/ets/PU.1 to bottom of bar plot, and make coloring consistent
+  by setting a specific order to the motifs in the bar plot
+
   
 ** DONE SPAMO analysis (Part C)
 CLOSED: [2025-07-31 Thu 10:23]
@@ -47,21 +56,17 @@ CLOSED: [2025-07-31 Thu 10:23]
   
 * Figure 4
 
-** TODO Heatmap (Part A) [0/1]
-- [ ] Add proper hierarchical clustering?
 
-
-** DONE Phenotype RELI (Part A)
-CLOSED: [2025-07-31 Thu 10:23] DEADLINE: <2025-07-23 Wed>
-- Needs new GWAS catalogue
-- Leah Released GWAS catalogue (how do I get it?)
-- Send RELI results around
-
-#+begin_quote
-Shreeja is the GWAS gatekeeper.
-
--- Matt
-#+end_quote
+** Phenotype RELI (Part A) [0/1]
+DEADLINE:<2025-08-15 Fri>
+- [ ] Need to rerun phenotype RELI using top 10 (page two of excel sheet)
+- [ ] Need to add Union set categoreis + EBV+ + EBV- to phenotype reli results
+  
+*** TODO Heatmap (Part A) [0/3]
+- [ ] disease only
+- [ ] cell counts only
+- [ ] all
+  
 
 ** TODO Mario Analysis
 - Identifies allele dependant behavior
@@ -72,6 +77,20 @@ Shreeja is the GWAS gatekeeper.
 - Need Permission still (shreeja will know)
 
   
+* Nextflow Pipeline
+
+** DONE Dockerize/Nixify R dependencies
+CLOSED: [2025-08-07 Thu 16:10]
+- Note taken on [2025-08-07 Thu 16:11] \\
+  Pipeline exists here: https://github.com/cchmc/PU1-Nextflow
+- Note taken on [2025-07-31 Thu 10:30] \\
+  Trying to implement a nextflow pipeline.
+
+  Already implemented dockerization/nixification of depenedencies,
+  so just need to write the pipelines themselves.
+- Are we publishing code?
+  
+
 
 
 * DONE Draft Methods
@@ -85,16 +104,7 @@ CLOSED: [2025-05-29 Thu 14:15]
 - Look for SNPs that show up as differentially regulated
 - Reaquaint myself with Trackgen
 
+  
+
 * Papers to Read
 ** TODO Harley et al
-
-* Want to, but don't need to?
-
-** TODO Dockerize/Nixify R dependencies
-- Note taken on [2025-07-31 Thu 10:30] \\
-  Trying to implement a nextflow pipeline.
-
-  Already implemented dockerization/nixification of depenedencies,
-  so just need to write the pipelines themselves.
-- Are we publishing code?
-  

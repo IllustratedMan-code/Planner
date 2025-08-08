@@ -59,7 +59,7 @@ Move to A
 
 ** New B.
 - List of composite elements from Matt and Diego
-- Into heatmap (will take a while
+- Into heatmap (will take a while)
 
 
 * Figure 4
