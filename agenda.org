@@ -14,5 +14,12 @@ CLOSED: [2025-05-28 Wed 09:57] DEADLINE: <2025-05-18 Sun>
   have a place for them that doesn't interfere with my current system
 - have to take into account that my organizational priority are going to change
   drastically as well. I won't have classes anymore.
+- How should I clean the git history? I really don't want to lug around lots of files.
 
+* TODO Move linux over to harddrive
+- Think the flashdrive might not last forever, and
+  I want to move away from windowws. I should have a
+  backup at least.
 
+* TODO Pick paper for Journal club <2025-08-25 Mon>
+- Dr. Freudenberg

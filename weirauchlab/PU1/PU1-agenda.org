@@ -1,5 +1,8 @@
 #+title: Agenda For PU1
 
+
+
+
 * DONE Unify genesets [1/1]
 CLOSED: [2025-07-31 Thu 10:21]
 - Note taken on [2025-07-31 Thu 10:21] \\
@@ -37,7 +40,7 @@ CLOSED: [2025-07-31 Thu 10:31]
 :END:
 
 
-** TODO Part A-B [0/1]
+** TODO Part A [0/1]
 DEADLINE: <2025-08-15 Fri>
 
 - [ ] Move SPI1/ets/PU.1 to bottom of bar plot, and make coloring consistent
@@ -101,6 +104,8 @@ CLOSED: [2025-05-29 Thu 14:15]
 - Maybe put on wiki instead?
 
 * TODO Browser sessions
+- Note taken on [2025-08-20 Wed 10:41] \\
+  Lee said we could contact her about it
 - Look for SNPs that show up as differentially regulated
 - Reaquaint myself with Trackgen
 
