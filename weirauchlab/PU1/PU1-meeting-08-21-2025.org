@@ -1,0 +1,36 @@
+#+title: PU.1 Meeting <2025-08-21 Thu>
+#+date:<2025-08-21 Thu>
+
+
+
+* Questions
+
+- How should I handle phenotype reli with b cell groups?
+  - Just merge them and run again?
+  - will this have a statistical effect?
+  - I don't really know the details of the RELI algorithm
+
+- How should I order families?
+
+
+* Minutes
+- Deadline is January 25th, molly wants to submit early
+
+** Figure 3
+- Homer efforts
+- Families By order of appearance then size in standard category order (match other figures)
+  - Move largest to the bottom
+
+*** Part C
+- Might want to add sequence logo beside important elements
+  
+** Figure 4
+- Union peaks sets
+- Intervene peak sets (specific)
+- make extra category for EBV- and EBV+
+- Xioting has a RELI summary thing
+- add Leah metadata to sheets
+
+*** Molly
+- EBV- has very little p values for specific traits (i.e. EBV- is not involved)
+
