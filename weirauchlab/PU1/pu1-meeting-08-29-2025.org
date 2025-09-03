@@ -1,0 +1,6 @@
+#+title: PU.1 Meeting<2025-08-29 Fri> 
+#+date: <2025-08-29 Fri>
+
+
+* Molly
+- Doing Chi squared test

@@ -1,0 +1,10 @@
+
+
+
+* Figure 2C
+- Should do tss distance instead
+- Ask Shreeja for this plot (phil has the script)
+
+* Phenotype RELI spreadsheet
+- Xioting's summaries
+
