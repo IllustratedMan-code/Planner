@@ -24,7 +24,7 @@ CLOSED: [2025-07-31 Thu 10:31]
 ** TODO Percent ChIP peaks (Part C) [0/1]
 - [ ] Integrate phil's script into nextflow pipeline
 
-** TODO GREAT analysis (Part D) [4/6]
+** TODO GREAT analysis (Part D) [5/7]
 - In the Figures folder
 - Where did bed files come from?
 - [X] Emailed Lee about code
@@ -33,6 +33,7 @@ CLOSED: [2025-07-31 Thu 10:31]
 - [X] Integrate great script with makefile?
 - [X] Combine long-name cell intersections (bedtools merge)
 - [ ] Update to set consistent radius (don't need the fold change)
+- [X] Add to Nextflow implmentation
   
 * Figure 3
 :PROPERTIES:
@@ -40,10 +41,10 @@ CLOSED: [2025-07-31 Thu 10:31]
 :END:
 
 
-** TODO Part A [0/1]
-DEADLINE: <2025-08-15 Fri>
+** DONE Part A [1/1]
+CLOSED: [2025-09-10 Wed 12:16] DEADLINE: <2025-08-15 Fri>
 
-- [ ] Move SPI1/ets/PU.1 to bottom of bar plot, and make coloring consistent
+- [X] Move SPI1/ets/PU.1 to bottom of bar plot, and make coloring consistent
   by setting a specific order to the motifs in the bar plot
 
   
@@ -65,11 +66,13 @@ DEADLINE:<2025-08-15 Fri>
 - [ ] Need to rerun phenotype RELI using top 10 (page two of excel sheet)
 - [ ] Need to add Union set categoreis + EBV+ + EBV- to phenotype reli results
   
-*** TODO Heatmap (Part A) [0/3]
+*** TODO Heatmap (Part A) [0/1]
 - [ ] disease only
 - [ ] cell counts only
 - [ ] all
-  
+
+**** TODO RELI summary table [0/0]
+- 
 
 ** TODO Mario Analysis
 - Identifies allele dependant behavior

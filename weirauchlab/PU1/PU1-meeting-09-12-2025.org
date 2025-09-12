@@ -1,0 +1,35 @@
+#+title: PU.1 Meeting <2025-09-12 Fri>
+#+date:<2025-09-12 Fri>
+
+
+
+* Clean up PU.1 Schedule
+I am still a little unclear about what is left to do in the project.
+
+- It looks like we have some MARIO results to look at
+- Phenotype RELI analysis (still in discovery phase?)
+- Should I aggregate ancestry or not?
+- What about aggregating by cell type?
+ 
+
+
+* Outstanding things
+
+** TODO Figure 3A
+- Make version with the consistent order as an alternative (HOMER)
+
+
+** Figure 4
+- Median can be used to aggregate cell type in the phenotype heatmap
+- Need Direction from Matt and Leah
+
+** Figure 5
+- Mario Plots
+- Need Direction from Matt and Leah
+
+** Figure 6
+- Highlight SNPs associated with SLE allelic in MARIO
+- SNPmoods finds SNPs that breaks a motif
+
+  
+
