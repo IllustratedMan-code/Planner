@@ -1,0 +1,47 @@
+#+title: PU1-meeting<2025-09-17 Wed>
+#+date:<2025-09-17 Wed>
+
+
+
+
+* TSS plot
+- Homer's =annotatepeaks.pl= is used to annotate each of the specific peak sets
+
+
+* Heatmap
+- Only EUR ancestry
+- Fischers method
+
+
+* Exemplars
+- Most consistent MARIO is consistent with Bulyk
+
+
+Computational methods from VTR
+
+
+
+* Figure 1 legend
+
+
+
+* Figure 4
+** How many disease phenotypes does at least [1,5,10] ebv+ have p value < [10^-6, 0.05, 10^-]
+- summary table
+- Pie chart (phenotypes that match condition) fraction
+
+
+* Figure 5
+
+** Part A
+
+** Part A is part B
+- Pie chart
+
+** Part C
+- Proportion 
+
+** Figure 6
+- Examples
+
+  

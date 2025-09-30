@@ -1,0 +1,18 @@
+
+
+* more variables in UMAP (for each)
+- Lab
+- Peak count
+- latent variable analysis
+- FriP (in table)
+- GSMID
+
+** Heatmaps
+
+- find percentage vs count
+- do heatmap for each ancestry
+- spreadsheet for all ancestries (Already in summary sheet?)
+
+
+** 2C
+- Rerun with shared at the top
