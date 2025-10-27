@@ -1,0 +1,42 @@
+#+title: Matt meeting<2025-10-20 Mon>
+#+date:<2025-10-20 Mon>
+
+
+- Committee
+- Fisher's method (heatmaps)
+- Umap Advice
+
+
+* Draft Committee email
+
+Hi Dr. Wells,
+
+I am a new PhD student in Matthew Weirauch's lab and he recommended you as as
+potential committee member. I don't have a lot of details yet, but
+my project will make use of RNA-seq, ATAC-seq, and ChIP-Seq datasets relating to
+HPV. If you are willing to be a committee member, let me know!
+
+Best,
+
+David
+
+** How many details should I include about the data?
+- I don't know much about how it was generated yet
+- Probably will need to talk to Phil
+
+
+* UMAP
+- Bins for peak counts
+
+
+
+* My plan pre-next week's meeting
+- I want to add an experiment UMAP
+- Better bins?
+- Finish up heatmaps
+- Finish up figure methods/legends
+- arbitrary p value that looks good for heatmaps
+
+
+# FDR analysis
+- permutations of the p values

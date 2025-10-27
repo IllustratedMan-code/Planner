@@ -1,0 +1,9 @@
+#+title: PU1 meeting<2025-10-27 Mon>
+#+date: <2025-10-27 Mon>
+
+
+* Figure 2
+** TODO Part D
+How should I sort the GO terms by number of significant conditions then P value?
+
+
