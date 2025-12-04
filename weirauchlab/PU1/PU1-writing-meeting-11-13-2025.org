@@ -1,0 +1,33 @@
+#+title: PU.1 writing meeting<2025-11-13 Thu>
+#+date:<2025-11-13 Thu>
+
+
+Itinerary:
+1. Get feedback on Illustrator version of Figure 4 (phenotype RELI)
+2. Updates on Powerpoint draft of Figure 5, including MARIO ARS vs
+   SNPmoods and ARS vs bQTLs.  Questions about circos plot. 
+3. Updates on Powerpoint draft of Figure 6 (exemplary loci)
+4. Write legend for Figure 4.  For Figures 5 and 6, we can wait until
+   we have a final Illustrator version 
+5. Read and revise what we have written for the Introduction section.
+   Work on drafting the rest of this section together .
+6. If time, outline section headings for results section (then later
+   we can fill in the text below these)
+
+* DONE Figure 4
+CLOSED: [2025-11-13 Thu 15:35]
+- fix labels (they are wrong)
+
+* TODO Figure 5
+- take out density plots (only scatter)
+- Use bQTL beta score and gapped kmer svm score (its in the table) score
+- 
+
+* Figure 6
+- Change letters (G to C, A to T) for all plots to match sequences
+  
+* Figure 7
+- Circos
+
+
+* Background critiques

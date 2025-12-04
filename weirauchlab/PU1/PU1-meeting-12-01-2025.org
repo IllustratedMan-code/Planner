@@ -1,0 +1,53 @@
+#+title: PU1-meeting-12-01-2025
+#+date:<2025-12-01 Mon>
+
+* Glass Lab
+- Data is in DBGap
+- Will be hard to submit to GEO
+- Het list
+
+
+* PBM predictions (figure 5 scatter plots)
+- Matt will Pick the Motif after fixing his program
+- Then send to Xioating to rerun
+*** Figure 5
+- scatter plots need to be Squares
+- R should be title
+
+  
+*** Figure 6
+- Figure out score cutoff for alphagenome
+- SNPmoods score cutoff
+  
+  
+* Supplementary information
+** supplementary figure 1 (umaps)
+- Get GSM experiment ID for all GEO studies (Rename title to "Study")
+
+#+begin_src R
+BiocManager::install("GEOquery")
+
+library(GEOquery)
+
+gsm_to_gse <- function(gsm_id) {
+  gsm <- getGEO(gsm_id, destdir = tempdir())
+  Meta(gsm)[["series_id"]]  # This usually gives GSE IDs
+}
+
+gsm_to_gse("GSM1010843")
+#+end_src
+
+- Output version with no legend for lucinda
+- Peak bins should be round numbers
+  
+** Absolute number of specific peaks is driven by number of datasets
+
+
+** TODO Ellie Kim has Mario/RELI/HOMER README files (Excel)
+- [X] I should email them and ask for these
+- Make wiki articles
+
+
+
+* Figure 1 supplemental
+Need to regenerate figures without legends

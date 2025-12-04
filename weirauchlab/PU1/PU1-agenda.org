@@ -1,6 +1,8 @@
 #+title: Agenda For PU1
 
-
+* TODO Extra Analysis
+- Histogram of peak widths
+- De-novo HOMER
 
 
 * DONE Unify genesets [1/1]
@@ -116,3 +118,14 @@ CLOSED: [2025-05-29 Thu 14:15]
 
 * Papers to Read
 ** TODO Harley et al
+
+
+* TODO Figure 5
+- Make square
+- Put R score (Spearman) in top left
+- GM12878 only
+
+* Figure 6
+- Table for is this variant significant in each method?
+
+* Supplemental datasets

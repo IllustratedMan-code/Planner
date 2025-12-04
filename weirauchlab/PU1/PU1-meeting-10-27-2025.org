@@ -1,9 +1,35 @@
 #+title: PU1 meeting<2025-10-27 Mon>
 #+date: <2025-10-27 Mon>
 
+* Figure 1
+** Part C
+- Restrict this to only DNA binding TFs (1639)
+
 
 * Figure 2
-** TODO Part D
-How should I sort the GO terms by number of significant conditions then P value?
+** DONE Part D
+CLOSED: [2025-10-27 Mon 10:43]
+How should I sort the GO terms? By number of significant conditions then P value?
+- Yes, sort like this, but with shared at the top, every set moved to left
+- Bigger circles
 
+* Figure 3
+** DONE Part A
+CLOSED: [2025-10-27 Mon 10:43]
+Where does the HOMER_TF_dictionary_proper.txt come from?
+- Doesn't matter (this is just manual annotation)
 
+* Figure 4
+- Only the ones that end in count (do a text search)
+- No dendrograms
+- Lupus should just be lupus (remove underscores)
+- remove long disease
+
+* Figure 5
+- Scatter plot between PU.1 MARIO ARS_GLOBAL and bQTL/AlphaGenome/SNPmoods
+  - Ask Andrew/Xiaoting for:
+    - Only PU.1 bound heterozygotes (hets)
+    - All Mario Hets where there were at least 7 reads
+    - UID/index, SNP ID (RSID), ARS_GLOBAL, DATASET, SNPmoods, bQTL (from bulyk lab's paper), ALphaGENOME (Andrew), Number of total Reads PU.1 to that SNP
+  - Density scatter plot/heatmap?
+  - Flow cytometry density plot is a good example
