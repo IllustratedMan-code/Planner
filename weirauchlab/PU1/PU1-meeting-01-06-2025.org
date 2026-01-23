@@ -1,0 +1,15 @@
+#+title: PU1 meeting<2026-01-06 Tue>
+#+date:<2026-01-06 Tue>
+
+* DONE Supplemental Figure 1 [3/3]
+CLOSED: [2026-01-06 Tue 11:51]
+- [X] Regenerate Experiment (part B)
+- [X] Check GSE that are doubles
+- [X] EGA (hollow circles [black outline]
+
+* Figure 5 [2/2]
+- [X] Send Matt SNPmoods output
+- [X] Check methods for how the GM12878 annotation is added
+
+* Figure 6
+- Section in methods, add "Positive" and "Negative" cutoffs

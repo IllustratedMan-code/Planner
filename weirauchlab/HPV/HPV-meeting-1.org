@@ -3,16 +3,17 @@
 
 
 * TODO Getting the Data
-DEADLINE: <2025-08-16 Sat>
 
 - Is there a spreadsheet
-- Data should be jamboreed soon (within a month)
 - Go to Seqbank/vtr/hpv
 - Generally speaking run2 is the one to use
 - Experiments are on Wiki: https://tfwiki.cchmc.org/wiki/VTR/Samples_for_paper
 - Get Paths to analysis files from seqbank: https://tf.cchmc.org/seqbank/admin/server/experiment/
 - use idr conservative peaks
 - Lot of APB1
+
+** TODO make metadata file(s)
+- Supplemental table
   
 
 * Analyzing the data

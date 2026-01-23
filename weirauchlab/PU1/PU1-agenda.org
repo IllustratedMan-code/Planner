@@ -1,6 +1,29 @@
 #+title: Agenda For PU1
 
-* TODO Extra Analysis
+
+* Barriers to finishing [0/2]
+- [ ] Matt needs to send me PBM data
+- [ ] Need to rerun reli datasets
+
+
+* TODO Find threshold to remove weird samples (pairwise reli)
+- [ ] Try threshold based on average overlap within cell type.
+
+* TODO Alzheimer's disease examination
+- [ ] sort vertically by significance
+
+
+* TODO Finish first draft of manuscript [0/2]
+DEADLINE: <2025-12-18 Thu>
+- [ ] Finish methods section
+- [ ] Finish supplemental stuff (lower priority)
+
+
+
+* DONE Extra Analysis
+CLOSED: [2025-12-18 Thu 09:18]
+- Note taken on [2025-12-18 Thu 09:18] \\
+  Not planned
 - Histogram of peak widths
 - De-novo HOMER
 
@@ -8,7 +31,7 @@
 * DONE Unify genesets [1/1]
 CLOSED: [2025-07-31 Thu 10:21]
 - Note taken on [2025-07-31 Thu 10:21] \\
-  shared_7_8
+  shared​_7​_8
 - [X] Combine long-name cell intersections (bedtools merge)
 
 * Figure 1
@@ -23,15 +46,17 @@ CLOSED: [2025-07-31 Thu 10:31]
 
 * Figure 2
 
-** TODO Percent ChIP peaks (Part C) [0/1]
-- [ ] Integrate phil's script into nextflow pipeline
+** DONE Percent ChIP peaks (Part C) [1/1]
+CLOSED: [2025-12-08 Mon 09:19]
+- [X] Integrate phil's script into nextflow pipeline
 
-** TODO GREAT analysis (Part D) [5/7]
+** DONE GREAT analysis (Part D) [6/7]
+CLOSED: [2025-12-08 Mon 09:19]
 - In the Figures folder
 - Where did bed files come from?
 - [X] Emailed Lee about code
 - [X] Use fold enrichment instead of odds ratio
-- [ ] Generate Tables
+- [X] Generate Tables
 - [X] Integrate great script with makefile?
 - [X] Combine long-name cell intersections (bedtools merge)
 - [ ] Update to set consistent radius (don't need the fold change)
@@ -63,24 +88,28 @@ CLOSED: [2025-07-31 Thu 10:23]
 * Figure 4
 
 
-** Phenotype RELI (Part A) [0/1]
+** Phenotype RELI (Part A) [1/1]
 DEADLINE:<2025-08-15 Fri>
 - [ ] Need to rerun phenotype RELI using top 10 (page two of excel sheet)
 - [ ] Need to add Union set categoreis + EBV+ + EBV- to phenotype reli results
   
-*** TODO Heatmap (Part A) [0/1]
-- [ ] disease only
-- [ ] cell counts only
-- [ ] all
+*** DONE Heatmap (Part A) [1/1]
+CLOSED: [2025-12-08 Mon 09:20]
+- [X] disease only
+- [X] cell counts only
+- [X] all
 
-**** TODO RELI summary table [0/0]
+**** DONE RELI summary table [0/0]
+CLOSED: [2025-12-08 Mon 09:20]
 - 
 
-** TODO Mario Analysis
+** DONE Mario Analysis
+CLOSED: [2025-12-08 Mon 09:20]
 - Identifies allele dependant behavior
 - Talk to Xioting
 
-*** TODO Download EGA datasets (vcf files)
+*** DONE Download EGA datasets (vcf files)
+CLOSED: [2025-12-08 Mon 09:20]
 - Required for MARIO analysis
 - Need Permission still (shreeja will know)
 
@@ -108,7 +137,8 @@ CLOSED: [2025-05-29 Thu 14:15]
 - Put in Docs folder
 - Maybe put on wiki instead?
 
-* TODO Browser sessions
+* DONE Browser sessions
+CLOSED: [2025-12-08 Mon 09:19]
 - Note taken on [2025-08-20 Wed 10:41] \\
   Lee said we could contact her about it
 - Look for SNPs that show up as differentially regulated
@@ -117,10 +147,12 @@ CLOSED: [2025-05-29 Thu 14:15]
   
 
 * Papers to Read
-** TODO Harley et al
+** DONE Harley et al
+CLOSED: [2025-12-08 Mon 09:19]
 
 
-* TODO Figure 5
+* DONE Figure 5
+CLOSED: [2025-12-08 Mon 09:19]
 - Make square
 - Put R score (Spearman) in top left
 - GM12878 only

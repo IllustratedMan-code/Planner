@@ -2,13 +2,17 @@
 #+date: <2025-06-23 Mon>
 
 
-* TODO GO-slim analysis
+* DONE GO-slim analysis
+CLOSED: [2025-12-08 Mon 09:36]
 - How to restrict terms (top N, P value cutoff?)
 - How to set P value cutoff?
 - Some p-values are still not able to be calculated, may need to increase precision again
 
   
-* TODO VCF files
+* DONE VCF files
+CLOSED: [2025-12-08 Mon 09:37]
+- Note taken on [2025-12-08 Mon 09:37] \\
+  Not sure what the status is on this, but don't think it matters anymore
 - Schreeja ran into error downloading
 - The tool is very unstable
 

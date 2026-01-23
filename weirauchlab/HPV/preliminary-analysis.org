@@ -1,0 +1,19 @@
+#+title: Preliminary Analysis
+
+
+
+* Differential Analysis
+- Use deseq2 for RNA-seq
+- Use diffbind for ATAC-seq/ChIP-seq
+** Heatmap of differentially expressed genes
+- one for transient
+- one for stably expressed
+
+** Upset plot of differentially expressed genes between conditions
+
+* Pathway analysis
+- Use differentially expressed genes as gene set
+- Use KEGG or GREAT
+
+
+

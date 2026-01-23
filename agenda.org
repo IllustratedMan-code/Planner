@@ -16,10 +16,12 @@ CLOSED: [2025-05-28 Wed 09:57] DEADLINE: <2025-05-18 Sun>
   drastically as well. I won't have classes anymore.
 - How should I clean the git history? I really don't want to lug around lots of files.
 
-* TODO Move linux over to harddrive
+* DONE Move linux over to harddrive
+CLOSED: [2025-12-18 Thu 09:11]
 - Think the flashdrive might not last forever, and
   I want to move away from windowws. I should have a
   backup at least.
 
-* TODO Pick paper for Journal club <2025-08-25 Mon>
+* DONE Pick paper for Journal club <2025-08-25 Mon>
+CLOSED: [2025-12-18 Thu 09:11]
 - Dr. Freudenberg

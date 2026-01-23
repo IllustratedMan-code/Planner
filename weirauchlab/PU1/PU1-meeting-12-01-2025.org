@@ -43,7 +43,10 @@ gsm_to_gse("GSM1010843")
 ** Absolute number of specific peaks is driven by number of datasets
 
 
-** TODO Ellie Kim has Mario/RELI/HOMER README files (Excel)
+** DONE Ellie Kim has Mario/RELI/HOMER README files (Excel)
+CLOSED: [2025-12-18 Thu 09:10]
+- Note taken on [2025-12-18 Thu 09:10] \\
+  She doesn't have a HOMER version
 - [X] I should email them and ask for these
 - Make wiki articles
 

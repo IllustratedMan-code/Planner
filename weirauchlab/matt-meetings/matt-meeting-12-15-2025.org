@@ -1,0 +1,28 @@
+#+title: Matt meeting<2025-12-15 Mon>
+#+date:<2025-12-15 Mon>
+
+Matt meeting
+
+* DONE Guidelines for supplementary files
+CLOSED: [2025-12-18 Thu 09:09]
+- Note taken on [2025-12-15 Mon 11:06] \\
+  Drop any columns that are not used in the analysis or are included in
+  Ellie's paper.
+- Should I toss all columns not directly used in analysis?
+- Does he want to review them before I drop columns
+
+
+* DONE Check status of PBM motif/scores
+CLOSED: [2025-12-18 Thu 09:09]
+- Still need to run SNPs-moods
+  - Matt will give the SNPs-moods shpeal
+  
+* DONE SNPs-moods methods
+CLOSED: [2025-12-18 Thu 09:09]
+- Is there a paper I can cite for the SNPs-moods tool, or just cite
+  MOODS? 
+
+* TODO HPV metadata
+- Andrew has huge dataset, act1:whole virus infection act2: head neck
+  cancer HPV condition. Determine effect of virus molecules using RELI.
+- HPV ChIP-seq data

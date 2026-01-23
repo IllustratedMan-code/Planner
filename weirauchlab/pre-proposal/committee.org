@@ -1,0 +1,12 @@
+#+title: Committee
+
+
+* DONE Form a committee
+CLOSED: [2025-12-18 Thu 09:13]
+- Matt and Leah
+- Susan Wells
+- Krish
+** TODO Organize first committee meeting
+
+
+* TODO Setup a pre-proposal

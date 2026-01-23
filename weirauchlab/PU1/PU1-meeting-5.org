@@ -4,10 +4,12 @@
 Progress updates, SPAMO, and more
 
 
-* TODO Show GREAT figure [1/2]
+* DONE Show GREAT figure [2/2]
+CLOSED: [2025-12-08 Mon 09:21]
 - Looks good, but need to check GO slim
 
-** TODO Talk to Lee about GO Slim
+** DONE Talk to Lee about GO Slim
+CLOSED: [2025-12-08 Mon 09:21]
 - I need a [[https://jokergoo.github.io/rGREAT/reference/read_gmt.html][GMT file]], can be from a URL
 - Can be done by intersecting, than recomputing FDR (False discovery rate)
 - Use Generic GO subset [[https://geneontology.org/docs/go-subset-guide/]]

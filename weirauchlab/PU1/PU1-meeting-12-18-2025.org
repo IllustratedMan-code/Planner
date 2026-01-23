@@ -1,0 +1,22 @@
+#+title: PU.1 Meeting<2025-12-18 Thu>
+#+date:<2025-12-18 Thu>
+
+
+Final writing meeting before completing the first draft (to send to collaborators).
+
+
+
+* Find Mario stats
+- How many of the bulyk significant
+  line 280
+
+* Figure 4
+- reply to Ty's comments about 4a
+  - Find alzheimers in heatmap (by dataset)
+    
+
+* Figure 5
+- Why did we use GM12878?
+  - Same as used in ALphagenome
+
+  

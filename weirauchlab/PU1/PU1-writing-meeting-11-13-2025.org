@@ -18,7 +18,8 @@ Itinerary:
 CLOSED: [2025-11-13 Thu 15:35]
 - fix labels (they are wrong)
 
-* TODO Figure 5
+* DONE Figure 5
+CLOSED: [2025-12-18 Thu 09:18]
 - take out density plots (only scatter)
 - Use bQTL beta score and gapped kmer svm score (its in the table) score
 - 

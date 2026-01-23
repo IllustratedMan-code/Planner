@@ -1,0 +1,15 @@
+#+title: PU.1 meeting<2026-01-21 Wed>
+#+date:<2026-01-21 Wed>
+
+
+
+* Things to do
+- Supplemental data 3 add de-novo
+- Supplemental Data 6 needs to be redone (only raw mario results no
+  joins)
+  - ARS value >= 0.4
+
+
+
+
+

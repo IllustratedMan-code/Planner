@@ -1,12 +1,22 @@
 
 
 
-* TODO What is the code publishing situation like?
+* DONE What is the code publishing situation like?
+CLOSED: [2025-12-08 Mon 09:35]
+- Note taken on [2025-12-08 Mon 09:34] \\
+  So, the code won't be published unless we are asked for it.
+  I think we should probably publish the nextflow pipeline,
+  but it won't be strictly reproducible.
 - How reproducible does the analysis need to be?
+  
 
 
-* TODO How were the .fa files for SPAMO created?
+* DONE How were the .fa files for SPAMO created?
+CLOSED: [2025-12-08 Mon 09:34]
 
+- Note taken on [2025-12-08 Mon 09:34] \\
+  no longer needed
+  
 * DONE How were the protein atlas files filtered for SPI1?
 CLOSED: [2025-06-02 Mon 19:26]
 Manually
@@ -16,8 +26,11 @@ Manually
 ** ANSWER
 The PCA code is in =manuscript/Figures/PCA=
 
-** TODO Where did Copy of PU1_MARIO_analysis_summary_statistics_MSS.xlsx come from?
+** DONE Where did Copy of PU1​_MARIO​_analysis​_summary​_statistics​_MSS.xlsx come from?
+CLOSED: [2025-12-08 Mon 09:33]
 
+- Note taken on [2025-12-08 Mon 09:33] \\
+  This is no longer needed
 What is it for?
 
 ** DONE Where does samplesheet.csv come from?

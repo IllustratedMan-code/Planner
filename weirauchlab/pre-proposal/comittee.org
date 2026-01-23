@@ -1,7 +1,0 @@
-#+title: Committee
-
-
-* TODO Form a comittee
-
-
-* TODO Setup a pre-proposal

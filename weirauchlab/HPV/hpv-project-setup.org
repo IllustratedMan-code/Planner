@@ -1,0 +1,47 @@
+#+title: HPV project setup
+
+
+* TODO Metadata 
+- Use seqbank to query paths for data
+
+#+begin_src sql
+select server_experiment.id, extra_details, results_path, server_celltype.type from server_project 
+join server_experiment on server_project.id=server_experiment.project_id 
+join server_experimentanalysis on server_experiment.id=server_experimentanalysis.experiment_id
+join server_celltype on server_experiment.cell_type_id=server_celltype.id
+where server_project.name="vTR_HPV"
+#+end_src
+
+- No Transient (according to Phil [because of EBV paper])
+- Only use stable
+- vTR_​control (HCT116-CL0168) FLpIn293
+
+/integrative_​analysis/ChIP/ATAC
+  
+* TODO Nextflow [0/3]
+- [ ] Setup project directory
+  - What's the deal with the existing HPV directory?
+- [ ] Nix container setup
+- [ ] GitHub
+
+
+* TODO Early analysis
+- Collect MultiQC outputs (should be in results directory from
+  seqbank)
+- wurl can be used to view multiqc reports
+- Data quality "Pass" (exact)
+- mixtape deseq pipeline (20% is used in the EBV paper)
+- differential between all four strains (HPV strains) and high risk and low risk
+- Look for BAM files in ATAC
+- narrowPeak files (idr_​conservative (convervation across replicates)) 
+  
+* Ask about transient tests
+- Only HPV 16
+
+
+
+* Make spreadsheet with urls to every multiQC report
+- Use SQL query, then post process with wurl
+
+
+  
