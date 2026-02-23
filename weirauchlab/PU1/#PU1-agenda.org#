@@ -1,0 +1,173 @@
+#+title: Agenda For PU1
+
+
+* Review Checklist [0/1]
+:PROPERTIES:
+:COOKIE_DATA: todo recursive
+:END:
+
+** TODO Reporting Summary Form
+Need to fill out reporting summary form for paper with Molly
+
+
+* DONE Find threshold to remove weird samples (pairwise reli)     :ARCHIVE:
+CLOSED: [2026-02-23 Mon 12:08]
+- Note taken on [2026-02-23 Mon 12:08] \\
+  couldn't find threshold that didn't also eliminate other samples
+- [X] Try threshold based on average overlap within cell type.
+  
+* DONE Alzheimer's disease examination                            :ARCHIVE:
+CLOSED: [2026-02-23 Mon 12:07]
+- [X] sort vertically by significance
+
+* DONE Finish first draft of manuscript [2/2]                     :ARCHIVE:
+CLOSED: [2026-02-23 Mon 11:43] DEADLINE: <2025-12-18 Thu>
+- [X] Finish methods section
+- [X] Finish supplemental stuff (lower priority)
+
+* DONE Extra Analysis                                             :ARCHIVE:
+CLOSED: [2025-12-18 Thu 09:18]
+- Note taken on [2025-12-18 Thu 09:18] \\
+  Not planned
+- Histogram of peak widths
+- De-novo HOMER
+
+* DONE Unify genesets [1/1]                                       :ARCHIVE:
+CLOSED: [2025-07-31 Thu 10:21]
+- Note taken on [2025-07-31 Thu 10:21] \\
+  shared​_7​_8
+- [X] Combine long-name cell intersections (bedtools merge)
+
+-----
+
+
+* Figure 1
+** DONE Create UMAP and PCA (Part B) [3/3]                         :ARCHIVE:
+CLOSED: [2025-07-31 Thu 10:31]
+- Molly made the samplesheets manually so need to regenerate with code
+  to add more metadata columns
+- [X] Matt wants supplemental figures for antibody and experiment
+- Antibody already has label, but need experiment annotations
+- [X] Antibody supplement
+- [X] Set colors to match cell type diagram
+
+* Figure 2
+
+** DONE Percent ChIP peaks (Part C) [1/1]                          :ARCHIVE:
+CLOSED: [2025-12-08 Mon 09:19]
+- [X] Integrate phil's script into nextflow pipeline
+
+** DONE GREAT analysis (Part D) [6/7]                              :ARCHIVE:
+CLOSED: [2025-12-08 Mon 09:19]
+- In the Figures folder
+- Where did bed files come from?
+- [X] Emailed Lee about code
+- [X] Use fold enrichment instead of odds ratio
+- [X] Generate Tables
+- [X] Integrate great script with makefile?
+- [X] Combine long-name cell intersections (bedtools merge)
+- [ ] Update to set consistent radius (don't need the fold change)
+- [X] Add to Nextflow implmentation
+  
+* Figure 3
+:PROPERTIES:
+:CATEGORY: PU1/Figure3
+:END:
+
+** DONE Part A [1/2]                                               :ARCHIVE:
+CLOSED: [2025-09-10 Wed 12:16] DEADLINE: <2025-08-15 Fri>
+
+- [X] Move SPI1/ets/PU.1 to bottom of bar plot, and make coloring consistent
+  by setting a specific order to the motifs in the bar plot
+- [ ] hi
+
+  
+** DONE SPAMO analysis (Part C)                                    :ARCHIVE:
+CLOSED: [2025-07-31 Thu 10:23]
+- Note taken on [2025-07-31 Thu 10:23] \\
+  not doing this anymore?
+- Identifies likely partners for PU.1
+- May or may not be working on it?
+
+*** DONE Contact Diego
+- For motifs
+  
+
+
+* Figure 4 [2/2]
+
+** DONE Phenotype RELI (Part A) [3/3]                              :ARCHIVE:
+CLOSED: [2026-02-23 Mon 11:56] DEADLINE:<2025-08-15 Fri>
+:PROPERTIES:
+:COOKIE_DATA: checkbox
+:END:
+- [X] Need to rerun phenotype RELI using top 10 (page two of excel sheet)
+- [X] Need to add Union set categoreis + EBV+ + EBV- to phenotype reli
+  results
+- [X] hi
+  
+*** DONE Heatmap (Part A) [1/1]
+CLOSED: [2026-02-23 Mon 11:56]
+- [X] cell counts only
+- [X] all
+- [X] all
+
+**** DONE RELI summary table [0/1]
+CLOSED: [2025-12-08 Mon 09:20]
+- [ ] Hi
+
+
+** DONE Mario Analysis                                             :ARCHIVE:
+CLOSED: [2025-12-08 Mon 09:20]
+- Identifies allele dependant behavior
+- Talk to Xioting
+
+*** DONE Download EGA datasets (vcf files)
+CLOSED: [2025-12-08 Mon 09:20]
+- Required for MARIO analysis
+- Need Permission still (shreeja will know)
+
+* Nextflow Pipeline
+
+** DONE Dockerize/Nixify R dependencies                            :ARCHIVE:
+CLOSED: [2025-08-07 Thu 16:10]
+- Note taken on [2025-08-07 Thu 16:11] \\
+  Pipeline exists here: https://github.com/cchmc/PU1-Nextflow
+- Note taken on [2025-07-31 Thu 10:30] \\
+  Trying to implement a nextflow pipeline.
+
+  Already implemented dockerization/nixification of depenedencies,
+  so just need to write the pipelines themselves.
+- Are we publishing code?
+
+* DONE Draft Methods                                              :ARCHIVE:
+CLOSED: [2025-05-29 Thu 14:15]
+-Note taken on [2025-06-03 Tue 13:06] \\
+  Added to wiki at [[https://tfwiki.cchmc.org/wiki/PU.1_Project/Methods]]
+- Put in Docs folder
+- Maybe put on wiki instead?
+
+* DONE Browser sessions                                           :ARCHIVE:
+CLOSED: [2025-12-08 Mon 09:19]
+- Note taken on [2025-08-20 Wed 10:41] \\
+  Lee said we could contact her about it
+- Look for SNPs that show up as differentially regulated
+- Reaquaint myself with Trackgen
+
+  
+
+* Papers to Read
+** DONE Harley et al                                               :ARCHIVE:
+CLOSED: [2025-12-08 Mon 09:19]
+
+* DONE Figure 5                                                   :ARCHIVE:
+CLOSED: [2025-12-08 Mon 09:19]
+- Make square
+- Put R score (Spearman) in top left
+- GM12878 only
+
+* DONE Figure 6                                                   :ARCHIVE:
+CLOSED: [2026-02-23 Mon 11:49]
+- Table for is this variant significant in each method?
+
+
