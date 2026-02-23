@@ -1,0 +1,22 @@
+#+title: Chris king practicum
+
+
+
+* rheumsmart
+- All patients have some EMR data in rheumsmart
+  
+** 1 or 2 small questions
+
+- describe current population pain with icd codes
+  - already have icd codes
+  - snapshot of all the patients with icd codes and see if they line
+    up with self-reported diagnoses
+  - redcap database
+  - rheumsmart has permission to pull MRN data
+
+- temporal relationship with pain conditions
+- need to get on the IRB protocal
+- 8th floor in R (meet chris king)
+
+* cytoff - flow cytometry + stuff
+- NFKB pathways

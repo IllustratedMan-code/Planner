@@ -1,45 +1,69 @@
 #+title: Agenda for HPV paper
 
-* Papers to read
-- EBV manuscript (should almost plagerize format)
+* Analysis [0/3]
 
-* DONE get data from Phil
+** TODO RNA-seq
+- [ ] Find DEGs relative to control by celltype (Flp vs TREX), then
+  protein (E proteins) for each strain.
+- [ ] K means cluster heatmap of DEGs
+- [ ] Linkage cluster heatmap of DEGs
+
+** TODO Pairwise RELI ChIP-seq [0/2]
+- [ ] RELI each sample against each sample for each protein and celltype
+  for each strain
+- [ ] % Overlap heatmap
+
+** TODO Pairwise RELI ATAC-seq
+- [ ] RELI each sample against each sample for each protein and celltype
+  for each strain
+- [ ] % Overlap heatmap
+
+
+* Preparing the data and QC
+Data freeze of all samples should be done before analysis begins
+
+** PCA/UMAP [0/1]
+- [-] Create PCA and UMAP code
+  - [ ] Fix ChIP seq label on ATAC plots
+  - [ ] Add percentage of variance for PCA
+  - [ ] Confirm failed enumber is no longer in metadata
+  - [X] Initial Implementation
+    
+** DONE get data from Phil                                         :ARCHIVE:
 CLOSED: [2025-12-15 Mon 08:33]
 - Note taken on [2025-12-15 Mon 08:33] \\
-  is linked here: https://tfwiki.cchmc.org/wiki/VTR/Samples_for_paper#Flp-In_293-3
+  is linked here: https://tfwiki.cchmc.org/wiki/VTR/Samples_for_paper
 - Could Start RNA-figure
 - Could start freeze on RNA (ask Phil about process)
 - If only duplicate instead of triplicate, its fine
 
-  
-
-
-* DONE Does Phil Have A nextflow pipeline for EBV?
+** DONE Does Phil Have A nextflow pipeline for EBV?                :ARCHIVE:
 CLOSED: [2025-07-16 Wed 13:14]
+- Note taken on [2026-02-23 Mon 12:13] \\
+  Pester Lee on a case-by-case basis
 - Note taken on [2025-07-16 Wed 13:14] \\
   Multiple pipelines exist for each figure and
   there is R code from Lee
-- If so, can I have it?
 
 
-* TODO Read EBV manuscript
-DEADLINE:<2025-07-04 Fri> 
 
-* See if data is useful for another lab
-- Look for emails
-
-* TODO Review VTR Paper to read
+* Reading
+** TODO Read EBV manuscript
+DEADLINE:<2025-07-04 Fri>
+- a good template
+** TODO Review VTR Paper to read
   https://pubmed.ncbi.nlm.nih.gov/32649876/
-
-* DONE Pester Matt for Grant if he didn't send it
+** DONE Pester Matt for Grant if he didn't send it                 :ARCHIVE:
 CLOSED: [2025-07-16 Wed 12:26]
 
-* TODO Read HPV paper (from matt)
 
-* WIki page
-https://tfwiki.cchmc.org/wiki/VTR/Samples_for_paper
+* TODO Find resources for HPV
+DEADLINE: <2026-02-25 Wed>
+
+* Wiki page resources
+- [[https://tfwiki.cchmc.org/wiki/VTR/Samples_for_paper][Samples]]
+- [[https://tfwiki.cchmc.org/wiki/HPV][HPV Landing Page]]
 
 
 
 
-* Nextflow endpoints

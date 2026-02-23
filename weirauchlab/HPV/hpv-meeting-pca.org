@@ -1,0 +1,26 @@
+#+title: PCA meeting
+#+date:<2026-02-19 Thu>
+
+
+* Feedback
+- Find enumber that failed and change in seqbank
+- Fix Chip seq label on ATAC plots
+- Add percentages of PCAs
+
+
+* Find DEGs relative to control
+- make heatmap of DEGs
+- K-means clustering
+
+- Find all DEGs within celltype
+- Find all DEGs within protein
+
+* Pairwise RELI for ChIP-seq and ATAC
+
+- After finding differential peaks
+- overlap and enrichment heatmaps
+
+
+* Findings
+- Cluster by cell type
+- UMAPs didn't show separation except for cell type

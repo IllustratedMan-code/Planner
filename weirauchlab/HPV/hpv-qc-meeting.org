@@ -1,0 +1,36 @@
+#+title: HPV qc meeting
+#+date:<2026-02-05 Thu>
+
+
+
+* Transient
+- Alphafold is reliable enough to not do transient
+
+
+
+
+* Two PCA plots
+- One with transient
+- one without transient
+
+
+How to do PCA between samples
+
+
+* Graph
+
+Tss enrichments
+
+
+* TSS enrichment
+
+Below 4 needs discussion
+
+* Peak calls
+- Less than 50000 peaks is bad
+
+
+
+* Ask Sreeja/Andrew
+- contribute to wiki page (tss enrichment for ATAC)
+- Standards link: https://tfwiki.cchmc.org/wiki/ENCODE#ATAC-seq

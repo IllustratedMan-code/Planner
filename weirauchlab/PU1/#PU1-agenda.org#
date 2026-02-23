@@ -15,7 +15,7 @@ CLOSED: [2026-02-23 Mon 12:08]
 - Note taken on [2026-02-23 Mon 12:08] \\
   couldn't find threshold that didn't also eliminate other samples
 - [X] Try threshold based on average overlap within cell type.
-
+  
 * DONE Alzheimer's disease examination                            :ARCHIVE:
 CLOSED: [2026-02-23 Mon 12:07]
 - [X] sort vertically by significance
