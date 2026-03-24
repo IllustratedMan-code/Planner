@@ -1,0 +1,288 @@
+#+title: David's Dissertation Pre-proposal
+#+date:<2026-03-10 Tue> 
+
+
+* Commitee members
+- Matthew Weirauch (Chair)
+- Leah Kottyan
+- Susan Wells
+- Krishna Roskin
+
+
+* Introduction
+This document consists of a description of proposed dissertation aims,
+submitted to the PhD committee for review. Assuming the aims are
+satisfactory, this document will be converted to a "proposal", which
+would then be approved by the committee. If the document is not
+satisfactory, feedback from the committee will be incorporated before
+being converted to a proposal.
+
+
+
+* Aims
+
+The aims of the proposal are listed below. There are three aims, two
+of which consist of analysis of bioinformatics datasets, while the
+other aim is much more computer science related and is meant to
+facilitate analysis.
+
+
+** Aim 1: PU.1 (Mostly Complete) <<one>>
+A comprehensive analysis of all the ChIP-seq data available for the
+human transcription factor PU.1., determining cell-type-specific
+differences in PU.1 binding. The analysis included:
+
+- Differential protein binding peak analysis
+- Gene ontology analysis, via
+  [[https://github.com/jokergoo/rGREAT][GREAT]]
+- Transcription factor motif enrichment analysis, via Homer
+  - Used to find potential cooperative binding with PU.1
+- Connections to GWAS studies via RELI, a tool created in the
+Weirauch lab
+- Identification of allele-dependent binding behavior via MARIO, a tool
+  developed in the Weirauch lab
+- Comparison of Mario results to other methods including alphagenome
+
+This analysis resulted in a co-first author manuscript, which has been sent out
+for review.
+
+
+** Aim 2: Piper <<two>>
+While performing the analysis for [[one][Aim 1]], it became clear that the
+existing tools for creating bioinformatics analysis pipelines were
+lacking. Particularly, once a project reaches a certain size, it
+becomes very difficult to connect different analysis intermediates
+without running into errors. This aim attempts to solve this problem
+by creating a "pipeline manager", a computational tool which can be
+used to effectively string together other analyses.
+
+This tool would simplify the creation of complicated analysis, while
+also conferring a degree of reproducibility that wasn't there
+before. The tool, which has been tentatively named "Piper" would
+facilitate the analysis in Aim 3. 
+
+A more detailed description of Piper is located at the [[piper][end of this document]].
+
+
+
+** Aim 3: VTR HPV
+Similar to [[one][Aim 1]], this aim would consist of bioinformatics analysis,
+though the scope is different. Instead, this aim hopes to determine
+the effect of viral transcriptional regulators (VTRs) from Human
+Papillomavirus (HPV) on human cell lines.
+
+To this end, the Weirauch lab has generated ATAC-seq, RNA-seq,
+and ChIP-seq data for three HPV VTRs [E2, E6, E7], from 4 different
+HPV strains [HPV6a, HPV11, HPV16, HPV18] in two different cell lines
+[Flp-In 293, Flp-In TREx HCT116], amounting to over a hundred distinct datasets.
+
+This aim would consist of the analysis of these datasets to provide
+insight into the effect of these VTRs on human cells. Many of the same
+analyses from [[one][Aim 1]] may be done here, though must be adapted to fit the
+data.
+
+Currently, the analysis is in an exploratory phase, though input from
+committee members is of course appreciated. 
+
+
+
+* Piper (extended) <<piper>>
+
+Below is a description of the current plans for the pipeline manager
+"Piper". Any thoughts or feedback are very much appreciated!
+
+** The problem
+
+Most bioinformatics analyses require connecting many computational
+tools together across many "steps". Many of these steps require
+significant amounts of computational resources. The tools involved in
+bioinformatics analysis specifically are often not well maintained or
+require very specific computational environments to work correctly.
+
+To solve the problem of computational resources, analysts often run
+their analysis on high performance compute (HPC) clusters, such as the
+one at CCHMC. Each HPC cluster has a "job scheduler", a piece of
+software used to manage the computational resources and assign those
+resources to each analyst at the appropriate time. Each HPC cluster
+may have a /different/ job scheduler which is operated by the analyst in
+a different way. This is one of the problems that Piper aims to solve,
+that is, create a consistent way to interact with all job schedulers
+on any HPC. For example, the CCHMC cluster uses a job scheduler called
+LSF, while the Ohio Supercomputer Center (OSC), uses a job scheduler
+called slurm. An analyst wanting to run an analysis written for LSF
+would have to convert all of the LSF commands to slurm command. A
+pipeline developed in Piper would work in both places.
+
+A typical bioinformatics analysis may use dozens of computational
+tools, many of which are poorly maintained. As often occurs with
+scientific software, developers and analysts are typically not financially
+motivated to maintain their software, as the software is usually
+developed to solve a problem for that specific
+developer. Bioinformatics in particular suffers from this problem
+because, as a cross-disciplinary field, many developers do not have formal
+computer science backgrounds and do not practice, or are not aware of,
+standard measures to ensure code quality. What does this mean for the
+analyst? Most analysts will eventually run into the problem commonly
+referred to as "dependency hell". When a piece of software becomes
+poorly maintained, its dependencies may not be updated, requiring
+"old" versions of other software to function. When an analyst needs two
+pieces of software that depend upon another, shared, piece of
+software, if one of the required pieces of software is poorly
+maintained, then it may need a different version of the shared piece
+of software. The analyst then needs to find some way to install
+multiple versions of the same software and ensure any dependent
+software knows which version to look for. This phenomenon is known as
+dependency hell.
+
+Dependency hell is typically dealt with by "containers", which effectively
+"snapshot" a working dependency tree for one or more pieces of
+software. Once a container has been created, it can be loaded to
+create the environment the analyst needs. There are many different
+container "runtimes" that each have different interfaces for use.
+For example, Docker containers are different than Singularity
+containers, but one or both may be available on the analyst's HPC
+cluster. Piper would create a unified interface. The user would
+specify the container, and Piper would handle the rest.
+
+The final problem that Piper aims to solve is one of organization. An analysis
+"pipeline" is simply a set of steps that an analyst must perform to
+create the analysis. This amounts to a set of programs or scripts, written by the
+analyst, which create the desired output after running in a particular
+order. This is not a problem if there are only a few steps, but
+bioinformatics analysis tends to be complicated. For example, the
+analysis performed in [[one][Aim 1]] required dozens if not hundreds of steps
+and thousands of HPC jobs submitted to the scheduler. Some steps
+required many hours to perform. When the analysis reaches this size,
+it becomes difficult to make sure that every step has been run
+appropriately. For example, if an analyst were to make several changes
+to the pipeline and forgets which steps were changed, they may have to
+rerun the entire analysis to ensure that the final results are
+accurate. They also must ensure that each step runs successfully,
+something which may not be guaranteed, especially on a HPC cluster.
+Piper would keep track of which steps have been modified and run only
+the appropriate steps based on those changes.
+
+*** Current Solutions
+
+Currently, there are a few solutions that solve these problems, though
+each come with their own set of problems. The two most common in
+bioinformatics are [[https://snakemake.readthedocs.io/en/stable/index.html][Snakemake]] and [[https://www.nextflow.io/][Nextflow]], though more do exist, like
+[[https://docs.openwdl.org/overview.html][WDL]], and [[https://github.com/PapenfussLab/bionix][BioNix]]. So why write another one? Nextflow, which was used to
+complete [[one][Aim 1]], has a significant learning curve and subpar error
+handling. The other alternatives are widely considered either equal or
+inferior to Nextflow. Pipeline managers should be easy to use and
+provide a tangible benefit over not using one. 
+
+
+** Piper's design
+
+The design of Piper is guided by 3 principles.
+
+1. Piper should have at least all of the features that any alternative
+   would have
+2. Piper should be considerably easier to learn and use than any alternative
+3. Piper should be easy to maintain and take less effort to develop
+   than the alternatives
+
+
+
+*** Piper Lang
+
+Workflow/pipeline managers define "steps" in their pipelines with a
+domain specific language (DSL). Maintaining a language takes
+considerable effort. If Piper were to use a fully custom language, it
+would violate design principle 3. To this end, Piper uses a language
+called "scheme" to define pipelines in. Scheme is a type of Lisp, a
+language with a very long history, but particularly well suited for
+creating DSLs. Scheme, along with any Lisp, has a feature called
+"macros" which allows a developer to add custom syntax onto the
+language within the language. This makes any syntax features specific
+to Piper easy to implement. The reason scheme is used here instead of
+any other particular lisp is because
+a particular variant of scheme called
+[[https://github.com/mattwparas/steel][Steel]] is very easy to use in conjunction with a language called [[https://rust-lang.org/][Rust]].
+Rust is used for piper's "backend" for a few reasons. The central
+reason to use rust is it allows the developer to handle every possible
+error that could arise in the program, making good error handling easy
+to implement. Otherwise, rust is an extremely fast language and the
+binaries it creates are easy to build and use on many systems.
+
+Pipelines might be defined like so:
+
+#+begin_src lisp :eval no
+
+;; we will create some fastq files with this script
+(define script (file! "create_fastqs.py"))
+(define proc1
+  (process!
+   name : "process 1"
+   container : "ubuntu:latest"
+   time : (hours 5)
+   memory : (GB 10)
+   ;; the script writes the fastqs to the proc1 output path {{out}}
+   script : #<<''
+     python {{script}} --output {{out}}
+   ''
+ ))
+
+
+
+(define script2 (file! "process_fastq.py"))
+(define proc2
+  (process!
+   name : "process 2"
+   container : "ubuntu:latest"
+   time : (hours 2)
+   memory : (GB 10)
+   ;; the script processes the fastq and writes the analysis to the {{out}}
+   script : #<<''
+     python {{script2}} --fastq {{proc1}}/1.fastq --out {{out}}
+   ''
+   ))
+
+;; the output of proc2 will be copied to my_results.txt in the pipeline results directory
+(output!
+ "my_results.txt" : proc2)
+#+end_src
+
+
+Here, Piper would determine that the outputs requires =proc2=, that
+=proc2= requires =proc1= and =script2=, and =proc1= requires =script=. It would
+then run =proc1= first, then =proc2=, and finally copy the output of
+=proc2= into the results directory as =my_results.txt=.
+
+
+Piper pipelines could be more complicated, but this is a basic
+definition that would take little time to learn, while still being
+useful when creating analyses. 
+
+
+
+*** Piper's model
+
+Piper models each "step" in a pipeline as a "process", which can
+utilize a container or request computational resources like time or
+memory. The "script" attribute of a process is the code that will be
+run in the pipeline. Anything inside a double bracket ={{}}= is a
+variable or expression defined in the scheme language. Piper checks
+these variables for a particular type of object called a
+"derivation". =process!= calls create derivations, along with =file!=
+calls. Each derivation is a node in a dependency graph.
+
+Piper runs the entire scheme script before running the pipeline. This
+way, Piper can determine if everything is in order in the pipeline
+before running anything. The scheme script creates a directed a-cyclic
+graph (DAG) which Piper then interprets into a particular order to run
+the processes.
+
+Piper also keeps track of modifications to the derivations, so any
+changes to any derivation, such as a change to =create_fastqs.py= will
+create a chain reaction that causes any dependent derivation to be
+reevaluated. Piper does this by creating a cache of each derivation
+that requires the caches of all of its dependent derivations.
+
+
+
+
+
+

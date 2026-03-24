@@ -1,0 +1,22 @@
+#+title: HPV meeting<2026-03-05 Thu>
+#+date:<2026-03-05 Thu>
+
+
+* Build into statistical test for deseq2
+- 1.2 fold change or more (20% fold changes)
+  - somewhat arbitrary decision based on inflection point of EBV
+    analysis (Lee figure)
+- Each of the three vtrs (), then by strain
+  - one big matrix to estimate dispersion????
+  - vtrs vs control
+  - strains vs control
+- Run Andrew's pipeline (mixtape)
+  - Spark plots for cluster summarization
+    - line plots (each sample is a line)
+      - clusters are subfigures
+      - Y axis is Z scaled minus-ctrl score
+      - X axis is HPV strain (or condition)
+
+
+* Rerun ATAC and ChIP pipelines
+- 1 in 3 will be better

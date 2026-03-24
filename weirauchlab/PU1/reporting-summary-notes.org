@@ -1,0 +1,28 @@
+#+title: Reporting Summary notes
+
+
+* 
+
+* What does this mean?
+A statement on whether measurements were taken from distinct samples or whether the same sample was measured repeatedly
+
+* Good enough?
+
+Estimates of effect sizes (e.g. Cohen's d, Pearson's r), indicating how they were calculated.
+
+
+The allelic PU.1 binding predictions produced by each method were then
+evaluated by comparing to MARIO allelic scores using the Spearman
+correlation.
+
+
+
+* Software
+- 
+
+* Info I need
+** ChIP-seq seqction
+- Peak calling parameters (occurred upward in the pipeline chain)
+- Sequencing depth
+- Data quality (don't know what this is supposed to be)
+- Software (is this just macs2?)

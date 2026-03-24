@@ -9,13 +9,38 @@
 ** TODO Reporting Summary Form
 Need to fill out reporting summary form for paper with Molly
 
+- Wants us to report one-sided or two sided and the name of the
+  statistical test used
+  - Is citing the tool used good enough?
+    - GTeX
+    - RELI
+    - Homer
+      
+- Full description of the statistical parameters including central
+  tendency?
+  - Are the figures good enough (1C and 5A) or do we need to list the
+    medians?
+    
+- Need Sex and source for all cell lines (used in the study?)
+  - Also need authentication method?
+    - Do we even do this?
+
+  - Supplementary table 11
+
+- Need replicate information for ChIP-seq
+  
+
+
+    
+  
+
 
 * DONE Find threshold to remove weird samples (pairwise reli)     :ARCHIVE:
 CLOSED: [2026-02-23 Mon 12:08]
 - Note taken on [2026-02-23 Mon 12:08] \\
   couldn't find threshold that didn't also eliminate other samples
 - [X] Try threshold based on average overlap within cell type.
-
+  
 * DONE Alzheimer's disease examination                            :ARCHIVE:
 CLOSED: [2026-02-23 Mon 12:07]
 - [X] sort vertically by significance

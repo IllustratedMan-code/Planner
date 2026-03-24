@@ -1,0 +1,95 @@
+
+
+
+* Deseq2 analysis link
+- https://tfinternal.research.cchmc.org/gitlab/mixtape_pipelines/pipelines/differential-expression-rnaseq/-/tree/master/wrl-deganalysis/assets/report_templates/deseq2
+
+
+* Plots
+Elbow plot is for determining the ideal number of clusters, can also
+try silhouette.
+
+#+begin_src R
+scan_k_clusters <- function(mat, centers = 1:20, ...){
+  map(
+    centers,
+    function(k){
+      km <- kmeans(x = mat, centers = k, ...)
+    }
+  )
+}
+
+summarize_kmeans_search <- function(km_list){
+  map_df(
+    km_list,
+    function(x){
+      ratio <- x$betweenss / x$totss
+      tibble(
+        k = max(x$cluster),
+        tot.withinss = x$tot.withinss,
+        betweenss = x$betweenss,
+        totss = x$totss,
+        prop_variance_explained = betweenss / totss,
+      )
+    }
+  )
+}
+
+plot_k_elbow <- function(.data, xintercept = NULL){
+  plt <-
+    ggplot(.data,aes(x = k, y = prop_variance_explained))+
+    geom_line()+
+    geom_point()+
+    labs(
+      x = "Number of clusters",
+      y = "Proportion of variance"
+    )+
+    theme(
+      panel.background = element_blank(),
+      axis.line = element_line(color = "#000000")
+    )
+  if(!is.null(xintercept)){
+    plt <-
+      plt +
+      geom_vline(xintercept = xintercept, linetype = 2)+
+      annotate("text",x = xintercept,y = Inf,label = xintercept, hjust = -1, vjust = 1)
+  }
+  plt
+}
+#+end_src
+
+
+#+begin_src R
+convert_to_long <- function(mat, clusters, coldata_tbl) {
+  sample_ids <- colnames(mat)
+  
+  mat[names(clusters), ] |>
+    as_tibble(rownames = "gene_id") |>
+    dplyr::mutate(cluster = clusters[gene_id]) |>
+    tidyr::pivot_longer(
+      cols      = c(-gene_id, -cluster),
+      names_to  = "sample_id",
+      values_to = "score"
+    ) |>
+    dplyr::left_join(coldata_tbl, by = "sample_id")
+}
+
+plot_k_genes <- function(df, line_alpha = 0.1, nrow = 3,x_title = "Status", y_title = "Mean Score"){
+  df |>
+    summarize(
+      mean_score = mean(score),
+      .by = c(gene_id,cluster,hpv_type)
+    ) |>
+    ggplot(
+      aes(x = hpv_type, y = mean_score, group = gene_id)
+    )+
+    geom_line(alpha = line_alpha, color = "#afafaf")+
+    stat_summary(aes(group = cluster), geom = "line",fun = mean, color = "#0000ff",linewidth = 1)+
+    facet_wrap(~cluster,nrow = nrow)+
+    labs(
+      x = x_title,
+      y = y_title
+    )+
+    theme(panel.background = element_blank(),axis.line = element_line(colour = "#000000"))
+}
+#+end_src

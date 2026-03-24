@@ -1,0 +1,11 @@
+
+#+date:<2026-03-19 Thu> 
+
+
+- Control on left
+  - force sorting so that control up is on the top,
+    
+- Each of the three vtrs (), then by strain
+  - one big matrix to estimate dispersion????
+  - vtrs vs control
+  - strains vs control
