@@ -1,23 +1,22 @@
 
-* Paths to rerun [16/19]
+* Paths to rerun [15/18]
 All that is needed to do is to rerun the =run_pipeline.sh= in each directory
 - [ ] =/data/weirauchlab/project/vtr/EBV/Flp-In-293/integrative_analysis/ChIP-seq/nf-encode-chip/run2'=,
 - [ ] =/data/weirauchlab/project/vtr/EBV/Flp-In-293/integrative_analysis/ATAC-seq/nf-encode-atac=
-- [X] =/data/weirauchlab/project/vtr/HPV_HPV16/Flp-In-TREx-HCT116/integrative_analysis/ChIP-seq/nf-encode-chip/run2=,
-- [X] =/data/weirauchlab/project/vtr/HPV_HPV18/Flp-In-TREx-HCT116/integrative_analysis/ATAC-seq/nf-encode-atac=,
+- [X] =/data/weirauchlab/project/vtr/HPV_HPV16/Flp-In-TREx-HCT116/integrative_analysis/ChIP-seq/nf-encode-chip/run2=
 - [X] =/data/weirauchlab/project/vtr/HPV_HPV16/Flp-In-293/integrative_analysis/ATAC-seq/nf-encode-atac=,
 - [X] =/data/weirauchlab/project/vtr/HPV_HPV16/Flp-In-293/integrative_analysis/ChIP-seq/nf-encode-chip=,
+- [X] =/data/weirauchlab/project/vtr/HPV_HPV16/Flp-In-TREx-HCT116/integrative_analysis/ATAC-seq/nf-encode-atac=,
+- [X] =/data/weirauchlab/project/vtr/HPV_HPV18/Flp-In-TREx-HCT116/integrative_analysis/ATAC-seq/nf-encode-atac=,
 - [X] =/data/weirauchlab/project/vtr/HPV_HPV18/Flp-In-293/integrative_analysis/ATAC-seq/nf-encode-atac=,
 - [X] =/data/weirauchlab/project/vtr/HPV_HPV18/Flp-In-293/integrative_analysis/ChIP-seq/nf-encode-chip=,
 - [X] =/data/weirauchlab/project/vtr/HPV_HPV6a/Flp-In-293/integrative_analysis/ATAC-seq/nf-encode-atac=,
 - [X] =/data/weirauchlab/project/vtr/HPV_HPV6a/Flp-In-293/integrative_analysis/ChIP-seq/nf-encode-chip=,
 - [X] =/data/weirauchlab/project/vtr/HPV_HPV11/Flp-In-293/integrative_analysis/ATAC-seq/nf-encode-atac=,
 - [X] =/data/weirauchlab/project/vtr/HPV_HPV11/Flp-In-293/integrative_analysis/ChIP-seq/nf-encode-chip=,
-- [X] =/data/weirauchlab/project/vtr/HPV_HPV16/Flp-In-TREx-HCT116/integrative_analysis/ATAC-seq/nf-encode-atac=,
 - [X] =/data/weirauchlab/project/vtr/HPV_HPV6a/Flp-In-TREx-HCT116/integrative_analysis/ChIP-seq/nf-encode-chip=,
 - [-] =/data/weirauchlab/project/vtr/HPV_HPV6a/Flp-In-TREx-HCT116/integrative_analysis/ATAC-seq/nf-encode-atac=,
 - [X] =/data/weirauchlab/project/vtr/HPV_HPV11/Flp-In-TREx-HCT116/integrative_analysis/ATAC-seq/nf-encode-atac=,
-- [X] =/data/weirauchlab/project/vtr/HPV_HPV16/Flp-In-TREx-HCT116/integrative_analysis/ChIP-seq/nf-encode-chip/run2=
 - [X] =/data/weirauchlab/project/vtr/HPV_HPV18/Flp-In-TREx-HCT116/integrative_analysis/ChIP-seq/nf-encode-chip/run2=
 - [X] =/data/weirauchlab/project/vtr/HPV_HPV11/Flp-In-TREx-HCT116/integrative_analysis/ChIP-seq/nf-encode-chip/run2=
 
