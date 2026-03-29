@@ -46,11 +46,13 @@ All that is needed to do is to rerun the =run_pipeline.sh= in each directory
 
 
 *** HPV6a
-- https://tf.cchmc.org/project/vtr/HPV_HPV6a/Flp-In-TREx-HCT116/integrative_analysis/ChIP-seq/nf-encode-chip/analysis/multiqc/multiqc_report.html
+- (not finished running): https://tf.cchmc.org/project/vtr/HPV_HPV6a/Flp-In-TREx-HCT116/integrative_analysis/ChIP-seq/nf-encode-chip/analysis/multiqc/multiqc_report.html
 - https://tf.cchmc.org/project/vtr/HPV_HPV6a/Flp-In-TREx-HCT116/integrative_analysis/ATAC-seq/nf-encode-atac/analysis/multiqc/multiqc_report.html
 
 *** HPV11
 - https://tf.cchmc.org/project/vtr/HPV_HPV11/Flp-In-TREx-HCT116/integrative_analysis/ATAC-seq/nf-encode-atac/analysis/multiqc/multiqc_report.html
+  - Add readme explaining that failed was included in samplesheet but
+    not to worry
 - https://tf.cchmc.org/project/vtr/HPV_HPV11/Flp-In-TREx-HCT116/integrative_analysis/ChIP-seq/nf-encode-chip/run2/analysis/multiqc/multiqc_report.html
 
 *** HPV16
@@ -60,3 +62,7 @@ All that is needed to do is to rerun the =run_pipeline.sh= in each directory
 *** HPV18
 - https://tf.cchmc.org/project/vtr/HPV_HPV18/Flp-In-TREx-HCT116/integrative_analysis/ChIP-seq/nf-encode-chip/run2/analysis/multiqc/multiqc_report.html
 - https://tf.cchmc.org/project/vtr/HPV_HPV18/Flp-In-TREx-HCT116/integrative_analysis/ATAC-seq/nf-encode-atac/analysis/multiqc/multiqc_report.html
+
+
+- Make sure this doesn't get chosen: HPV11-E6_E007908_RepB
+- Compare peak counts to previous
