@@ -8,6 +8,7 @@
 ** Heatmap of differentially expressed genes
 - one for transient
 - one for stably expressed
+- "Spark Plots" via Andrew
 
 ** Upset plot of differentially expressed genes between conditions
 
@@ -15,5 +16,20 @@
 - Use differentially expressed genes as gene set
 - Use KEGG or GREAT
 
+* Rerun ATAC, ChIP pipelines
+- Bug caused only 2 out of 3 comparisons to occur, so needed to rerun
 
+** Do extra ChIP samples
+
+*** HPV11-E6
+HPV11 E6 ChIP samples failed QC and needed to be rerun
+new:
+- E008876
+- E008877
+-E008878
+
+replaces:
+- E007126
+- E007127
+- E007128
 

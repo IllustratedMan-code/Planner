@@ -1,0 +1,44 @@
+#+title: Task list based on reviewer comments
+
+- reviews: https://cchmc.sharepoint.com/:w:/r/sites/PU.1team/_layouts/15/Doc.aspx?sourcedoc=%7B3C3EE75F-BD1C-4575-98DC-CB76DF29683F%7D&file=PU.1%20reviews%203.30.26.docx&action=default&mobileredirect=true&DefaultItemOpen=1
+
+* Figure 1 Part B Supplemental
+Add PCA to figure 1 part B pipeline output
+
+** Try redoing Figure1 with different gene sets, removing the "shared" peaks
+- Will need to bedtools subtract?
+
+** Restrict to cell-type specific peaks and redo UMAP and PCA
+- 
+
+* Figure 3 adjacent
+- Small heatmap showing correlation between expression levels of PU.1
+  and other TF families
+- Matt will create TF family map
+- DICE resource will be used for data
+
+
+* Figure 5D
+Remake figure, with bQTL effect size on the X axis instead of Mario Score
+
+
+
+* Look into human Immunological genome project
+to find 
+
+* data website
+- Create metadata for all of our data
+- Bedfiles, links to all fastq files (including those on GEO)
+** data website Plan
+- do we want 
+
+* Meeting notes
+
+** <2026-04-02 Thu> 
+
+- Halt work on HPV till reviews are done
+
+*** Molly is going to work on EMSA
+
+** <2026-04-16 Thu>
+
