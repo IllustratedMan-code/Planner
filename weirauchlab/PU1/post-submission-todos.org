@@ -5,8 +5,6 @@
 * Figure 1 Part B Supplemental
 Add PCA to figure 1 part B pipeline output
 
-** Try redoing Figure1 with different gene sets, removing the "shared" peaks
-- Will need to bedtools subtract?
 
 ** Restrict to cell-type specific peaks and redo UMAP and PCA
 - 
@@ -18,27 +16,28 @@ Add PCA to figure 1 part B pipeline output
 - DICE resource will be used for data
 
 
-* Figure 5D
+* TODO Figure 5D
 Remake figure, with bQTL effect size on the X axis instead of Mario Score
 
 
-
-* Look into human Immunological genome project
-to find 
-
-* data website
+* DONE data website
+CLOSED: [2026-07-27 Mon 14:01]
 - Create metadata for all of our data
 - Bedfiles, links to all fastq files (including those on GEO)
 ** data website Plan
 - do we want 
 
-* Meeting notes
 
-** <2026-04-02 Thu> 
 
-- Halt work on HPV till reviews are done
 
-*** Molly is going to work on EMSA
+* Figures supplemental data
 
-** <2026-04-16 Thu>
+Need to have a table that verbatim represents the plots that were made
 
+- [ ] Figure 1
+  - =Figure-1/Part-B/table=
+- [ ] Figure 2
+- [ ] Figure 3
+- [ ] Figure 4
+- [ ] Figure 5
+- [ ] Figure 6
