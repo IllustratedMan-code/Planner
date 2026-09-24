@@ -1,12 +1,15 @@
 #+title: Agenda For PU1
 
 
-* Review Checklist [0/1]
+* Review Checklist [1/2]
 :PROPERTIES:
 :COOKIE_DATA: todo recursive
 :END:
 
-** TODO Reporting Summary Form
+** TODO Fix enumbers in tables
+7, 9, 16
+** DONE Reporting Summary Form
+CLOSED: [2026-09-19 Sat 10:20]
 Need to fill out reporting summary form for paper with Molly
 
 - Wants us to report one-sided or two sided and the name of the
