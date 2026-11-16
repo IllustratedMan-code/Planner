@@ -1,0 +1,24 @@
+#+title: Matt Meeting<2026-11-16 Mon> 
+#+date:<2026-11-16 Mon>
+
+
+* Stuff to work on
+Finish PU.1
+
+* Ideas
+- Review Paper (HPV related?)
+  - E2,E6,E7 (literature search)
+    - Make a spreadsheet of all reviews (transcriptonal regulators of
+      HPV in human diseases)
+    - Learn biology now
+  
+- Alphagenome in-silico mutagenesis for HPV infection (do we have the
+  viral genomes?)
+  - Shotgun the HPV genome into different locations in the human genome,
+    then use alphagenome to predict HI-C tracks and find places where
+    the genome contact maps are significantly altered, see if they
+    line up with cancer diagnosis
+  - Add to list of downstream analysis
+  - Hek cells
+  - "Tethering" the genome
+  - Talk to Andrew
